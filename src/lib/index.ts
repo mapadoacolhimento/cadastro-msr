@@ -4,4 +4,5 @@ export { default as getErrorMessage } from "./getErrorMessage";
 export { default as normalizeCity } from "./normalizeCity";
 export { default as formatZipcode } from "./formatZipcode";
 export { default as updateManyTickets } from "./zendesk/updateManyTickets";
+export { default as createOrUpdateUser } from "./zendesk/createOrUpdateUser";
 export * from "./constants";

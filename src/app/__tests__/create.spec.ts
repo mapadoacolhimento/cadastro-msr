@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
-import { type Gender, type MSRStatus, Prisma, type Race } from "@prisma/client";
+import { type Gender, type MSRStatus, type Race } from "@prisma/client";
 import mockedDb from "../../lib/__mocks__/db";
 import msrPayload from "../../lib/__mocks__/payloads";
 import { POST } from "../create/route";

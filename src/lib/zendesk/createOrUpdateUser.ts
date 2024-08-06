@@ -9,7 +9,7 @@ import getErrorMessage from "../getErrorMessage";
 type User = {
 	id?: bigint;
 	name: string;
-	role: "end-user";
+	role: string;
 	organization_id: bigint;
 	email: string;
 	phone: string;
@@ -47,7 +47,7 @@ export default async function createOrUpdateUser(user: User) {
 			throw new Error(response.statusText);
 		}
 
-		return response;
+		return await response.json();
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 

@@ -14,6 +14,7 @@ import StepsController from "./StepsController";
 import { Illustration } from "../";
 import { type StepChildrenProps } from "./Step";
 import { type Values } from "./";
+import LoadingStep from "../LoadingStep";
 
 interface MultiStepFormWrapperProps {
 	initialValues: Values;
@@ -27,6 +28,8 @@ export default function MultiStepFormWrapper({
 }: PropsWithChildren<MultiStepFormWrapperProps>) {
 	const [stepIndex, setStepIndex] = useState(0);
 	const [snapshot, setSnapshot] = useState(initialValues);
+	const [isLoading, setIsLoading] = useState(false);
+	const [submitError, setSubmitError] = useState<string | null>(null);
 	const childrenSteps = Children.toArray(children);
 	const router = useRouter();
 
@@ -48,6 +51,8 @@ export default function MultiStepFormWrapper({
 
 	const handleSubmit = async (values: Values, bag: FormikHelpers<Values>) => {
 		try {
+			setIsLoading(true);
+			setSubmitError(null);
 			if (step.props.onSubmit) {
 				const submit = await step.props.onSubmit(values, bag);
 				if (submit && submit.redirectTo) {
@@ -61,10 +66,10 @@ export default function MultiStepFormWrapper({
 
 			await bag.setTouched({});
 			nextStep(values);
-		} catch (e) {
-			console.log(
-				`Something went wrong when submitting the form: ${JSON.stringify(e)}`
-			);
+		} catch (error: any) {
+			setSubmitError(error.message || "Ocorreu um erro durante a submissão");
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -108,7 +113,8 @@ export default function MultiStepFormWrapper({
 								justify={"center"}
 								gapY={"4"}
 							>
-								{step}
+								{!isLoading && !submitError ? step : null}
+								{isLoading ? <LoadingStep /> : null}
 							</Flex>
 						</Box>
 						<StepsController

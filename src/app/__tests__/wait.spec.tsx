@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Wait from "../wait/page";
+import Wait from "../cadastro-finalizado/page";
 
 const setup = () => {
 	return render(<Wait />);

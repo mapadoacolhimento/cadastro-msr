@@ -26,7 +26,7 @@ type User = {
 	};
 };
 
-export default async function updateOrCreateUser(user: User) {
+export default async function createOrUpdateUser(user: User) {
 	try {
 		const endpoint = ZENDESK_SUBDOMAIN + "/api/v2/users/create_or_update";
 

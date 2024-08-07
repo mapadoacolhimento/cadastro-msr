@@ -1,30 +1,10 @@
-import { Decimal } from "@prisma/client/runtime/library";
 import {
 	ZENDESK_API_TOKEN,
 	ZENDESK_API_USER,
 	ZENDESK_SUBDOMAIN,
 } from "../constants";
+import { User } from "../types";
 import getErrorMessage from "../getErrorMessage";
-
-type User = {
-	id?: bigint;
-	name: string;
-	role: string;
-	organization_id: bigint;
-	email: string;
-	phone: string;
-	user_fields: {
-		condition: string;
-		state: string;
-		city: string;
-		cep?: string;
-		address?: string;
-		cor: string;
-		whatsapp: string;
-		latitude: string;
-		longitude: string;
-	};
-};
 
 export default async function createOrUpdateUser(user: User) {
 	try {

@@ -1,22 +1,19 @@
+import { Decimal } from "@prisma/client/runtime/library";
 import {
 	ZENDESK_API_TOKEN,
 	ZENDESK_API_USER,
 	ZENDESK_SUBDOMAIN,
 } from "../constants";
 import getErrorMessage from "../getErrorMessage";
-import { Ticket, Tickets } from "../types";
+import { Ticket } from "../types";
 
-export default async function updateManyTickets(
-	ids: string,
-	ticketUpdate: Ticket | Tickets
-) {
+export default async function createTicket(ticket: Ticket) {
 	try {
-		const endpoint =
-			ZENDESK_SUBDOMAIN + "/api/v2/tickets/update_many.json?ids=" + ids;
+		const endpoint = ZENDESK_SUBDOMAIN + "/api/v2/tickets";
 
 		const response = await fetch(endpoint, {
-			body: JSON.stringify({ ...ticketUpdate }),
-			method: "PUT",
+			body: JSON.stringify({ ticket }),
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization:

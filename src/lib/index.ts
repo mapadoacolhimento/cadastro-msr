@@ -5,4 +5,5 @@ export { default as normalizeCity } from "./normalizeCity";
 export { default as formatZipcode } from "./formatZipcode";
 export { default as updateManyTickets } from "./zendesk/updateManyTickets";
 export { default as createOrUpdateUser } from "./zendesk/createOrUpdateUser";
+export { default as createTicket } from "./zendesk/createTicket";
 export * from "./constants";

@@ -45,7 +45,7 @@ describe("POST /create", () => {
 		const response = await POST(request);
 
 		expect(mockcreateOrUpdateUser).toHaveBeenCalled();
-		expect(await response.status).toEqual(200);
+		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345666 });
 	});
 });

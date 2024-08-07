@@ -34,28 +34,6 @@ export type User = {
 	};
 };
 
-export const dicio: {
-	360014379412: "status_acolhimento";
-	360016631592: "nome_voluntaria";
-	360016681971: "nome_msr";
-	360017432652: "data_encaminhamento";
-	360021665652: "status_inscricao";
-	360021812712: "telefone";
-	360021879791: "estado";
-	360021879811: "cidade";
-	360032229831: "atrelado_ao_ticket";
-} = {
-	360014379412: "status_acolhimento",
-	360016631592: "nome_voluntaria",
-	360016681971: "nome_msr",
-	360017432652: "data_encaminhamento",
-	360021665652: "status_inscricao",
-	360021812712: "telefone",
-	360021879791: "estado",
-	360021879811: "cidade",
-	360032229831: "atrelado_ao_ticket",
-};
-
 export type Ticket = {
 	id?: number;
 	requester_id?: number;

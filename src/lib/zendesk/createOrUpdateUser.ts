@@ -21,8 +21,8 @@ type User = {
 		address?: string;
 		cor: string;
 		whatsapp: string;
-		latitude: Decimal;
-		longitude: Decimal;
+		latitude: string;
+		longitude: string;
 	};
 };
 
@@ -31,7 +31,7 @@ export default async function createOrUpdateUser(user: User) {
 		const endpoint = ZENDESK_SUBDOMAIN + "/api/v2/users/create_or_update";
 
 		const response = await fetch(endpoint, {
-			body: JSON.stringify(user),
+			body: JSON.stringify({ user }),
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

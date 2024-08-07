@@ -26,7 +26,7 @@ describe("POST /create", () => {
 			},
 		});
 		const request = new NextRequest(
-			new Request("http://localhost:3000/create", {
+			new Request("http://localhost:3000/zendesk/user", {
 				method: "POST",
 				body: JSON.stringify({
 					email: "lua@email.com",
@@ -37,8 +37,8 @@ describe("POST /create", () => {
 					neighborhood: "Federação",
 					color: "black",
 					zipcode: "40210245",
-					latitude: -13.004,
-					longitude: -38.479,
+					latitude: "-13.004",
+					longitude: "-38.479",
 				}),
 			})
 		);

@@ -15,8 +15,8 @@ const payloadSchema = Yup.object({
 	neighborhood: Yup.string().required(),
 	color: Yup.string().oneOf(Object.values(Race)).required(),
 	zipcode: Yup.string().min(8).max(9).required(),
-	latitude: Yup.number().required(),
-	longitude: Yup.number().required(),
+	latitude: Yup.string().required(),
+	longitude: Yup.string().required(),
 	// dateOfBirth: Yup.date().required().nullable(),
 	// gender: Yup.string().oneOf(Object.values(Gender)).required(),
 	// hasDisability: Yup.boolean().required().nullable(),
@@ -61,6 +61,7 @@ export async function POST(request: Request) {
 		const res = await createOrUpdateUser(user);
 
 		let msrZendeskUserId;
+
 		if (res.data) {
 			msrZendeskUserId = res.data.user.id;
 		} else {

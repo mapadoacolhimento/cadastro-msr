@@ -4,7 +4,7 @@ import * as createOrUpdateUser from "../../lib/zendesk/createOrUpdateUser";
 
 const mockcreateOrUpdateUser = vi.spyOn(createOrUpdateUser, "default");
 
-describe("POST /create", () => {
+describe("POST /zendesk/user", () => {
 	it("returns error when dont have a valid payload", async () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/user", {
@@ -15,7 +15,7 @@ describe("POST /create", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: longitude is a required field"
+			"Validation error: zipcode is a required field"
 		);
 	});
 
@@ -37,8 +37,6 @@ describe("POST /create", () => {
 					neighborhood: "Federação",
 					color: "black",
 					zipcode: "40210245",
-					latitude: "-13.004",
-					longitude: "-38.479",
 				}),
 			})
 		);

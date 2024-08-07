@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Text } from "@radix-ui/themes";
-import DesktopIllustration from "./DesktopIllustration";
+import DesktopIllustration from "../../DesktopIllustration";
 import Image from "next/image";
 
 export default function LoadingStep() {

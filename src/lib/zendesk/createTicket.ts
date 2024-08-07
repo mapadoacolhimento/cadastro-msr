@@ -12,7 +12,7 @@ export default async function createTicket(ticket: Ticket) {
 		const endpoint = ZENDESK_SUBDOMAIN + "/api/v2/tickets";
 
 		const response = await fetch(endpoint, {
-			body: JSON.stringify({ ticket }),
+			body: JSON.stringify({ ...ticket }),
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

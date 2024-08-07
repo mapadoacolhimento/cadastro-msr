@@ -1,65 +1,97 @@
 import * as Yup from "yup";
-import {
-	colorOptions,
-	createOrUpdateUser,
-	getErrorMessage,
-} from "../../../lib";
-import { Race } from "@prisma/client";
+import { createTicket, getErrorMessage, updateManyTickets } from "../../../lib";
+import { SupportType } from "@prisma/client";
+import { Ticket } from "../../../lib";
+import { ZENDESK_CUSTOM_FIELDS_DICIO } from "../../../lib";
 
 const payloadSchema = Yup.object({
-	support,
-	// email: Yup.string().email().required(),
-	// phone: Yup.string().min(10).required(),
-	// firstName: Yup.string().required(),
-	// city: Yup.string().required(),
-	// state: Yup.string().length(2).required(),
-	// neighborhood: Yup.string().required(),
-	// color: Yup.string().oneOf(Object.values(Race)).required(),
-	// zipcode: Yup.string().min(8).max(9).required(),
-	// latitude: Yup.number().required(),
-	// longitude: Yup.number().required(),
-	// dateOfBirth: Yup.date().required().nullable(),
-	// gender: Yup.string().oneOf(Object.values(Gender)).required(),
-	// hasDisability: Yup.boolean().required().nullable(),
-	// acceptsOnlineSupport: Yup.boolean().required(),
+	ticketId: Yup.number(),
+	msrZendeskUserID: Yup.number(),
+	msrName: Yup.string(),
+	phone: Yup.string().min(10),
+	city: Yup.string(),
+	state: Yup.string().length(2),
+	neighborhood: Yup.string(),
+	subject: Yup.string(),
+	status: Yup.string(),
+	statusAcolhimento: Yup.string(),
+	supportType: Yup.string().oneOf(Object.values(SupportType)),
+	tag: Yup.array().of(Yup.string()),
+	comment: Yup.object(),
 }).required();
+
+function getCustomFieldsTicket(payload: any) {
+	let custom_fields: any = [];
+
+	if (payload.msrName) {
+		custom_fields.push({
+			id: ZENDESK_CUSTOM_FIELDS_DICIO["nome_msr"],
+			value: payload.msrName,
+		});
+	}
+	if (payload.phone) {
+		custom_fields.push({
+			id: ZENDESK_CUSTOM_FIELDS_DICIO["telefone"],
+			value: payload.phone,
+		});
+	}
+	if (payload.city) {
+		custom_fields.push({
+			id: ZENDESK_CUSTOM_FIELDS_DICIO["cidade"],
+			value: payload.city,
+		});
+	}
+	if (payload.state) {
+		custom_fields.push({
+			id: ZENDESK_CUSTOM_FIELDS_DICIO["estado"],
+			value: payload.state,
+		});
+	}
+	if (payload.statusAcolhimento) {
+		custom_fields.push({
+			id: ZENDESK_CUSTOM_FIELDS_DICIO["status_acolhimento"],
+			value: payload.statusAcolhimento,
+		});
+	}
+
+	if (custom_fields.length === 0) return;
+
+	return custom_fields;
+}
 
 export async function POST(request: Request) {
 	try {
 		const payload = await request.json();
 
+		if (!payload) {
+			throw new Error("Error: Body is empty");
+		}
+
 		await payloadSchema.validate(payload);
 
-		const user = {
-			name: payload.firstName,
-			role: "end-user",
-			organization_id: 360273031591 as unknown as bigint,
-			email: payload.email,
-			phone: payload.phone,
-			user_fields: {
-				condition: "inscrita",
-				state: payload.state,
-				city: payload.city,
-				cep: payload.zipcode,
-				//address?
-				cor: getColor(payload.color),
-				whatsapp: payload.phone,
-				latitude: payload.latitude,
-				longitude: payload.longitude,
-			},
+		const ticket: Ticket = {
+			id: payload.ticketId,
+			description: "-",
+			requester_id: payload.msrZendeskUserID,
+			subject: payload.subject,
+			organization_id: 360273031591,
+			status: payload.status,
+			tag: payload.tag,
+			comment: payload.comment,
+			custom_fields: getCustomFieldsTicket(payload),
 		};
+		let response;
 
-		const res = await createOrUpdateUser(user);
-
-		let msrZendeskUserId;
-		if (res.data) {
-			msrZendeskUserId = res.data.user.id;
+		if (ticket.id) {
+			response = await updateManyTickets(ticket.id.toString(), {
+				ticket: ticket,
+			});
 		} else {
-			msrZendeskUserId = res.user.id;
+			response = await createTicket(ticket);
 		}
 
 		return Response.json({
-			msrZendeskUserId: msrZendeskUserId,
+			ticketId: response.ticket.id,
 		});
 	} catch (e) {
 		const error = e as Record<string, unknown>;

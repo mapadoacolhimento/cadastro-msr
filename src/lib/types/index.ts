@@ -31,21 +31,53 @@ export type User = {
 		address?: string;
 		cor: string;
 		whatsapp: string;
-		latitude: string;
-		longitude: string;
-	};
-};
-export type Ticket = {
-	ticket: {
-		status?: string;
-		comment?: {
-			body: string;
-			public: boolean;
-		};
 	};
 };
 
-export type Tickets = {
+export const dicio: {
+	360014379412: "status_acolhimento";
+	360016631592: "nome_voluntaria";
+	360016681971: "nome_msr";
+	360017432652: "data_encaminhamento";
+	360021665652: "status_inscricao";
+	360021812712: "telefone";
+	360021879791: "estado";
+	360021879811: "cidade";
+	360032229831: "atrelado_ao_ticket";
+} = {
+	360014379412: "status_acolhimento",
+	360016631592: "nome_voluntaria",
+	360016681971: "nome_msr",
+	360017432652: "data_encaminhamento",
+	360021665652: "status_inscricao",
+	360021812712: "telefone",
+	360021879791: "estado",
+	360021879811: "cidade",
+	360032229831: "atrelado_ao_ticket",
+};
+
+export type Ticket = {
+	id?: number;
+	requester_id?: number;
+	submitter_id?: number;
+	assignee_id?: number;
+	status?: string;
+	subject?: string;
+	description?: string;
+	organization_id?: number;
+	tag?: string[];
+	comment?: {
+		body: string;
+		public: boolean;
+	};
+	custom_fields?: Array<{ id: number; value: string | number }>;
+};
+
+export type TicketUpdate = {
+	ticket: Ticket;
+};
+
+export type TicketsUpdate = {
 	tickets: {
 		id: number;
 	}[];

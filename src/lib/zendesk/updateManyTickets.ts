@@ -4,11 +4,11 @@ import {
 	ZENDESK_SUBDOMAIN,
 } from "../constants";
 import getErrorMessage from "../getErrorMessage";
-import { Ticket, Tickets } from "../types";
+import { TicketUpdate, TicketsUpdate } from "../types";
 
 export default async function updateManyTickets(
 	ids: string,
-	ticketUpdate: Ticket | Tickets
+	ticketUpdate: TicketUpdate | TicketsUpdate
 ) {
 	try {
 		const endpoint =

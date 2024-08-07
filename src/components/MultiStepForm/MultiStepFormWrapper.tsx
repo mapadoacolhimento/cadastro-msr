@@ -14,7 +14,8 @@ import StepsController from "./StepsController";
 import { Illustration } from "../";
 import { type StepChildrenProps } from "./Step";
 import { type Values } from "./";
-import LoadingStep from "../LoadingStep";
+import LoadingStep from "./Steps/LoadingStep";
+import ErrorStep from "./Steps/ErrorStep";
 
 interface MultiStepFormWrapperProps {
 	initialValues: Values;
@@ -115,6 +116,9 @@ export default function MultiStepFormWrapper({
 							>
 								{!isLoading && !submitError ? step : null}
 								{isLoading ? <LoadingStep /> : null}
+								{submitError && !isSubmitting ? (
+									<ErrorStep message={submitError} />
+								) : null}
 							</Flex>
 						</Box>
 						<StepsController

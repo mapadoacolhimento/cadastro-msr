@@ -19,7 +19,7 @@ export default function LoadingStep() {
 						color={"purple"}
 						highContrast
 					>
-						Agora é só esperar
+						Por favor, aguarde
 					</Heading>
 				</Box>
 				<Flex

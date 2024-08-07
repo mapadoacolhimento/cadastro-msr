@@ -1,23 +1,24 @@
 import * as Yup from "yup";
-import { createTicket, getErrorMessage, updateManyTickets } from "../../../lib";
+import { createOrUpdateTicket, getErrorMessage } from "../../../lib";
 import { SupportType } from "@prisma/client";
 import { Ticket } from "../../../lib";
 import { ZENDESK_CUSTOM_FIELDS_DICIO } from "../../../lib";
 
 const payloadSchema = Yup.object({
 	ticketId: Yup.number(),
+	subject: Yup.string(),
+	description: Yup.string(),
+	status: Yup.string(),
+	statusAcolhimento: Yup.string(),
+	supportType: Yup.string().oneOf(Object.values(SupportType)),
+	tag: Yup.array().of(Yup.string()),
+	comment: Yup.object(),
 	msrZendeskUserID: Yup.number(),
 	msrName: Yup.string(),
 	phone: Yup.string().min(10),
 	city: Yup.string(),
 	state: Yup.string().length(2),
 	neighborhood: Yup.string(),
-	subject: Yup.string(),
-	status: Yup.string(),
-	statusAcolhimento: Yup.string(),
-	supportType: Yup.string().oneOf(Object.values(SupportType)),
-	tag: Yup.array().of(Yup.string()),
-	comment: Yup.object(),
 }).required();
 
 function getCustomFieldsTicket(payload: any) {
@@ -71,7 +72,6 @@ export async function POST(request: Request) {
 
 		const ticket: Ticket = {
 			id: payload.ticketId,
-			description: "-",
 			requester_id: payload.msrZendeskUserID,
 			subject: payload.subject,
 			organization_id: 360273031591,
@@ -80,15 +80,8 @@ export async function POST(request: Request) {
 			comment: payload.comment,
 			custom_fields: getCustomFieldsTicket(payload),
 		};
-		let response;
 
-		if (ticket.id) {
-			response = await updateManyTickets(ticket.id.toString(), {
-				ticket: ticket,
-			});
-		} else {
-			response = await createTicket(ticket);
-		}
+		const response = await createOrUpdateTicket(ticket);
 
 		return Response.json({
 			ticketId: response.ticket.id,

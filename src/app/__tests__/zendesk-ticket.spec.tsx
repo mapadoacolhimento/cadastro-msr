@@ -1,10 +1,8 @@
 import { NextRequest } from "next/server";
 import { POST } from "../zendesk/ticket/route";
-import * as createTicket from "../../lib/zendesk/createTicket";
-import * as updateManyTickets from "../../lib/zendesk/updateManyTickets";
+import * as createOrUpdateTicket from "../../lib/zendesk/createOrUpdateTicket";
 
-const mockcreateTicket = vi.spyOn(createTicket, "default");
-const mockUpdateManyTickets = vi.spyOn(updateManyTickets, "default");
+const mockcreateOrUpdateTicket = vi.spyOn(createOrUpdateTicket, "default");
 const mockPayloadCreate = {
 	msrZendeskUserID: 12345678,
 	msrName: "Sol",
@@ -46,7 +44,7 @@ describe("POST /zendesk/ticket", () => {
 	});
 
 	it("should create new zendesk ticket with payload", async () => {
-		mockcreateTicket.mockResolvedValue({
+		mockcreateOrUpdateTicket.mockResolvedValue({
 			ticket: {
 				id: 1234,
 			},
@@ -60,12 +58,12 @@ describe("POST /zendesk/ticket", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(200);
-		expect(mockcreateTicket).toHaveBeenCalled();
+		expect(mockcreateOrUpdateTicket).toHaveBeenCalled();
 		expect(await response.json()).toEqual({ ticketId: 1234 });
 	});
 
 	it("should update zendesk ticket with payload", async () => {
-		mockUpdateManyTickets.mockResolvedValue({
+		mockcreateOrUpdateTicket.mockResolvedValue({
 			ticket: {
 				id: 5678,
 			},
@@ -78,7 +76,7 @@ describe("POST /zendesk/ticket", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(200);
-		expect(mockUpdateManyTickets).toHaveBeenCalled();
+		expect(mockcreateOrUpdateTicket).toHaveBeenCalled();
 		expect(await response.json()).toEqual({ ticketId: 5678 });
 	});
 });

@@ -51,8 +51,6 @@ export async function POST(request: Request) {
 				//address?
 				cor: getColor(payload.color),
 				whatsapp: payload.phone,
-				latitude: payload.latitude,
-				longitude: payload.longitude,
 			},
 		};
 

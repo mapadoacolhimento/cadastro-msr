@@ -5,6 +5,32 @@ import * as updateManyTickets from "../../lib/zendesk/updateManyTickets";
 
 const mockcreateTicket = vi.spyOn(createTicket, "default");
 const mockUpdateManyTickets = vi.spyOn(updateManyTickets, "default");
+const mockPayloadCreate = {
+	msrZendeskUserID: 12345678,
+	msrName: "Sol",
+	phone: "19999999999",
+	city: "CAMPINAS",
+	state: "SP",
+	neighborhood: "Vila Santa Isabel",
+	subject: "[Jurídico] Sol, São Paulo - SP",
+	status: "new",
+	statusAcolhimento: "solicitação_recebida",
+	supportType: "legal",
+	comment: {
+		body: "Gerado pelo cadastro",
+		public: false,
+	},
+};
+const mockPayloadUpdate = {
+	ticketId: 5678,
+	status: "open",
+	statusAcolhimento: "solicitação_repitida",
+	supportType: "legal",
+	comment: {
+		body: "MSR tentou fazer pedido de acolhimento novamente",
+		public: false,
+	},
+};
 
 describe("POST /zendesk/ticket", () => {
 	it("returns error when dont have a valid payload", async () => {
@@ -25,26 +51,11 @@ describe("POST /zendesk/ticket", () => {
 				id: 1234,
 			},
 		});
-		const payload = {
-			msrZendeskUserID: 12345678,
-			msrName: "Sol",
-			phone: "19999999999",
-			city: "CAMPINAS",
-			state: "SP",
-			neighborhood: "Vila Santa Isabel",
-			subject: "[Jurídico] Sol, São Paulo - SP",
-			status: "new",
-			statusAcolhimento: "solicitação_recebida",
-			supportType: "legal",
-			comment: {
-				body: "Gerado pelo cadastro",
-				public: false,
-			},
-		};
+
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",
-				body: JSON.stringify(payload),
+				body: JSON.stringify(mockPayloadCreate),
 			})
 		);
 		const response = await POST(request);
@@ -59,20 +70,10 @@ describe("POST /zendesk/ticket", () => {
 				id: 5678,
 			},
 		});
-		const payload = {
-			ticketId: 5678,
-			status: "open",
-			statusAcolhimento: "solicitação_repitida",
-			supportType: "legal",
-			comment: {
-				body: "MSR tentou fazer pedido de acolhimento novamente",
-				public: false,
-			},
-		};
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",
-				body: JSON.stringify(payload),
+				body: JSON.stringify(mockPayloadUpdate),
 			})
 		);
 		const response = await POST(request);

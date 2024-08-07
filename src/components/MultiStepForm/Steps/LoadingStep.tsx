@@ -47,6 +47,19 @@ export default function LoadingStep() {
 					alt: "Ilustração de uma mulher com cabelo castanho escuro e blusa roxa com um coração branco do mapa do acolhimento",
 				}}
 			/>
+			<Flex
+				position={"absolute"}
+				right={"0"}
+				bottom={"0"}
+				display={{ initial: "flex", md: "none" }}
+			>
+				<Image
+					src="/illustrations/woman.svg"
+					width={200}
+					height={200}
+					alt="Ilustração de uma mulher com cabelo castanho escuro e blusa roxa com um coração branco do mapa do acolhimento"
+				/>
+			</Flex>
 		</Flex>
 	);
 }

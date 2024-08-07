@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from "@radix-ui/themes";
 import DesktopIllustration from "../../components/DesktopIllustration";
 import InfoBox from "../../components/InfoBox";
+import Image from "next/image";
 
 export default function Page() {
 	return (
@@ -53,6 +54,19 @@ export default function Page() {
 					alt: "Ilustração de uma mulher com cabelo roxo se abraçando",
 				}}
 			/>
+			<Flex
+				position={"absolute"}
+				right={"0"}
+				bottom={"0"}
+				display={{ initial: "flex", md: "none" }}
+			>
+				<Image
+					src="/illustrations/woman-self-hug.svg"
+					width={200}
+					height={200}
+					alt="Ilustração de uma mulher com cabelo roxo se abraçando"
+				/>
+			</Flex>
 		</Flex>
 	);
 }

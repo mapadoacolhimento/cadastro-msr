@@ -13,7 +13,7 @@ const payloadSchema = Yup.object({
 	supportType: Yup.string().oneOf(Object.values(SupportType)),
 	tag: Yup.array().of(Yup.string()),
 	comment: Yup.object(),
-	msrZendeskUserID: Yup.number(),
+	msrZendeskUserId: Yup.number(),
 	msrName: Yup.string(),
 }).required();
 
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 
 		const ticket: any = {
 			id: payload.ticketId,
-			requester_id: payload.msrZendeskUserID,
+			requester_id: payload.msrZendeskUserId,
 			subject: payload.subject,
 			organization_id: 360273031591,
 			status: payload.status,

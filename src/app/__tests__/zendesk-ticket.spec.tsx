@@ -4,7 +4,7 @@ import * as createOrUpdateTicket from "../../lib/zendesk/createOrUpdateTicket";
 
 const mockcreateOrUpdateTicket = vi.spyOn(createOrUpdateTicket, "default");
 const mockPayloadCreate = {
-	msrZendeskUserID: 12345678,
+	msrZendeskUserId: 12345678,
 	msrName: "Sol",
 	subject: "[Jurídico] Sol, São Paulo - SP",
 	status: "new",
@@ -26,6 +26,28 @@ const mockPayloadUpdate = {
 	},
 };
 
+const mockCreateTicket = {
+	requester_id: mockPayloadCreate.msrZendeskUserId,
+	subject: mockPayloadCreate.subject,
+	organization_id: 360273031591,
+	status: mockPayloadCreate.status,
+	comment: mockPayloadCreate.comment,
+	custom_fields: [
+		{ id: 360016681971, value: mockPayloadCreate.msrName },
+		{ id: 360014379412, value: mockPayloadCreate.statusAcolhimento },
+	],
+};
+
+const mockUpdateTicket = {
+	id: mockPayloadUpdate.ticketId,
+	organization_id: 360273031591,
+	status: mockPayloadUpdate.status,
+	comment: mockPayloadUpdate.comment,
+	custom_fields: [
+		{ id: 360014379412, value: mockPayloadUpdate.statusAcolhimento },
+	],
+};
+
 describe("POST /zendesk/ticket", () => {
 	it("returns error when dont have a valid payload", async () => {
 		const request = new NextRequest(
@@ -40,7 +62,7 @@ describe("POST /zendesk/ticket", () => {
 	});
 
 	it("should create new zendesk ticket with payload", async () => {
-		mockcreateOrUpdateTicket.mockResolvedValue({
+		mockcreateOrUpdateTicket.mockResolvedValueOnce({
 			ticket: {
 				id: 1234,
 			},
@@ -54,12 +76,12 @@ describe("POST /zendesk/ticket", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(200);
-		expect(mockcreateOrUpdateTicket).toHaveBeenCalled();
+		expect(mockcreateOrUpdateTicket).toHaveBeenCalledWith(mockCreateTicket);
 		expect(await response.json()).toEqual({ ticketId: 1234 });
 	});
 
 	it("should update zendesk ticket with payload", async () => {
-		mockcreateOrUpdateTicket.mockResolvedValue({
+		mockcreateOrUpdateTicket.mockResolvedValueOnce({
 			ticket: {
 				id: 5678,
 			},
@@ -72,7 +94,7 @@ describe("POST /zendesk/ticket", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(200);
-		expect(mockcreateOrUpdateTicket).toHaveBeenCalled();
+		expect(mockcreateOrUpdateTicket).toHaveBeenCalledWith(mockUpdateTicket);
 		expect(await response.json()).toEqual({ ticketId: 5678 });
 	});
 });

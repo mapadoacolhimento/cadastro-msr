@@ -7,7 +7,6 @@ import {
 import { Race } from "@prisma/client";
 
 const payloadSchema = Yup.object({
-	id: Yup.number(),
 	email: Yup.string().email().required(),
 	phone: Yup.string().min(10).required(),
 	firstName: Yup.string().required(),
@@ -36,7 +35,6 @@ export async function POST(request: Request) {
 		await payloadSchema.validate(payload);
 
 		const user = {
-			...payload.id,
 			name: payload.firstName,
 			role: "end-user",
 			organization_id: 360273031591 as unknown as bigint,
@@ -53,7 +51,7 @@ export async function POST(request: Request) {
 				date_of_birth: payload.dateOfBirth,
 			},
 		};
-		console.log(user);
+
 		const res = await createOrUpdateUser(user);
 
 		let msrZendeskUserId;

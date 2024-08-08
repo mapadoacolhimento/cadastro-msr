@@ -14,4 +14,10 @@ export interface Values {
 	externalSupport: string;
 	financialNeed: string;
 	terms: boolean;
+	zipcode: string;
+	neighborhood: string;
+	city: string;
+	state: string;
+	lat: number;
+	lng: number;
 }

@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 import { createOrUpdateTicket, getErrorMessage } from "../../../lib";
 import { SupportType } from "@prisma/client";
-import { Ticket } from "../../../lib";
 import { ZENDESK_CUSTOM_FIELDS_DICIO } from "../../../lib";
 
 const payloadSchema = Yup.object({

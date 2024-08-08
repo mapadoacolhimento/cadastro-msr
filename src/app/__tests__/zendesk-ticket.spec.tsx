@@ -18,7 +18,6 @@ const mockPayloadCreate = {
 const mockPayloadUpdate = {
 	ticketId: 5678,
 	status: "open",
-	statusAcolhimento: "solicitação_repitida",
 	supportType: "legal",
 	comment: {
 		body: "MSR tentou fazer pedido de acolhimento novamente",
@@ -43,13 +42,10 @@ const mockUpdateTicket = {
 	organization_id: 360273031591,
 	status: mockPayloadUpdate.status,
 	comment: mockPayloadUpdate.comment,
-	custom_fields: [
-		{ id: 360014379412, value: mockPayloadUpdate.statusAcolhimento },
-	],
 };
 
 describe("POST /zendesk/ticket", () => {
-	it("returns error when dont have a valid payload", async () => {
+	it("returns error when dont have a empty payload", async () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",
@@ -59,6 +55,22 @@ describe("POST /zendesk/ticket", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(500);
 		expect(await response.text()).toEqual("Error: Body is empty");
+	});
+
+	it("returns error when dont have a valid payload", async () => {
+		const request = new NextRequest(
+			new Request("http://localhost:3000/zendesk/ticket", {
+				method: "POST",
+				body: JSON.stringify({
+					ticketId: null,
+				}),
+			})
+		);
+		const response = await POST(request);
+		expect(response.status).toEqual(400);
+		expect(await response.text()).toEqual(
+			"Validation error: ticketId cannot be null"
+		);
 	});
 
 	it("should create new zendesk ticket with payload", async () => {

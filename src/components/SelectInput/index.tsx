@@ -11,6 +11,7 @@ interface SelectInputProps {
 	label: string;
 	options: Option[];
 	placeholder?: string;
+	onChange?: (optionValue: string) => Promise<void>;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -18,6 +19,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 	label,
 	options,
 	placeholder,
+	onChange,
 }) => {
 	const [field, meta, helpers] = useField(name);
 	const [isFocused, setIsFocused] = useState(false);
@@ -34,6 +36,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
 	const handleValueChange = (option: SingleValue<Option>) => {
 		helpers.setValue(option?.value);
+		onChange && onChange(option?.value || "");
 		setIsFocused(true);
 	};
 

@@ -31,6 +31,10 @@ const CITY_OPTIONS = [
 ];
 
 export default function Geolocation() {
+	async function handleStateChange(optionValue: string) {
+		console.log("State changed to", optionValue);
+	}
+
 	return (
 		<Step
 			onSubmit={() =>
@@ -48,7 +52,7 @@ export default function Geolocation() {
 					mask="99999-999"
 					name="zipcode"
 					label="CEP"
-					placeholder="Informe seu CEP"
+					placeholder="Insira seu CEP"
 				/>
 			</Box>
 			<TextInput
@@ -57,16 +61,17 @@ export default function Geolocation() {
 				placeholder="Insira seu bairro"
 			/>
 			<SelectInput
-				name="city"
-				label="Cidade"
-				options={CITY_OPTIONS}
-				placeholder="Selecione sua cidade"
-			/>
-			<SelectInput
 				name="state"
 				label="Estado"
 				options={BRAZILIAN_STATES_OPTIONS}
 				placeholder="Selecione seu estado"
+				onChange={handleStateChange}
+			/>
+			<SelectInput
+				name="city"
+				label="Cidade"
+				options={CITY_OPTIONS}
+				placeholder="Selecione sua cidade"
 			/>
 		</Step>
 	);

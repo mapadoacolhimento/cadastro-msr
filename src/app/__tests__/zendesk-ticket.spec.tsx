@@ -10,6 +10,7 @@ const mockPayloadCreate = {
 	status: "new",
 	statusAcolhimento: "solicitação_recebida",
 	supportType: "legal",
+	description: "-",
 	comment: {
 		body: "Gerado pelo cadastro",
 		public: false,
@@ -45,31 +46,47 @@ const mockUpdateTicket = {
 };
 
 describe("POST /zendesk/ticket", () => {
-	it("returns error when dont have a empty payload", async () => {
+	it("returns error when dont have a valid payload", async () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",
-				body: JSON.stringify(""),
+				body: JSON.stringify({}),
 			})
 		);
 		const response = await POST(request);
-		expect(response.status).toEqual(500);
-		expect(await response.text()).toEqual("Error: Body is empty");
+		expect(response.status).toEqual(400);
+		expect(await response.text()).toEqual(
+			"Validation error: statusAcolhimento is a required field"
+		);
+	});
+
+	it("returns error when dont have any field to update", async () => {
+		const request = new NextRequest(
+			new Request("http://localhost:3000/zendesk/ticket", {
+				method: "POST",
+				body: JSON.stringify({
+					ticketId: 1234,
+				}),
+			})
+		);
+		const response = await POST(request);
+		//expect(response.status).toEqual(400);
+		expect(await response.text()).toEqual(
+			"Validation error: Must have at least one field to update"
+		);
 	});
 
 	it("returns error when dont have a valid payload", async () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",
-				body: JSON.stringify({
-					ticketId: null,
-				}),
+				body: JSON.stringify({}),
 			})
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: ticketId cannot be null"
+			"Validation error: statusAcolhimento is a required field"
 		);
 	});
 

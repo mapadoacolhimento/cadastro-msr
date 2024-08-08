@@ -3,8 +3,20 @@ import { createOrUpdateTicket, getErrorMessage } from "../../../lib";
 import { SupportType } from "@prisma/client";
 import { ZENDESK_CUSTOM_FIELDS_DICIO } from "../../../lib";
 
-const payloadSchema = Yup.object({
-	ticketId: Yup.number(),
+const payloadSchemaCreate = Yup.object({
+	msrZendeskUserId: Yup.number().required(),
+	subject: Yup.string().required(),
+	description: Yup.string().required(),
+	status: Yup.string().required(),
+	statusAcolhimento: Yup.string().required(),
+	supportType: Yup.string().oneOf(Object.values(SupportType)),
+	tag: Yup.array().of(Yup.string()),
+	comment: Yup.object(),
+	msrName: Yup.string(),
+}).required();
+
+const payloadSchemaUpdate = Yup.object({
+	ticketId: Yup.number().required(),
 	subject: Yup.string(),
 	description: Yup.string(),
 	status: Yup.string(),
@@ -14,7 +26,18 @@ const payloadSchema = Yup.object({
 	comment: Yup.object(),
 	msrZendeskUserId: Yup.number(),
 	msrName: Yup.string(),
-}).required();
+}).test(
+	"atLeastOneField",
+	"Must have at least one field to update",
+	function (obj) {
+		for (const [key, value] of Object.entries(obj)) {
+			if (key != "ticketId" && value) {
+				return true;
+			}
+		}
+		return false;
+	}
+);
 
 function getCustomFieldsTicket(payload: any) {
 	let custom_fields: any = [];
@@ -42,11 +65,8 @@ export async function POST(request: Request) {
 	try {
 		const payload = await request.json();
 
-		if (!payload) {
-			throw new Error("Error: Body is empty");
-		}
-
-		await payloadSchema.validate(payload);
+		if (payload.ticketId) await payloadSchemaUpdate.validate(payload);
+		else await payloadSchemaCreate.validate(payload);
 
 		const ticket: any = {
 			id: payload.ticketId,

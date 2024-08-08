@@ -1,8 +1,9 @@
 import * as Yup from "yup";
 import Step from "../Step";
-import { externalSupportOptions, Values } from "../../../lib";
+import { externalSupportOptions } from "../../../lib";
 import RadioInput from "../../RadioInput";
 import { Strong } from "@radix-ui/themes";
+import type { Values } from "..";
 
 const externalSupportSchema = Yup.object({
 	externalSupport: Yup.string()

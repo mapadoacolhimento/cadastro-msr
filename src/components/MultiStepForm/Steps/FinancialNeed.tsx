@@ -4,7 +4,8 @@ import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
 import CheckboxInfo from "../../CheckboxInfo";
-import { financialNeedOptions, Values } from "../../../lib";
+import { financialNeedOptions } from "../../../lib";
+import type { Values } from "..";
 
 const financialNeedSchema = Yup.object({
 	financialNeed: Yup.string()

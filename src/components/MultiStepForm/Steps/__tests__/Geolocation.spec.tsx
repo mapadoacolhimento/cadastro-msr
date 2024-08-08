@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 
 import Geolocation from "../Geolocation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { Values } from "@/lib";
+import type { Values } from "../..";
 
 const setup = (props?: any) => {
 	return render(

@@ -13,6 +13,7 @@ const mockPayload = {
 	color: "black",
 	zipcode: "40210245",
 	dateOfBirth: new Date("1990-03-14"),
+	supportTypes: ["legal"],
 };
 
 describe("POST /zendesk/user", () => {
@@ -26,7 +27,7 @@ describe("POST /zendesk/user", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: dateOfBirth is a required field"
+			"Validation error: supportTypes is a required field"
 		);
 	});
 

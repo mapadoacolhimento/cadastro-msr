@@ -32,6 +32,7 @@ export type User = {
 		cor: string;
 		whatsapp: string;
 		date_of_birth: string;
+		tipo_de_acolhimento: string;
 	};
 };
 

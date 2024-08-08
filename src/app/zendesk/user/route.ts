@@ -4,7 +4,7 @@ import {
 	createOrUpdateUser,
 	getErrorMessage,
 } from "../../../lib";
-import { Race } from "@prisma/client";
+import { Race, SupportType } from "@prisma/client";
 
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
@@ -16,6 +16,9 @@ const payloadSchema = Yup.object({
 	color: Yup.string().oneOf(Object.values(Race)).required(),
 	zipcode: Yup.string().min(8).max(9).required(),
 	dateOfBirth: Yup.date().required().nullable(),
+	supportTypes: Yup.array()
+		.of(Yup.string().oneOf(Object.values(SupportType)).required())
+		.required(),
 }).required();
 
 function getColor(color: string) {
@@ -26,6 +29,16 @@ function getColor(color: string) {
 		}
 	});
 	return result;
+}
+
+function getSupportType(supportTypes: string[]) {
+	if (supportTypes.length === 2) {
+		return "psicológico_e_jurídico";
+	}
+	if (supportTypes[0] === "legal") {
+		return "jurídico";
+	}
+	return "psicológico";
 }
 
 export async function POST(request: Request) {
@@ -49,6 +62,7 @@ export async function POST(request: Request) {
 				cor: getColor(payload.color),
 				whatsapp: payload.phone,
 				date_of_birth: payload.dateOfBirth,
+				tipo_de_acolhimento: getSupportType(payload.supportTypes),
 			},
 		};
 

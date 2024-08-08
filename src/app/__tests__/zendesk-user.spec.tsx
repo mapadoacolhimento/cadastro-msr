@@ -16,6 +16,20 @@ const mockPayload = {
 	supportTypes: ["legal"],
 };
 
+const mockPayloadUpdate = {
+	email: "sol@email.com",
+	phone: "19999999999",
+	firstName: "Sol",
+	city: "CAMPINAS",
+	state: "SP",
+	neighborhood: "Vila Santal Isabel",
+	description: "-",
+	color: "white",
+	zipcode: "13084609",
+	dateOfBirth: new Date("1999-04-14"),
+	supportTypes: ["legal", "psychological"],
+};
+
 const mockUser = {
 	name: mockPayload.firstName,
 	role: "end-user",
@@ -32,6 +46,25 @@ const mockUser = {
 		whatsapp: mockPayload.phone,
 		date_of_birth: mockPayload.dateOfBirth.toISOString(),
 		tipo_de_acolhimento: "jurídico",
+	},
+};
+
+const mockUserUpdate = {
+	name: mockPayloadUpdate.firstName,
+	role: "end-user",
+	organization_id: 360273031591 as unknown as bigint,
+	email: mockPayloadUpdate.email,
+	phone: mockPayloadUpdate.phone,
+	user_fields: {
+		condition: "inscrita",
+		state: mockPayloadUpdate.state,
+		city: mockPayloadUpdate.city,
+		cep: mockPayloadUpdate.zipcode,
+		neighborhood: mockPayloadUpdate.neighborhood,
+		cor: "branca",
+		whatsapp: mockPayloadUpdate.phone,
+		date_of_birth: mockPayloadUpdate.dateOfBirth.toISOString(),
+		tipo_de_acolhimento: "psicológico_e_jurídico",
 	},
 };
 
@@ -73,20 +106,20 @@ describe("POST /zendesk/user", () => {
 		mockcreateOrUpdateUser.mockResolvedValueOnce({
 			data: {
 				user: {
-					id: 12345666 as unknown as bigint,
+					id: 12345667 as unknown as bigint,
 				},
 			},
 		});
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/user", {
 				method: "POST",
-				body: JSON.stringify(mockPayload),
+				body: JSON.stringify(mockPayloadUpdate),
 			})
 		);
 		const response = await POST(request);
 
-		expect(mockcreateOrUpdateUser).toHaveBeenCalledWith(mockUser);
+		expect(mockcreateOrUpdateUser).toHaveBeenCalledWith(mockUserUpdate);
 		expect(response.status).toEqual(200);
-		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345666 });
+		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345667 });
 	});
 });

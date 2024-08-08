@@ -12,6 +12,7 @@ const mockPayload = {
 	neighborhood: "Federação",
 	color: "black",
 	zipcode: "40210245",
+	dateOfBirth: new Date("1990-03-14"),
 };
 
 describe("POST /zendesk/user", () => {
@@ -25,7 +26,7 @@ describe("POST /zendesk/user", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: zipcode is a required field"
+			"Validation error: dateOfBirth is a required field"
 		);
 	});
 

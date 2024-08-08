@@ -7,6 +7,7 @@ import {
 import { Race } from "@prisma/client";
 
 const payloadSchema = Yup.object({
+	id: Yup.number(),
 	email: Yup.string().email().required(),
 	phone: Yup.string().min(10).required(),
 	firstName: Yup.string().required(),
@@ -15,10 +16,7 @@ const payloadSchema = Yup.object({
 	neighborhood: Yup.string().required(),
 	color: Yup.string().oneOf(Object.values(Race)).required(),
 	zipcode: Yup.string().min(8).max(9).required(),
-	// dateOfBirth: Yup.date().required().nullable(),
-	// gender: Yup.string().oneOf(Object.values(Gender)).required(),
-	// hasDisability: Yup.boolean().required().nullable(),
-	// acceptsOnlineSupport: Yup.boolean().required(),
+	dateOfBirth: Yup.date().required().nullable(),
 }).required();
 
 function getColor(color: string) {
@@ -38,6 +36,7 @@ export async function POST(request: Request) {
 		await payloadSchema.validate(payload);
 
 		const user = {
+			...payload.id,
 			name: payload.firstName,
 			role: "end-user",
 			organization_id: 360273031591 as unknown as bigint,
@@ -48,12 +47,13 @@ export async function POST(request: Request) {
 				state: payload.state,
 				city: payload.city,
 				cep: payload.zipcode,
-				//address?
+				neighborhood: payload.neighborhood,
 				cor: getColor(payload.color),
 				whatsapp: payload.phone,
+				date_of_birth: payload.dateOfBirth,
 			},
 		};
-
+		console.log(user);
 		const res = await createOrUpdateUser(user);
 
 		let msrZendeskUserId;

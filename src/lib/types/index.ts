@@ -28,9 +28,10 @@ export type User = {
 		state: string;
 		city: string;
 		cep?: string;
-		address?: string;
+		neighborhood: string;
 		cor: string;
 		whatsapp: string;
+		date_of_birth: string;
 	};
 };
 
@@ -49,14 +50,4 @@ export type Ticket = {
 		public: boolean;
 	};
 	custom_fields?: Array<{ id: number; value: string | number }>;
-};
-
-export type TicketUpdate = {
-	ticket: Ticket;
-};
-
-export type TicketsUpdate = {
-	tickets: {
-		id: number;
-	}[];
 };

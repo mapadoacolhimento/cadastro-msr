@@ -6,10 +6,6 @@ const mockcreateOrUpdateTicket = vi.spyOn(createOrUpdateTicket, "default");
 const mockPayloadCreate = {
 	msrZendeskUserID: 12345678,
 	msrName: "Sol",
-	phone: "19999999999",
-	city: "CAMPINAS",
-	state: "SP",
-	neighborhood: "Vila Santa Isabel",
 	subject: "[Jurídico] Sol, São Paulo - SP",
 	status: "new",
 	statusAcolhimento: "solicitação_recebida",

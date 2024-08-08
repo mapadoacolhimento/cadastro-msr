@@ -15,10 +15,6 @@ const payloadSchema = Yup.object({
 	comment: Yup.object(),
 	msrZendeskUserID: Yup.number(),
 	msrName: Yup.string(),
-	phone: Yup.string().min(10),
-	city: Yup.string(),
-	state: Yup.string().length(2),
-	neighborhood: Yup.string(),
 }).required();
 
 function getCustomFieldsTicket(payload: any) {
@@ -30,24 +26,7 @@ function getCustomFieldsTicket(payload: any) {
 			value: payload.msrName,
 		});
 	}
-	if (payload.phone) {
-		custom_fields.push({
-			id: ZENDESK_CUSTOM_FIELDS_DICIO["telefone"],
-			value: payload.phone,
-		});
-	}
-	if (payload.city) {
-		custom_fields.push({
-			id: ZENDESK_CUSTOM_FIELDS_DICIO["cidade"],
-			value: payload.city,
-		});
-	}
-	if (payload.state) {
-		custom_fields.push({
-			id: ZENDESK_CUSTOM_FIELDS_DICIO["estado"],
-			value: payload.state,
-		});
-	}
+
 	if (payload.statusAcolhimento) {
 		custom_fields.push({
 			id: ZENDESK_CUSTOM_FIELDS_DICIO["status_acolhimento"],
@@ -70,7 +49,7 @@ export async function POST(request: Request) {
 
 		await payloadSchema.validate(payload);
 
-		const ticket: Ticket = {
+		const ticket: any = {
 			id: payload.ticketId,
 			requester_id: payload.msrZendeskUserID,
 			subject: payload.subject,
@@ -80,6 +59,10 @@ export async function POST(request: Request) {
 			comment: payload.comment,
 			custom_fields: getCustomFieldsTicket(payload),
 		};
+
+		Object.keys(ticket).forEach(
+			(key: string) => ticket[key] === undefined && delete ticket[key]
+		);
 
 		const response = await createOrUpdateTicket(ticket);
 

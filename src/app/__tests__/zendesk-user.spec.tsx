@@ -16,6 +16,25 @@ const mockPayload = {
 	supportTypes: ["legal"],
 };
 
+const mockUser = {
+	name: mockPayload.firstName,
+	role: "end-user",
+	organization_id: 360273031591 as unknown as bigint,
+	email: mockPayload.email,
+	phone: mockPayload.phone,
+	user_fields: {
+		condition: "inscrita",
+		state: mockPayload.state,
+		city: mockPayload.city,
+		cep: mockPayload.zipcode,
+		neighborhood: mockPayload.neighborhood,
+		cor: "preta",
+		whatsapp: mockPayload.phone,
+		date_of_birth: mockPayload.dateOfBirth.toISOString(),
+		tipo_de_acolhimento: "jurídico",
+	},
+};
+
 describe("POST /zendesk/user", () => {
 	it("returns error when dont have a valid payload", async () => {
 		const request = new NextRequest(
@@ -32,7 +51,7 @@ describe("POST /zendesk/user", () => {
 	});
 
 	it("should create new zendesk user with payload", async () => {
-		mockcreateOrUpdateUser.mockResolvedValue({
+		mockcreateOrUpdateUser.mockResolvedValueOnce({
 			user: {
 				id: 12345666 as unknown as bigint,
 			},
@@ -45,13 +64,13 @@ describe("POST /zendesk/user", () => {
 		);
 		const response = await POST(request);
 
-		expect(mockcreateOrUpdateUser).toHaveBeenCalled();
+		expect(mockcreateOrUpdateUser).toHaveBeenCalledWith(mockUser);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345666 });
 	});
 
 	it("should update zendesk user with payload", async () => {
-		mockcreateOrUpdateUser.mockResolvedValue({
+		mockcreateOrUpdateUser.mockResolvedValueOnce({
 			data: {
 				user: {
 					id: 12345666 as unknown as bigint,
@@ -66,7 +85,7 @@ describe("POST /zendesk/user", () => {
 		);
 		const response = await POST(request);
 
-		expect(mockcreateOrUpdateUser).toHaveBeenCalled();
+		expect(mockcreateOrUpdateUser).toHaveBeenCalledWith(mockUser);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345666 });
 	});

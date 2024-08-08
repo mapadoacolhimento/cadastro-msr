@@ -1,5 +1,6 @@
+import { useState } from "react";
 import * as Yup from "yup";
-import { Box } from "@radix-ui/themes";
+import { Box, Text } from "@radix-ui/themes";
 
 import Step from "../Step";
 import TextInput from "../../TextInput";
@@ -23,16 +24,38 @@ const geolocationSchema = Yup.object({
 		.length(8, "CEP inválido"),
 });
 
-const CITY_OPTIONS = [
-	{
-		value: "SAO PAULO",
-		label: "SÃO PAULO",
-	},
-];
+type Status = "error" | "idle" | "loading";
 
 export default function Geolocation() {
-	async function handleStateChange(optionValue: string) {
-		console.log("State changed to", optionValue);
+	const [cityOptions, setCityOptions] = useState([
+		{
+			value: "",
+			label: "Selecione sua cidade",
+		},
+	]);
+	const [status, setStatus] = useState<Status | null>(null);
+	const [error, setError] = useState<string | null>(null);
+
+	async function handleStateChange(state: string) {
+		try {
+			setStatus("loading");
+			const response = await fetch(`/cities?state=${state}`, {
+				method: "GET",
+			});
+
+			if (!response.ok) {
+				throw new Error(response.statusText);
+			}
+
+			const cities = await response.json();
+			setCityOptions((prevCities) => [...prevCities, ...cities]);
+			setStatus("idle");
+		} catch (e: unknown) {
+			const error = e as Error;
+			console.error("Error fetching cities", error.message);
+			setError("Erro ao buscar cidades");
+			setStatus("error");
+		}
 	}
 
 	return (
@@ -70,9 +93,15 @@ export default function Geolocation() {
 			<SelectInput
 				name="city"
 				label="Cidade"
-				options={CITY_OPTIONS}
+				options={cityOptions}
 				placeholder="Selecione sua cidade"
+				isLoading={status === "loading"}
 			/>
+			{error && status === "error" ? (
+				<Text color={"red"} size={"2"}>
+					{error}
+				</Text>
+			) : null}
 		</Step>
 	);
 }

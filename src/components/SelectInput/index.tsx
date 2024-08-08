@@ -12,6 +12,7 @@ interface SelectInputProps {
 	options: Option[];
 	placeholder?: string;
 	onChange?: (optionValue: string) => Promise<void>;
+	isLoading?: boolean;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -20,6 +21,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 	options,
 	placeholder,
 	onChange,
+	isLoading,
 }) => {
 	const [field, meta, helpers] = useField(name);
 	const [isFocused, setIsFocused] = useState(false);
@@ -63,6 +65,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 				placeholder={placeholder}
 				aria-invalid={!!hasError}
 				aria-labelledby={`select-label-${field.name}`}
+				isLoading={isLoading}
 			/>
 			<ErrorMessage name={name} />
 		</div>

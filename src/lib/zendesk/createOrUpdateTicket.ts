@@ -8,9 +8,13 @@ import { Ticket } from "../types";
 
 export default async function createOrUpdateTicket(ticket: Ticket) {
 	try {
-		const endpoint =
-			ZENDESK_SUBDOMAIN + "/api/v2/tickets/" + ticket.id?.toString();
-		const method = ticket.id ? "PUT" : "POST";
+		let endpoint = ZENDESK_SUBDOMAIN + "/api/v2/tickets/";
+		let method = "POST";
+
+		if (ticket.id) {
+			endpoint = endpoint + ticket.id;
+			method = "PUT";
+		}
 
 		const response = await fetch(endpoint, {
 			body: JSON.stringify({ ticket }),

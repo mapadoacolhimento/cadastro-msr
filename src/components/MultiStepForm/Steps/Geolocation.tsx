@@ -24,21 +24,39 @@ const geolocationSchema = Yup.object({
 		.length(8, "CEP inválido"),
 });
 
-type Status = "error" | "idle" | "loading";
+enum Status {
+	error,
+	idle,
+	loading,
+}
 
-export default function Geolocation() {
-	const [cityOptions, setCityOptions] = useState([
-		{
-			value: "",
-			label: "Selecione sua cidade",
-		},
-	]);
-	const [status, setStatus] = useState<Status | null>(null);
+type CityOption = {
+	value: string;
+	label: string;
+};
+
+const defaultCityOptions: CityOption[] = [
+	{
+		value: "",
+		label: "Selecione sua cidade",
+	},
+];
+
+function GeolocationFields() {
+	const [cityOptions, setCityOptions] =
+		useState<CityOption[]>(defaultCityOptions);
+	const [status, setStatus] = useState<Status | null>(Status.idle);
 	const [error, setError] = useState<string | null>(null);
 
 	async function handleStateChange(state: string) {
 		try {
-			setStatus("loading");
+			setStatus(Status.loading);
+			setCityOptions([
+				{
+					value: "",
+					label: "Carregando cidades...",
+				},
+			]);
 			const response = await fetch(`/cities?state=${state}`, {
 				method: "GET",
 			});
@@ -48,28 +66,17 @@ export default function Geolocation() {
 			}
 
 			const cities = await response.json();
-			setCityOptions((prevCities) => [...prevCities, ...cities]);
-			setStatus("idle");
-		} catch (e: unknown) {
-			const error = e as Error;
-			console.error("Error fetching cities", error.message);
+			setCityOptions([...defaultCityOptions, ...cities]);
+			setStatus(Status.idle);
+		} catch (e) {
+			setCityOptions(defaultCityOptions);
 			setError("Erro ao buscar cidades");
-			setStatus("error");
+			setStatus(Status.error);
 		}
 	}
 
 	return (
-		<Step
-			onSubmit={() =>
-				sleep(1).then(() => console.log("Step geolocation onSubmit"))
-			}
-			validationSchema={geolocationSchema}
-			title={"Seu endereço"}
-			img={{
-				src: "/illustrations/woman-floating.svg",
-				alt: "Ilustração com uma mulher flutuando.",
-			}}
-		>
+		<>
 			<Box pt={{ initial: "7", sm: "8" }} width={"100%"} maxWidth={"22rem"}>
 				<TextInput
 					mask="99999-999"
@@ -94,14 +101,38 @@ export default function Geolocation() {
 				name="city"
 				label="Cidade"
 				options={cityOptions}
-				placeholder="Selecione sua cidade"
-				isLoading={status === "loading"}
+				placeholder={"Selecione sua cidade"}
+				isLoading={status === Status.loading}
 			/>
-			{error && status === "error" ? (
-				<Text color={"red"} size={"2"}>
+			{error && status === Status.error ? (
+				<Text
+					color={"red"}
+					size={"2"}
+					role={"alert"}
+					as={"p"}
+					style={{ paddingTop: "var(--space-1)", backgroundColor: "white" }}
+				>
 					{error}
 				</Text>
 			) : null}
+		</>
+	);
+}
+
+export default function Geolocation() {
+	return (
+		<Step
+			onSubmit={() =>
+				sleep(1).then(() => console.log("Step geolocation onSubmit"))
+			}
+			validationSchema={geolocationSchema}
+			title={"Seu endereço"}
+			img={{
+				src: "/illustrations/woman-floating.svg",
+				alt: "Ilustração com uma mulher flutuando.",
+			}}
+		>
+			<GeolocationFields />
 		</Step>
 	);
 }

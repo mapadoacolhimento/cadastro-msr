@@ -31,7 +31,7 @@ export default function MultiStepFormWrapper({
 	const router = useRouter();
 
 	const step = childrenSteps[stepIndex] as ReactElement<StepChildrenProps>;
-	const totalSteps = childrenSteps.length;
+	const totalSteps = Children.count(children);
 	const isLastStep = stepIndex === totalSteps - 1;
 	const stepNumber = Math.min(stepIndex + 1, totalSteps);
 	const progress = (100 * stepNumber) / totalSteps;

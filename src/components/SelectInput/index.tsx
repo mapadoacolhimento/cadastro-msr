@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useField } from "formik";
-import "./SelectInput.css";
 import Select, { SingleValue } from "react-select";
 import ErrorMessage from "../ErrorMessage";
+import "./SelectInput.css";
 
 type Option = { value: string; label: string };
 
@@ -52,6 +52,8 @@ const SelectInput: React.FC<SelectInputProps> = ({
 				{label}
 			</label>
 			<Select
+				aria-live={"polite"}
+				aria-busy={isLoading}
 				classNamePrefix="custom-select"
 				options={options}
 				name={field.name}

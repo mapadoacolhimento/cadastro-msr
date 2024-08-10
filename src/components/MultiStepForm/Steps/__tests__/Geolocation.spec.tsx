@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 
 import Geolocation from "../Geolocation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
+import createFetchResponse from "../../../../lib/__mocks__/fetch";
 import type { Values } from "../..";
 
 const setup = (props?: any) => {
@@ -26,7 +27,22 @@ const setup = (props?: any) => {
 	);
 };
 
+const cityResponse = [
+	{
+		value: "SAO PAULO",
+		label: "SÃO PAULO",
+	},
+];
+
 describe("Geolocation", () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
+	beforeEach(() => {
+		fetch.mockResolvedValueOnce(createFetchResponse(cityResponse));
+	});
+
 	it("should render geolocation fields", () => {
 		setup();
 		expect(screen.getByRole("textbox", { name: "CEP" })).toBeInTheDocument();
@@ -123,13 +139,17 @@ describe("Geolocation", () => {
 
 		// state
 		await userEvent.click(screen.getByRole("combobox", { name: "Estado" }));
-		await userEvent.click(await screen.findByText("São Paulo"));
+		await userEvent.click(
+			await screen.findByRole("option", { name: "São Paulo" })
+		);
 
 		// city
 		await userEvent.click(screen.getByRole("combobox", { name: "Cidade" }));
-		await userEvent.click(await screen.findByText("SÃO PAULO"));
+		await userEvent.click(
+			await screen.findByRole("option", { name: "SÃO PAULO" })
+		);
 
-		// submit
+		// submit;
 		await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
 
 		expect(screen.queryByRole("alert")).not.toBeInTheDocument();

@@ -55,68 +55,97 @@ describe("Geolocation", () => {
 		).toBeInTheDocument();
 	});
 
-	it("should show an error message if city is not selected", async () => {
-		setup();
+	describe("Field validation errors", () => {
+		it("should show an error message if city is not selected", async () => {
+			setup();
 
-		await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
+			await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
 
-		const errors = await screen.findAllByRole("alert");
+			const errors = await screen.findAllByRole("alert");
 
-		expect(
-			errors.find((error) => error.textContent === "Insira sua cidade")
-		).toBeDefined();
+			expect(
+				errors.find((error) => error.textContent === "Insira sua cidade")
+			).toBeDefined();
+		});
+
+		it("should show an error message if state is not selected", async () => {
+			setup();
+
+			await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
+
+			const errors = await screen.findAllByRole("alert");
+
+			expect(
+				errors.find((error) => error.textContent === "Insira seu estado")
+			).toBeDefined();
+		});
+
+		it("should show an error message if neighborhood is not filled", async () => {
+			setup();
+
+			await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
+
+			const errors = await screen.findAllByRole("alert");
+
+			expect(
+				errors.find((error) => error.textContent === "Insira seu bairro")
+			).toBeDefined();
+		});
+
+		it("should show an error message if zipcode is not filled", async () => {
+			setup();
+
+			await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
+
+			const errors = await screen.findAllByRole("alert");
+
+			expect(
+				errors.find((error) => error.textContent === "Insira seu CEP")
+			).toBeDefined();
+		});
+
+		it("should show an error message if zipcode is invalid", async () => {
+			setup();
+
+			await userEvent.type(
+				screen.getByRole("textbox", { name: "CEP" }),
+				"1234567"
+			);
+			await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
+
+			const errors = await screen.findAllByRole("alert");
+
+			expect(
+				errors.find((error) => error.textContent === "CEP inválido")
+			).toBeDefined();
+		});
 	});
 
-	it("should show an error message if state is not selected", async () => {
+	it("should call fetch with correct params", async () => {
 		setup();
 
-		await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
-
-		const errors = await screen.findAllByRole("alert");
-
-		expect(
-			errors.find((error) => error.textContent === "Insira seu estado")
-		).toBeDefined();
-	});
-
-	it("should show an error message if neighborhood is not filled", async () => {
-		setup();
-
-		await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
-
-		const errors = await screen.findAllByRole("alert");
-
-		expect(
-			errors.find((error) => error.textContent === "Insira seu bairro")
-		).toBeDefined();
-	});
-
-	it("should show an error message if zipcode is not filled", async () => {
-		setup();
-
-		await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
-
-		const errors = await screen.findAllByRole("alert");
-
-		expect(
-			errors.find((error) => error.textContent === "Insira seu CEP")
-		).toBeDefined();
-	});
-
-	it("should show an error message if zipcode is invalid", async () => {
-		setup();
-
-		await userEvent.type(
-			screen.getByRole("textbox", { name: "CEP" }),
-			"1234567"
+		await userEvent.click(screen.getByRole("combobox", { name: "Estado" }));
+		await userEvent.click(
+			await screen.findByRole("option", { name: "São Paulo" })
 		);
-		await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
 
-		const errors = await screen.findAllByRole("alert");
+		expect(fetch).toHaveBeenCalledWith("/cities?state=SP", {
+			method: "GET",
+		});
+	});
 
+	it("should show loading message when fetching cities", async () => {
+		setup();
+
+		await userEvent.click(screen.getByRole("combobox", { name: "Estado" }));
+		await userEvent.click(
+			await screen.findByRole("option", { name: "São Paulo" })
+		);
+
+		await userEvent.click(screen.getByRole("combobox", { name: "Cidade" }));
 		expect(
-			errors.find((error) => error.textContent === "CEP inválido")
-		).toBeDefined();
+			await screen.findByRole("option", { name: "Carregando cidades..." })
+		).toBeInTheDocument();
 	});
 
 	it("should validate all fields and go to next step", async () => {
@@ -154,5 +183,25 @@ describe("Geolocation", () => {
 
 		expect(screen.queryByRole("alert")).not.toBeInTheDocument();
 		expect(mockOnSubmit).toHaveBeenCalledTimes(1);
+	});
+
+	describe("Error when fetching cities", () => {
+		beforeEach(() => {
+			vi.restoreAllMocks();
+			fetch.mockRejectedValueOnce(createFetchResponse(null, false));
+		});
+
+		it("should show error message", async () => {
+			setup();
+
+			await userEvent.click(screen.getByRole("combobox", { name: "Estado" }));
+			await userEvent.click(
+				await screen.findByRole("option", { name: "São Paulo" })
+			);
+
+			expect(await screen.findByRole("alert")).toHaveTextContent(
+				"Erro ao buscar cidades"
+			);
+		});
 	});
 });

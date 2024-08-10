@@ -14,3 +14,5 @@ vi.mock("next/navigation", () => ({
 
 // Stub the global ResizeObserver
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
+
+global.fetch = vi.fn();

@@ -19,6 +19,20 @@ const isDateValid = (dateString: string) => {
 	);
 };
 
+const calculateAge = (date: string) => {
+	const [day, month, year] = date.split("/").map(Number);
+	const birthDate = new Date(year, month - 1, day);
+	let age = today.getFullYear() - birthDate.getFullYear();
+	const monthDifference = today.getMonth() - birthDate.getMonth();
+	if (
+		monthDifference < 0 ||
+		(monthDifference === 0 && today.getDate() < birthDate.getDate())
+	) {
+		age--;
+	}
+	return age;
+};
+
 const basicRegisterInformationSchema = Yup.object({
 	firstName: Yup.string().required("Esse campo é obrigatório."),
 	email: Yup.string()
@@ -63,6 +77,13 @@ export default function BasicRegisterInformation() {
 	async function handleSubmit(
 		values: Yup.InferType<typeof basicRegisterInformationSchema>
 	) {
+		const age = calculateAge(values.dateOfBirth);
+		if (age < 18) {
+			return {
+				redirectTo: "/fora-criterios",
+			};
+		}
+
 		const response = await fetch("/validate", {
 			method: "POST",
 			headers: {

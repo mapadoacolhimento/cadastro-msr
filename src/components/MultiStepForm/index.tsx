@@ -11,6 +11,7 @@ import {
 	ViolenceLocation,
 	ExternalSupport,
 	FinancialNeed,
+	Geolocation,
 } from "./Steps";
 import { sleep } from "../../lib";
 
@@ -69,6 +70,7 @@ export default function MultiStepForm() {
 			}
 		>
 			{BasicRegisterInformation()}
+			{Geolocation()}
 			{DisabilityInformation()}
 			{GenderIdentity()}
 			{AcceptsOnlineSupport()}

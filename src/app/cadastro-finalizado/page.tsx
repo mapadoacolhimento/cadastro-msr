@@ -1,6 +1,5 @@
 import { Box, Flex, Heading, Text } from "@radix-ui/themes";
-import Illustration from "../../components/Illustration";
-import InfoBox from "../../components/InfoBox";
+import { Illustration, InfoBox } from "../../components";
 
 export default function Page() {
 	return (

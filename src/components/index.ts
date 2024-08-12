@@ -11,3 +11,4 @@ export { default as HoverInfo } from "./HoverInfo";
 export { default as BaseLayout } from "./BaseLayout";
 export { default as ExtraSupport } from "./ExtraSupport";
 export { default as Contact } from "./Contact";
+export { default as InfoBox } from "./InfoBox";

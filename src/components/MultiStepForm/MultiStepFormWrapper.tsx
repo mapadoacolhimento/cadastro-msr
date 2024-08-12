@@ -11,7 +11,7 @@ import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 import StepsController from "./StepsController";
-import { DesktopIllustration } from "../";
+import { Illustration } from "../";
 import { type StepChildrenProps } from "./Step";
 import { type Values } from "./";
 
@@ -117,12 +117,11 @@ export default function MultiStepFormWrapper({
 							isButtonDisabled={isSubmitting}
 							progress={progress}
 							isLastStep={isLastStep}
-							img={step.props.img}
 						/>
 					</Form>
 				)}
 			</Formik>
-			<DesktopIllustration img={step.props.img} />
+			<Illustration img={step.props.img} />
 		</>
 	);
 }

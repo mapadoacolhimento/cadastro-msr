@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Text } from "@radix-ui/themes";
 import Contact from "../../components/Contact";
 import ExtraSupport from "../../components/ExtraSupport";
-import DesktopIllustration from "../../components/DesktopIllustration";
+import Illustration from "../../components/Illustration";
 
 export default function Page() {
 	return (
@@ -33,7 +33,8 @@ export default function Page() {
 				<ExtraSupport />
 				<Contact />
 			</Flex>
-			<DesktopIllustration
+			<Illustration
+				isForm={false}
 				img={{
 					src: "/illustrations/laptop.svg",
 					alt: "Computador branco com rosa, com a logo roxa do mapa do acolhimento na tela do monitor",

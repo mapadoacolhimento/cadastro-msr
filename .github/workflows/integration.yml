@@ -16,7 +16,61 @@ on:
 
 
 jobs:
-  integration:
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        node-version: [20.x]
+        pnpm-version: [9.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ matrix.pnpm-version }}
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: |
+          pnpm i --frozen-lockfile
+
+      - name: Run build
+        run: pnpm run build
+
+      - name: Run unit tests
+        run: pnpm run test:ci
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
@@ -82,18 +136,6 @@ jobs:
         run: |
           pnpm i --frozen-lockfile
 
-      - name: Run build
-        run: pnpm run build
-
-      - name: Run unit tests
-        run: pnpm run test:ci
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
       - name: Push current migrations to test database
         run: pnpm db:push
 
@@ -101,6 +143,7 @@ jobs:
         id: e2e
         uses: cypress-io/github-action@v6
         with:
+          build: pnpm run build
           start: pnpm run start
           wait-on: "http://localhost:3000"
           wait-on-timeout: 120

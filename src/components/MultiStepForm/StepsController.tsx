@@ -6,10 +6,6 @@ export interface StepsControllerProps {
 	isButtonDisabled: boolean;
 	progress: number;
 	isLastStep: boolean;
-	img: {
-		src: string;
-		alt: string;
-	};
 }
 
 export default function StepsController({
@@ -18,7 +14,6 @@ export default function StepsController({
 	isButtonDisabled,
 	progress,
 	isLastStep,
-	img,
 }: Readonly<StepsControllerProps>) {
 	return (
 		<Box
@@ -27,14 +22,6 @@ export default function StepsController({
 			width={"100%"}
 			style={{ background: "white" }}
 		>
-			<Box
-				position={"absolute"}
-				right={"0"}
-				bottom={"115px"}
-				display={{ initial: "block", md: "none" }}
-			>
-				<img src={img.src} height={"150px"} alt={img.alt} />
-			</Box>
 			<Progress
 				color={"yellow"}
 				size={"3"}

@@ -21,9 +21,7 @@ type MsrSearchResponse = {
 
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
-	supportTypes: Yup.array()
-		.of(Yup.string().oneOf(Object.values(SupportType)).required())
-		.required(),
+	supportType: Yup.string().oneOf(Object.values(SupportType)).required(),
 }).required();
 
 async function checkMatchEligibility(
@@ -114,14 +112,11 @@ export async function POST(request: Request) {
 		});
 
 		let matchEligibilityResponse: MsrSearchResponse = {};
-
-		for (let i = 0; payload.supportTypes.length > i; i++) {
-			const supportType = payload.supportTypes[i] as SupportType;
-			matchEligibilityResponse[supportType] = await checkMatchEligibility(
-				supportType,
-				msr?.msrId
-			);
-		}
+		const supportType: SupportType = payload.supportType;
+		matchEligibilityResponse[supportType] = await checkMatchEligibility(
+			supportType,
+			msr?.msrId
+		);
 
 		return Response.json(matchEligibilityResponse);
 	} catch (e) {

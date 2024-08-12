@@ -10,17 +10,17 @@ describe("POST /check-eligibility", () => {
 
 	const msr = {
 		email: "lua@email.com",
-		supportTypes: ["psychological"],
+		supportType: "psychological",
 	};
 
 	const msr2 = {
 		email: "sol@email.com",
-		supportTypes: ["psychological", "legal"],
+		supportType: "psychological",
 	};
 
 	const msr3 = {
 		email: "venus@email.com",
-		supportTypes: ["legal"],
+		supportType: "legal",
 	};
 
 	const mockMsrPiiSec = {
@@ -88,16 +88,14 @@ describe("POST /check-eligibility", () => {
 			},
 			where: {
 				msrId: mockMsrPiiSec.msrId,
-				supportType: msr.supportTypes[0],
+				supportType: msr.supportType,
 				status: { not: "duplicated" },
 			},
 		});
 	});
 
-	it("should return `psychological: {shouldCreateMatch: false, supportRequestId: 222}, legal: {shouldCreateMatch: true, supportRequestId: 223}` when msr exists and has one match", async () => {
+	it("should return `psychological: {shouldCreateMatch: false, legal: {shouldCreateMatch: true, supportRequestId: 223}` when msr exists and has one match", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec2);
-
-		mockedDb.matches.findFirst.mockResolvedValueOnce(mockMatch);
 
 		mockedDb.supportRequests.findFirst.mockResolvedValue(mockSupportRequest[1]);
 
@@ -111,10 +109,6 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			psychological: {
-				supportRequestId: 224,
-				shouldCreateMatch: false,
-			},
-			legal: {
 				supportRequestId: 223,
 				shouldCreateMatch: true,
 			},
@@ -128,11 +122,12 @@ describe("POST /check-eligibility", () => {
 			orderBy: { createdAt: "asc" },
 			where: {
 				msrId: mockMsrPiiSec2.msrId,
-				supportType: msr2.supportTypes[1],
+				supportType: msr2.supportType,
 				status: { not: "duplicated" },
 			},
 		});
 	});
+
 	it("should return `legal: {shouldCreateMatch: false, supportRequestId: 224}` when msr exists and has one match", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec3);
 
@@ -171,7 +166,7 @@ describe("POST /check-eligibility", () => {
 		});
 	});
 
-	it("should return `psychological: {supportRequestId: null,  shouldCreateMatch: true}` when msr exists but she has no matches and no supprt_requests", async () => {
+	it("should return `psychological: {supportRequestId: null,  shouldCreateMatch: true}` when msr exists but she has no matches and no support_requests", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec);
 
 		mockedDb.matches.findFirst.mockResolvedValue(null);
@@ -203,7 +198,7 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(400);
 		expect(await response.text()).toStrictEqual(
-			"Validation error: supportTypes is a required field"
+			"Validation error: supportType is a required field"
 		);
 	});
 });

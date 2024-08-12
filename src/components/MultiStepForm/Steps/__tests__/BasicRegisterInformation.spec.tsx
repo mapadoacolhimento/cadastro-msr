@@ -175,30 +175,4 @@ describe("<BasicRegisterInformation />", () => {
 			"Insira um número de telefone válido com DDD."
 		);
 	});
-
-	it.only("should redirect to fora-criterios page if msr is under 18 years old", async () => {
-		setup();
-		const nameInput = screen.getByRole("textbox", { name: /Nome/i });
-		await userEvent.type(nameInput, "MSR");
-		const emailInput = screen.getByRole("textbox", { name: "E-mail" });
-		await userEvent.type(emailInput, "msr@test.com");
-		const confirmEmailInput =
-			screen.getByPlaceholderText(/Confirme seu e-mail/i);
-		await userEvent.type(confirmEmailInput, "msr@test.com");
-		const phoneInput = screen.getByRole("textbox", { name: /whatsapp/i });
-		await userEvent.type(phoneInput, "81999999999");
-		const dateOfBirth = screen.getByRole("textbox", {
-			name: /Data de Nascimento/i,
-		});
-		await userEvent.type(dateOfBirth, "18112017");
-
-		const btn = screen.getByRole("button", { name: /enviar/i });
-		await userEvent.click(btn);
-
-		// expect(await screen.findByRole("heading")).toBeInTheDocument();
-		expect(screen.getByText("Sentimos muito"));
-		// expect(screen.getByRole("heading")).toHaveTextContent(
-		// 	"Sentimos muito"
-		// );
-	});
 });

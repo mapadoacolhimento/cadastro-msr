@@ -196,4 +196,25 @@ describe("When MSR does not meet the criteria", () => {
 
 		cy.url().should("include", "/fora-criterios");
 	});
+
+	it("should redirect to `fora-criterios` page if MSR is under 18 years old", () => {
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		const { firstName, email, confirmEmail, phone, dateOfBirth, colorOption } =
+			userData;
+
+		cy.findByRole("heading", { name: "Seus dados" }).should("exist");
+		cy.get("#firstName").type(firstName);
+		cy.get("#email").type(email);
+		cy.get("#confirmEmail").type(confirmEmail);
+		cy.get("#phone").type(phone);
+		cy.get("#dateOfBirth").type("18112015");
+		cy.get("#color").click();
+		cy.contains(colorOption).should("be.visible").click();
+
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.url().should("include", "/fora-criterios");
+	});
 });

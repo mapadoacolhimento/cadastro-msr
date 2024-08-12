@@ -1,6 +1,8 @@
 import { useState } from "react";
 import * as Yup from "yup";
 import { Box, Text } from "@radix-ui/themes";
+import { useFormikContext } from "formik";
+import { MSRs, SupportRequests } from "@prisma/client";
 
 import Step from "../Step";
 import TextInput from "../../TextInput";
@@ -35,6 +37,9 @@ type CityOption = {
 	label: string;
 };
 
+type GeolocationResponseData = Pick<MSRs, "city" | "state" | "neighborhood"> &
+	Pick<SupportRequests, "lat" | "lng">;
+
 const defaultCityOptions: CityOption[] = [
 	{
 		value: "",
@@ -47,6 +52,7 @@ function GeolocationFields() {
 		useState<CityOption[]>(defaultCityOptions);
 	const [status, setStatus] = useState<Status | null>(Status.idle);
 	const [error, setError] = useState<string | null>(null);
+	const { setFieldValue } = useFormikContext();
 
 	async function handleStateChange(state: string) {
 		try {
@@ -75,6 +81,38 @@ function GeolocationFields() {
 		}
 	}
 
+	async function autofillGeolocation(zipcode: string) {
+		const response = await fetch(
+			`/geolocation?zipcode=${zipcode.replace("-", "")}`,
+			{
+				method: "GET",
+			}
+		);
+
+		if (!response.ok) {
+			return;
+		}
+
+		const geolocation = (await response.json()) as GeolocationResponseData;
+
+		for (const [key, value] of Object.entries(geolocation)) {
+			if (!value) return;
+
+			if (key === "city") {
+				const city = normalizeCity(value.toString());
+				setFieldValue(key, city);
+				return setCityOptions([
+					{
+						value: city,
+						label: value.toString(),
+					},
+				]);
+			}
+
+			setFieldValue(key, value);
+		}
+	}
+
 	return (
 		<>
 			<Box pt={{ initial: "7", sm: "8" }} width={"100%"} maxWidth={"22rem"}>
@@ -83,6 +121,7 @@ function GeolocationFields() {
 					name="zipcode"
 					label="CEP"
 					placeholder="Insira seu CEP"
+					onBlur={autofillGeolocation}
 				/>
 			</Box>
 			<TextInput

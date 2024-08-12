@@ -9,7 +9,7 @@ const geolocationParamSchema = Yup.object({
 	neighborhood: Yup.string().required(),
 }).required();
 
-type GeolocationResponse = {
+type GeolocationResponseData = {
 	coordinates: {
 		lat: number | null;
 		lng: number | null;
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
 		const {
 			coordinates: { lat, lng },
 			...rest
-		} = (await response.json()) as GeolocationResponse;
+		} = (await response.json()) as GeolocationResponseData;
 
 		return Response.json({ lat, lng, ...rest });
 	} catch (e) {

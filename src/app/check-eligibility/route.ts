@@ -10,6 +10,7 @@ import { MSRPiiSec, SupportType } from "@prisma/client";
 
 type MsrSearchResponse = {
 	supportRequestId: number | null;
+	ticketId: bigint | null;
 	shouldCreateMatch: boolean;
 };
 
@@ -25,6 +26,7 @@ async function checkMatchEligibility(
 	if (!msrId) {
 		return {
 			supportRequestId: null,
+			ticketId: null,
 			shouldCreateMatch: true,
 		};
 	}
@@ -42,12 +44,14 @@ async function checkMatchEligibility(
 			supportRequestId: true,
 			status: true,
 			supportType: true,
+			msrZendeskTicketId: true,
 		},
 	});
 
 	if (ongoingMatch) {
 		return {
 			supportRequestId: ongoingMatch.supportRequestId,
+			ticketId: ongoingMatch.msrZendeskTicketId,
 			shouldCreateMatch: false,
 		};
 	}
@@ -65,12 +69,14 @@ async function checkMatchEligibility(
 			supportRequestId: true,
 			status: true,
 			supportType: true,
+			zendeskTicketId: true,
 		},
 	});
 
 	if (!supportRequest) {
 		return {
 			supportRequestId: null,
+			ticketId: null,
 			shouldCreateMatch: true,
 		};
 	}
@@ -86,6 +92,7 @@ async function checkMatchEligibility(
 
 	return {
 		supportRequestId: supportRequest.supportRequestId,
+		ticketId: supportRequest.zendeskTicketId,
 		shouldCreateMatch: !hasOngoingSupport,
 	};
 }
@@ -105,10 +112,8 @@ export async function POST(request: Request) {
 			},
 		});
 		const supportType: SupportType = payload.supportType;
-		const matchEligibilityResponse = await checkMatchEligibility(
-			supportType,
-			msr?.msrId
-		);
+		const matchEligibilityResponse: MsrSearchResponse =
+			await checkMatchEligibility(supportType, msr?.msrId);
 
 		return Response.json(matchEligibilityResponse);
 	} catch (e) {

@@ -43,12 +43,14 @@ describe("POST /check-eligibility", () => {
 			supportRequestId: 222,
 			status: "social_worker",
 			supportType: "psychological",
+			zendeskTicketId: 5678,
 		},
 
 		{
 			supportRequestId: 223,
 			status: "matched",
 			supportType: "legal",
+			zendeskTicketId: 9012,
 		},
 	];
 
@@ -56,6 +58,7 @@ describe("POST /check-eligibility", () => {
 		supportRequestId: 224,
 		status: "waiting_contact",
 		supportType: "legal",
+		msrZendeskTicketId: 1234,
 	};
 
 	it("should return `psychological: {shouldCreateMatch: false, supportRequestId: 222}` when msr and support request exists", async () => {
@@ -73,6 +76,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: 222,
+			ticketId: 5678,
 			shouldCreateMatch: false,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
@@ -80,6 +84,7 @@ describe("POST /check-eligibility", () => {
 				supportRequestId: true,
 				status: true,
 				supportType: true,
+				zendeskTicketId: true,
 			},
 			orderBy: {
 				createdAt: "asc",
@@ -107,6 +112,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: 223,
+			ticketId: 9012,
 			shouldCreateMatch: true,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
@@ -114,6 +120,7 @@ describe("POST /check-eligibility", () => {
 				supportRequestId: true,
 				status: true,
 				supportType: true,
+				zendeskTicketId: true,
 			},
 			orderBy: { createdAt: "asc" },
 			where: {
@@ -139,6 +146,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: 224,
+			ticketId: 1234,
 			shouldCreateMatch: false,
 		});
 	});
@@ -154,6 +162,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: null,
+			ticketId: null,
 			shouldCreateMatch: true,
 		});
 	});
@@ -174,6 +183,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: null,
+			ticketId: null,
 			shouldCreateMatch: true,
 		});
 	});

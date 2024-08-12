@@ -91,7 +91,7 @@ describe("POST /db/upsert-msr", () => {
 		mockedDb.mSRs.upsert.mockResolvedValueOnce(mockMsr);
 		mockedDb.mSRPiiSec.upsert.mockResolvedValueOnce(mockMsrPii);
 		const request = new NextRequest(
-			new Request("http://localhost:3000/create", {
+			new Request("http://localhost:3000/db/upsert-msr", {
 				method: "POST",
 				body: JSON.stringify(mockPayload),
 			})
@@ -109,7 +109,7 @@ describe("POST /db/upsert-msr", () => {
 		mockedDb.mSRs.upsert.mockResolvedValueOnce(mockMsr2);
 		mockedDb.mSRPiiSec.upsert.mockResolvedValueOnce(mockMsrPii2);
 		const request = new NextRequest(
-			new Request("http://localhost:3000/create", {
+			new Request("http://localhost:3000/db/upsert-msr", {
 				method: "POST",
 				body: JSON.stringify(mockPayload2),
 			})
@@ -125,7 +125,7 @@ describe("POST /db/upsert-msr", () => {
 
 	it("returns error when dont have a valid payload", async () => {
 		const request = new NextRequest(
-			new Request("http://localhost:3000/create", {
+			new Request("http://localhost:3000/db/upsert-msr", {
 				method: "POST",
 				body: JSON.stringify(mockIncompletePayload),
 			})

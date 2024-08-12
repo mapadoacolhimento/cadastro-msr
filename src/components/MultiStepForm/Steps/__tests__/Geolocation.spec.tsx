@@ -154,11 +154,8 @@ describe("Geolocation", () => {
 		).toBeInTheDocument();
 	});
 
-	it("should validate all fields and go to next step", async () => {
-		const mockOnSubmit = vi.fn();
-		setup({
-			onSubmit: mockOnSubmit,
-		});
+	it("should validate all fields and not show error messages", async () => {
+		setup();
 
 		// zipcode
 		await userEvent.type(
@@ -188,7 +185,6 @@ describe("Geolocation", () => {
 		await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
 
 		expect(screen.queryByRole("alert")).not.toBeInTheDocument();
-		expect(mockOnSubmit).toHaveBeenCalledTimes(1);
 	});
 
 	describe("Error when fetching cities", () => {

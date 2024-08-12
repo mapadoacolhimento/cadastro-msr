@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as Yup from "yup";
 import { Box, Text } from "@radix-ui/themes";
-import { useFormikContext } from "formik";
+import { type FormikHelpers, useFormikContext } from "formik";
 import { MSRs, SupportRequests } from "@prisma/client";
 
 import Step from "../Step";
@@ -11,15 +11,15 @@ import {
 	BRAZILIAN_STATES_OPTIONS,
 	formatZipcode,
 	normalizeCity,
-	sleep,
 } from "../../../lib";
+import { Values } from "..";
 
 const geolocationSchema = Yup.object({
 	city: Yup.string().transform(normalizeCity).required("Insira sua cidade"),
 	state: Yup.string().length(2).uppercase().required("Insira seu estado"),
 	neighborhood: Yup.string().required("Insira seu bairro"),
-	lat: Yup.number().max(90).min(-90).required(),
-	lng: Yup.number().max(180).min(-180).required(),
+	lat: Yup.number().max(90).min(-90).required().nullable(),
+	lng: Yup.number().max(180).min(-180).required().nullable(),
 	zipcode: Yup.string()
 		.transform(formatZipcode)
 		.required("Insira seu CEP")
@@ -164,11 +164,35 @@ function GeolocationFields() {
 }
 
 export default function Geolocation() {
+	async function handleGeolocationSubmit(
+		values: Values,
+		{ setFieldValue }: FormikHelpers<Values>
+	) {
+		if (values.lat && values.lng) return null;
+
+		const response = await fetch(
+			`/geolocation?state=${values.state}&city=${values.city}&neighborhood=${values.neighborhood}`,
+			{
+				method: "GET",
+			}
+		);
+
+		if (!response.ok) {
+			setFieldValue("lat", null);
+			setFieldValue("lng", null);
+			return null;
+		}
+
+		const geolocation = (await response.json()) as GeolocationResponseData;
+
+		setFieldValue("lat", geolocation.lat);
+		setFieldValue("lng", geolocation.lng);
+		return null;
+	}
+
 	return (
 		<Step
-			onSubmit={() =>
-				sleep(1).then(() => console.log("Step geolocation onSubmit"))
-			}
+			onSubmit={handleGeolocationSubmit}
 			validationSchema={geolocationSchema}
 			title={"Seu endereço"}
 			img={{

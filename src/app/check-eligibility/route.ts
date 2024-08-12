@@ -9,14 +9,8 @@ import {
 import { MSRPiiSec, SupportType } from "@prisma/client";
 
 type MsrSearchResponse = {
-	psychological?: {
-		supportRequestId: number | null;
-		shouldCreateMatch: boolean;
-	};
-	legal?: {
-		supportRequestId: number | null;
-		shouldCreateMatch: boolean;
-	};
+	supportRequestId: number | null;
+	shouldCreateMatch: boolean;
 };
 
 const payloadSchema = Yup.object({
@@ -110,10 +104,8 @@ export async function POST(request: Request) {
 				email: true,
 			},
 		});
-
-		let matchEligibilityResponse: MsrSearchResponse = {};
 		const supportType: SupportType = payload.supportType;
-		matchEligibilityResponse[supportType] = await checkMatchEligibility(
+		const matchEligibilityResponse = await checkMatchEligibility(
 			supportType,
 			msr?.msrId
 		);

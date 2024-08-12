@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { db, getErrorMessage } from "../../lib";
+import { db, getErrorMessage } from "../../../lib";
 import { Gender, MSRStatus, Race } from "@prisma/client";
 
 const payloadSchema = Yup.object({

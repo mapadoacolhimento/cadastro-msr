@@ -72,10 +72,8 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			psychological: {
-				supportRequestId: 222,
-				shouldCreateMatch: false,
-			},
+			supportRequestId: 222,
+			shouldCreateMatch: false,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
 			select: {
@@ -108,10 +106,8 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			psychological: {
-				supportRequestId: 223,
-				shouldCreateMatch: true,
-			},
+			supportRequestId: 223,
+			shouldCreateMatch: true,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
 			select: {
@@ -142,10 +138,8 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			legal: {
-				supportRequestId: 224,
-				shouldCreateMatch: false,
-			},
+			supportRequestId: 224,
+			shouldCreateMatch: false,
 		});
 	});
 
@@ -159,10 +153,8 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			psychological: {
-				supportRequestId: null,
-				shouldCreateMatch: true,
-			},
+			supportRequestId: null,
+			shouldCreateMatch: true,
 		});
 	});
 
@@ -181,10 +173,8 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			psychological: {
-				supportRequestId: null,
-				shouldCreateMatch: true,
-			},
+			supportRequestId: null,
+			shouldCreateMatch: true,
 		});
 	});
 

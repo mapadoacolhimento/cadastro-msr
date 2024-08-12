@@ -3,7 +3,7 @@ import { mockReset } from "vitest-mock-extended";
 import { type Gender, type MSRStatus, type Race } from "@prisma/client";
 import mockedDb from "../../lib/__mocks__/db";
 import msrPayload from "../../lib/__mocks__/payloads";
-import { POST } from "../create/route";
+import { POST } from "../db/upsert-msr/route";
 
 const mockPayload = msrPayload();
 
@@ -82,7 +82,7 @@ const mockMsrPii2 = {
 	updatedAt: new Date(),
 };
 
-describe("POST /create", () => {
+describe("POST /db/upsert-msr", () => {
 	beforeEach(() => {
 		mockReset(mockedDb);
 	});

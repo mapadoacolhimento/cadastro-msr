@@ -40,7 +40,7 @@ describe("Geolocation", () => {
 	});
 
 	beforeEach(() => {
-		fetch.mockResolvedValueOnce(createFetchResponse(cityResponse));
+		fetch.mockResolvedValue(createFetchResponse(cityResponse));
 	});
 
 	it("should render geolocation fields", () => {

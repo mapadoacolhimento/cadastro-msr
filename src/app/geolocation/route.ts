@@ -22,12 +22,11 @@ type GeolocationResponseData = {
 export async function GET(request: NextRequest) {
 	try {
 		const searchParams = request.nextUrl.searchParams;
-		const zipcode = await zipcodeParamSchema.validate(
-			searchParams.get("zipcode")
-		);
+		const zipcode = searchParams.get("zipcode");
 		let queryParams;
 
 		if (zipcode) {
+			await zipcodeParamSchema.validate(zipcode);
 			queryParams = `zipcode=${zipcode}`;
 		} else {
 			const geolocation = await geolocationParamSchema.validate({

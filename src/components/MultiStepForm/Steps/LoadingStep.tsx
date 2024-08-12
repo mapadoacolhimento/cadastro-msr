@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Text } from "@radix-ui/themes";
-import DesktopIllustration from "../../DesktopIllustration";
+import Illustration from "../../Illustration";
 import Image from "next/image";
 
 export default function LoadingStep() {
@@ -41,25 +41,12 @@ export default function LoadingStep() {
 					</Text>
 				</Flex>
 			</Flex>
-			<DesktopIllustration
+			<Illustration
 				img={{
 					src: "/illustrations/woman.svg",
 					alt: "Ilustração de uma mulher com cabelo castanho escuro e blusa roxa com um coração branco do mapa do acolhimento",
 				}}
 			/>
-			<Flex
-				position={"absolute"}
-				right={"0"}
-				bottom={"0"}
-				display={{ initial: "flex", md: "none" }}
-			>
-				<Image
-					src="/illustrations/woman.svg"
-					width={200}
-					height={200}
-					alt="Ilustração de uma mulher com cabelo castanho escuro e blusa roxa com um coração branco do mapa do acolhimento"
-				/>
-			</Flex>
 		</Flex>
 	);
 }

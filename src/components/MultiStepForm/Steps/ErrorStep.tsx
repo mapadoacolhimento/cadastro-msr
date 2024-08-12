@@ -1,3 +1,4 @@
+import Illustration from "../../Illustration";
 import { Box, Flex, Heading, Text } from "@radix-ui/themes";
 import Image from "next/image";
 
@@ -36,40 +37,12 @@ export default function ErrorStep({ message }: ErrorStepProps) {
 					<Text align={"center"}>Por favor, realize o cadastro novamente</Text>
 				</Flex>
 			</Flex>
-			<Flex
-				display={{ initial: "none", md: "flex" }}
-				asChild
-				style={{ backgroundColor: "var(--yellow-3)", zIndex: "-1" }}
-				justify={"center"}
-				align={"center"}
-				position={"absolute"}
-				top={"0"}
-				right={"0"}
-				width={"55%"}
-				height={"100%"}
-			>
-				<aside>
-					<Image
-						src="/icons/error.svg"
-						alt="Ícone de erro"
-						width={500}
-						height={500}
-					/>
-				</aside>
-			</Flex>
-			<Flex
-				position={"absolute"}
-				right={"0"}
-				bottom={"0"}
-				display={{ initial: "flex", md: "none" }}
-			>
-				<Image
-					src="/icons/error.svg"
-					width={200}
-					height={200}
-					alt="Ícone com exclamação de erro"
-				/>
-			</Flex>
+			<Illustration
+				img={{
+					src: "/icons/error.svg",
+					alt: "Ícone de erro",
+				}}
+			/>
 		</Flex>
 	);
 }

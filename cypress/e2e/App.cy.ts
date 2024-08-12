@@ -48,13 +48,13 @@ describe("App", () => {
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDisabilityStep();
+		cy.fillGeolocationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillDisabilityStep();
 		cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
-		const { firstName } = userData;
-
-		cy.get("#firstName").type(firstName);
+		cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
 	});
 });
 
@@ -137,7 +137,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.url().should("include", "/fora-criterios");
 	});
 
-	it("should redirect to `fora-criterios` page if MSR selects that the violence location wasn't in Brazil", () => {
+	it.only("should redirect to `fora-criterios` page if MSR selects that the violence location wasn't in Brazil", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
 

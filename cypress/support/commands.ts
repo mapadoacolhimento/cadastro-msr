@@ -24,13 +24,13 @@ Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
 
 Cypress.Commands.add("fillGeolocationStep", () => {
 	const { zipcode, neighborhood, state, city } = userData;
-	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
+	cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
 
 	// zipcode
-	cy.findByRole("textbox", { name: "CEP" }).type(zipcode).blur();
+	cy.findByLabelText("CEP").type(zipcode).blur();
 
 	// neighborhood
-	cy.findByRole("textbox", { name: "Bairro" }).type(neighborhood);
+	cy.findByLabelText("Bairro").type(neighborhood);
 
 	// state
 	cy.findByRole("combobox", { name: "Estado" }).click();

@@ -22,6 +22,25 @@ Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
 	cy.contains(colorOption).should("be.visible").click();
 });
 
+Cypress.Commands.add("fillGeolocationStep", () => {
+	const { zipcode, neighborhood, state, city } = userData;
+	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
+
+	// zipcode
+	cy.findByRole("textbox", { name: "CEP" }).type(zipcode).blur();
+
+	// neighborhood
+	cy.findByRole("textbox", { name: "Bairro" }).type(neighborhood);
+
+	// state
+	cy.findByRole("combobox", { name: "Estado" }).click();
+	cy.findByRole("option", { name: state }).click();
+
+	// city
+	cy.findByRole("combobox", { name: "Cidade" }).click();
+	cy.findByRole("option", { name: city }).click();
+});
+
 Cypress.Commands.add("fillDisabilityStep", () => {
 	const { hasDisability } = userData;
 	cy.contains("Você é PcD (Pessoa com deficiência)?").should("exist");

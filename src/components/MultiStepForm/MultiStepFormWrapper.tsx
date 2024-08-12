@@ -54,6 +54,7 @@ export default function MultiStepFormWrapper({
 		try {
 			if (isLastStep) {
 				setIsLoading(true);
+				return onSubmit(values, bag);
 			}
 			setSubmitError(null);
 			if (step.props.onSubmit) {
@@ -61,10 +62,6 @@ export default function MultiStepFormWrapper({
 				if (submit && submit.redirectTo) {
 					return router.push(submit.redirectTo);
 				}
-			}
-
-			if (isLastStep) {
-				return onSubmit(values, bag);
 			}
 
 			await bag.setTouched({});

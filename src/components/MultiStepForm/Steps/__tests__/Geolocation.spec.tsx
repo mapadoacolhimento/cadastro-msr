@@ -1,10 +1,16 @@
-import { render, screen } from "@testing-library/react";
+import {
+	render,
+	screen,
+	waitFor,
+	waitForElementToBeRemoved,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Geolocation from "../Geolocation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import createFetchResponse from "../../../../lib/__mocks__/fetch";
 import type { Values } from "../..";
+import { normalizeCity } from "../../../../lib";
 
 const setup = (props?: any) => {
 	return render(
@@ -202,6 +208,54 @@ describe("Geolocation", () => {
 			expect(await screen.findByRole("alert")).toHaveTextContent(
 				"Erro ao buscar cidades"
 			);
+		});
+	});
+
+	describe("Autofill geolocation", () => {
+		const mockResponse = {
+			city: "SÃO PAULO",
+			state: "SP",
+			neighborhood: "Vila Buarque",
+			lat: -23.5505,
+			lng: -46.6333,
+		};
+
+		beforeEach(() => {
+			fetch.mockResolvedValueOnce(createFetchResponse(mockResponse));
+		});
+
+		it("should autofill geolocation fields when response is successful", async () => {
+			setup();
+
+			await userEvent.type(
+				screen.getByRole("textbox", { name: "CEP" }),
+				"12345678[tab]"
+			);
+
+			const loading = await screen.findByText("Carregando...");
+			await waitForElementToBeRemoved(loading);
+
+			expect(
+				screen.getByDisplayValue(mockResponse.neighborhood)
+			).toBeInTheDocument();
+			expect(screen.getByDisplayValue(mockResponse.state)).toBeInTheDocument();
+			expect(
+				screen.getByDisplayValue(normalizeCity(mockResponse.city))
+			).toBeInTheDocument();
+		});
+
+		it("should call fetch with correct params", async () => {
+			setup();
+
+			const zipcode = "12345678";
+			await userEvent.type(
+				screen.getByRole("textbox", { name: "CEP" }),
+				zipcode + "[tab]"
+			);
+
+			expect(fetch).toHaveBeenCalledWith(`/geolocation?zipcode=${zipcode}`, {
+				method: "GET",
+			});
 		});
 	});
 });

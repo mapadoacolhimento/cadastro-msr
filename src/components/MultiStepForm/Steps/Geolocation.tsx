@@ -82,6 +82,8 @@ function GeolocationFields() {
 	}
 
 	async function autofillGeolocation(zipcode: string) {
+		setStatus(Status.loading);
+
 		const response = await fetch(
 			`/geolocation?zipcode=${zipcode.replace("-", "")}`,
 			{
@@ -90,10 +92,12 @@ function GeolocationFields() {
 		);
 
 		if (!response.ok) {
+			setStatus(Status.idle);
 			return;
 		}
 
 		const geolocation = (await response.json()) as GeolocationResponseData;
+		setStatus(Status.idle);
 
 		for (const [key, value] of Object.entries(geolocation)) {
 			if (!value) return;
@@ -101,15 +105,15 @@ function GeolocationFields() {
 			if (key === "city") {
 				const city = normalizeCity(value.toString());
 				setFieldValue(key, city);
-				return setCityOptions([
+				setCityOptions([
 					{
 						value: city,
 						label: value.toString(),
 					},
 				]);
+			} else {
+				setFieldValue(key, value);
 			}
-
-			setFieldValue(key, value);
 		}
 	}
 
@@ -122,6 +126,7 @@ function GeolocationFields() {
 					label="CEP"
 					placeholder="Insira seu CEP"
 					onBlur={autofillGeolocation}
+					isLoading={status === Status.loading}
 				/>
 			</Box>
 			<TextInput

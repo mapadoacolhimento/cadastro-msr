@@ -11,6 +11,7 @@ interface TextInputProps {
 	label: string;
 	placeholder?: string;
 	mask?: string;
+	onBlur?: (value: string) => Promise<void> | void;
 }
 
 const TextInput: React.FC<TextInputProps> = (props) => {
@@ -30,6 +31,10 @@ const TextInput: React.FC<TextInputProps> = (props) => {
 		field.onBlur(e);
 		if (e.target.value === "") {
 			setIsActive(false);
+		} else {
+			if (props.onBlur) {
+				props.onBlur(e.target.value);
+			}
 		}
 	}
 

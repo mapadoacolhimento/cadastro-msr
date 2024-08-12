@@ -52,7 +52,9 @@ export default function MultiStepFormWrapper({
 
 	const handleSubmit = async (values: Values, bag: FormikHelpers<Values>) => {
 		try {
-			setIsLoading(true);
+			if (isLastStep) {
+				setIsLoading(true);
+			}
 			setSubmitError(null);
 			if (step.props.onSubmit) {
 				const submit = await step.props.onSubmit(values, bag);

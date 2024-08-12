@@ -10,7 +10,7 @@ describe("<LoadingStep />", () => {
 		setup();
 
 		const heading1 = screen.getByRole("heading", {
-			name: "Agora é só esperar",
+			name: "Por favor, aguarde",
 			level: 1,
 		});
 		expect(heading1).toBeInTheDocument();

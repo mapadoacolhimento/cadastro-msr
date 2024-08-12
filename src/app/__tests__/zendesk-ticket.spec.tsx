@@ -126,4 +126,18 @@ describe("POST /zendesk/ticket", () => {
 		expect(mockcreateOrUpdateTicket).toHaveBeenCalledWith(mockUpdateTicket);
 		expect(await response.json()).toEqual({ ticketId: 5678 });
 	});
+
+	it("should return a error when createOrUpdateTicket return a error", async () => {
+		mockcreateOrUpdateTicket.mockRejectedValueOnce(new Error("Invalid body"));
+
+		const request = new NextRequest(
+			new Request("http://localhost:3000/zendesk/ticket", {
+				method: "POST",
+				body: JSON.stringify(mockPayloadCreate),
+			})
+		);
+		const response = await POST(request);
+		expect(response.status).toEqual(500);
+		expect(await response.text()).toEqual("Invalid body");
+	});
 });

@@ -16,6 +16,19 @@ const mockPayload = {
 	supportTypes: ["legal"],
 };
 
+const mockPayload2 = {
+	email: "lua@email.com",
+	phone: "71999999999",
+	firstName: "Lua",
+	city: "SALVADOR",
+	state: "BA",
+	neighborhood: "Federação",
+	color: "black",
+	zipcode: "40210245",
+	dateOfBirth: new Date("1990-03-14"),
+	supportTypes: ["psychological"],
+};
+
 const mockPayloadUpdate = {
 	email: "sol@email.com",
 	phone: "19999999999",
@@ -121,5 +134,18 @@ describe("POST /zendesk/user", () => {
 		expect(mockcreateOrUpdateUser).toHaveBeenCalledWith(mockUserUpdate);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345667 });
+	});
+
+	it("should return a error when createOrUpdateUser return a error ", async () => {
+		mockcreateOrUpdateUser.mockRejectedValueOnce(new Error("Invalid body"));
+		const request = new NextRequest(
+			new Request("http://localhost:3000/zendesk/user", {
+				method: "POST",
+				body: JSON.stringify(mockPayload),
+			})
+		);
+		const response = await POST(request);
+		expect(response.status).toEqual(500);
+		expect(await response.text()).toStrictEqual("Invalid body");
 	});
 });

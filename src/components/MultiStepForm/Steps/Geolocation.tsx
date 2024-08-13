@@ -168,7 +168,7 @@ export default function Geolocation() {
 		values: Values,
 		{ setFieldValue }: FormikHelpers<Values>
 	) {
-		if (values.lat && values.lng) return null;
+		if (values.lat && values.lng) return;
 
 		const response = await fetch(
 			`/geolocation?state=${values.state}&city=${values.city}&neighborhood=${values.neighborhood}`,
@@ -187,7 +187,7 @@ export default function Geolocation() {
 
 		setFieldValue("lat", geolocation.lat);
 		setFieldValue("lng", geolocation.lng);
-		return null;
+		return;
 	}
 
 	return (

@@ -38,7 +38,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
 	const handleValueChange = (option: SingleValue<Option>) => {
 		if (onChange) {
-			onChange(option?.value || "");
+			onChange(option?.value ?? "");
 		}
 		helpers.setValue(option?.value);
 		setIsFocused(true);

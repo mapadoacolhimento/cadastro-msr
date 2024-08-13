@@ -3,6 +3,7 @@ import {
 	colorOptions,
 	createOrUpdateUser,
 	getErrorMessage,
+	msrOrganizationId,
 } from "../../../lib";
 import { Race, SupportType } from "@prisma/client";
 
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
 		const user = {
 			name: payload.firstName,
 			role: "end-user",
-			organization_id: 360273031591 as unknown as bigint,
+			organization_id: msrOrganizationId,
 			email: payload.email,
 			phone: payload.phone,
 			user_fields: {

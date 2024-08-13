@@ -123,9 +123,7 @@ export const statusSupportRequestisAlreadyInQueue = [
 export const ZENDESK_SUBDOMAIN = process.env["ZENDESK_SUBDOMAIN"];
 export const ZENDESK_API_USER = `${process.env["ZENDESK_API_USER"]}/token`;
 export const ZENDESK_API_TOKEN = process.env["ZENDESK_API_TOKEN"];
-<<<<<<< HEAD
 export const VOLUNTEER_API_URL = process.env["VOLUNTEER_API_URL"];
-=======
 
 export const ZENDESK_CUSTOM_FIELDS_DICIO = {
 	nomeMsr: 360016681971,
@@ -137,4 +135,6 @@ export const ZENDESK_CUSTOM_FIELDS_DICIO = {
 	telefone: 360021812712,
 	cidade: 360021879811,
 };
->>>>>>> 357684f (feat: add endpoint zendesk/ticket)
+
+export const msrOrganizationId = 360273031591 as unknown as bigint;
+

@@ -43,9 +43,7 @@ export type Ticket = {
 	assignee_id?: number;
 	status?: string;
 	subject?: string;
-	description?: string;
-	organization_id?: number;
-	tag?: string[];
+	organization_id?: bigint;
 	comment?: {
 		body: string;
 		public: boolean;

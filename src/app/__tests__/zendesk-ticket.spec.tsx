@@ -10,7 +10,6 @@ const mockPayloadCreate = {
 	status: "new",
 	statusAcolhimento: "solicitação_recebida",
 	supportType: "legal",
-	description: "-",
 	comment: {
 		body: "Gerado pelo cadastro",
 		public: false,
@@ -70,7 +69,7 @@ describe("POST /zendesk/ticket", () => {
 			})
 		);
 		const response = await POST(request);
-		//expect(response.status).toEqual(400);
+		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
 			"Validation error: Must have at least one field to update"
 		);

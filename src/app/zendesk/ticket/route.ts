@@ -1,16 +1,19 @@
 import * as Yup from "yup";
-import { createOrUpdateTicket, getErrorMessage } from "../../../lib";
+import {
+	createOrUpdateTicket,
+	getErrorMessage,
+	msrOrganizationId,
+	Ticket,
+} from "../../../lib";
 import { SupportType } from "@prisma/client";
 import { ZENDESK_CUSTOM_FIELDS_DICIO } from "../../../lib";
 
 const payloadSchemaCreate = Yup.object({
 	msrZendeskUserId: Yup.number().required(),
 	subject: Yup.string().required(),
-	description: Yup.string().required(),
 	status: Yup.string().required(),
 	statusAcolhimento: Yup.string().required(),
 	supportType: Yup.string().oneOf(Object.values(SupportType)),
-	tag: Yup.array().of(Yup.string()),
 	comment: Yup.object(),
 	msrName: Yup.string(),
 }).required();
@@ -18,11 +21,9 @@ const payloadSchemaCreate = Yup.object({
 const payloadSchemaUpdate = Yup.object({
 	ticketId: Yup.number().required(),
 	subject: Yup.string(),
-	description: Yup.string(),
 	status: Yup.string(),
 	statusAcolhimento: Yup.string(),
 	supportType: Yup.string().oneOf(Object.values(SupportType)),
-	tag: Yup.array().of(Yup.string()),
 	comment: Yup.object(),
 	msrZendeskUserId: Yup.number(),
 	msrName: Yup.string(),
@@ -68,22 +69,21 @@ export async function POST(request: Request) {
 		if (payload.ticketId) await payloadSchemaUpdate.validate(payload);
 		else await payloadSchemaCreate.validate(payload);
 
-		const ticket: any = {
+		const ticket: Ticket = {
 			id: payload.ticketId,
 			requester_id: payload.msrZendeskUserId,
 			subject: payload.subject,
-			organization_id: 360273031591,
+			organization_id: msrOrganizationId,
 			status: payload.status,
-			tag: payload.tag,
 			comment: payload.comment,
 			custom_fields: getCustomFieldsTicket(payload),
 		};
 
-		Object.keys(ticket).forEach(
-			(key: string) => ticket[key] === undefined && delete ticket[key]
+		const ticketWithoutEmptyProperties = Object.entries(ticket).filter(
+			([_, value]) => value !== null && typeof value !== "undefined"
 		);
-
-		const response = await createOrUpdateTicket(ticket);
+		const validTicket = Object.fromEntries(ticketWithoutEmptyProperties);
+		const response = await createOrUpdateTicket(validTicket);
 
 		return Response.json({
 			ticketId: response.ticket.id,

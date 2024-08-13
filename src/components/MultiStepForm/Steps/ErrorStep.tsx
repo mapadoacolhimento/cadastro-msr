@@ -6,7 +6,7 @@ interface ErrorStepProps {
 	message: string;
 }
 
-export default function ErrorStep({ message }: ErrorStepProps) {
+export default function ErrorStep({ message }: Readonly<ErrorStepProps>) {
 	return (
 		<Flex
 			width={"100%"}

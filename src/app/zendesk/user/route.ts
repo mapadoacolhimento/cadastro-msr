@@ -27,7 +27,7 @@ function getColor(color: string) {
 	return option ? option.label.toLowerCase().normalize("NFD") : null;
 }
 
-function getSupportType(supportTypes: string[]) {
+function getSupportType(supportTypes: SupportType) {
 	if (supportTypes.length === 2) {
 		return "psicológico_e_jurídico";
 	}

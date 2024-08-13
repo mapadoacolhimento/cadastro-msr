@@ -48,5 +48,5 @@ export type Ticket = {
 		body: string;
 		public: boolean;
 	};
-	custom_fields?: Array<{ id: number; value: string | number }>;
+	custom_fields?: Array<{ id: number; value: string | number }> | null;
 };

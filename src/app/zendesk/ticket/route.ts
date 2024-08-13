@@ -4,9 +4,25 @@ import {
 	getErrorMessage,
 	msrOrganizationId,
 	Ticket,
+	ZENDESK_CUSTOM_FIELDS_DICIO,
 } from "../../../lib";
 import { SupportType } from "@prisma/client";
-import { ZENDESK_CUSTOM_FIELDS_DICIO } from "../../../lib";
+
+type TicketPayload = {
+	ticketId: number;
+	subject: string;
+	status: string;
+	supportType: SupportType;
+	comment: { body: string; public: boolean };
+	msrZendeskUserId: number;
+	msrName: string;
+	statusAcolhimento: string;
+};
+
+type CustomFields = {
+	id: number;
+	value: string;
+};
 
 const payloadSchemaCreate = Yup.object({
 	msrZendeskUserId: Yup.number().required(),
@@ -40,8 +56,8 @@ const payloadSchemaUpdate = Yup.object({
 	}
 );
 
-function getCustomFieldsTicket(payload: any) {
-	let custom_fields: any = [];
+function getCustomFieldsTicket(payload: TicketPayload) {
+	let custom_fields: CustomFields[] = [];
 
 	if (payload.msrName) {
 		custom_fields.push({
@@ -57,7 +73,7 @@ function getCustomFieldsTicket(payload: any) {
 		});
 	}
 
-	if (custom_fields.length === 0) return;
+	if (custom_fields.length === 0) return null;
 
 	return custom_fields;
 }
@@ -66,8 +82,9 @@ export async function POST(request: Request) {
 	try {
 		const payload = await request.json();
 
-		if (payload.ticketId) await payloadSchemaUpdate.validate(payload);
-		else await payloadSchemaCreate.validate(payload);
+		const schema = payload.ticketId ? payloadSchemaUpdate : payloadSchemaCreate;
+
+		await schema.validate(payload);
 
 		const ticket: Ticket = {
 			id: payload.ticketId,

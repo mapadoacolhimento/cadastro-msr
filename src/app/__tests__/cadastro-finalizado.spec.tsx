@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import Wait from "../cadastro-finalizado/page";
+import RegistrationCompleted from "../cadastro-finalizado/page";
 
 const setup = () => {
-	return render(<Wait />);
+	return render(<RegistrationCompleted />);
 };
 
-describe("<Wait />", () => {
+describe("<RegistrationCompleted />", () => {
 	it("should render headers and descriptions", () => {
 		setup();
 

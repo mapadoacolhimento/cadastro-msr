@@ -42,7 +42,7 @@ export async function POST(request: Request) {
 		const payload = await request.json();
 
 		await payloadSchema.validate(payload);
-		console.log("COR", getColor(payload.color));
+
 		const user = {
 			name: payload.firstName,
 			role: "end-user",
@@ -63,8 +63,12 @@ export async function POST(request: Request) {
 		};
 
 		const response = await createOrUpdateUser(user);
-		const data = await response.json();
 
+		if (!response.ok) {
+			throw new Error(await response.text());
+		}
+
+		const data = await response.json();
 		let msrZendeskUserId;
 
 		if (data.data) {

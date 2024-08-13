@@ -101,7 +101,13 @@ export async function POST(request: Request) {
 		);
 		const validTicket = Object.fromEntries(ticketWithoutEmptyProperties);
 		const response = await createOrUpdateTicket(validTicket);
+
+		if (!response.ok) {
+			throw new Error(await response.text());
+		}
+
 		const data = await response.json();
+
 		return Response.json({
 			ticketId: data.ticket.id,
 		});

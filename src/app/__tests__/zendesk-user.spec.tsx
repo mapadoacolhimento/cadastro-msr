@@ -1,9 +1,12 @@
 import { NextRequest } from "next/server";
 import { POST } from "../zendesk/user/route";
-import * as createOrUpdateUser from "../../lib/zendesk/createOrUpdateUser";
+import {
+	ZENDESK_SUBDOMAIN,
+	ZENDESK_API_TOKEN,
+	ZENDESK_API_USER,
+} from "../../lib";
 
-const mockcreateOrUpdateUser = vi.spyOn(createOrUpdateUser, "default");
-const mockPayload = {
+let mockPayload = {
 	email: "lua@email.com",
 	phone: "71999999999",
 	firstName: "Lua",
@@ -13,24 +16,10 @@ const mockPayload = {
 	color: "black",
 	zipcode: "40210245",
 	dateOfBirth: new Date("1990-03-14"),
-	supportTypes: ["legal"],
-};
-
-const mockPayloadUpdate = {
-	email: "sol@email.com",
-	phone: "19999999999",
-	firstName: "Sol",
-	city: "CAMPINAS",
-	state: "SP",
-	neighborhood: "Vila Santal Isabel",
-	description: "-",
-	color: "white",
-	zipcode: "13084609",
-	dateOfBirth: new Date("1999-04-14"),
 	supportTypes: ["legal", "psychological"],
 };
 
-const mockUser = {
+let mockUser = {
 	name: mockPayload.firstName,
 	role: "end-user",
 	organization_id: 360273031591 as unknown as bigint,
@@ -45,28 +34,14 @@ const mockUser = {
 		cor: "preta",
 		whatsapp: mockPayload.phone,
 		date_of_birth: mockPayload.dateOfBirth.toISOString(),
-		tipo_de_acolhimento: "jurídico",
-	},
-};
-
-const mockUserUpdate = {
-	name: mockPayloadUpdate.firstName,
-	role: "end-user",
-	organization_id: 360273031591 as unknown as bigint,
-	email: mockPayloadUpdate.email,
-	phone: mockPayloadUpdate.phone,
-	user_fields: {
-		condition: "inscrita",
-		state: mockPayloadUpdate.state,
-		city: mockPayloadUpdate.city,
-		cep: mockPayloadUpdate.zipcode,
-		neighborhood: mockPayloadUpdate.neighborhood,
-		cor: "branca",
-		whatsapp: mockPayloadUpdate.phone,
-		date_of_birth: mockPayloadUpdate.dateOfBirth.toISOString(),
 		tipo_de_acolhimento: "psicológico_e_jurídico",
 	},
 };
+
+const endpoint = `${ZENDESK_SUBDOMAIN}/api/v2/users/create_or_update`;
+const authorization =
+	"Basic " +
+	Buffer.from(`${ZENDESK_API_USER}:${ZENDESK_API_TOKEN}`).toString("base64");
 
 describe("POST /zendesk/user", () => {
 	it("returns error when dont have a valid payload", async () => {
@@ -83,8 +58,8 @@ describe("POST /zendesk/user", () => {
 		);
 	});
 
-	it("should create new zendesk user with payload", async () => {
-		mockcreateOrUpdateUser.mockResolvedValueOnce(
+	it("should create new zendesk user with both support type ", async () => {
+		fetch.mockResolvedValueOnce(
 			Response.json({
 				user: {
 					id: 12345666 as unknown as bigint,
@@ -99,17 +74,27 @@ describe("POST /zendesk/user", () => {
 		);
 		const response = await POST(request);
 
-		expect(mockcreateOrUpdateUser).toHaveBeenCalledWith(mockUser);
+		expect(fetch).toHaveBeenCalledWith(endpoint, {
+			body: JSON.stringify({ user: mockUser }),
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: authorization,
+			},
+		});
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345666 });
 	});
 
-	it("should update zendesk user with payload", async () => {
-		mockcreateOrUpdateUser.mockResolvedValueOnce(
+	it("should update zendesk user with support type legal", async () => {
+		mockPayload.supportTypes = ["legal"];
+		mockUser.user_fields.tipo_de_acolhimento = "jurídico";
+
+		fetch.mockResolvedValueOnce(
 			Response.json({
 				data: {
 					user: {
-						id: 12345667 as unknown as bigint,
+						id: 12345666 as unknown as bigint,
 					},
 				},
 			})
@@ -117,18 +102,25 @@ describe("POST /zendesk/user", () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/user", {
 				method: "POST",
-				body: JSON.stringify(mockPayloadUpdate),
+				body: JSON.stringify(mockPayload),
 			})
 		);
 		const response = await POST(request);
 
-		expect(mockcreateOrUpdateUser).toHaveBeenCalledWith(mockUserUpdate);
+		expect(fetch).toHaveBeenCalledWith(endpoint, {
+			body: JSON.stringify({ user: mockUser }),
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: authorization,
+			},
+		});
 		expect(response.status).toEqual(200);
-		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345667 });
+		expect(await response.json()).toStrictEqual({ msrZendeskUserId: 12345666 });
 	});
 
-	it("should return a error when createOrUpdateUser return a error ", async () => {
-		mockcreateOrUpdateUser.mockRejectedValueOnce(new Error("Invalid body"));
+	it("should return a error when zendesk api does not create a user", async () => {
+		fetch.mockRejectedValueOnce(new Error("Could not create a new user"));
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/user", {
 				method: "POST",
@@ -137,6 +129,6 @@ describe("POST /zendesk/user", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(500);
-		expect(await response.text()).toStrictEqual("Invalid body");
+		expect(await response.text()).toStrictEqual("Could not create a new user");
 	});
 });

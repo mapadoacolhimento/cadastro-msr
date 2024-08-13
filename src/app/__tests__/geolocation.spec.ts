@@ -49,7 +49,7 @@ describe("/geolocation", () => {
 			});
 		});
 
-		it("should fail validation and return an error message with status 400 when zipcode is empty", async () => {
+		it("should fail validation and return an error message with status 400 when zipcode is invalid", async () => {
 			const invalidParams = `zipcode=123`;
 			const request = new NextRequest(
 				new Request(`http://localhost:3000/geolocation?${invalidParams}`, {
@@ -63,6 +63,23 @@ describe("/geolocation", () => {
 			expect(response.status).toStrictEqual(400);
 			expect(await response.text()).toStrictEqual(
 				"[geolocation] - Validation error: this must be exactly 8 characters"
+			);
+		});
+
+		it("should fail validation and return an error message with status 400 when zipcode is 'not_found'", async () => {
+			const invalidParams = `zipcode=not_found`;
+			const request = new NextRequest(
+				new Request(`http://localhost:3000/geolocation?${invalidParams}`, {
+					method: "GET",
+				})
+			);
+			const response = await GET(request);
+
+			expect(fetch).not.toHaveBeenCalled();
+			expect(response.ok).toStrictEqual(false);
+			expect(response.status).toStrictEqual(400);
+			expect(await response.text()).toStrictEqual(
+				'[geolocation] - Validation error: zipcode is "not_found"'
 			);
 		});
 

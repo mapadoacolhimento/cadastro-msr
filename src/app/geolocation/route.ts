@@ -2,7 +2,14 @@ import { type NextRequest } from "next/server";
 import * as Yup from "yup";
 import { getErrorMessage, VOLUNTEER_API_URL } from "../../lib";
 
-const zipcodeParamSchema = Yup.string().required().length(8);
+const zipcodeParamSchema = Yup.string()
+	.required()
+	.test(
+		"is-valid-zipcode",
+		() => `zipcode is "not_found"`,
+		(value) => value !== "not_found"
+	)
+	.length(8);
 const geolocationParamSchema = Yup.object({
 	state: Yup.string().required().length(2),
 	city: Yup.string().required(),

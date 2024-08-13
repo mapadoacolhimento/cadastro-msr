@@ -85,7 +85,7 @@ function GeolocationFields() {
 		setStatus(Status.loading);
 
 		const response = await fetch(
-			`/geolocation?zipcode=${zipcode.replace("-", "")}`,
+			`/geolocation?zipcode=${formatZipcode(zipcode)}`,
 			{
 				method: "GET",
 			}
@@ -187,7 +187,6 @@ export default function Geolocation() {
 
 		setFieldValue("lat", geolocation.lat);
 		setFieldValue("lng", geolocation.lng);
-		return;
 	}
 
 	return (

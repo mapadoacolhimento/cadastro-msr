@@ -16,19 +16,6 @@ const mockPayload = {
 	supportTypes: ["legal"],
 };
 
-const mockPayload2 = {
-	email: "lua@email.com",
-	phone: "71999999999",
-	firstName: "Lua",
-	city: "SALVADOR",
-	state: "BA",
-	neighborhood: "Federação",
-	color: "black",
-	zipcode: "40210245",
-	dateOfBirth: new Date("1990-03-14"),
-	supportTypes: ["psychological"],
-};
-
 const mockPayloadUpdate = {
 	email: "sol@email.com",
 	phone: "19999999999",
@@ -97,11 +84,13 @@ describe("POST /zendesk/user", () => {
 	});
 
 	it("should create new zendesk user with payload", async () => {
-		mockcreateOrUpdateUser.mockResolvedValueOnce({
-			user: {
-				id: 12345666 as unknown as bigint,
-			},
-		});
+		mockcreateOrUpdateUser.mockResolvedValueOnce(
+			Response.json({
+				user: {
+					id: 12345666 as unknown as bigint,
+				},
+			})
+		);
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/user", {
 				method: "POST",
@@ -116,13 +105,15 @@ describe("POST /zendesk/user", () => {
 	});
 
 	it("should update zendesk user with payload", async () => {
-		mockcreateOrUpdateUser.mockResolvedValueOnce({
-			data: {
-				user: {
-					id: 12345667 as unknown as bigint,
+		mockcreateOrUpdateUser.mockResolvedValueOnce(
+			Response.json({
+				data: {
+					user: {
+						id: 12345667 as unknown as bigint,
+					},
 				},
-			},
-		});
+			})
+		);
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/user", {
 				method: "POST",

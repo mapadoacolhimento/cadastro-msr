@@ -62,14 +62,15 @@ export async function POST(request: Request) {
 			},
 		};
 
-		const res = await createOrUpdateUser(user);
+		const response = await createOrUpdateUser(user);
+		const data = await response.json();
 
 		let msrZendeskUserId;
 
-		if (res.data) {
-			msrZendeskUserId = res.data.user.id;
+		if (data.data) {
+			msrZendeskUserId = data.data.user.id;
 		} else {
-			msrZendeskUserId = res.user.id;
+			msrZendeskUserId = data.user.id;
 		}
 
 		return Response.json({

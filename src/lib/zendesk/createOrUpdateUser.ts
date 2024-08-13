@@ -27,7 +27,7 @@ export default async function createOrUpdateUser(user: ZendeskUser) {
 			throw new Error(response.statusText);
 		}
 
-		return await response.json();
+		return response;
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 

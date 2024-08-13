@@ -26,7 +26,7 @@ export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
 			throw new Error(response.statusText);
 		}
 
-		return await response.json();
+		return response;
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 

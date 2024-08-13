@@ -90,12 +90,9 @@ describe("POST /zendesk/ticket", () => {
 	});
 
 	it("should create new zendesk ticket with payload", async () => {
-		mockcreateOrUpdateTicket.mockResolvedValueOnce({
-			ticket: {
-				id: 1234,
-			},
-		});
-
+		mockcreateOrUpdateTicket.mockResolvedValueOnce(
+			Response.json({ ticket: { id: 1234 } })
+		);
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",
@@ -109,11 +106,9 @@ describe("POST /zendesk/ticket", () => {
 	});
 
 	it("should update zendesk ticket with payload", async () => {
-		mockcreateOrUpdateTicket.mockResolvedValueOnce({
-			ticket: {
-				id: 5678,
-			},
-		});
+		mockcreateOrUpdateTicket.mockResolvedValueOnce(
+			Response.json({ ticket: { id: 5678 } })
+		);
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",

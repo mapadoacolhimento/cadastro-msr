@@ -3,7 +3,7 @@ import {
 	createOrUpdateTicket,
 	getErrorMessage,
 	msrOrganizationId,
-	Ticket,
+	ZendeskTicket,
 	ZENDESK_CUSTOM_FIELDS_DICIO,
 } from "../../../lib";
 import { SupportType } from "@prisma/client";
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
 
 		await schema.validate(payload);
 
-		const ticket: Ticket = {
+		const ticket: ZendeskTicket = {
 			id: payload.ticketId,
 			requester_id: payload.msrZendeskUserId,
 			subject: payload.subject,
@@ -101,9 +101,9 @@ export async function POST(request: Request) {
 		);
 		const validTicket = Object.fromEntries(ticketWithoutEmptyProperties);
 		const response = await createOrUpdateTicket(validTicket);
-
+		const data = await response.json();
 		return Response.json({
-			ticketId: response.ticket.id,
+			ticketId: data.ticket.id,
 		});
 	} catch (e) {
 		const error = e as Record<string, unknown>;

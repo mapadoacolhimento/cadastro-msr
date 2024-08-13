@@ -29,7 +29,7 @@ export type User = {
 		city: string;
 		cep?: string;
 		neighborhood: string;
-		cor: string;
+		cor: string | null;
 		whatsapp: string;
 		date_of_birth: string;
 		tipo_de_acolhimento: string;

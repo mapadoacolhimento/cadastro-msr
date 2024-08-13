@@ -23,13 +23,8 @@ const payloadSchema = Yup.object({
 }).required();
 
 function getColor(color: string) {
-	let result = "";
-	colorOptions.forEach((option) => {
-		if (option.value === color) {
-			result = option.label.toLowerCase().normalize("NFD");
-		}
-	});
-	return result;
+	const option = colorOptions.find((option) => option.value === color);
+	return option ? option.label.toLowerCase().normalize("NFD") : null;
 }
 
 function getSupportType(supportTypes: string[]) {
@@ -47,7 +42,7 @@ export async function POST(request: Request) {
 		const payload = await request.json();
 
 		await payloadSchema.validate(payload);
-
+		console.log("COR", getColor(payload.color));
 		const user = {
 			name: payload.firstName,
 			role: "end-user",

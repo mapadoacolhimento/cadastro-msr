@@ -128,11 +128,11 @@ export const VOLUNTEER_API_URL = process.env["VOLUNTEER_API_URL"];
 =======
 
 export const ZENDESK_CUSTOM_FIELDS_DICIO = {
-	nome_msr: 360016681971,
-	link_match: 360016631632,
-	status_acolhimento: 360014379412,
-	data_encaminhamento: 360017432652,
-	nome_voluntaria: 360016631592,
+	nomeMsr: 360016681971,
+	linkMatch: 360016631632,
+	statusAcolhimento: 360014379412,
+	dataEncaminhamento: 360017432652,
+	nomeVoluntaria: 360016631592,
 	estado: 360021879791,
 	telefone: 360021812712,
 	cidade: 360021879811,

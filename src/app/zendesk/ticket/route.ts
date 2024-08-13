@@ -44,14 +44,14 @@ function getCustomFieldsTicket(payload: any) {
 
 	if (payload.msrName) {
 		custom_fields.push({
-			id: ZENDESK_CUSTOM_FIELDS_DICIO["nome_msr"],
+			id: ZENDESK_CUSTOM_FIELDS_DICIO["nomeMsr"],
 			value: payload.msrName,
 		});
 	}
 
 	if (payload.statusAcolhimento) {
 		custom_fields.push({
-			id: ZENDESK_CUSTOM_FIELDS_DICIO["status_acolhimento"],
+			id: ZENDESK_CUSTOM_FIELDS_DICIO["statusAcolhimento"],
 			value: payload.statusAcolhimento,
 		});
 	}

@@ -137,7 +137,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.url().should("include", "/fora-criterios");
 	});
 
-	it.only("should redirect to `fora-criterios` page if MSR selects that the violence location wasn't in Brazil", () => {
+	it("should redirect to `fora-criterios` page if MSR selects that the violence location wasn't in Brazil", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
 

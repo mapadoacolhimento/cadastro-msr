@@ -1,0 +1,15 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .spinner_z9k8 {
+      transform-origin: center;
+      animation: spinner_StKS .75s infinite linear;
+    }
+    @keyframes spinner_StKS {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" opacity=".25" fill="none" stroke="#622565" stroke-width="2"/>
+  <path d="M12 4a8 8 0 017.89 6.7A1.53 1.53 0 0021.38 12h0a1.5 1.5 0 001.48-1.75 11 11 0 00-21.72 0A1.5 1.5 0 002.62 12h0a1.53 1.53 0 001.49-1.3A8 8 0 0112 4z" class="spinner_z9k8" fill="#622565" />
+</svg>

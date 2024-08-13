@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import "./HoverInfo.css";
 import { ChevronDownIcon } from "@radix-ui/react-icons";

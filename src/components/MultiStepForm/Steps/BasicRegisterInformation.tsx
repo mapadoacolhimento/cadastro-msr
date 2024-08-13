@@ -2,36 +2,11 @@ import * as Yup from "yup";
 import { Box } from "@radix-ui/themes";
 import Step from "../Step";
 import TextInput from "../../TextInput";
-import { colorOptions } from "../../../lib";
+import { colorOptions, isAdult, isDateValid } from "../../../lib";
 import SelectInput from "../../SelectInput";
 
 const today = new Date();
 const minDate = new Date(1900, 0, 1);
-
-const isDateValid = (dateString: string) => {
-	const [day, month, year] = dateString.split("/").map(Number);
-	const date = new Date(year, month - 1, day);
-	return (
-		!isNaN(date.getTime()) &&
-		date.getDate() === day &&
-		date.getMonth() === month - 1 &&
-		date.getFullYear() === year
-	);
-};
-
-const calculateAge = (date: string) => {
-	const [day, month, year] = date.split("/").map(Number);
-	const birthDate = new Date(year, month - 1, day);
-	let age = today.getFullYear() - birthDate.getFullYear();
-	const monthDifference = today.getMonth() - birthDate.getMonth();
-	if (
-		monthDifference < 0 ||
-		(monthDifference === 0 && today.getDate() < birthDate.getDate())
-	) {
-		age--;
-	}
-	return age;
-};
 
 const basicRegisterInformationSchema = Yup.object({
 	firstName: Yup.string().required("Esse campo é obrigatório."),
@@ -77,8 +52,8 @@ export default function BasicRegisterInformation() {
 	async function handleSubmit(
 		values: Yup.InferType<typeof basicRegisterInformationSchema>
 	) {
-		const age = calculateAge(values.dateOfBirth);
-		if (age < 18) {
+		const isSurvivorAdult = isAdult(values.dateOfBirth);
+		if (!isSurvivorAdult) {
 			return {
 				redirectTo: "/fora-criterios",
 			};

@@ -3,7 +3,6 @@
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
-	AcceptsOnlineSupport,
 	SupportType,
 	GenderIdentity,
 	GenderViolence,
@@ -59,7 +58,6 @@ export default function MultiStepForm() {
 			{BasicRegisterInformation()}
 			{DisabilityInformation()}
 			{GenderIdentity()}
-			{AcceptsOnlineSupport()}
 			{SupportType()}
 			{GenderViolence()}
 			{ExternalSupport()}

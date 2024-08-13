@@ -20,9 +20,6 @@ describe("App", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillAcceptsOnlineSupportStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
 		cy.fillSupportTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -85,9 +82,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillAcceptsOnlineSupportStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
 		cy.fillSupportTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -108,9 +102,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillAcceptsOnlineSupportStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillSupportTypeStep();
@@ -136,9 +127,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillAcceptsOnlineSupportStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillSupportTypeStep();
@@ -167,9 +155,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillAcceptsOnlineSupportStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillSupportTypeStep();

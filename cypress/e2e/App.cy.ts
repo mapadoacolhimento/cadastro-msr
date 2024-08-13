@@ -201,15 +201,20 @@ describe("When MSR does not meet the criteria", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
 
-		const { firstName, email, confirmEmail, phone, dateOfBirth, colorOption } =
-			userData;
+		const { firstName, email, confirmEmail, phone, colorOption } = userData;
+
+		const today = new Date();
+		const birthYear = today.getFullYear() - 17;
+		const birthMonth = String(today.getMonth() + 1).padStart(2, "0");
+		const birthDay = String(today.getDate()).padStart(2, "0");
+		const dateOfBirth = `${birthDay}${birthMonth}${birthYear}`;
 
 		cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 		cy.get("#firstName").type(firstName);
 		cy.get("#email").type(email);
 		cy.get("#confirmEmail").type(confirmEmail);
 		cy.get("#phone").type(phone);
-		cy.get("#dateOfBirth").type("18112015");
+		cy.get("#dateOfBirth").type(dateOfBirth);
 		cy.get("#color").click();
 		cy.contains(colorOption).should("be.visible").click();
 

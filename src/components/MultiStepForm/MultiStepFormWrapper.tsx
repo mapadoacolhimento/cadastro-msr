@@ -65,11 +65,10 @@ export default function MultiStepFormWrapper({
 			}
 
 			await bag.setTouched({});
+			setIsLoading(false);
 			nextStep(values);
 		} catch (error: any) {
 			setSubmitError(error.message || "Ocorreu um erro durante a submissão");
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
@@ -103,7 +102,7 @@ export default function MultiStepFormWrapper({
 									highContrast
 									align={"center"}
 								>
-									{step.props.title}
+									{!isLoading && step.props.title}
 								</Heading>
 							</Box>
 

@@ -3,10 +3,10 @@ import {
 	ZENDESK_API_USER,
 	ZENDESK_SUBDOMAIN,
 } from "../constants";
-import { User } from "../types";
+import { ZendeskUser } from "../types";
 import getErrorMessage from "../getErrorMessage";
 
-export default async function createOrUpdateUser(user: User) {
+export default async function createOrUpdateUser(user: ZendeskUser) {
 	try {
 		const endpoint = ZENDESK_SUBDOMAIN + "/api/v2/users/create_or_update";
 

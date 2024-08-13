@@ -4,9 +4,9 @@ import {
 	ZENDESK_SUBDOMAIN,
 } from "../constants";
 import getErrorMessage from "../getErrorMessage";
-import { Ticket } from "../types";
+import { ZendeskTicket } from "../types";
 
-export default async function createOrUpdateTicket(ticket: Ticket) {
+export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
 	try {
 		const endpoint = `${ZENDESK_SUBDOMAIN}/api/v2/tickets/${ticket.id ? ticket.id : ""}`;
 		const response = await fetch(endpoint, {

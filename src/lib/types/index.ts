@@ -16,7 +16,7 @@ export interface Values {
 	terms: boolean;
 }
 
-export type User = {
+export type ZendeskUser = {
 	id?: bigint;
 	name: string;
 	role: string;
@@ -36,7 +36,7 @@ export type User = {
 	};
 };
 
-export type Ticket = {
+export type ZendeskTicket = {
 	id?: number;
 	requester_id?: number;
 	submitter_id?: number;

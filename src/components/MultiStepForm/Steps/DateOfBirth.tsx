@@ -1,8 +1,9 @@
 import * as Yup from "yup";
+import { Box, Strong, Text } from "@radix-ui/themes";
+
 import Step from "../Step";
 import { TextInput } from "../..";
 import { sleep, isDateValid } from "../../../lib";
-import { Box } from "@radix-ui/themes";
 
 const today = new Date();
 const minDate = new Date(1900, 0, 1);
@@ -44,7 +45,14 @@ export default function DateOfBirth() {
 				alt: "Ilustração de uma mulher com cabelo roxo se abraçando",
 			}}
 		>
-			<Box pt={{ initial: "7", sm: "8" }} width={"100%"} maxWidth={"22rem"}>
+			<Box width={"100%"} maxWidth={"22rem"}>
+				<Box asChild pb={{ initial: "7", sm: "8" }} pt={"3"}>
+					<Text asChild align={"center"} as={"p"}>
+						<legend>
+							Qual a sua <Strong>data de nascimento?</Strong>
+						</legend>
+					</Text>
+				</Box>
 				<TextInput
 					name="dateOfBirth"
 					type="text"

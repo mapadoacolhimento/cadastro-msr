@@ -124,3 +124,17 @@ export const ZENDESK_SUBDOMAIN = process.env["ZENDESK_SUBDOMAIN"];
 export const ZENDESK_API_USER = `${process.env["ZENDESK_API_USER"]}/token`;
 export const ZENDESK_API_TOKEN = process.env["ZENDESK_API_TOKEN"];
 export const VOLUNTEER_API_URL = process.env["VOLUNTEER_API_URL"];
+
+export const ZENDESK_CUSTOM_FIELDS_DICIO = {
+	nomeMsr: 360016681971,
+	linkMatch: 360016631632,
+	statusAcolhimento: 360014379412,
+	dataEncaminhamento: 360017432652,
+	nomeVoluntaria: 360016631592,
+	estado: 360021879791,
+	telefone: 360021812712,
+	cidade: 360021879811,
+};
+
+export const msrOrganizationId = 360273031591 as unknown as bigint;
+

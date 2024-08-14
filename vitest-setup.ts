@@ -17,3 +17,6 @@ vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 global.fetch = vi.fn();
 vi.stubEnv("VOLUNTEER_API", "http://voluntaria.mapa.org.br");
+vi.stubEnv("ZENDESK_API_TOKEN", "XXXXXXXXXX");
+vi.stubEnv("ZENDESK_API_USER", "user@email.org");
+vi.stubEnv("ZENDESK_SUBDOMAIN", "https://subdomain.zendesk.com");

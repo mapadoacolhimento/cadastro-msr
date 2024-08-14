@@ -8,12 +8,13 @@ Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("button", { name: "Quero ser acolhida" }).click();
 });
 
-Cypress.Commands.add("fillDateOfBirthStep", () => {
-	const { dateOfBirth } = userData;
-
-	cy.findByRole("heading", { name: "Sobre você" }).should("exist");
-	cy.findByRole("textbox").should("be.visible").type(dateOfBirth);
-});
+Cypress.Commands.add(
+	"fillDateOfBirthStep",
+	(dateOfBirth = userData.dateOfBirth) => {
+		cy.findByRole("heading", { name: "Sobre você" }).should("exist");
+		cy.findByRole("textbox").should("be.visible").type(dateOfBirth);
+	}
+);
 
 Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
 	const { firstName, email, confirmEmail, phone } = userData;

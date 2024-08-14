@@ -44,8 +44,7 @@ describe("App", () => {
 	});
 
 	it("should go back to the previous step when the back button is clicked", () => {
-		cy.visit("/");
-		cy.goThroughHomePage();
+		cy.visit("/cadastro");
 
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -68,8 +67,7 @@ describe("App", () => {
 
 describe("When MSR does not meet the criteria", () => {
 	it("should redirect to `fora-criterios` page if gender identity is filled with option `Não me identifico como mulher`", () => {
-		cy.visit("/");
-		cy.goThroughHomePage();
+		cy.visit("/cadastro");
 
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -90,8 +88,7 @@ describe("When MSR does not meet the criteria", () => {
 	});
 
 	it("should redirect to `fora-criterios` page if gender violence is filled with option `Não`", () => {
-		cy.visit("/");
-		cy.goThroughHomePage();
+		cy.visit("/cadastro");
 
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -118,8 +115,7 @@ describe("When MSR does not meet the criteria", () => {
 	});
 
 	it("should redirect to `fora-criterios` page if MSR asks for legal support and they select that they already have external legal support", () => {
-		cy.visit("/");
-		cy.goThroughHomePage();
+		cy.visit("/cadastro");
 
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -149,8 +145,7 @@ describe("When MSR does not meet the criteria", () => {
 	});
 
 	it("should redirect to `fora-criterios` page if MSR selects that the violence location wasn't in Brazil", () => {
-		cy.visit("/");
-		cy.goThroughHomePage();
+		cy.visit("/cadastro");
 
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -183,8 +178,7 @@ describe("When MSR does not meet the criteria", () => {
 	});
 
 	it("should redirect to `fora-criterios` page if MSR signals they dont struggle financially", () => {
-		cy.visit("/");
-		cy.goThroughHomePage();
+		cy.visit("/cadastro");
 
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -222,10 +216,7 @@ describe("When MSR does not meet the criteria", () => {
 	});
 
 	it("should redirect to `fora-criterios` page if MSR is under 18 years old", () => {
-		cy.visit("/");
-		cy.goThroughHomePage();
-
-		const { firstName, email, confirmEmail, phone, colorOption } = userData;
+		cy.visit("/cadastro");
 
 		const today = new Date();
 		const birthYear = today.getFullYear() - 17;
@@ -233,15 +224,7 @@ describe("When MSR does not meet the criteria", () => {
 		const birthDay = String(today.getDate()).padStart(2, "0");
 		const dateOfBirth = `${birthDay}${birthMonth}${birthYear}`;
 
-		cy.findByRole("heading", { name: "Seus dados" }).should("exist");
-		cy.get("#firstName").type(firstName);
-		cy.get("#email").type(email);
-		cy.get("#confirmEmail").type(confirmEmail);
-		cy.get("#phone").type(phone);
-		cy.get("#dateOfBirth").type(dateOfBirth);
-		cy.get("#color").click();
-		cy.contains(colorOption).should("be.visible").click();
-
+		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");

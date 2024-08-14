@@ -6,7 +6,7 @@ export { default as normalizeCity } from "./normalizeCity";
 export { default as formatZipcode } from "./formatZipcode";
 export { default as createOrUpdateUser } from "./zendesk/createOrUpdateUser";
 export { default as createOrUpdateTicket } from "./zendesk/createOrUpdateTicket";
+export { default as isAdult } from "./isAdult";
+
 export * from "./constants";
 export * from "./types";
-export { isAdult } from "./isAdult";
-export { isDateValid } from "./isDateValid";

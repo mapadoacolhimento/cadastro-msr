@@ -1,5 +1,4 @@
-import { describe, it, expect } from "vitest";
-import { isAdult } from "../isAdult";
+import isAdult from "../isAdult";
 
 describe("isAdult", () => {
 	it("should return true when the age is exactly 18 years", () => {

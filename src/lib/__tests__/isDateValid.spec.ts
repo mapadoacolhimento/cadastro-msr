@@ -1,5 +1,4 @@
-import { describe, it, expect } from "vitest";
-import { isDateValid } from "../isDateValid";
+import isDateValid from "../isDateValid";
 
 describe("isDateValid", () => {
 	it("should return true when the date is valid", () => {

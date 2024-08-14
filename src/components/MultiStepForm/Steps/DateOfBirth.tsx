@@ -3,10 +3,7 @@ import { Box, Strong, Text } from "@radix-ui/themes";
 
 import Step from "../Step";
 import { TextInput } from "../..";
-import { sleep, isDateValid } from "../../../lib";
-
-const today = new Date();
-const minDate = new Date(1900, 0, 1);
+import { isDateValid, isAdult } from "../../../lib";
 
 const dateOfBirthSchema = Yup.object({
 	dateOfBirth: Yup.string()
@@ -18,6 +15,7 @@ const dateOfBirthSchema = Yup.object({
 			"date-range",
 			"A data de nascimento não pode ser anterior ao ano de 1900",
 			(value) => {
+				const minDate = new Date(1900, 0, 1);
 				const [day, month, year] = value.split("/").map(Number);
 				const date = new Date(year, month - 1, day);
 				return date >= minDate;
@@ -27,6 +25,7 @@ const dateOfBirthSchema = Yup.object({
 			"date-range",
 			"A data de nascimento não pode ser superior ao dia de hoje",
 			(value) => {
+				const today = new Date();
 				const [day, month, year] = value.split("/").map(Number);
 				const date = new Date(year, month - 1, day);
 				return date <= today;
@@ -35,9 +34,20 @@ const dateOfBirthSchema = Yup.object({
 });
 
 export default function DateOfBirth() {
+	async function handleStepSubmit(
+		values: Yup.InferType<typeof dateOfBirthSchema>
+	) {
+		const isSurvivorAdult = isAdult(values.dateOfBirth);
+		if (!isSurvivorAdult) {
+			return {
+				redirectTo: "/fora-criterios",
+			};
+		}
+	}
+
 	return (
 		<Step
-			onSubmit={() => sleep(300).then(() => console.log("Step2 onSubmit"))}
+			onSubmit={handleStepSubmit}
 			validationSchema={dateOfBirthSchema}
 			title={"Sobre você"}
 			img={{

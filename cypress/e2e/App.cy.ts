@@ -16,6 +16,9 @@ describe("App", () => {
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillDiversityInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillGeolocationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -44,10 +47,13 @@ describe("App", () => {
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillDiversityInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillGeolocationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillGenderIdentityStep("Mulher cis");
+		cy.fillGenderIdentityStep("Eu sou uma mulher cis");
 		cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 		cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
@@ -60,6 +66,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDiversityInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGeolocationStep();
@@ -76,6 +85,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDiversityInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGeolocationStep();
@@ -98,6 +110,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDiversityInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGeolocationStep();
@@ -123,6 +138,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDiversityInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGeolocationStep();
@@ -151,6 +169,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDiversityInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGeolocationStep();

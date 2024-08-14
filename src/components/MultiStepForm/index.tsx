@@ -10,6 +10,7 @@ import {
 	ExternalSupport,
 	FinancialNeed,
 	Geolocation,
+	DiversityInformation,
 } from "./Steps";
 import { sleep } from "../../lib";
 
@@ -68,6 +69,7 @@ export default function MultiStepForm() {
 			}
 		>
 			{BasicRegisterInformation()}
+			{DiversityInformation()}
 			{Geolocation()}
 			{GenderIdentity()}
 			{SupportType()}

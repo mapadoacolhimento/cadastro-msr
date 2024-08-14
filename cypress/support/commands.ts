@@ -26,8 +26,7 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 	cy.contains(colorOption).should("be.visible").click();
 	cy.findByRole("combobox", {
 		name: "Você é PcD (Pessoa com deficiência)?",
-	}).click();
-	cy.contains(hasDisability).should("be.visible").click();
+	}).type(`${hasDisability}{enter}`);
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {
@@ -50,9 +49,7 @@ Cypress.Commands.add("fillGeolocationStep", () => {
 });
 
 Cypress.Commands.add("fillGenderIdentityStep", (gender: string) => {
-	cy.findByRole("heading", { name: "Qual sua identidade de gênero?" }).should(
-		"exist"
-	);
+	cy.contains("Qual sua identidade de gênero?").should("exist");
 	cy.findByRole("radio", { name: gender }).click();
 });
 

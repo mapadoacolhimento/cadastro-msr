@@ -1,10 +1,12 @@
 import userData from "../fixtures/userData.json";
 
-const { gender } = userData;
-const { genderViolence } = userData;
-const { externalSupport } = userData;
-const { violenceLocation } = userData;
-const { financialNeed } = userData;
+const {
+	gender,
+	genderViolence,
+	externalSupport,
+	violenceLocation,
+	financialNeed,
+} = userData;
 
 describe("App", () => {
 	it("should continue to next step if all fields are filled correctly", () => {

@@ -4,34 +4,14 @@ import {
 	ZENDESK_SUBDOMAIN,
 } from "../constants";
 import getErrorMessage from "../getErrorMessage";
+import { ZendeskTicket } from "../types";
 
-type TicketUpdate = {
-	ticket: {
-		status?: string;
-		comment?: {
-			body: string;
-			public: boolean;
-		};
-	};
-};
-
-type TicketsUpdate = {
-	tickets: {
-		id: number;
-	}[];
-};
-
-export default async function updateManyTickets(
-	ids: string,
-	ticketUpdate: TicketUpdate | TicketsUpdate
-) {
+export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
 	try {
-		const endpoint =
-			ZENDESK_SUBDOMAIN + "/api/v2/tickets/update_many.json?ids=" + ids;
-
+		const endpoint = `${ZENDESK_SUBDOMAIN}/api/v2/tickets/${ticket.id ? ticket.id : ""}`;
 		const response = await fetch(endpoint, {
-			body: JSON.stringify({ ...ticketUpdate }),
-			method: "PUT",
+			body: JSON.stringify({ ticket }),
+			method: ticket.id ? "PUT" : "POST",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization:

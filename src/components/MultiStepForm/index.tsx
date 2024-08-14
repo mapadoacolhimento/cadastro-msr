@@ -71,8 +71,8 @@ export default function MultiStepForm() {
 		>
 			{DateOfBirth()}
 			{BasicRegisterInformation()}
-			{DiversityInformation()}
 			{Geolocation()}
+			{DiversityInformation()}
 			{GenderIdentity()}
 			{SupportType()}
 			{GenderViolence()}

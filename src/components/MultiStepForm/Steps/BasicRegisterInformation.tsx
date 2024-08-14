@@ -2,8 +2,7 @@ import * as Yup from "yup";
 import { Box } from "@radix-ui/themes";
 
 import Step from "../Step";
-import { TextInput, SelectInput } from "../..";
-import { colorOptions } from "../../../lib";
+import { TextInput } from "../..";
 
 const basicRegisterInformationSchema = Yup.object({
 	firstName: Yup.string().required("Insira seu primeiro nome."),
@@ -19,7 +18,6 @@ const basicRegisterInformationSchema = Yup.object({
 			"Insira um número de telefone válido com DDD."
 		)
 		.required("Insira seu número de telefone celular."),
-	color: Yup.string().required("Selecione sua cor."),
 });
 
 export default function BasicRegisterInformation() {
@@ -80,12 +78,6 @@ export default function BasicRegisterInformation() {
 				label="Whatsapp"
 				placeholder="Qual o seu whatsapp (com DDD)?"
 				mask="(99) 99999-9999"
-			/>
-			<SelectInput
-				name="color"
-				label="Cor"
-				options={colorOptions}
-				placeholder="Cor"
 			/>
 		</Step>
 	);

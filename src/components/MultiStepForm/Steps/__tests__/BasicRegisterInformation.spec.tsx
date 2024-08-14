@@ -18,7 +18,6 @@ const setup = () => {
 					firstName: "",
 					confirmEmail: "",
 					phone: "",
-					color: "",
 				} as Values
 			}
 		>
@@ -37,13 +36,11 @@ describe("<BasicRegisterInformation />", () => {
 			name: "Confirme seu e-mail",
 		});
 		const whatsappInput = screen.getByRole("textbox", { name: "Whatsapp" });
-		const colorInput = screen.getByRole("combobox", { name: "Cor" });
 
 		expect(nameInput).toBeInTheDocument();
 		expect(emailInput).toBeInTheDocument();
 		expect(confirmEmailInput).toBeInTheDocument();
 		expect(whatsappInput).toBeInTheDocument();
-		expect(colorInput).toBeInTheDocument();
 	});
 
 	it("should render empty field error if no info provided", async () => {
@@ -54,7 +51,7 @@ describe("<BasicRegisterInformation />", () => {
 
 		await screen.findAllByRole("alert");
 
-		expect(screen.getAllByRole("alert")).toHaveLength(5);
+		expect(screen.getAllByRole("alert")).toHaveLength(4);
 	});
 
 	it("should render error if name field is empty", async () => {
@@ -129,17 +126,6 @@ describe("<BasicRegisterInformation />", () => {
 				(error) =>
 					error.textContent === "Insira seu número de telefone celular."
 			)
-		).toBeDefined();
-	});
-
-	it("should render error if color is empty", async () => {
-		setup();
-		const btn = screen.getByRole("button", { name: /enviar/i });
-		await userEvent.click(btn);
-
-		const errors = await screen.findAllByRole("alert");
-		expect(
-			errors.find((error) => error.textContent === "Selecione sua cor.")
 		).toBeDefined();
 	});
 });

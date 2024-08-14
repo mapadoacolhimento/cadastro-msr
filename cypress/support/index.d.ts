@@ -19,5 +19,6 @@ declare namespace Cypress {
 		fillExternalSupportStep(option: string): Chainable<any>;
 		fillFinancialNeedStep(option: string): Chainable<any>;
 		fillGeolocationStep(): Chainable<any>;
+		fillDiversityInformationStep(): Chainable<any>;
 	}
 }

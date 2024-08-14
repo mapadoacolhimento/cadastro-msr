@@ -7,3 +7,5 @@ export { default as createOrUpdateUser } from "./zendesk/createOrUpdateUser";
 export { default as createOrUpdateTicket } from "./zendesk/createOrUpdateTicket";
 export * from "./constants";
 export * from "./types";
+export { isAdult } from "./isAdult";
+export { isDateValid } from "./isDateValid";

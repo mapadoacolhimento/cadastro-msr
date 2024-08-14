@@ -15,7 +15,6 @@ export const isAdult = (dateOfBirth: string) => {
 
 	if (hasNotPassedBirthdayThisYear) {
 		ageDifference--;
-	} else {
-		return ageDifference >= 18;
 	}
+	return ageDifference >= 18;
 };

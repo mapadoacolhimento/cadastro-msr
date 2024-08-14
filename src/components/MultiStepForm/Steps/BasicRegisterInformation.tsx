@@ -1,29 +1,15 @@
 import * as Yup from "yup";
 import { Box } from "@radix-ui/themes";
+
 import Step from "../Step";
-import TextInput from "../../TextInput";
+import { TextInput, SelectInput } from "../..";
 import { colorOptions } from "../../../lib";
-import SelectInput from "../../SelectInput";
-
-const today = new Date();
-const minDate = new Date(1900, 0, 1);
-
-const isDateValid = (dateString: string) => {
-	const [day, month, year] = dateString.split("/").map(Number);
-	const date = new Date(year, month - 1, day);
-	return (
-		!isNaN(date.getTime()) &&
-		date.getDate() === day &&
-		date.getMonth() === month - 1 &&
-		date.getFullYear() === year
-	);
-};
 
 const basicRegisterInformationSchema = Yup.object({
-	firstName: Yup.string().required("Esse campo é obrigatório."),
+	firstName: Yup.string().required("Insira seu primeiro nome."),
 	email: Yup.string()
 		.email("Insira um e-mail válido.")
-		.required("Esse campo é obrigatório."),
+		.required("Insira seu e-mail."),
 	confirmEmail: Yup.string()
 		.oneOf([Yup.ref("email")], "Os e-mails precisam ser iguais.")
 		.required("Esse campo é obrigatório."),
@@ -32,31 +18,8 @@ const basicRegisterInformationSchema = Yup.object({
 			/^\(\d{2}\)\s\d{4,5}-\d{4}$/,
 			"Insira um número de telefone válido com DDD."
 		)
-		.required("Esse campo é obrigatório."),
-	dateOfBirth: Yup.string()
-		.required("Esse campo é obrigatório.")
-		.test("valid date", "Data de nascimento inválida", (value) => {
-			return isDateValid(value);
-		})
-		.test(
-			"date-range",
-			"A data de nascimento não pode ser anterior ao ano de 1900",
-			(value) => {
-				const [day, month, year] = value.split("/").map(Number);
-				const date = new Date(year, month - 1, day);
-				return date >= minDate;
-			}
-		)
-		.test(
-			"date-range",
-			"A data de nascimento não pode ser superior ao dia de hoje",
-			(value) => {
-				const [day, month, year] = value.split("/").map(Number);
-				const date = new Date(year, month - 1, day);
-				return date <= today;
-			}
-		),
-	color: Yup.string().required("Esse campo é obrigatório."),
+		.required("Insira seu número de telefone celular."),
+	color: Yup.string().required("Selecione sua cor."),
 });
 
 export default function BasicRegisterInformation() {
@@ -108,7 +71,7 @@ export default function BasicRegisterInformation() {
 			<TextInput
 				name="confirmEmail"
 				type="email"
-				label="Confirme seu E-mail"
+				label="Confirme seu e-mail"
 				placeholder="Confirme seu e-mail"
 			/>
 			<TextInput
@@ -117,13 +80,6 @@ export default function BasicRegisterInformation() {
 				label="Whatsapp"
 				placeholder="Qual o seu whatsapp (com DDD)?"
 				mask="(99) 99999-9999"
-			/>
-			<TextInput
-				name="dateOfBirth"
-				type="text"
-				label="Data de Nascimento"
-				placeholder="DD/MM/AAAA"
-				mask="99/99/9999"
 			/>
 			<SelectInput
 				name="color"

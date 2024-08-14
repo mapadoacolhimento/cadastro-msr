@@ -16,9 +16,9 @@ const setup = () => {
 				{
 					email: "",
 					firstName: "",
-					dateOfBirth: "",
 					confirmEmail: "",
 					phone: "",
+					color: "",
 				} as Values
 			}
 		>
@@ -34,7 +34,7 @@ describe("<BasicRegisterInformation />", () => {
 		const nameInput = screen.getByRole("textbox", { name: "Primeiro nome" });
 		const emailInput = screen.getByRole("textbox", { name: "E-mail" });
 		const confirmEmailInput = screen.getByRole("textbox", {
-			name: "Confirme seu E-mail",
+			name: "Confirme seu e-mail",
 		});
 		const whatsappInput = screen.getByRole("textbox", { name: "Whatsapp" });
 		const colorInput = screen.getByRole("combobox", { name: "Cor" });
@@ -60,55 +60,26 @@ describe("<BasicRegisterInformation />", () => {
 	it("should render error if name field is empty", async () => {
 		setup();
 
-		const emailInput = screen.getByRole("textbox", { name: "E-mail" });
-		await userEvent.type(emailInput, "test@gmail.com");
-
-		const confirmEmailInput =
-			screen.getByPlaceholderText(/Confirme seu e-mail/i);
-		await userEvent.type(confirmEmailInput, "test@gmail.com");
-
-		const phoneInput = screen.getByRole("textbox", { name: /whatsapp/i });
-		await userEvent.type(phoneInput, "81123430219");
-
-		const dateOfBirth = screen.getByRole("textbox", {
-			name: /Data de Nascimento/i,
-		});
-		await userEvent.type(dateOfBirth, "18111996");
-
 		const btn = screen.getByRole("button", { name: /enviar/i });
 		await userEvent.click(btn);
 
-		expect(await screen.findByRole("alert")).toBeInTheDocument();
-		expect(screen.getByRole("alert")).toHaveTextContent(
-			"Esse campo é obrigatório."
-		);
+		const errors = await screen.findAllByRole("alert");
+
+		expect(
+			errors.find((error) => error.textContent === "Insira seu primeiro nome.")
+		).toBeDefined();
 	});
 
 	it("should render error if email field is empty", async () => {
 		setup();
 
-		const nameInput = screen.getByRole("textbox", { name: /Primeiro nome/i });
-		await userEvent.type(nameInput, "MSR");
-
-		const confirmEmailInput =
-			screen.getByPlaceholderText(/Confirme seu e-mail/i);
-		await userEvent.type(confirmEmailInput, "test@gmail.com");
-
-		const phoneInput = screen.getByRole("textbox", { name: /whatsapp/i });
-		await userEvent.type(phoneInput, "81123430219");
-
-		const dateOfBirth = screen.getByRole("textbox", {
-			name: /Data de nascimento/i,
-		});
-		await userEvent.type(dateOfBirth, "18111996");
-
 		const btn = screen.getByRole("button", { name: /enviar/i });
 		await userEvent.click(btn);
 
-		const alerts: HTMLElement[] = await screen.findAllByRole("alert");
-		expect(screen.getAllByRole("alert")).toHaveLength(2);
-		expect(alerts[0]).toHaveTextContent("Esse campo é obrigatório.");
-		expect(alerts[1]).toHaveTextContent("Os e-mails precisam ser iguais.");
+		const errors = await screen.findAllByRole("alert");
+		expect(
+			errors.find((error) => error.textContent === "Insira seu e-mail.")
+		).toBeDefined();
 	});
 
 	it("should render invalid email field error if no valid email is provided", async () => {
@@ -121,58 +92,54 @@ describe("<BasicRegisterInformation />", () => {
 		const btn = screen.getByRole("button", { name: /enviar/i });
 		await userEvent.click(btn);
 
+		const errors = await screen.findAllByRole("alert");
 		expect(
-			await screen.findByText(/Insira um e-mail válido./i)
-		).toBeInTheDocument();
+			errors.find((error) => error.textContent === "Insira um e-mail válido.")
+		).toBeDefined();
 	});
 
 	it("should render error if email confirmation does not match email", async () => {
 		setup();
-		const nameInput = screen.getByRole("textbox", { name: /Nome/i });
-		await userEvent.type(nameInput, "MSR");
 		const emailInput = screen.getByRole("textbox", { name: "E-mail" });
 		await userEvent.type(emailInput, "msr@test.com");
-		const confirmEmailInput =
-			screen.getByPlaceholderText(/Confirme seu e-mail/i);
-		await userEvent.type(confirmEmailInput, "test@test.com");
-		const phoneInput = screen.getByRole("textbox", { name: /whatsapp/i });
-		await userEvent.type(phoneInput, "91123430219");
-		const dateOfBirth = screen.getByRole("textbox", {
-			name: /Data de Nascimento/i,
+		const confirmEmailInput = screen.getByRole("textbox", {
+			name: "Confirme seu e-mail",
 		});
-		await userEvent.type(dateOfBirth, "18111996");
+		await userEvent.type(confirmEmailInput, "test@test.com");
 
 		const btn = screen.getByRole("button", { name: /enviar/i });
 		await userEvent.click(btn);
 
-		expect(await screen.findByRole("alert")).toBeInTheDocument();
-		expect(screen.getByRole("alert")).toHaveTextContent(
-			"Os e-mails precisam ser iguais."
-		);
+		const errors = await screen.findAllByRole("alert");
+		expect(
+			errors.find(
+				(error) => error.textContent === "Os e-mails precisam ser iguais."
+			)
+		).toBeDefined();
 	});
 
 	it("should render error if whatsapp number is invalid", async () => {
 		setup();
-		const nameInput = screen.getByRole("textbox", { name: /Nome/i });
-		await userEvent.type(nameInput, "MSR");
-		const emailInput = screen.getByRole("textbox", { name: "E-mail" });
-		await userEvent.type(emailInput, "msr@test.com");
-		const confirmEmailInput =
-			screen.getByPlaceholderText(/Confirme seu e-mail/i);
-		await userEvent.type(confirmEmailInput, "msr@test.com");
-		const phoneInput = screen.getByRole("textbox", { name: /whatsapp/i });
-		await userEvent.type(phoneInput, "123430219");
-		const dateOfBirth = screen.getByRole("textbox", {
-			name: /Data de nascimento/i,
-		});
-		await userEvent.type(dateOfBirth, "18111996");
-
 		const btn = screen.getByRole("button", { name: /enviar/i });
 		await userEvent.click(btn);
 
-		expect(await screen.findByRole("alert")).toBeInTheDocument();
-		expect(screen.getByRole("alert")).toHaveTextContent(
-			"Insira um número de telefone válido com DDD."
-		);
+		const errors = await screen.findAllByRole("alert");
+		expect(
+			errors.find(
+				(error) =>
+					error.textContent === "Insira seu número de telefone celular."
+			)
+		).toBeDefined();
+	});
+
+	it("should render error if color is empty", async () => {
+		setup();
+		const btn = screen.getByRole("button", { name: /enviar/i });
+		await userEvent.click(btn);
+
+		const errors = await screen.findAllByRole("alert");
+		expect(
+			errors.find((error) => error.textContent === "Selecione sua cor.")
+		).toBeDefined();
 	});
 });

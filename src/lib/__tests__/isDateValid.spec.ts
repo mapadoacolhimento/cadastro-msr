@@ -3,7 +3,7 @@ import { isDateValid } from "../isDateValid";
 
 describe("isDateValid", () => {
 	it("should return true when the date is valid", () => {
-		expect(isDateValid("15/08/2024")).toBe(true);
+		expect(isDateValid("14/08/2024")).toBe(true);
 	});
 
 	it("should return false when the date is invalid", () => {
@@ -11,19 +11,19 @@ describe("isDateValid", () => {
 	});
 
 	it("should return false when the month is invalid", () => {
-		expect(isDateValid("10/13/2024")).toBe(false);
+		expect(isDateValid("14/13/2024")).toBe(false);
 	});
 
 	it("should return false when the year is invalid", () => {
-		expect(isDateValid("15/08/0000")).toBe(false);
+		expect(isDateValid("14/08/0000")).toBe(false);
 	});
 
 	it("should return false for an invalid format", () => {
-		expect(isDateValid("15/08")).toBe(false);
+		expect(isDateValid("14/08")).toBe(false);
 	});
 
 	it("should return false for an invalid date format", () => {
-		expect(isDateValid("15/Aug/2024")).toBe(false);
+		expect(isDateValid("14/Aug/2024")).toBe(false);
 	});
 
 	it("should return true for a leap year date", () => {

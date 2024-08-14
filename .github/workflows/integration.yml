@@ -139,6 +139,9 @@ jobs:
       - name: Push current migrations to test database
         run: pnpm db:push
 
+      - name: Seed db
+        run: pnpm db:seed
+
       - name: Run e2e tests
         id: e2e
         uses: cypress-io/github-action@v6

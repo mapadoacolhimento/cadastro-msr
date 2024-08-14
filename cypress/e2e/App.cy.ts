@@ -14,6 +14,9 @@ describe("App", () => {
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillGeolocationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillDisabilityStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -42,13 +45,13 @@ describe("App", () => {
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDisabilityStep();
+		cy.fillGeolocationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillDisabilityStep();
 		cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
-		const { firstName } = userData;
-
-		cy.get("#firstName").type(firstName);
+		cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
 	});
 });
 
@@ -58,6 +61,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillGeolocationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillDisabilityStep();
@@ -74,6 +80,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillGeolocationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillDisabilityStep();
@@ -96,6 +105,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillGeolocationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillDisabilityStep();
@@ -121,6 +133,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillGeolocationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillDisabilityStep();
@@ -149,6 +164,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.goThroughHomePage();
 
 		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillGeolocationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillDisabilityStep();

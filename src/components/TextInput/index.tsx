@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { useField } from "formik";
-import { TextField } from "@radix-ui/themes";
+import { Spinner, TextField } from "@radix-ui/themes";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import InputMask from "react-input-mask";
 import ErrorMessage from "../ErrorMessage";
 import "./TextInput.css";
@@ -12,6 +13,22 @@ interface TextInputProps {
 	label: string;
 	placeholder?: string;
 	mask?: string;
+	onBlur?: (value: string) => Promise<void> | void;
+	isLoading?: boolean;
+}
+
+function LoadingSpinner({ isLoading }: { isLoading: boolean }) {
+	return isLoading ? (
+		<>
+			<VisuallyHidden.Root>Carregando...</VisuallyHidden.Root>
+			<TextField.Slot
+				style={{ paddingLeft: "var(--space-3", paddingRight: 0 }}
+			></TextField.Slot>
+			<TextField.Slot>
+				<Spinner size="2" loading={isLoading} />
+			</TextField.Slot>
+		</>
+	) : null;
 }
 
 const TextInput: React.FC<TextInputProps> = (props) => {
@@ -29,8 +46,13 @@ const TextInput: React.FC<TextInputProps> = (props) => {
 
 	function handleBlur(e: React.FocusEvent<HTMLInputElement>) {
 		field.onBlur(e);
+
 		if (e.target.value === "") {
-			setIsActive(false);
+			return setIsActive(false);
+		}
+
+		if (props.onBlur) {
+			props.onBlur(e.target.value);
 		}
 	}
 
@@ -56,7 +78,9 @@ const TextInput: React.FC<TextInputProps> = (props) => {
 					aria-invalid={hasError ? "true" : "false"}
 					color={hasError ? "red" : "purple"}
 				>
-					<TextField.Root size={"3"} />
+					<TextField.Root size={"3"}>
+						<LoadingSpinner isLoading={!!props.isLoading} />
+					</TextField.Root>
 				</InputMask>
 			) : (
 				<TextField.Root
@@ -70,7 +94,9 @@ const TextInput: React.FC<TextInputProps> = (props) => {
 					size={"3"}
 					aria-invalid={hasError ? "true" : "false"}
 					color={hasError ? "red" : "purple"}
-				/>
+				>
+					<LoadingSpinner isLoading={!!props.isLoading} />
+				</TextField.Root>
 			)}
 			<ErrorMessage name={props.name} />
 		</div>

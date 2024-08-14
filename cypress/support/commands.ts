@@ -34,10 +34,6 @@ Cypress.Commands.add("fillGeolocationStep", () => {
 	const { zipcode, neighborhood, state, city } = userData;
 	cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
 
-	cy.findByRole("combobox", {
-		name: "Você é PcD (Pessoa com deficiência)?",
-	}).click();
-	cy.contains(hasDisability).should("be.visible").click();
 	// zipcode
 	cy.findByLabelText("CEP").type(zipcode).blur();
 
@@ -53,14 +49,10 @@ Cypress.Commands.add("fillGeolocationStep", () => {
 	cy.findByRole("option", { name: city }).click();
 });
 
-Cypress.Commands.add("fillDisabilityStep", () => {
-	const { hasDisability } = userData;
-	cy.contains("Você é PcD (Pessoa com deficiência)?").should("exist");
-	cy.contains(hasDisability).click();
-});
-
 Cypress.Commands.add("fillGenderIdentityStep", (gender: string) => {
-	cy.contains("Qual sua identidade de gênero?").should("exist");
+	cy.findByRole("heading", { name: "Qual sua identidade de gênero?" }).should(
+		"exist"
+	);
 	cy.findByRole("radio", { name: gender }).click();
 });
 

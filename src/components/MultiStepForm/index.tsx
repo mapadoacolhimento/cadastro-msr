@@ -6,7 +6,6 @@ import {
 	SupportType,
 	GenderIdentity,
 	GenderViolence,
-	DisabilityInformation,
 	ViolenceLocation,
 	ExternalSupport,
 	FinancialNeed,
@@ -70,7 +69,6 @@ export default function MultiStepForm() {
 		>
 			{BasicRegisterInformation()}
 			{Geolocation()}
-			{DisabilityInformation()}
 			{GenderIdentity()}
 			{SupportType()}
 			{GenderViolence()}

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useRouter } from "next/navigation";
 
 import DateOfBirth from "../DateOfBirth";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
@@ -98,5 +99,38 @@ describe("DateOfBirth", () => {
 		await userEvent.click(btn);
 
 		expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+	});
+
+	it("should redirect to `fora-criterios` when MSR is under 18 years old", async () => {
+		const pushMock = vi.fn();
+		useRouter.mockReturnValue({
+			push: pushMock,
+		});
+
+		setup();
+
+		const today = new Date();
+		const seventeenYearsAgo = new Date(
+			today.getFullYear() - 17,
+			today.getMonth(),
+			today.getDate()
+		);
+		const birthYear17 = seventeenYearsAgo.getFullYear();
+		const birthMonth17 = String(seventeenYearsAgo.getMonth() + 1).padStart(
+			2,
+			"0"
+		);
+		const birthDay17 = String(seventeenYearsAgo.getDate()).padStart(2, "0");
+		const dateOfBirth17 = birthDay17 + birthMonth17 + birthYear17;
+
+		const dateOfBirth = screen.getByRole("textbox", {
+			name: /Data de nascimento/i,
+		});
+		await userEvent.type(dateOfBirth, dateOfBirth17);
+
+		const btn = screen.getByRole("button", { name: /enviar/i });
+		await userEvent.click(btn);
+
+		expect(pushMock).toHaveBeenCalledWith("/fora-criterios");
 	});
 });

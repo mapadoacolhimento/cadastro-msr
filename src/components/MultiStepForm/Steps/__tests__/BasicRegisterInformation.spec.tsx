@@ -5,7 +5,6 @@ import BasicRegisterInformation from "../BasicRegisterInformation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import { sleep } from "../../../../lib";
 import { type Values } from "../..";
-import { useRouter } from "next/navigation";
 
 const setup = () => {
 	return render(
@@ -128,39 +127,5 @@ describe("<BasicRegisterInformation />", () => {
 					error.textContent === "Insira seu número de telefone celular."
 			)
 		).toBeDefined();
-	});
-
-	it("should redirect to `fora-criterios` when MSR is under 18 years old", async () => {
-		const pushMock = vi.fn();
-		useRouter.mockReturnValue({
-			push: pushMock,
-		});
-
-		setup();
-
-		const nameInput = screen.getByRole("textbox", { name: /Nome/i });
-		await userEvent.type(nameInput, "MSR");
-		const emailInput = screen.getByRole("textbox", { name: "E-mail" });
-		await userEvent.type(emailInput, "msr@test.com");
-		const confirmEmailInput =
-			screen.getByPlaceholderText(/Confirme seu e-mail/i);
-		await userEvent.type(confirmEmailInput, "msr@test.com");
-		const phoneInput = screen.getByRole("textbox", { name: /whatsapp/i });
-		await userEvent.type(phoneInput, "81999999999");
-		const dateOfBirth = screen.getByRole("textbox", {
-			name: /Data de nascimento/i,
-		});
-		await userEvent.type(dateOfBirth, "18112014");
-
-		const color = screen.getByRole("combobox", { name: /Cor/i });
-		await userEvent.click(color);
-
-		const optionColor = screen.getByText("Preta");
-		await userEvent.click(optionColor);
-
-		const btn = screen.getByRole("button", { name: /enviar/i });
-		await userEvent.click(btn);
-
-		expect(pushMock).toHaveBeenCalledWith("/fora-criterios");
 	});
 });

@@ -47,4 +47,34 @@ describe("isAdult", () => {
 
 		expect(isAdult(dateOfBirth17)).toBe(false);
 	});
+
+	it("should return false when the person will be 18 this year, on this same date, but only one month later", () => {
+		const today = new Date();
+		const eighteenYearsAgo = new Date(
+			today.getFullYear() - 18,
+			today.getMonth() + 1,
+			today.getDate()
+		);
+		const birthYear = eighteenYearsAgo.getFullYear();
+		const birthMonth = String(eighteenYearsAgo.getMonth() + 1).padStart(2, "0");
+		const birthDay = String(eighteenYearsAgo.getDate()).padStart(2, "0");
+		const dateOfBirth = `${birthDay}/${birthMonth}/${birthYear}`;
+
+		expect(isAdult(dateOfBirth)).toBe(false);
+	});
+
+	it("should return true when the person is 18 years old and their birthday has already passed this year", () => {
+		const today = new Date();
+		const eighteenYearsAgo = new Date(
+			today.getFullYear() - 18,
+			today.getMonth() - 1,
+			today.getDate()
+		);
+		const birthYear = eighteenYearsAgo.getFullYear();
+		const birthMonth = String(eighteenYearsAgo.getMonth() + 1).padStart(2, "0");
+		const birthDay = String(eighteenYearsAgo.getDate()).padStart(2, "0");
+		const dateOfBirth = `${birthDay}/${birthMonth}/${birthYear}`;
+
+		expect(isAdult(dateOfBirth)).toBe(true);
+	});
 });

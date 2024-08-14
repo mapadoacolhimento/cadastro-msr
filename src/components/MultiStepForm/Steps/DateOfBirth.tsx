@@ -56,7 +56,7 @@ export default function DateOfBirth() {
 				<TextInput
 					name="dateOfBirth"
 					type="text"
-					label="Data de Nascimento"
+					label="Data de nascimento"
 					placeholder="DD/MM/AAAA"
 					mask="99/99/9999"
 				/>

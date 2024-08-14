@@ -13,6 +13,9 @@ describe("App", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
 
+		cy.fillDateOfBirthStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -44,6 +47,9 @@ describe("App", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
 
+		cy.fillDateOfBirthStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -65,6 +71,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
 
+		cy.fillDateOfBirthStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -83,6 +92,9 @@ describe("When MSR does not meet the criteria", () => {
 	it("should redirect to `fora-criterios` page if gender violence is filled with option `Não`", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
+
+		cy.fillDateOfBirthStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -108,6 +120,9 @@ describe("When MSR does not meet the criteria", () => {
 	it("should redirect to `fora-criterios` page if MSR asks for legal support and they select that they already have external legal support", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
+
+		cy.fillDateOfBirthStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -136,6 +151,9 @@ describe("When MSR does not meet the criteria", () => {
 	it("should redirect to `fora-criterios` page if MSR selects that the violence location wasn't in Brazil", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
+
+		cy.fillDateOfBirthStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
@@ -167,6 +185,9 @@ describe("When MSR does not meet the criteria", () => {
 	it("should redirect to `fora-criterios` page if MSR signals they dont struggle financially", () => {
 		cy.visit("/");
 		cy.goThroughHomePage();
+
+		cy.fillDateOfBirthStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();

@@ -26,7 +26,7 @@ const setup = () => {
 describe("DateOfBirth", () => {
 	it("should render date of birth field", () => {
 		setup();
-		const input = screen.getByRole("textbox", { name: "Data de Nascimento" });
+		const input = screen.getByRole("textbox", { name: "Data de nascimento" });
 		expect(input).toBeInTheDocument();
 	});
 
@@ -45,7 +45,7 @@ describe("DateOfBirth", () => {
 	it("should render error if date of birth is prior to 1900", async () => {
 		setup();
 
-		const input = screen.getByRole("textbox", { name: "Data de Nascimento" });
+		const input = screen.getByRole("textbox", { name: "Data de nascimento" });
 		await userEvent.type(input, "01/01/1889");
 
 		const btn = screen.getByRole("button", { name: /enviar/i });
@@ -60,7 +60,7 @@ describe("DateOfBirth", () => {
 	it("should render error if date of birth is invalid", async () => {
 		setup();
 
-		const input = screen.getByRole("textbox", { name: "Data de Nascimento" });
+		const input = screen.getByRole("textbox", { name: "Data de nascimento" });
 		await userEvent.type(input, "32/02/1990");
 
 		const btn = screen.getByRole("button", { name: /enviar/i });
@@ -75,7 +75,7 @@ describe("DateOfBirth", () => {
 	it("should render error if date of birth is today", async () => {
 		setup();
 
-		const input = screen.getByRole("textbox", { name: "Data de Nascimento" });
+		const input = screen.getByRole("textbox", { name: "Data de nascimento" });
 		const nextYear = new Date().getFullYear() + 1;
 		await userEvent.type(input, `01/01/${nextYear}`);
 
@@ -91,7 +91,7 @@ describe("DateOfBirth", () => {
 	it("should not render error if date of birth is valid", async () => {
 		setup();
 
-		const input = screen.getByRole("textbox", { name: "Data de Nascimento" });
+		const input = screen.getByRole("textbox", { name: "Data de nascimento" });
 		await userEvent.type(input, `01/01/1980`);
 
 		const btn = screen.getByRole("button", { name: /enviar/i });

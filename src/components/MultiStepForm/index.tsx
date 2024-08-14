@@ -11,6 +11,7 @@ import {
 	FinancialNeed,
 	Geolocation,
 	DiversityInformation,
+	DateOfBirth,
 } from "./Steps";
 import { sleep } from "../../lib";
 
@@ -68,6 +69,7 @@ export default function MultiStepForm() {
 				sleep(300).then(() => console.log("Wizard submit", values))
 			}
 		>
+			{DateOfBirth()}
 			{BasicRegisterInformation()}
 			{DiversityInformation()}
 			{Geolocation()}

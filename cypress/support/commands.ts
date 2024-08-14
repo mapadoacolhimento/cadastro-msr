@@ -17,7 +17,6 @@ Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
 	cy.get("#email").type(email);
 	cy.get("#confirmEmail").type(confirmEmail);
 	cy.get("#phone").type(phone);
-	cy.get("#dateOfBirth").type(dateOfBirth);
 	cy.get("#color").click();
 	cy.contains(colorOption).should("be.visible").click();
 });

@@ -6,7 +6,7 @@ import {
 	ZENDESK_API_USER,
 } from "../../lib";
 
-let mockPayload = {
+const mockPayload = {
 	email: "lua@email.com",
 	phone: "71999999999",
 	firstName: "Lua",
@@ -19,7 +19,12 @@ let mockPayload = {
 	supportTypes: ["legal", "psychological"],
 };
 
-let mockUser = {
+const mockPayloadUpdate = {
+	...mockPayload,
+	supportTypes: ["legal"],
+};
+
+const mockUser = {
 	name: mockPayload.firstName,
 	role: "end-user",
 	organization_id: 360273031591 as unknown as bigint,
@@ -35,6 +40,14 @@ let mockUser = {
 		whatsapp: mockPayload.phone,
 		date_of_birth: mockPayload.dateOfBirth.toISOString(),
 		tipo_de_acolhimento: "psicológico_e_jurídico",
+	},
+};
+
+const mockUserUpdate = {
+	...mockUser,
+	user_fields: {
+		...mockUser.user_fields,
+		tipo_de_acolhimento: "jurídico",
 	},
 };
 
@@ -87,9 +100,6 @@ describe("POST /zendesk/user", () => {
 	});
 
 	it("should update zendesk user with support type legal", async () => {
-		mockPayload.supportTypes = ["legal"];
-		mockUser.user_fields.tipo_de_acolhimento = "jurídico";
-
 		fetch.mockResolvedValueOnce(
 			Response.json({
 				data: {
@@ -102,13 +112,13 @@ describe("POST /zendesk/user", () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/user", {
 				method: "POST",
-				body: JSON.stringify(mockPayload),
+				body: JSON.stringify(mockPayloadUpdate),
 			})
 		);
 		const response = await POST(request);
 
 		expect(fetch).toHaveBeenCalledWith(endpoint, {
-			body: JSON.stringify({ user: mockUser }),
+			body: JSON.stringify({ user: mockUserUpdate }),
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

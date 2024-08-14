@@ -53,7 +53,7 @@ const authorization =
 	Buffer.from(`${ZENDESK_API_USER}:${ZENDESK_API_TOKEN}`).toString("base64");
 
 describe("POST /zendesk/ticket", () => {
-	it("returns error when dont have a empty payload", async () => {
+	it("returns error when have a empty payload", async () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",

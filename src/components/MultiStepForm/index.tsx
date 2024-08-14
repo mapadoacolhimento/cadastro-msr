@@ -3,7 +3,6 @@
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
-	AcceptsOnlineSupport,
 	SupportType,
 	GenderIdentity,
 	GenderViolence,
@@ -11,6 +10,7 @@ import {
 	ViolenceLocation,
 	ExternalSupport,
 	FinancialNeed,
+	Geolocation,
 } from "./Steps";
 import { sleep } from "../../lib";
 
@@ -30,6 +30,12 @@ export interface Values {
 	externalSupport: string;
 	financialNeed: string;
 	terms: boolean;
+	zipcode: string;
+	neighborhood: string;
+	city: string;
+	state: string;
+	lat: number | null;
+	lng: number | null;
 }
 
 export default function MultiStepForm() {
@@ -51,15 +57,21 @@ export default function MultiStepForm() {
 				externalSupport: "",
 				financialNeed: "",
 				terms: false,
+				city: "",
+				state: "",
+				neighborhood: "",
+				lat: null,
+				lng: null,
+				zipcode: "",
 			}}
 			onSubmit={async (values: Values) =>
 				sleep(300).then(() => console.log("Wizard submit", values))
 			}
 		>
 			{BasicRegisterInformation()}
+			{Geolocation()}
 			{DisabilityInformation()}
 			{GenderIdentity()}
-			{AcceptsOnlineSupport()}
 			{SupportType()}
 			{GenderViolence()}
 			{ExternalSupport()}

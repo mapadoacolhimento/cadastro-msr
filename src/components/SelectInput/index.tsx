@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { useField } from "formik";
-import "./SelectInput.css";
 import Select, { SingleValue } from "react-select";
 import ErrorMessage from "../ErrorMessage";
+import "./SelectInput.css";
 
 type Option = { value: string; label: string };
 
@@ -12,6 +12,8 @@ interface SelectInputProps {
 	label: string;
 	options: Option[];
 	placeholder?: string;
+	onChange?: (value: string) => Promise<void> | void;
+	isLoading?: boolean;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -19,6 +21,8 @@ const SelectInput: React.FC<SelectInputProps> = ({
 	label,
 	options,
 	placeholder,
+	onChange,
+	isLoading,
 }) => {
 	const [field, meta, helpers] = useField(name);
 	const [isFocused, setIsFocused] = useState(false);
@@ -34,6 +38,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
 	};
 
 	const handleValueChange = (option: SingleValue<Option>) => {
+		if (onChange) {
+			onChange(option?.value ?? "");
+		}
 		helpers.setValue(option?.value);
 		setIsFocused(true);
 	};
@@ -48,6 +55,8 @@ const SelectInput: React.FC<SelectInputProps> = ({
 				{label}
 			</label>
 			<Select
+				aria-live={"polite"}
+				aria-busy={isLoading}
 				classNamePrefix="custom-select"
 				options={options}
 				name={field.name}
@@ -61,6 +70,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 				placeholder={placeholder}
 				aria-invalid={!!hasError}
 				aria-labelledby={`select-label-${field.name}`}
+				isLoading={isLoading}
 			/>
 			<ErrorMessage name={name} />
 		</div>

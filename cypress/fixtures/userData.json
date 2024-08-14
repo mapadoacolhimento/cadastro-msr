@@ -18,5 +18,9 @@
 	"genderViolence": "Sim",
 	"violenceLocation": "Sim",
 	"externalSupport": "Não",
-	"financialNeed": "Sim"
+	"financialNeed": "Sim",
+	"zipcode": "12345678",
+	"state": "São Paulo",
+	"city": "SÃO PAULO",
+	"neighborhood": "Centro"
 }

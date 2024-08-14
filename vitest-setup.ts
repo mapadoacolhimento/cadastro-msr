@@ -14,3 +14,6 @@ vi.mock("next/navigation", () => ({
 
 // Stub the global ResizeObserver
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
+
+global.fetch = vi.fn();
+vi.stubEnv("VOLUNTEER_API", "http://voluntaria.mapa.org.br");

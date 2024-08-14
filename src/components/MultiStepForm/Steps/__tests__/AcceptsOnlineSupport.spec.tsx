@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import AcceptsOnlineSupport from "../AcceptsOnlineSupport";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import { sleep } from "../../../../lib";
-import { type Values } from "../..";
+import type { Values } from "../..";
 
 const setup = () => {
 	return render(

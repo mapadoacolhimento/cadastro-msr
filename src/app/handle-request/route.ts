@@ -1,8 +1,32 @@
 import * as Yup from "yup";
-import { getErrorMessage, db } from "../../lib";
+import { sign } from "jsonwebtoken";
+import {
+	getErrorMessage,
+	db,
+	MATCH_LAMBDA_URL,
+	JWT_SECRET,
+	emailDuplicated,
+} from "../../lib";
 import { Gender, MSRStatus, Race, SupportType } from "@prisma/client";
-import { BASE_URL, ZENDESK_API_TOKEN } from "../../lib";
+import { BASE_URL } from "../../lib";
 
+type SubjectInfo = {
+	supportType: SupportType;
+	firstName: string;
+	city: string;
+	state: string;
+};
+
+type DuplicatedRequest = {
+	supportRequestId: number;
+	ticketId: number;
+	supportType: SupportType;
+};
+
+type RequestResponse = {
+	psychological?: string | null;
+	legal?: string | null;
+};
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
 	phone: Yup.string().min(10).required(),
@@ -26,13 +50,60 @@ const payloadSchema = Yup.object({
 	).required(),
 }).required();
 
+const subject = (subjectInfo: SubjectInfo) => {
+	const type: string =
+		subjectInfo.supportType === "legal" ? "Jurídico" : "Psicológico";
+	return `[${type}] ${subjectInfo.firstName}, ${subjectInfo.city} - ${subjectInfo.state}`;
+};
+
+const handleDuplicated = async (supportRequest: DuplicatedRequest) => {
+	await db.supportRequests.update({
+		where: {
+			supportRequestId: supportRequest.supportRequestId,
+		},
+		data: {
+			status: "duplicated",
+		},
+	});
+
+	await db.supportRequestStatusHistory.create({
+		data: {
+			supportRequestId: supportRequest.supportRequestId,
+			status: "duplicated",
+		},
+	});
+
+	const resTicket = await fetch(`${BASE_URL}/zendesk/ticket`, {
+		body: JSON.stringify({
+			ticketId: supportRequest.ticketId,
+			status: "open",
+			statusAcolhimento: "solicitação_repetida",
+			supportType: supportRequest.supportType,
+			comment: {
+				body: emailDuplicated,
+				public: true,
+			},
+		}),
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	if (!resTicket.ok) {
+		throw new Error(resTicket.statusText);
+	}
+};
 export async function POST(request: Request) {
 	try {
 		const payload = await request.json();
 
 		await payloadSchema.validate(payload);
+
+		let response: RequestResponse = {};
+
 		for (let i = 0; payload.supportTypes.length > i; i++) {
-			const supportType = payload.supportTypes[i];
+			const supportType: SupportType = payload.supportTypes[i];
 
 			const resEligibilitily = await fetch(`${BASE_URL}/check-eligibility`, {
 				body: JSON.stringify({
@@ -44,62 +115,86 @@ export async function POST(request: Request) {
 					"Content-Type": "application/json",
 				},
 			});
-			console.log(resEligibilitily);
-			const eligibilitily = await resEligibilitily.json();
-			console.log(eligibilitily);
-			if (!eligibilitily.shouldCreateMatch) {
-				const supportRequestId = eligibilitily.supportRequestId;
-				const ticketId = eligibilitily.ticketId;
-				await db.supportRequests.update({
-					where: {
-						supportRequestId: supportRequestId,
-					},
-					data: {
-						status: "duplicated",
-					},
-				});
+			const { supportRequestId, ticketId, shouldCreateMatch } =
+				await resEligibilitily.json();
 
-				await db.supportRequestStatusHistory.create({
-					data: {
-						supportRequestId: supportRequestId,
-						status: "duplicated",
-					},
-				});
-
-				await fetch(`${BASE_URL}/zendesk/ticket`, {
-					body: JSON.stringify({
-						ticketId: ticketId,
-						status: "open",
-						statusAcolhimento: "solicitação_repetida",
-						supportType: supportType,
-						comment: {
-							body: `${payload.firstName} solicitou acolhimento novamente`,
-							public: false,
-						},
-					}),
+			if (shouldCreateMatch) {
+				const resZendeskUser = await fetch(`${BASE_URL}/zendesk/user`, {
+					body: JSON.stringify(payload),
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
 					},
 				});
 
-				// await fetch(`${BASE_URL}/zendesk/ticket`,{
-				// 	body: JSON.stringify({
-				// 		ticketId: ticketId,
-				// 		comment: {
-				// 			body: "TBD",
-				// 			public: true
-				// 		},
-				// 	}),
-				// 	method: "POST",
-				// 	headers: {
-				// 		"Content-Type": "application/json"
-				// 	},
-				// });
+				const user = await resZendeskUser.json();
+
+				const resMsr = await fetch(`${BASE_URL}/db/upsert-msr`, {
+					body: JSON.stringify({
+						msrZendeskUserId: user.msrZendeskUserId,
+						...payload,
+					}),
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				const bodyTicket = {
+					ticketId: ticketId,
+					msrZendeskUserId: user.msrZendeskUserId,
+					status: "new",
+					subject: subject({ supportType, ...payload }),
+					statusAcolhimento: "solicitação_recebida",
+					supportType: supportType,
+					comment: {
+						body: `${payload.firstName} solicitou acolhimento pelo cadastro`,
+						public: false,
+					},
+				};
+
+				const resZendeskTicket = await fetch(`${BASE_URL}/zendesk/ticket`, {
+					body: JSON.stringify(bodyTicket),
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+
+				const ticket = await resZendeskTicket.json();
+				const lambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequestId ? "compose" : "handle-match"}`;
+				const jwtSecret = JWT_SECRET;
+				const authToken = sign({ sub: "cadastro-msr" }, jwtSecret!, {
+					expiresIn: 300, // expires in 5 minutes
+				});
+				const bodyLambda = {
+					supportRequestId: supportRequestId,
+					msrId: user.msrZendeskUserId,
+					zendeskTicketId: ticket.ticketId,
+					supportType: supportType,
+					status: "open",
+					hasDisability: payload.hasDisability,
+					lat: payload.coordinates.lat,
+					lng: payload.coordinates.lng,
+					city: payload.city,
+					state: payload.state,
+				};
+				const resLambda = await fetch(lambdaUrl, {
+					body: JSON.stringify(
+						supportRequestId ? [bodyLambda] : { supportRequest: bodyLambda }
+					),
+					method: "POST",
+					headers: {
+						Authorization: authToken,
+					},
+				});
+				const match = await resLambda.json();
+				response[supportType] = match.status;
+			} else {
+				await handleDuplicated({ supportRequestId, ticketId, supportType });
+				response[supportType] = "duplicated";
 			}
 		}
-
-		return Response.json({});
+		return Response.json(response);
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {

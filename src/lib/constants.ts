@@ -124,6 +124,9 @@ export const ZENDESK_SUBDOMAIN = process.env["ZENDESK_SUBDOMAIN"];
 export const ZENDESK_API_USER = `${process.env["ZENDESK_API_USER"]}/token`;
 export const ZENDESK_API_TOKEN = process.env["ZENDESK_API_TOKEN"];
 export const VOLUNTEER_API_URL = process.env["VOLUNTEER_API_URL"];
+export const MATCH_LAMBDA_URL = process.env["MATCH_LAMBDA_URL"];
+export const JWT_SECRET = process.env["JWT_SECRET"];
+export const BASE_URL = process.env["PUBLIC_BASE_URL"];
 
 export const ZENDESK_CUSTOM_FIELDS_DICIO = {
 	nomeMsr: 360016681971,
@@ -137,3 +140,5 @@ export const ZENDESK_CUSTOM_FIELDS_DICIO = {
 };
 
 export const msrOrganizationId = 360273031591 as unknown as bigint;
+
+export const emailDuplicated = "TBD";

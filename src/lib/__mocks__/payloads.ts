@@ -6,6 +6,10 @@ type msrPayloadParams = {
 	city?: string;
 	state?: string;
 	neighborhood?: string;
+	coordinates?: {
+		lat: number;
+		lng: number;
+	};
 	zipcode?: string;
 	color?: string;
 	gender?: string;
@@ -13,6 +17,7 @@ type msrPayloadParams = {
 	dateOfBirth?: string;
 	hasDisability?: boolean;
 	acceptsOnlineSupport?: boolean;
+	supportTypes?: string[];
 };
 
 function msrPayload(msr?: msrPayloadParams) {
@@ -35,6 +40,12 @@ function msrPayload(msr?: msrPayloadParams) {
 		acceptsOnlineSupport: msr?.acceptsOnlineSupport
 			? msr.acceptsOnlineSupport
 			: true,
+		coordinates: msr?.coordinates
+			? msr.coordinates
+			: { lat: -12.995, lng: -38.504 },
+		supportTypes: msr?.supportTypes
+			? msr.supportTypes
+			: ["legal", "psychological"],
 	};
 
 	return payload;

@@ -6,9 +6,9 @@ import {
 	MATCH_LAMBDA_URL,
 	JWT_SECRET,
 	emailDuplicated,
+	BASE_URL,
 } from "../../lib";
 import { Gender, MSRStatus, Race, SupportType } from "@prisma/client";
-import { BASE_URL } from "../../lib";
 
 type SubjectInfo = {
 	supportType: SupportType;

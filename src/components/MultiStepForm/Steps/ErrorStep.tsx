@@ -39,7 +39,7 @@ export default function ErrorStep({ message }: Readonly<ErrorStepProps>) {
 			</Flex>
 			<Illustration
 				img={{
-					src: "/icons/error.svg",
+					src: "/illustrations/woman.svg",
 					alt: "Ícone de erro",
 				}}
 			/>

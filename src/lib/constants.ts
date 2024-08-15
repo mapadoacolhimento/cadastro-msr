@@ -38,9 +38,9 @@ export const colorOptions = [
 	{ value: "white", label: "Branca" },
 ];
 
-export const disabilityOptions = [
-	{ value: "yes", name: "Sim" },
-	{ value: "no", name: "Não" },
+export const DISABILITY_OPTIONS = [
+	{ value: "yes", label: "Sim" },
+	{ value: "no", label: "Não" },
 ];
 
 export const acceptsOnlineSupportOptions = [
@@ -137,4 +137,3 @@ export const ZENDESK_CUSTOM_FIELDS_DICIO = {
 };
 
 export const msrOrganizationId = 360273031591 as unknown as bigint;
-

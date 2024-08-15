@@ -1,8 +1,8 @@
-const today = new Date();
-
-export const isAdult = (dateOfBirth: string) => {
+export default function isAdult(dateOfBirth: string) {
 	const [day, month, year] = dateOfBirth.split("/").map(Number);
 	const birthDate = new Date(year, month - 1, day);
+	const today = new Date();
+
 	let ageDifference = today.getFullYear() - birthDate.getFullYear();
 	const monthDifference = today.getMonth() - birthDate.getMonth();
 	const dayDifference = today.getDate() - birthDate.getDate();
@@ -17,4 +17,4 @@ export const isAdult = (dateOfBirth: string) => {
 		ageDifference--;
 	}
 	return ageDifference >= 18;
-};
+}

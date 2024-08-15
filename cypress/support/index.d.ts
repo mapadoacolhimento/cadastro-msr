@@ -10,7 +10,6 @@ declare namespace Cypress {
 			phone?: string,
 			dateOfBirth?: string
 		): Chainable<any>;
-		fillDisabilityStep(hasDisability?: string): Chainable<any>;
 		fillGenderIdentityStep(gender: string): Chainable<any>;
 		fillAcceptsOnlineSupportStep(): Chainable<any>;
 		fillSupportTypeStep(): Chainable<any>;
@@ -19,5 +18,7 @@ declare namespace Cypress {
 		fillExternalSupportStep(option: string): Chainable<any>;
 		fillFinancialNeedStep(option: string): Chainable<any>;
 		fillGeolocationStep(): Chainable<any>;
+		fillDiversityInformationStep(): Chainable<any>;
+		fillDateOfBirthStep(dateOfBirth?: string): Chainable<any>;
 	}
 }

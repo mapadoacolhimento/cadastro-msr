@@ -1,4 +1,4 @@
-export const isDateValid = (dateString: string) => {
+export default function isDateValid(dateString: string) {
 	const [day, month, year] = dateString.split("/").map(Number);
 	const date = new Date(year, month - 1, day);
 	return (
@@ -7,4 +7,4 @@ export const isDateValid = (dateString: string) => {
 		date.getMonth() === month - 1 &&
 		date.getFullYear() === year
 	);
-};
+}

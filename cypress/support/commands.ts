@@ -8,18 +8,33 @@ Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("button", { name: "Quero ser acolhida" }).click();
 });
 
+Cypress.Commands.add(
+	"fillDateOfBirthStep",
+	(dateOfBirth = userData.dateOfBirth) => {
+		cy.findByRole("heading", { name: "Sobre você" }).should("exist");
+		cy.findByRole("textbox").should("be.visible").type(dateOfBirth);
+	}
+);
+
 Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
-	const { firstName, email, confirmEmail, phone, dateOfBirth, colorOption } =
-		userData;
+	const { firstName, email, confirmEmail, phone } = userData;
 
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.get("#firstName").type(firstName);
 	cy.get("#email").type(email);
 	cy.get("#confirmEmail").type(confirmEmail);
 	cy.get("#phone").type(phone);
-	cy.get("#dateOfBirth").type(dateOfBirth);
+});
+
+Cypress.Commands.add("fillDiversityInformationStep", () => {
+	const { hasDisability, colorOption } = userData;
+
+	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.get("#color").click();
 	cy.contains(colorOption).should("be.visible").click();
+	cy.findByRole("combobox", {
+		name: "Você é PcD (Pessoa com deficiência)?",
+	}).type(`${hasDisability}{enter}`);
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {
@@ -39,12 +54,6 @@ Cypress.Commands.add("fillGeolocationStep", () => {
 	// city
 	cy.findByRole("combobox", { name: "Cidade" }).click();
 	cy.findByRole("option", { name: city }).click();
-});
-
-Cypress.Commands.add("fillDisabilityStep", () => {
-	const { hasDisability } = userData;
-	cy.contains("Você é PcD (Pessoa com deficiência)?").should("exist");
-	cy.contains(hasDisability).click();
 });
 
 Cypress.Commands.add("fillGenderIdentityStep", (gender: string) => {

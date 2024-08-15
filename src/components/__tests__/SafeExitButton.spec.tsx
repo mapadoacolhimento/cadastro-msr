@@ -21,7 +21,11 @@ describe("SafeExitButton", () => {
 		const button = screen.getByRole("button", { name: /sair desse site/i });
 		fireEvent.click(button);
 
-		expect(mockOpen).toHaveBeenCalledWith("https://www.google.com", "_self");
+		expect(mockOpen).toHaveBeenCalledWith(
+			"https://www.google.com",
+			"_self",
+			"noopener,noreferrer"
+		);
 
 		mockOpen.mockRestore();
 	});

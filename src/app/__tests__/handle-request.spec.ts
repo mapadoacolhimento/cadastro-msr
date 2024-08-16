@@ -6,6 +6,123 @@ import createFetchResponse from "../../lib/__mocks__/fetch";
 import { POST } from "../handle-request/route";
 import { BASE_URL, MATCH_LAMBDA_URL, emailDuplicated } from "../../lib";
 
+const mockPayloadLegal = msrPayload({ supportType: ["legal"] });
+const mockPayloadPsychlogical = msrPayload({ supportType: ["psychological"] });
+const mockPayloadBoth = msrPayload({ supportType: ["legal", "psychological"] });
+
+const mockResZendeskUser = {
+	msrZendeskUserId: 12346789 as unknown as bigint,
+};
+
+const mockResMsr = {
+	data: {
+		msrId: 12346789 as unknown as bigint,
+		status: "inscrita",
+	},
+};
+
+const mockSupportRequestsLegal = {
+	supportRequestId: 1234,
+};
+
+const mockSupportRequestsPsychological = {
+	supportRequestId: 7890,
+};
+
+const mockSupportRequestStatusHistory = {
+	supportRequestStatusHistoryId: 2,
+};
+
+const bodyCheckEligibilityLegal = {
+	email: mockPayloadLegal.email,
+	supportType: "legal",
+};
+
+const bodyCheckEligibilityPsychological = {
+	email: mockPayloadPsychlogical.email,
+	supportType: "psychological",
+};
+
+const mockResCheckEligibility = {
+	supportRequestId: null,
+	ticketId: null,
+	shouldCreateMatch: true,
+};
+
+const mockResTicketLegal = {
+	ticketId: 1234,
+};
+
+const mockResTicketPsychological = {
+	ticketId: 7890,
+};
+
+const mockResCheckEligibilityLegal = {
+	supportRequestId: 1234,
+	ticketId: 1234,
+	shouldCreateMatch: true,
+};
+
+const mockResCheckEligibilityPsychological = {
+	supportRequestId: 5678,
+	ticketId: 7890,
+	shouldCreateMatch: false,
+};
+
+const mockResLambdaLegal = {
+	matchId: 3456,
+	supportRequestId: mockSupportRequestsLegal.supportRequestId,
+	msrId: 12346789 as unknown as bigint,
+	volunteerId: 1,
+	msrZendeskTicketId: mockResTicketLegal.ticketId,
+	volunteerZendeskTicketId: 4567,
+	supportType: "legal",
+	createdAt: "2024-08-13",
+	updatedAt: "2024-08-13",
+	status: "matched",
+};
+
+const mockResLambdaPsychological = {
+	...mockResLambdaLegal,
+	supportType: "psychological",
+	supportRequestId: mockSupportRequestsPsychological.supportRequestId,
+	msrZendeskTicketId: mockResTicketLegal.ticketId,
+	matchId: 3457,
+	volunteerZendeskTicketId: 4568,
+};
+
+const bodyComposeLegal = {
+	supportRequestId: null,
+	msrId: mockPayloadLegal.msrZendeskUserId,
+	zendeskTicketId: mockResTicketLegal.ticketId,
+	supportType: "legal",
+	status: "open",
+	hasDisability: mockPayloadLegal.hasDisability,
+	lat: mockPayloadLegal.lat,
+	lng: mockPayloadLegal.lng,
+	city: mockPayloadLegal.city,
+	state: mockPayloadLegal.state,
+};
+
+const bodyHandleMatchLegal = {
+	supportRequest: {
+		...bodyComposeLegal,
+		supportRequestId: mockResCheckEligibilityLegal.supportRequestId,
+		zendeskTicketId: mockResTicketLegal.ticketId,
+	},
+};
+const bodyComposePsychological = {
+	...bodyComposeLegal,
+	supportType: "psychological",
+	zendeskTicketId: mockResTicketPsychological.ticketId,
+};
+const bodyHandleMatchPsychological = {
+	supportRequest: {
+		...bodyComposeLegal,
+		supportRequestId: mockResCheckEligibilityPsychological.supportRequestId,
+		zendeskTicketId: mockResTicketPsychological.ticketId,
+	},
+};
 describe("POST handle-request", () => {
 	beforeEach(() => {
 		mockReset(mockedDb);
@@ -25,73 +142,24 @@ describe("POST handle-request", () => {
 	});
 
 	it("should create match for support request legal", async () => {
-		const mockPayload = msrPayload({ supportType: ["legal"] });
-		const mockResCheckEligibility = {
-			supportRequestId: null,
-			ticketId: null,
-			shouldCreateMatch: true,
-		};
-		const mockResZendeskUser = {
-			msrZendeskUserId: mockPayload.msrZendeskUserId,
-		};
-
-		const mockResMsr = {
-			data: {
-				msrId: mockPayload.msrZendeskUserId,
-				status: mockPayload.status,
-			},
-		};
-
-		const mockResTicket = {
-			ticketId: 1234,
-		};
-
-		const mockResLambda = {
-			matchId: 3456,
-			supportRequestId: 234,
-			msrId: mockPayload.msrZendeskUserId,
-			volunteerId: 1,
-			msrZendeskTicketId: 1234,
-			volunteerZendeskTicketId: 4567,
-			supportType: "legal",
-			createdAt: "2024-08-13",
-			updatedAt: "2024-08-13",
-			status: "matched",
-		};
-
-		const bodyLambda = {
-			supportRequest: {
-				supportRequestId: null,
-				msrId: mockPayload.msrZendeskUserId,
-				zendeskTicketId: mockResTicket.ticketId,
-				supportType: "legal",
-				status: "open",
-				hasDisability: mockPayload.hasDisability,
-				lat: mockPayload.lat,
-				lng: mockPayload.lng,
-				city: mockPayload.city,
-				state: mockPayload.state,
-			},
-		};
-
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResCheckEligibility));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicket));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResLambda));
+		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicketLegal));
+		fetch.mockResolvedValueOnce(createFetchResponse(mockResLambdaLegal));
 
 		const request = new NextRequest(
 			new Request("http://localhost:3000/db/handle-request", {
 				method: "POST",
-				body: JSON.stringify(mockPayload),
+				body: JSON.stringify(mockPayloadLegal),
 			})
 		);
 		const response = await POST(request);
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
 			body: JSON.stringify({
-				email: mockPayload.email,
-				supportType: mockPayload.supportType[0],
+				email: mockPayloadLegal.email,
+				supportType: mockPayloadLegal.supportType[0],
 			}),
 			method: "POST",
 			headers: {
@@ -100,7 +168,7 @@ describe("POST handle-request", () => {
 		});
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/user`, {
 			body: JSON.stringify({
-				...mockPayload,
+				...mockPayloadLegal,
 			}),
 			method: "POST",
 			headers: {
@@ -110,7 +178,7 @@ describe("POST handle-request", () => {
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/db/upsert-msr`, {
 			body: JSON.stringify({
-				...mockPayload,
+				...mockPayloadLegal,
 			}),
 			method: "POST",
 			headers: {
@@ -120,13 +188,13 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
 			body: JSON.stringify({
 				ticketId: null,
-				msrZendeskUserId: mockPayload.msrZendeskUserId,
+				msrZendeskUserId: mockPayloadLegal.msrZendeskUserId,
 				status: "new",
 				subject: "[Jurídico] Msr, SALVADOR - BA",
 				statusAcolhimento: "solicitação_recebida",
 				supportType: "legal",
 				comment: {
-					body: `${mockPayload.firstName} solicitou acolhimento pelo cadastro`,
+					body: `${mockPayloadLegal.firstName} solicitou acolhimento pelo cadastro`,
 					public: false,
 				},
 			}),
@@ -135,8 +203,8 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/handle-match`, {
-			body: JSON.stringify(bodyLambda),
+		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
+			body: JSON.stringify([bodyComposeLegal]),
 			method: "POST",
 			headers: {
 				Authorization: undefined,
@@ -147,37 +215,28 @@ describe("POST handle-request", () => {
 	});
 
 	it("should just update ticket and psychological support request as duplicated", async () => {
-		const mockPayload = msrPayload({ supportType: ["psychological"] });
-		const mockResCheckEligibility = {
-			supportRequestId: 1234,
-			ticketId: 3456,
-			shouldCreateMatch: false,
-		};
-
-		const mockResTicket = {
-			ticketId: 3456,
-		};
-		mockedDb.supportRequests.findFirst.mockResolvedValue({
-			supportRequestId: 1234,
-		});
-		mockedDb.supportRequestStatusHistory.findFirst.mockResolvedValue({
-			supportRequestStatusHistoryId: 2,
-		});
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResCheckEligibility));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicket));
+		mockedDb.supportRequests.findFirst.mockResolvedValue(
+			mockSupportRequestsPsychological
+		);
+		mockedDb.supportRequestStatusHistory.findFirst.mockResolvedValue(
+			mockSupportRequestStatusHistory
+		);
+		fetch.mockResolvedValueOnce(
+			createFetchResponse(mockResCheckEligibilityPsychological)
+		);
+		fetch.mockResolvedValueOnce(
+			createFetchResponse(mockResTicketPsychological)
+		);
 
 		const request = new NextRequest(
 			new Request("http://localhost:3000/db/handle-request", {
 				method: "POST",
-				body: JSON.stringify(mockPayload),
+				body: JSON.stringify(mockPayloadPsychlogical),
 			})
 		);
 		const response = await POST(request);
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
-			body: JSON.stringify({
-				email: mockPayload.email,
-				supportType: mockPayload.supportType[0],
-			}),
+			body: JSON.stringify(bodyCheckEligibilityPsychological),
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -185,12 +244,12 @@ describe("POST handle-request", () => {
 		});
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
 			body: JSON.stringify({
-				ticketId: mockResTicket.ticketId,
+				ticketId: mockResTicketPsychological.ticketId,
 				status: "open",
 				statusAcolhimento: "solicitação_repetida",
 				supportType: "psychological",
 				comment: {
-					body: emailDuplicated(mockPayload.firstName),
+					body: emailDuplicated(mockPayloadPsychlogical.firstName),
 					public: true,
 				},
 			}),
@@ -201,7 +260,7 @@ describe("POST handle-request", () => {
 		});
 		expect(mockedDb.supportRequests.update).toHaveBeenCalledWith({
 			where: {
-				supportRequestId: mockResCheckEligibility.supportRequestId,
+				supportRequestId: mockResCheckEligibilityPsychological.supportRequestId,
 			},
 			data: {
 				status: "duplicated",
@@ -210,7 +269,7 @@ describe("POST handle-request", () => {
 
 		expect(mockedDb.supportRequestStatusHistory.create).toHaveBeenCalledWith({
 			data: {
-				supportRequestId: mockResCheckEligibility.supportRequestId,
+				supportRequestId: mockResCheckEligibilityPsychological.supportRequestId,
 				status: "duplicated",
 			},
 		});
@@ -218,73 +277,7 @@ describe("POST handle-request", () => {
 		expect(await response.json()).toEqual({ psychological: "duplicated" });
 	});
 
-	it("should create match for support requests legal and psychological", async () => {
-		const mockPayload = msrPayload({
-			supportType: ["legal", "psychological"],
-		});
-		const mockResCheckEligibility = {
-			supportRequestId: null,
-			ticketId: null,
-			shouldCreateMatch: true,
-		};
-		const mockResZendeskUser = {
-			msrZendeskUserId: mockPayload.msrZendeskUserId,
-		};
-
-		const mockResMsr = {
-			data: {
-				msrId: mockPayload.msrZendeskUserId,
-				status: mockPayload.status,
-			},
-		};
-
-		const mockResTicketLegal = {
-			ticketId: 1234,
-		};
-		const mockResTicketPsychological = {
-			ticketId: 7890,
-		};
-		const mockResLambdaLegal = {
-			matchId: 3456,
-			supportRequestId: 234,
-			msrId: mockPayload.msrZendeskUserId,
-			volunteerId: 1,
-			msrZendeskTicketId: 1234,
-			volunteerZendeskTicketId: 4567,
-			supportType: "legal",
-			createdAt: "2024-08-13",
-			updatedAt: "2024-08-13",
-			status: "matched",
-		};
-		const mockResLambdaPsychological = {
-			...mockResLambdaLegal,
-			matchId: 3457,
-			supportType: "psychological",
-		};
-
-		const bodyLambdaLegal = {
-			supportRequest: {
-				supportRequestId: null,
-				msrId: mockPayload.msrZendeskUserId,
-				zendeskTicketId: mockResTicketLegal.ticketId,
-				supportType: "legal",
-				status: "open",
-				hasDisability: mockPayload.hasDisability,
-				lat: mockPayload.lat,
-				lng: mockPayload.lng,
-				city: mockPayload.city,
-				state: mockPayload.state,
-			},
-		};
-
-		const bodyLambdaPsychological = {
-			supportRequest: {
-				...bodyLambdaLegal.supportRequest,
-				supportType: "psychological",
-				zendeskTicketId: mockResTicketPsychological.ticketId,
-			},
-		};
-
+	it("should create matches for support requests legal and psychological", async () => {
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResCheckEligibility));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
@@ -304,16 +297,13 @@ describe("POST handle-request", () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/db/handle-request", {
 				method: "POST",
-				body: JSON.stringify(mockPayload),
+				body: JSON.stringify(mockPayloadBoth),
 			})
 		);
 		const response = await POST(request);
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
-			body: JSON.stringify({
-				email: mockPayload.email,
-				supportType: mockPayload.supportType[0],
-			}),
+			body: JSON.stringify(bodyCheckEligibilityLegal),
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -321,7 +311,7 @@ describe("POST handle-request", () => {
 		});
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/user`, {
 			body: JSON.stringify({
-				...mockPayload,
+				...mockPayloadBoth,
 			}),
 			method: "POST",
 			headers: {
@@ -331,7 +321,7 @@ describe("POST handle-request", () => {
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/db/upsert-msr`, {
 			body: JSON.stringify({
-				...mockPayload,
+				...mockPayloadBoth,
 			}),
 			method: "POST",
 			headers: {
@@ -341,13 +331,13 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
 			body: JSON.stringify({
 				ticketId: null,
-				msrZendeskUserId: mockPayload.msrZendeskUserId,
+				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
 				status: "new",
 				subject: "[Jurídico] Msr, SALVADOR - BA",
 				statusAcolhimento: "solicitação_recebida",
 				supportType: "legal",
 				comment: {
-					body: `${mockPayload.firstName} solicitou acolhimento pelo cadastro`,
+					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
 					public: false,
 				},
 			}),
@@ -356,8 +346,8 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/handle-match`, {
-			body: JSON.stringify(bodyLambdaLegal),
+		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
+			body: JSON.stringify([bodyComposeLegal]),
 			method: "POST",
 			headers: {
 				Authorization: undefined,
@@ -365,10 +355,7 @@ describe("POST handle-request", () => {
 		});
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
-			body: JSON.stringify({
-				email: mockPayload.email,
-				supportType: mockPayload.supportType[1],
-			}),
+			body: JSON.stringify(bodyCheckEligibilityPsychological),
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -376,7 +363,7 @@ describe("POST handle-request", () => {
 		});
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/user`, {
 			body: JSON.stringify({
-				...mockPayload,
+				...mockPayloadBoth,
 			}),
 			method: "POST",
 			headers: {
@@ -386,7 +373,7 @@ describe("POST handle-request", () => {
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/db/upsert-msr`, {
 			body: JSON.stringify({
-				...mockPayload,
+				...mockPayloadBoth,
 			}),
 			method: "POST",
 			headers: {
@@ -396,13 +383,13 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
 			body: JSON.stringify({
 				ticketId: null,
-				msrZendeskUserId: mockPayload.msrZendeskUserId,
+				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
 				status: "new",
 				subject: "[Psicológico] Msr, SALVADOR - BA",
 				statusAcolhimento: "solicitação_recebida",
 				supportType: "psychological",
 				comment: {
-					body: `${mockPayload.firstName} solicitou acolhimento pelo cadastro`,
+					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
 					public: false,
 				},
 			}),
@@ -411,8 +398,8 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/handle-match`, {
-			body: JSON.stringify(bodyLambdaPsychological),
+		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
+			body: JSON.stringify([bodyComposePsychological]),
 			method: "POST",
 			headers: {
 				Authorization: undefined,
@@ -427,63 +414,6 @@ describe("POST handle-request", () => {
 	});
 
 	it("should just update ticket and psychological support request as duplicated and create match for legal support request", async () => {
-		const mockPayload = msrPayload({
-			supportType: ["legal", "psychological"],
-		});
-		const mockResCheckEligibilityLegal = {
-			supportRequestId: 1234,
-			ticketId: 1111,
-			shouldCreateMatch: true,
-		};
-
-		const mockResCheckEligibilityPsychological = {
-			supportRequestId: 5678,
-			ticketId: 2222,
-			shouldCreateMatch: false,
-		};
-
-		const mockResZendeskUser = {
-			msrZendeskUserId: mockPayload.msrZendeskUserId,
-		};
-
-		const mockResMsr = {
-			data: {
-				msrId: mockPayload.msrZendeskUserId,
-				status: mockPayload.status,
-			},
-		};
-
-		const mockResTicketLegal = {
-			ticketId: 1111,
-		};
-		const mockResTicketPsychological = {
-			ticketId: 2222,
-		};
-		const mockResLambdaLegal = {
-			matchId: 123,
-			supportRequestId: 234,
-			msrId: mockPayload.msrZendeskUserId,
-			volunteerId: 1,
-			msrZendeskTicketId: 1234,
-			volunteerZendeskTicketId: 4567,
-			supportType: "legal",
-			createdAt: "2024-08-13",
-			updatedAt: "2024-08-13",
-			status: "matched",
-		};
-
-		const bodyLambdaLegal = {
-			supportRequestId: mockResCheckEligibilityLegal.supportRequestId,
-			msrId: mockPayload.msrZendeskUserId,
-			zendeskTicketId: mockResTicketLegal.ticketId,
-			supportType: "legal",
-			status: "open",
-			hasDisability: mockPayload.hasDisability,
-			lat: mockPayload.lat,
-			lng: mockPayload.lng,
-			city: mockPayload.city,
-			state: mockPayload.state,
-		};
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResCheckEligibilityLegal)
 		);
@@ -492,12 +422,12 @@ describe("POST handle-request", () => {
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicketLegal));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResLambdaLegal));
 
-		mockedDb.supportRequests.findFirst.mockResolvedValue({
-			supportRequestId: mockResCheckEligibilityPsychological.supportRequestId,
-		});
-		mockedDb.supportRequestStatusHistory.findFirst.mockResolvedValue({
-			supportRequestStatusHistoryId: 3,
-		});
+		mockedDb.supportRequests.findFirst.mockResolvedValue(
+			mockSupportRequestsPsychological
+		);
+		mockedDb.supportRequestStatusHistory.findFirst.mockResolvedValue(
+			mockSupportRequestStatusHistory
+		);
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResCheckEligibilityPsychological)
 		);
@@ -508,16 +438,13 @@ describe("POST handle-request", () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/db/handle-request", {
 				method: "POST",
-				body: JSON.stringify(mockPayload),
+				body: JSON.stringify(mockPayloadBoth),
 			})
 		);
 		const response = await POST(request);
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
-			body: JSON.stringify({
-				email: mockPayload.email,
-				supportType: mockPayload.supportType[0],
-			}),
+			body: JSON.stringify(bodyCheckEligibilityLegal),
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -525,7 +452,7 @@ describe("POST handle-request", () => {
 		});
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/user`, {
 			body: JSON.stringify({
-				...mockPayload,
+				...mockPayloadBoth,
 			}),
 			method: "POST",
 			headers: {
@@ -535,7 +462,7 @@ describe("POST handle-request", () => {
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/db/upsert-msr`, {
 			body: JSON.stringify({
-				...mockPayload,
+				...mockPayloadBoth,
 			}),
 			method: "POST",
 			headers: {
@@ -545,13 +472,13 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
 			body: JSON.stringify({
 				ticketId: mockResCheckEligibilityLegal.ticketId,
-				msrZendeskUserId: mockPayload.msrZendeskUserId,
+				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
 				status: "new",
 				subject: "[Jurídico] Msr, SALVADOR - BA",
 				statusAcolhimento: "solicitação_recebida",
 				supportType: "legal",
 				comment: {
-					body: `${mockPayload.firstName} solicitou acolhimento pelo cadastro`,
+					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
 					public: false,
 				},
 			}),
@@ -560,18 +487,15 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
-			body: JSON.stringify([bodyLambdaLegal]),
+		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/handle-match`, {
+			body: JSON.stringify(bodyHandleMatchLegal),
 			method: "POST",
 			headers: {
 				Authorization: undefined,
 			},
 		});
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
-			body: JSON.stringify({
-				email: mockPayload.email,
-				supportType: mockPayload.supportType[1],
-			}),
+			body: JSON.stringify(bodyCheckEligibilityPsychological),
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -584,7 +508,7 @@ describe("POST handle-request", () => {
 				statusAcolhimento: "solicitação_repetida",
 				supportType: "psychological",
 				comment: {
-					body: emailDuplicated(mockPayload.firstName),
+					body: emailDuplicated(mockPayloadBoth.firstName),
 					public: true,
 				},
 			}),

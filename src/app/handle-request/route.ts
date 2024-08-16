@@ -159,7 +159,7 @@ export async function POST(request: Request) {
 				});
 
 				const ticket = await resZendeskTicket.json();
-				const lambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequestId ? "compose" : "handle-match"}`;
+				const lambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequestId ? "handle-match" : "compose"}`;
 				const jwtSecret = JWT_SECRET;
 				const authToken = sign({ sub: "cadastro-msr" }, jwtSecret!, {
 					expiresIn: 300, // expires in 5 minutes
@@ -178,7 +178,7 @@ export async function POST(request: Request) {
 				};
 				const resLambda = await fetch(lambdaUrl, {
 					body: JSON.stringify(
-						supportRequestId ? [bodyLambda] : { supportRequest: bodyLambda }
+						supportRequestId ? { supportRequest: bodyLambda } : [bodyLambda]
 					),
 					method: "POST",
 					headers: {

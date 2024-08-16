@@ -17,7 +17,7 @@ const payloadSchema = Yup.object({
 	color: Yup.string().oneOf(Object.values(Race)).required(),
 	zipcode: Yup.string().min(8).max(9).required(),
 	dateOfBirth: Yup.date().required().nullable(),
-	supportTypes: Yup.array()
+	supportType: Yup.array()
 		.of(Yup.string().oneOf(Object.values(SupportType)).required())
 		.required(),
 }).required();
@@ -27,11 +27,11 @@ function getColor(color: string) {
 	return option ? option.label.toLowerCase().normalize("NFD") : null;
 }
 
-function getSupportType(supportTypes: SupportType) {
-	if (supportTypes.length === 2) {
+function getSupportType(supportType: SupportType) {
+	if (supportType.length === 2) {
 		return "psicológico_e_jurídico";
 	}
-	if (supportTypes[0] === "legal") {
+	if (supportType[0] === "legal") {
 		return "jurídico";
 	}
 	return "psicológico";
@@ -58,7 +58,7 @@ export async function POST(request: Request) {
 				cor: getColor(payload.color),
 				whatsapp: payload.phone,
 				date_of_birth: payload.dateOfBirth,
-				tipo_de_acolhimento: getSupportType(payload.supportTypes),
+				tipo_de_acolhimento: getSupportType(payload.supportType),
 			},
 		};
 

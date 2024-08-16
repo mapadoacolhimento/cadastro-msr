@@ -20,12 +20,12 @@ describe("POST handle-request", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: supportTypes is a required field"
+			"Validation error: supportType is a required field"
 		);
 	});
 
 	it("should create match for support request legal", async () => {
-		const mockPayload = msrPayload({ supportTypes: ["legal"] });
+		const mockPayload = msrPayload({ supportType: ["legal"] });
 		const mockResCheckEligibility = {
 			supportRequestId: null,
 			ticketId: null,
@@ -67,8 +67,8 @@ describe("POST handle-request", () => {
 				supportType: "legal",
 				status: "open",
 				hasDisability: mockPayload.hasDisability,
-				lat: mockPayload.coordinates.lat,
-				lng: mockPayload.coordinates.lng,
+				lat: mockPayload.lat,
+				lng: mockPayload.lng,
 				city: mockPayload.city,
 				state: mockPayload.state,
 			},
@@ -91,7 +91,7 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
 			body: JSON.stringify({
 				email: mockPayload.email,
-				supportType: mockPayload.supportTypes[0],
+				supportType: mockPayload.supportType[0],
 			}),
 			method: "POST",
 			headers: {
@@ -147,7 +147,7 @@ describe("POST handle-request", () => {
 	});
 
 	it("should just update ticket and psychological support request as duplicated", async () => {
-		const mockPayload = msrPayload({ supportTypes: ["psychological"] });
+		const mockPayload = msrPayload({ supportType: ["psychological"] });
 		const mockResCheckEligibility = {
 			supportRequestId: 1234,
 			ticketId: 3456,
@@ -176,7 +176,7 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
 			body: JSON.stringify({
 				email: mockPayload.email,
-				supportType: mockPayload.supportTypes[0],
+				supportType: mockPayload.supportType[0],
 			}),
 			method: "POST",
 			headers: {
@@ -220,7 +220,7 @@ describe("POST handle-request", () => {
 
 	it("should create match for support requests legal and psychological", async () => {
 		const mockPayload = msrPayload({
-			supportTypes: ["legal", "psychological"],
+			supportType: ["legal", "psychological"],
 		});
 		const mockResCheckEligibility = {
 			supportRequestId: null,
@@ -270,8 +270,8 @@ describe("POST handle-request", () => {
 				supportType: "legal",
 				status: "open",
 				hasDisability: mockPayload.hasDisability,
-				lat: mockPayload.coordinates.lat,
-				lng: mockPayload.coordinates.lng,
+				lat: mockPayload.lat,
+				lng: mockPayload.lng,
 				city: mockPayload.city,
 				state: mockPayload.state,
 			},
@@ -312,7 +312,7 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
 			body: JSON.stringify({
 				email: mockPayload.email,
-				supportType: mockPayload.supportTypes[0],
+				supportType: mockPayload.supportType[0],
 			}),
 			method: "POST",
 			headers: {
@@ -367,7 +367,7 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
 			body: JSON.stringify({
 				email: mockPayload.email,
-				supportType: mockPayload.supportTypes[1],
+				supportType: mockPayload.supportType[1],
 			}),
 			method: "POST",
 			headers: {
@@ -428,7 +428,7 @@ describe("POST handle-request", () => {
 
 	it("should just update ticket and psychological support request as duplicated and create match for legal support request", async () => {
 		const mockPayload = msrPayload({
-			supportTypes: ["legal", "psychological"],
+			supportType: ["legal", "psychological"],
 		});
 		const mockResCheckEligibilityLegal = {
 			supportRequestId: 1234,
@@ -479,8 +479,8 @@ describe("POST handle-request", () => {
 			supportType: "legal",
 			status: "open",
 			hasDisability: mockPayload.hasDisability,
-			lat: mockPayload.coordinates.lat,
-			lng: mockPayload.coordinates.lng,
+			lat: mockPayload.lat,
+			lng: mockPayload.lng,
 			city: mockPayload.city,
 			state: mockPayload.state,
 		};
@@ -516,7 +516,7 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
 			body: JSON.stringify({
 				email: mockPayload.email,
-				supportType: mockPayload.supportTypes[0],
+				supportType: mockPayload.supportType[0],
 			}),
 			method: "POST",
 			headers: {
@@ -570,7 +570,7 @@ describe("POST handle-request", () => {
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/check-eligibility`, {
 			body: JSON.stringify({
 				email: mockPayload.email,
-				supportType: mockPayload.supportTypes[1],
+				supportType: mockPayload.supportType[1],
 			}),
 			method: "POST",
 			headers: {

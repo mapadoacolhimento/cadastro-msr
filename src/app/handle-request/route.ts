@@ -36,16 +36,13 @@ const payloadSchema = Yup.object({
 	city: Yup.string().required(),
 	state: Yup.string().length(2).required(),
 	neighborhood: Yup.string().required(),
-	coordinates: Yup.object({
-		lat: Yup.number().required(),
-		lng: Yup.number().required(),
-	}).required(),
+	lat: Yup.number().required().nullable(),
+	lng: Yup.number().required().nullable(),
 	zipcode: Yup.string().min(8).max(9).required(),
-	status: Yup.string().oneOf(Object.values(MSRStatus)).required(),
 	dateOfBirth: Yup.date().required().nullable(),
 	hasDisability: Yup.boolean().required().nullable(),
-	acceptsOnlineSupport: Yup.boolean().required(),
-	supportTypes: Yup.array(
+	acceptsOnlineSupport: Yup.boolean(),
+	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
 	).required(),
 }).required();
@@ -102,8 +99,8 @@ export async function POST(request: Request) {
 
 		let response: RequestResponse = {};
 
-		for (let i = 0; payload.supportTypes.length > i; i++) {
-			const supportType: SupportType = payload.supportTypes[i];
+		for (let i = 0; payload.supportType.length > i; i++) {
+			const supportType: SupportType = payload.supportType[i];
 
 			const resEligibilitily = await fetch(`${BASE_URL}/check-eligibility`, {
 				body: JSON.stringify({
@@ -143,7 +140,7 @@ export async function POST(request: Request) {
 					ticketId: ticketId,
 					msrZendeskUserId: user.msrZendeskUserId,
 					status: "new",
-					subject: subject({ supportType, ...payload }),
+					subject: subject({ ...payload, supportType: supportType }),
 					statusAcolhimento: "solicitação_recebida",
 					supportType: supportType,
 					comment: {
@@ -173,8 +170,8 @@ export async function POST(request: Request) {
 					supportType: supportType,
 					status: "open",
 					hasDisability: payload.hasDisability,
-					lat: payload.coordinates.lat,
-					lng: payload.coordinates.lng,
+					lat: payload.lat,
+					lng: payload.lng,
 					city: payload.city,
 					state: payload.state,
 				};

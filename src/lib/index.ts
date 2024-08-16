@@ -7,6 +7,7 @@ export { default as formatZipcode } from "./formatZipcode";
 export { default as createOrUpdateUser } from "./zendesk/createOrUpdateUser";
 export { default as createOrUpdateTicket } from "./zendesk/createOrUpdateTicket";
 export { default as isAdult } from "./isAdult";
+export { default as parseValues } from "./parseValues";
 
 export * from "./constants";
 export * from "./types";

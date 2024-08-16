@@ -4,7 +4,7 @@ import mockedDb from "../../lib/__mocks__/db";
 import msrPayload from "../../lib/__mocks__/payloads";
 import createFetchResponse from "../../lib/__mocks__/fetch";
 import { POST } from "../handle-request/route";
-import { BASE_URL, MATCH_LAMBDA_URL } from "../../lib";
+import { BASE_URL, MATCH_LAMBDA_URL, emailDuplicated } from "../../lib";
 
 describe("POST handle-request", () => {
 	beforeEach(() => {
@@ -190,7 +190,7 @@ describe("POST handle-request", () => {
 				statusAcolhimento: "solicitação_repetida",
 				supportType: "psychological",
 				comment: {
-					body: "TBD",
+					body: emailDuplicated(mockPayload.firstName),
 					public: true,
 				},
 			}),
@@ -584,7 +584,7 @@ describe("POST handle-request", () => {
 				statusAcolhimento: "solicitação_repetida",
 				supportType: "psychological",
 				comment: {
-					body: "TBD",
+					body: emailDuplicated(mockPayload.firstName),
 					public: true,
 				},
 			}),

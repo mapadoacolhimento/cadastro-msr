@@ -8,7 +8,7 @@ import {
 	emailDuplicated,
 	BASE_URL,
 } from "../../lib";
-import { Gender, MSRStatus, Race, SupportType } from "@prisma/client";
+import { Gender, Race, SupportType } from "@prisma/client";
 
 type SubjectInfo = {
 	supportType: SupportType;
@@ -18,6 +18,7 @@ type SubjectInfo = {
 };
 
 type DuplicatedRequest = {
+	firstName: string;
 	supportRequestId: number;
 	ticketId: number;
 	supportType: SupportType;
@@ -77,7 +78,7 @@ const handleDuplicated = async (supportRequest: DuplicatedRequest) => {
 			statusAcolhimento: "solicitação_repetida",
 			supportType: supportRequest.supportType,
 			comment: {
-				body: emailDuplicated,
+				body: emailDuplicated(supportRequest.firstName),
 				public: true,
 			},
 		}),
@@ -187,7 +188,12 @@ export async function POST(request: Request) {
 				const match = await resLambda.json();
 				response[supportType] = match.status;
 			} else {
-				await handleDuplicated({ supportRequestId, ticketId, supportType });
+				await handleDuplicated({
+					firstName: payload.firstName,
+					supportRequestId,
+					ticketId,
+					supportType,
+				});
 				response[supportType] = "duplicated";
 			}
 		}

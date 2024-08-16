@@ -78,11 +78,13 @@ Cypress.Commands.add("fillAcceptsOnlineSupportStep", () => {
 	}).click();
 });
 
-Cypress.Commands.add("fillSupportTypeStep", () => {
-	const { supportTypes } = userData;
+Cypress.Commands.add("fillSupportTypeStep", (supportType) => {
+	//const { supportTypes } = userData;
 	cy.contains("Que tipo de acolhimento você precisa?").should("exist");
-	cy.findByLabelText(supportTypes.psychological).click({ force: true });
-	cy.findByLabelText(supportTypes.legal).click({ force: true });
+	if (supportType.psychological)
+		cy.findByLabelText(supportType.psychological).click({ force: true });
+	if (supportType.legal)
+		cy.findByLabelText(supportType.legal).click({ force: true });
 });
 
 Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
@@ -109,6 +111,45 @@ Cypress.Commands.add("fillFinancialNeedStep", (option: string) => {
 		"Você declara que não pode pagar por atendimento jurídico/psicológico?"
 	).should("exist");
 	cy.findByLabelText(option).click({ force: true });
+});
+
+Cypress.Commands.add("fillAllSteps", (supportTypes) => {
+	const {
+		gender,
+		genderViolence,
+		externalSupport,
+		violenceLocation,
+		financialNeed,
+	} = userData;
+
+	cy.fillDateOfBirthStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillBasicRegisterInformationStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillGeolocationStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillDiversityInformationStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillGenderIdentityStep(gender);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillSupportTypeStep(supportTypes);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillGenderViolenceStep(genderViolence);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillExternalSupportStep(externalSupport);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillViolenceLocationStep(violenceLocation);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillFinancialNeedStep(financialNeed);
 });
 
 export {};

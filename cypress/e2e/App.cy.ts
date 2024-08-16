@@ -6,6 +6,7 @@ const {
 	externalSupport,
 	violenceLocation,
 	financialNeed,
+	supportTypes,
 } = userData;
 
 describe("App", () => {
@@ -28,7 +29,7 @@ describe("App", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillSupportTypeStep();
+		cy.fillSupportTypeStep(supportTypes);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -105,7 +106,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillSupportTypeStep();
+		cy.fillSupportTypeStep(supportTypes);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep("Não");
@@ -132,7 +133,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillSupportTypeStep();
+		cy.fillSupportTypeStep(supportTypes);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -162,7 +163,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillSupportTypeStep();
+		cy.fillSupportTypeStep(supportTypes);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -195,7 +196,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillSupportTypeStep();
+		cy.fillSupportTypeStep(supportTypes);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -228,5 +229,105 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
+	});
+});
+
+describe("Submit the form", () => {
+	it("should redirect to `cadastro-finalizado` when handle-quest return none of supportquests as `duplicated`", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: "waiting_contact",
+				legal: "waiting_contact",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps(supportTypes);
+
+		cy.get("#terms").click();
+		cy.findByRole("button", { name: "Enviar" }).click();
+
+		cy.url().should("include", "/cadastro-finalizado");
+	});
+
+	it("should redirect to `acolhimento-andamento` when handle-quest return the supportquest as `duplicated`", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: "duplicated",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps({ psychological: "Acolhimento psicológico" });
+
+		cy.get("#terms").click();
+		cy.findByRole("button", { name: "Enviar" }).click();
+
+		cy.url().should("include", "/acolhimento-andamento");
+	});
+
+	it("should redirect to `cadastro-finalizado` when handle-quest return the supportquest not as `duplicated`", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				legal: "waiting_contact",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps({ legal: "Acolhimento jurídico" });
+
+		cy.get("#terms").click();
+		cy.findByRole("button", { name: "Enviar" }).click();
+
+		cy.url().should("include", "/cadastro-finalizado");
+	});
+
+	it("should redirect to `cadastro-finalizado` when handle-quest return only one the supportquest as `duplicated`", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: "duplicated",
+				egal: "waiting_contact",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps(supportTypes);
+
+		cy.get("#terms").click();
+		cy.findByRole("button", { name: "Enviar" }).click();
+
+		cy.url().should("include", "/cadastro-finalizado");
+	});
+
+	it("should redirect to `acolhimento-andamento` when handle-quest return both the supportquests as `duplicated`", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: "duplicated",
+				legal: "duplicated",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps(supportTypes);
+
+		cy.get("#terms").click();
+		cy.findByRole("button", { name: "Enviar" }).click();
+
+		cy.url().should("include", "/acolhimento-andamento");
 	});
 });

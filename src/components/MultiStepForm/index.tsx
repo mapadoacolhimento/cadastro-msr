@@ -69,11 +69,11 @@ export default function MultiStepForm() {
 				sleep(300).then(() => console.log("Wizard submit", values))
 			}
 		>
+			{GenderIdentity()}
 			{DateOfBirth()}
 			{BasicRegisterInformation()}
 			{Geolocation()}
 			{DiversityInformation()}
-			{GenderIdentity()}
 			{SupportType()}
 			{GenderViolence()}
 			{ExternalSupport()}

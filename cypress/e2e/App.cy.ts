@@ -71,6 +71,24 @@ describe("When MSR does not meet the criteria", () => {
 		cy.url().should("include", "/fora-criterios");
 	});
 
+	it("should redirect to `fora-criterios` page if MSR is under 18 years old", () => {
+		cy.visit("/cadastro");
+
+		cy.fillGenderIdentityStep(gender);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		const today = new Date();
+		const birthYear = today.getFullYear() - 17;
+		const birthMonth = String(today.getMonth() + 1).padStart(2, "0");
+		const birthDay = String(today.getDate()).padStart(2, "0");
+		const invalidDateOfBirth = `${birthDay}${birthMonth}${birthYear}`;
+
+		cy.fillDateOfBirthStep(invalidDateOfBirth);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.url().should("include", "/fora-criterios");
+	});
+
 	it("should redirect to `fora-criterios` page if gender violence is filled with option `Não`", () => {
 		cy.visit("/cadastro");
 
@@ -81,40 +99,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep("Não");
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.url().should("include", "/fora-criterios");
-	});
-
-	// skipping for now because this condition will change shortly
-	it.skip("should redirect to `fora-criterios` page if MSR asks for legal support and they select that they already have external legal support", () => {
-		cy.visit("/cadastro");
-
-		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDateOfBirthStep(dateOfBirth);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGenderViolenceStep(genderViolence);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillViolenceLocationStep(violenceLocation);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillBasicRegisterInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGeolocationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDiversityInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillExternalSupportStep("Sim");
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
@@ -162,19 +146,35 @@ describe("When MSR does not meet the criteria", () => {
 		cy.url().should("include", "/fora-criterios");
 	});
 
-	it("should redirect to `fora-criterios` page if MSR is under 18 years old", () => {
+	// skipping for now because this condition will change shortly
+	it.skip("should redirect to `fora-criterios` page if MSR asks for legal support and they select that they already have external legal support", () => {
 		cy.visit("/cadastro");
 
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		const today = new Date();
-		const birthYear = today.getFullYear() - 17;
-		const birthMonth = String(today.getMonth() + 1).padStart(2, "0");
-		const birthDay = String(today.getDate()).padStart(2, "0");
-		const invalidDateOfBirth = `${birthDay}${birthMonth}${birthYear}`;
+		cy.fillDateOfBirthStep(dateOfBirth);
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep(invalidDateOfBirth);
+		cy.fillGenderViolenceStep(genderViolence);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillViolenceLocationStep(violenceLocation);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillGeolocationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDiversityInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillSupportTypeStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillExternalSupportStep("Sim");
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");

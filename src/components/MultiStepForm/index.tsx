@@ -74,11 +74,11 @@ export default function MultiStepForm() {
 			{GenderViolence()}
 			{ViolenceLocation()}
 			{ExternalSupport()}
+			{FinancialNeed()}
 			{BasicRegisterInformation()}
 			{Geolocation()}
 			{DiversityInformation()}
 			{SupportType()}
-			{FinancialNeed()}
 		</MultiStepFormWrapper>
 	);
 }

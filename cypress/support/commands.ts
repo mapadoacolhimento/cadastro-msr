@@ -109,6 +109,7 @@ Cypress.Commands.add("fillFinancialNeedStep", (option: string) => {
 		"Você declara que não pode pagar por atendimento jurídico/psicológico?"
 	).should("exist");
 	cy.findByLabelText(option).click({ force: true });
+	cy.get("#terms").click();
 });
 
 export {};

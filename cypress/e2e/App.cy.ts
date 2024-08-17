@@ -28,6 +28,9 @@ describe("App", () => {
 		cy.fillExternalSupportStep(externalSupport);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillFinancialNeedStep(financialNeed);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -38,9 +41,7 @@ describe("App", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillFinancialNeedStep(financialNeed);
+		cy.findByRole("button", { name: "Enviar" }).click();
 	});
 
 	it("should go back to the previous step when the back button is clicked", () => {
@@ -154,22 +155,8 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillExternalSupportStep(externalSupport);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillBasicRegisterInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGeolocationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDiversityInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
 		cy.fillFinancialNeedStep("Não");
-
-		cy.get("#terms").click();
-		cy.findByRole("button", { name: "Enviar" }).click();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
 	});

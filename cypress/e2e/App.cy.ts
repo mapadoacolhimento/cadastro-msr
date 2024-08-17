@@ -32,6 +32,9 @@ describe("App", () => {
 		cy.fillFinancialNeedStep(financialNeed);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillSupportTypeStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -39,9 +42,6 @@ describe("App", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillDiversityInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillSupportTypeStep();
 		cy.findByRole("button", { name: "Enviar" }).click();
 	});
 

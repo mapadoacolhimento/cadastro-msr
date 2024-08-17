@@ -75,10 +75,10 @@ export default function MultiStepForm() {
 			{ViolenceLocation()}
 			{ExternalSupport()}
 			{FinancialNeed()}
+			{SupportType()}
 			{BasicRegisterInformation()}
 			{Geolocation()}
 			{DiversityInformation()}
-			{SupportType()}
 		</MultiStepFormWrapper>
 	);
 }

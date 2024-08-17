@@ -86,7 +86,7 @@ Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
 	cy.contains("Você sofreu ou está sofrendo violência de gênero?").should(
 		"exist"
 	);
-	cy.findByLabelText(option).click({ force: true });
+	cy.findByRole("radio", { name: option }).click();
 });
 
 Cypress.Commands.add("fillViolenceLocationStep", (option: string) => {
@@ -107,6 +107,15 @@ Cypress.Commands.add("fillFinancialNeedStep", (option: string) => {
 	).should("exist");
 	cy.findByLabelText(option).click({ force: true });
 	cy.get("#terms").click();
+});
+
+Cypress.Commands.add("checkForaCriteriosPage", () => {
+	cy.findByRole("heading", { name: "Sentimos muito", level: 1 }).should(
+		"exist"
+	);
+	cy.findByText(
+		"O Mapa do Acolhimento atende mulheres cis, trans ou travestis maiores de 18 anos, que vivem no Brasil e enfrentam situações de vulnerabilidade socioeconômica."
+	).should("exist");
 });
 
 export {};

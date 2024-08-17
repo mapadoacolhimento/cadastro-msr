@@ -58,6 +58,7 @@ describe("App", () => {
 		cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 		cy.findByRole("heading", { name: "Sobre você" }).should("exist");
+		cy.findByRole("textbox").should("have.value", "18/11/1996");
 	});
 });
 
@@ -69,6 +70,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
+		cy.checkForaCriteriosPage();
 	});
 
 	it("should redirect to `fora-criterios` page if MSR is under 18 years old", () => {
@@ -87,6 +89,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
+		cy.checkForaCriteriosPage();
 	});
 
 	it("should redirect to `fora-criterios` page if gender violence is filled with option `Não`", () => {
@@ -102,6 +105,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
+		cy.checkForaCriteriosPage();
 	});
 
 	it("should redirect to `fora-criterios` page if MSR selects that the violence location wasn't in Brazil", () => {
@@ -120,6 +124,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
+		cy.checkForaCriteriosPage();
 	});
 
 	it("should redirect to `fora-criterios` page if MSR signals they dont struggle financially", () => {
@@ -144,6 +149,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
+		cy.checkForaCriteriosPage();
 	});
 
 	// skipping for now because this condition will change shortly

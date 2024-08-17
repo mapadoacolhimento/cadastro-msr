@@ -22,6 +22,9 @@ describe("App", () => {
 		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillViolenceLocationStep(violenceLocation);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -35,9 +38,6 @@ describe("App", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep(externalSupport);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillViolenceLocationStep(violenceLocation);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillFinancialNeedStep(financialNeed);
@@ -96,6 +96,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillViolenceLocationStep(violenceLocation);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -126,21 +129,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillBasicRegisterInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGeolocationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDiversityInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillExternalSupportStep(externalSupport);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
 		cy.fillViolenceLocationStep("Não");
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -159,6 +147,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillViolenceLocationStep(violenceLocation);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -172,9 +163,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep(externalSupport);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillViolenceLocationStep(violenceLocation);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillFinancialNeedStep("Não");

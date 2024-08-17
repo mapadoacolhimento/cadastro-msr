@@ -27,11 +27,14 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 	const { hasDisability, colorOption } = userData;
 
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
-	cy.get("#color").click();
+	cy.findByRole("combobox", {
+		name: "Cor",
+	}).click();
 	cy.contains(colorOption).should("be.visible").click();
 	cy.findByRole("combobox", {
 		name: "Você é PcD (Pessoa com deficiência)?",
 	}).type(`${hasDisability}{enter}`);
+	cy.findByRole("checkbox").click();
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {
@@ -91,22 +94,21 @@ Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
 
 Cypress.Commands.add("fillViolenceLocationStep", (option: string) => {
 	cy.contains("A violência ocorreu no Brasil?").should("exist");
-	cy.findByLabelText(option).click({ force: true });
+	cy.findByLabelText(option).click();
 });
 
 Cypress.Commands.add("fillExternalSupportStep", (option: string) => {
 	cy.contains(
 		"Você está recebendo acompanhamento jurídico pela defensoria pública?"
 	).should("exist");
-	cy.findByLabelText(option).click({ force: true });
+	cy.findByLabelText(option).click();
 });
 
 Cypress.Commands.add("fillFinancialNeedStep", (option: string) => {
 	cy.contains(
 		"Você declara que não pode pagar por atendimento jurídico/psicológico?"
 	).should("exist");
-	cy.findByLabelText(option).click({ force: true });
-	cy.get("#terms").click();
+	cy.findByLabelText(option).click();
 });
 
 Cypress.Commands.add("checkForaCriteriosPage", () => {

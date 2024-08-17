@@ -71,11 +71,11 @@ export default function MultiStepForm() {
 		>
 			{GenderIdentity()}
 			{DateOfBirth()}
+			{GenderViolence()}
 			{BasicRegisterInformation()}
 			{Geolocation()}
 			{DiversityInformation()}
 			{SupportType()}
-			{GenderViolence()}
 			{ExternalSupport()}
 			{ViolenceLocation()}
 			{FinancialNeed()}

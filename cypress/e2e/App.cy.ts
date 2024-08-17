@@ -19,6 +19,9 @@ describe("App", () => {
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillGenderViolenceStep(genderViolence);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -29,9 +32,6 @@ describe("App", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep(externalSupport);
@@ -52,16 +52,10 @@ describe("App", () => {
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillBasicRegisterInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGeolocationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDiversityInformationStep();
+		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
-		cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
+		cy.findByRole("heading", { name: "Sobre você" }).should("exist");
 	});
 });
 
@@ -84,18 +78,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillBasicRegisterInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGeolocationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDiversityInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
 		cy.fillGenderViolenceStep("Não");
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -111,6 +93,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillGenderViolenceStep(genderViolence);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -121,9 +106,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep("Sim");
@@ -141,6 +123,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillGenderViolenceStep(genderViolence);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -151,9 +136,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep(externalSupport);
@@ -174,6 +156,9 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
+		cy.fillGenderViolenceStep(genderViolence);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
 		cy.fillBasicRegisterInformationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -184,9 +169,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep(externalSupport);

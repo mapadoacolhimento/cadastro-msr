@@ -9,57 +9,130 @@ const {
 	dateOfBirth,
 } = userData;
 
-describe("App", () => {
-	it("should continue to next step if all fields are filled correctly", () => {
-		cy.visit("/");
-		cy.goThroughHomePage();
+describe("Happy path", () => {
+	describe(
+		"Desktop",
+		{
+			viewportHeight: 1080,
+			viewportWidth: 1920,
+		},
+		() => {
+			it("should continue to next step if all fields are filled correctly", () => {
+				cy.visit("/");
+				cy.goThroughHomePage();
 
-		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillGenderIdentityStep(gender);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep(dateOfBirth);
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillDateOfBirthStep(dateOfBirth);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillGenderViolenceStep(genderViolence);
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillGenderViolenceStep(genderViolence);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceLocationStep(violenceLocation);
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillViolenceLocationStep(violenceLocation);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillExternalSupportStep(externalSupport);
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillExternalSupportStep(externalSupport);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillFinancialNeedStep(financialNeed);
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillFinancialNeedStep(financialNeed);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillSupportTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillSupportTypeStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillBasicRegisterInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillBasicRegisterInformationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillGeolocationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillGeolocationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDiversityInformationStep();
-		cy.findByRole("button", { name: "Enviar" }).click();
-	});
+				cy.fillDiversityInformationStep();
+				cy.findByRole("button", { name: "Enviar" }).click();
+			});
 
-	it("should go back to the previous step when the back button is clicked", () => {
-		cy.visit("/cadastro");
+			it("should go back to the previous step when the back button is clicked", () => {
+				cy.visit("/cadastro");
 
-		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillGenderIdentityStep(gender);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep(dateOfBirth);
-		cy.findByRole("button", { name: "Continuar" }).click();
+				cy.fillDateOfBirthStep(dateOfBirth);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillGenderViolenceStep(genderViolence);
-		cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
+				cy.fillGenderViolenceStep(genderViolence);
+				cy.findByRole("button", {
+					name: "Voltar para o passo anterior",
+				}).click();
 
-		cy.findByRole("heading", { name: "Sobre você" }).should("exist");
-		cy.findByRole("textbox").should("have.value", "18/11/1996");
-	});
+				cy.findByRole("heading", { name: "Sobre você" }).should("exist");
+				cy.findByRole("textbox").should("have.value", "18/11/1996");
+			});
+		}
+	);
+
+	describe(
+		"Mobile",
+		{
+			viewportHeight: 844,
+			viewportWidth: 390,
+		},
+		() => {
+			it("should continue to next step if all fields are filled correctly", () => {
+				cy.visit("/");
+				cy.goThroughHomePage();
+
+				cy.fillGenderIdentityStep(gender);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillDateOfBirthStep(dateOfBirth);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillGenderViolenceStep(genderViolence);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceLocationStep(violenceLocation);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillExternalSupportStep(externalSupport);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillFinancialNeedStep(financialNeed);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillSupportTypeStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillBasicRegisterInformationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillGeolocationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillDiversityInformationStep();
+				cy.findByRole("button", { name: "Enviar" }).click();
+			});
+
+			it("should go back to the previous step when the back button is clicked", () => {
+				cy.visit("/cadastro");
+
+				cy.fillGenderIdentityStep(gender);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillDateOfBirthStep(dateOfBirth);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillGenderViolenceStep(genderViolence);
+				cy.findByRole("button", {
+					name: "Voltar para o passo anterior",
+				}).click();
+
+				cy.findByRole("heading", { name: "Sobre você" }).should("exist");
+				cy.findByRole("textbox").should("have.value", "18/11/1996");
+			});
+		}
+	);
 });
 
 describe("When MSR does not meet the criteria", () => {

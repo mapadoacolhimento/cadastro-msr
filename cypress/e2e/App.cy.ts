@@ -6,6 +6,7 @@ const {
 	externalSupport,
 	violenceLocation,
 	financialNeed,
+	dateOfBirth,
 } = userData;
 
 describe("App", () => {
@@ -16,7 +17,7 @@ describe("App", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep();
+		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -50,7 +51,7 @@ describe("App", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep();
+		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -76,7 +77,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep();
+		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep("Não");
@@ -92,7 +93,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep();
+		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -125,7 +126,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep();
+		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -143,7 +144,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderIdentityStep(gender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep();
+		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillGenderViolenceStep(genderViolence);
@@ -171,9 +172,9 @@ describe("When MSR does not meet the criteria", () => {
 		const birthYear = today.getFullYear() - 17;
 		const birthMonth = String(today.getMonth() + 1).padStart(2, "0");
 		const birthDay = String(today.getDate()).padStart(2, "0");
-		const dateOfBirth = `${birthDay}${birthMonth}${birthYear}`;
+		const invalidDateOfBirth = `${birthDay}${birthMonth}${birthYear}`;
 
-		cy.fillDateOfBirthStep(dateOfBirth);
+		cy.fillDateOfBirthStep(invalidDateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");

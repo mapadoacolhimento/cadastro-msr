@@ -19,158 +19,111 @@ function terminalLog(violations) {
 }
 
 describe("Accessbility", () => {
+	const sizes = [
+		{
+			name: "Desktop",
+			viewportHeight: 1080,
+			viewportWidth: 1920,
+		},
+		{
+			name: "Mobile",
+			viewportHeight: 844,
+			viewportWidth: 390,
+		},
+	];
+
 	describe("Home Page", () => {
-		describe(
-			"Desktop",
-			{
-				viewportHeight: 1080,
-				viewportWidth: 1920,
-			},
-			() => {
-				it("should pass the accessibility test", () => {
-					cy.visit("/");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
-		describe(
-			"Mobile",
-			{
-				viewportHeight: 844,
-				viewportWidth: 390,
-			},
-			() => {
-				it("should pass the accessibility test", () => {
-					cy.visit("/");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
+		sizes.forEach((size) => {
+			describe(
+				size.name,
+				{
+					viewportHeight: size.viewportHeight,
+					viewportWidth: size.viewportWidth,
+				},
+				() => {
+					it("should pass the accessibility test", () => {
+						cy.visit("/");
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+				}
+			);
+		});
 	});
 
 	describe("Fora criterios", () => {
-		describe(
-			"Desktop",
-			{
-				viewportHeight: 1080,
-				viewportWidth: 1920,
-			},
-			() => {
-				it("should pass the accessibility test", () => {
-					cy.visit("/fora-criterios");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
-		describe(
-			"Mobile",
-			{
-				viewportHeight: 844,
-				viewportWidth: 390,
-			},
-			() => {
-				it("should pass the accessibility test", () => {
-					cy.visit("/fora-criterios");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
+		sizes.forEach((size) => {
+			describe(
+				size.name,
+				{
+					viewportHeight: size.viewportHeight,
+					viewportWidth: size.viewportWidth,
+				},
+				() => {
+					it("should pass the accessibility test", () => {
+						cy.visit("/fora-criterios");
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+				}
+			);
+		});
 	});
 
 	describe("Acolhimento andamento", () => {
-		describe(
-			"Desktop",
-			{
-				viewportHeight: 1080,
-				viewportWidth: 1920,
-			},
-			() => {
-				it("should pass the accessibility test", () => {
-					cy.visit("/acolhimento-andamento");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
-		describe(
-			"Mobile",
-			{
-				viewportHeight: 844,
-				viewportWidth: 390,
-			},
-			() => {
-				it("should pass the accessibility test", () => {
-					cy.visit("/acolhimento-andamento");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
+		sizes.forEach((size) => {
+			describe(
+				size.name,
+				{
+					viewportHeight: size.viewportHeight,
+					viewportWidth: size.viewportWidth,
+				},
+				() => {
+					it("should pass the accessibility test", () => {
+						cy.visit("/acolhimento-andamento");
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+				}
+			);
+		});
 	});
 
 	describe("Cadastro finalizado", () => {
-		describe(
-			"Desktop",
-			{
-				viewportHeight: 1080,
-				viewportWidth: 1920,
-			},
-			() => {
-				it("should pass the accessibility test", () => {
-					cy.visit("/cadastro-finalizado");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
-		describe(
-			"Mobile",
-			{
-				viewportHeight: 844,
-				viewportWidth: 390,
-			},
-			() => {
-				it("should pass the accessibility test", () => {
-					cy.visit("/cadastro-finalizado");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
+		sizes.forEach((size) => {
+			describe(
+				size.name,
+				{
+					viewportHeight: size.viewportHeight,
+					viewportWidth: size.viewportWidth,
+				},
+				() => {
+					it("should pass the accessibility test", () => {
+						cy.visit("/cadastro-finalizado");
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+				}
+			);
+		});
 	});
 
 	describe("Cadastro", () => {
-		describe(
-			"Desktop",
-			{
-				viewportHeight: 1080,
-				viewportWidth: 1920,
-			},
-			() => {
-				it("should pass the accessibility test on Date of Birth step", () => {
-					cy.visit("/cadastro");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
-		describe(
-			"Mobile",
-			{
-				viewportHeight: 844,
-				viewportWidth: 390,
-			},
-			() => {
-				it("should pass the accessibility test on Date of Birth step", () => {
-					cy.visit("/cadastro");
-					cy.injectAxe();
-					cy.checkA11y(null, null, terminalLog);
-				});
-			}
-		);
+		sizes.forEach((size) => {
+			describe(
+				size.name,
+				{
+					viewportHeight: size.viewportHeight,
+					viewportWidth: size.viewportWidth,
+				},
+				() => {
+					it("should pass the accessibility test on Date of Birth step", () => {
+						cy.visit("/cadastro");
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+				}
+			);
+		});
 	});
 });

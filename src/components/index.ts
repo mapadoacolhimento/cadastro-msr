@@ -12,3 +12,4 @@ export { default as BaseLayout } from "./BaseLayout";
 export { default as ExtraSupport } from "./ExtraSupport";
 export { default as Contact } from "./Contact";
 export { default as InfoBox } from "./InfoBox";
+export { default as CheckboxInput } from "./CheckboxInput";

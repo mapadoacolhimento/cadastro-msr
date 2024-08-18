@@ -2,8 +2,7 @@ import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
-import RadioInput from "../../RadioInput";
-import CheckboxInfo from "../../CheckboxInfo";
+import { RadioInput, CheckboxInput } from "../..";
 import { financialNeedOptions } from "../../../lib";
 import type { Values } from "..";
 
@@ -43,7 +42,7 @@ export default function FinancialNeed() {
 					</>
 				}
 			/>
-			<CheckboxInfo name="terms">
+			<CheckboxInput name="terms">
 				Ao inserir seus dados, você concorda em ter seus dados compartilhados
 				com os organizadores dessa página e aceita receber emails de
 				atualização, conforme descrito na{" "}
@@ -54,7 +53,7 @@ export default function FinancialNeed() {
 					política de privacidade
 				</a>
 				. Você pode cancelar o recebimento desses e-mails a qualquer momento.
-			</CheckboxInfo>
+			</CheckboxInput>
 		</Step>
 	);
 }

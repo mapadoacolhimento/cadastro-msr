@@ -7,9 +7,11 @@ import "@/theme/index.css";
 
 import type { PropsWithChildren } from "react";
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { nunitoSans, idealista } from "@/fonts";
 import Providers from "./providers";
 import BaseLayout from "@/components/BaseLayout";
+import { GOOGLE_ANALYTICS_ID } from "@/lib";
 
 export const metadata: Metadata = {
 	title: "Quero ser acolhida - Mapa do Acolhimento",
@@ -28,6 +30,7 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
 					<BaseLayout>{children}</BaseLayout>
 				</Providers>
 			</body>
+			<GoogleAnalytics gaId={GOOGLE_ANALYTICS_ID} />
 		</html>
 	);
 }

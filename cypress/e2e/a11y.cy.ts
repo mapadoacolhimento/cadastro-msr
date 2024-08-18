@@ -142,4 +142,35 @@ describe("Accessbility", () => {
 			}
 		);
 	});
+
+	describe("Cadastro", () => {
+		describe(
+			"Desktop",
+			{
+				viewportHeight: 1080,
+				viewportWidth: 1920,
+			},
+			() => {
+				it("should pass the accessibility test on Date of Birth step", () => {
+					cy.visit("/cadastro");
+					cy.injectAxe();
+					cy.checkA11y(null, null, terminalLog);
+				});
+			}
+		);
+		describe(
+			"Mobile",
+			{
+				viewportHeight: 844,
+				viewportWidth: 390,
+			},
+			() => {
+				it("should pass the accessibility test on Date of Birth step", () => {
+					cy.visit("/cadastro");
+					cy.injectAxe();
+					cy.checkA11y(null, null, terminalLog);
+				});
+			}
+		);
+	});
 });

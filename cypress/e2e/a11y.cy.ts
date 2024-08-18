@@ -1,3 +1,5 @@
+import userData from "../fixtures/userData.json";
+
 function terminalLog(violations) {
 	cy.task(
 		"log",
@@ -17,6 +19,8 @@ function terminalLog(violations) {
 
 	cy.task("table", violationData);
 }
+
+const { gender, genderViolence, externalSupport, violenceLocation } = userData;
 
 describe("Accessbility", () => {
 	const sizes = [
@@ -117,8 +121,232 @@ describe("Accessbility", () => {
 					viewportWidth: size.viewportWidth,
 				},
 				() => {
+					it("should pass the accessibility test on Gender Identity step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.contains("Qual sua identidade de gênero?").should("exist");
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
 					it("should pass the accessibility test on Date of Birth step", () => {
 						cy.visit("/cadastro");
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
+					it("should pass the accessibility test on Gender Violence step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGenderIdentityStep(gender);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillSupportTypeStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.contains(
+							"Você sofreu ou está sofrendo violência de gênero?"
+						).should("exist");
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
+					it("should pass the accessibility test on Violence Location step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGenderIdentityStep(gender);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillSupportTypeStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGenderViolenceStep(genderViolence);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillExternalSupportStep(externalSupport);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.contains("A violência ocorreu no Brasil?").should("exist");
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
+					it("should pass the accessibility test on External Support step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGenderIdentityStep(gender);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillSupportTypeStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGenderViolenceStep(genderViolence);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.contains(
+							"Você está recebendo acompanhamento jurídico pela defensoria pública?"
+						).should("exist");
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
+					it("should pass the accessibility test on Financial Need step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGenderIdentityStep(gender);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillSupportTypeStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGenderViolenceStep(genderViolence);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillExternalSupportStep(externalSupport);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillViolenceLocationStep(violenceLocation);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.contains(
+							"Você declara que não pode pagar por atendimento jurídico/psicológico?"
+						).should("exist");
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
+					it("should pass the accessibility test on Support Type step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGenderIdentityStep(gender);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.contains("Que tipo de acolhimento você precisa?").should(
+							"exist"
+						);
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
+					it("should pass the accessibility test on Basic Register Information step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.get("#firstName").should("exist");
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
+					it("should pass the accessibility test on Geolocation step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
+					it("should pass the accessibility test on Diversity Information step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillDateOfBirthStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.contains("Você é PcD (Pessoa com deficiência)?").should("exist");
+
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
 					});

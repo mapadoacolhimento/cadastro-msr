@@ -47,7 +47,7 @@ export default function Homepage() {
 
 					<Flex direction={"column"} align={"center"}>
 						<Box asChild width={"15.625rem"}>
-							<Button size={"4"}>
+							<Button size={"4"} asChild>
 								<Link href={"/cadastro"}>Quero ser acolhida</Link>
 							</Button>
 						</Box>
@@ -121,15 +121,21 @@ function CriteriaBox() {
 			<ul style={{ margin: 0, padding: 0 }}>
 				{criteria.map(({ icon: { alt, src }, text }, i) => (
 					<>
-						<Flex align={"center"} gap={"4"} py={"4"} asChild>
+						<Flex
+							align={"center"}
+							gap={"4"}
+							py={"4"}
+							asChild
+							style={{
+								borderBottom: i < criteria.length - 1 ? "1px solid" : 0,
+								borderColor: "var(--gray-a6)",
+							}}
+						>
 							<li key={`criteria-${alt}`}>
 								<Image src={src} alt={alt} width={30} height={30} />
 								<Text>{text}</Text>
 							</li>
 						</Flex>
-						{i < criteria.length - 1 ? (
-							<Separator orientation="horizontal" size="4" />
-						) : null}
 					</>
 				))}
 			</ul>

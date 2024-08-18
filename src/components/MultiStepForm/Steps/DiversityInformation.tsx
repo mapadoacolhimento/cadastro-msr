@@ -2,6 +2,7 @@ import * as Yup from "yup";
 import { Box } from "@radix-ui/themes";
 
 import Step from "../Step";
+import CheckboxInfo from "../../CheckboxInfo";
 import { SelectInput } from "../..";
 import { colorOptions, DISABILITY_OPTIONS, sleep } from "../../../lib";
 
@@ -10,6 +11,10 @@ const diversityInformationSchema = Yup.object({
 	hasDisability: Yup.string()
 		.oneOf(DISABILITY_OPTIONS.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
+	terms: Yup.boolean().oneOf(
+		[true],
+		"Você precisar aceitar os termos para receber atendimento."
+	),
 });
 
 export default function DiversityInformation() {
@@ -37,6 +42,18 @@ export default function DiversityInformation() {
 				label={"Você é PcD (Pessoa com deficiência)?"}
 				placeholder="Você é PcD (Pessoa com deficiência)?"
 			/>
+			<CheckboxInfo name="terms">
+				Ao inserir seus dados, você concorda em ter seus dados compartilhados
+				com os organizadores dessa página e aceita receber emails de
+				atualização, conforme descrito na{" "}
+				<a
+					href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
+					target="_blank"
+				>
+					política de privacidade
+				</a>
+				. Você pode cancelar o recebimento desses e-mails a qualquer momento.
+			</CheckboxInfo>
 		</Step>
 	);
 }

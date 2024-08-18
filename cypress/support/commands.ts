@@ -8,13 +8,10 @@ Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();
 });
 
-Cypress.Commands.add(
-	"fillDateOfBirthStep",
-	(dateOfBirth = userData.dateOfBirth) => {
-		cy.findByRole("heading", { name: "Sobre você" }).should("exist");
-		cy.findByRole("textbox").should("be.visible").type(dateOfBirth);
-	}
-);
+Cypress.Commands.add("fillDateOfBirthStep", (dateOfBirth) => {
+	cy.findByRole("heading", { name: "Sobre você" }).should("exist");
+	cy.findByRole("textbox").should("be.visible").type(dateOfBirth);
+});
 
 Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
 	const { firstName, email, confirmEmail, phone } = userData;
@@ -30,11 +27,14 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 	const { hasDisability, colorOption } = userData;
 
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
-	cy.get("#color").click();
+	cy.findByRole("combobox", {
+		name: "Cor",
+	}).click();
 	cy.contains(colorOption).should("be.visible").click();
 	cy.findByRole("combobox", {
 		name: "Você é PcD (Pessoa com deficiência)?",
 	}).type(`${hasDisability}{enter}`);
+	cy.findByRole("checkbox").click();
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {
@@ -89,26 +89,35 @@ Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
 	cy.contains("Você sofreu ou está sofrendo violência de gênero?").should(
 		"exist"
 	);
-	cy.findByLabelText(option).click({ force: true });
+	cy.findByRole("radio", { name: option }).click();
 });
 
 Cypress.Commands.add("fillViolenceLocationStep", (option: string) => {
 	cy.contains("A violência ocorreu no Brasil?").should("exist");
-	cy.findByLabelText(option).click({ force: true });
+	cy.findByLabelText(option).click();
 });
 
 Cypress.Commands.add("fillExternalSupportStep", (option: string) => {
 	cy.contains(
 		"Você está recebendo acompanhamento jurídico pela defensoria pública?"
 	).should("exist");
-	cy.findByLabelText(option).click({ force: true });
+	cy.findByLabelText(option).click();
 });
 
 Cypress.Commands.add("fillFinancialNeedStep", (option: string) => {
 	cy.contains(
 		"Você declara que não pode pagar por atendimento jurídico/psicológico?"
 	).should("exist");
-	cy.findByLabelText(option).click({ force: true });
+	cy.findByLabelText(option).click();
+});
+
+Cypress.Commands.add("checkForaCriteriosPage", () => {
+	cy.findByRole("heading", { name: "Sentimos muito", level: 1 }).should(
+		"exist"
+	);
+	cy.findByText(
+		"O Mapa do Acolhimento atende mulheres cis, trans ou travestis maiores de 18 anos, que vivem no Brasil e enfrentam situações de vulnerabilidade socioeconômica."
+	).should("exist");
 });
 
 export {};

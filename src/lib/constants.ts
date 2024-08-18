@@ -137,3 +137,5 @@ export const ZENDESK_CUSTOM_FIELDS_DICIO = {
 };
 
 export const msrOrganizationId = 360273031591 as unknown as bigint;
+
+export const GOOGLE_ANALYTICS_ID = "G-H4HVJY8T0V";

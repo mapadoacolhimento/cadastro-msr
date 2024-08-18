@@ -18,4 +18,6 @@ export default defineConfig({
 			});
 		},
 	},
+	viewportWidth: 768,
+	viewportHeight: 1366,
 });

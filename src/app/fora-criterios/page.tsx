@@ -24,7 +24,7 @@ export default function Page() {
 					</Heading>
 				</Box>
 				<Box pb={{ initial: "7", sm: "8" }} asChild>
-					<Text align={"center"}>
+					<Text align={"center"} as={"p"}>
 						O Mapa do Acolhimento atende mulheres cis, trans ou travestis
 						maiores de 18 anos, que vivem no Brasil e enfrentam situações de
 						vulnerabilidade socioeconômica.

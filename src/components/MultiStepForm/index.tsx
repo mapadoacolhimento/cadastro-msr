@@ -69,16 +69,16 @@ export default function MultiStepForm() {
 				sleep(300).then(() => console.log("Wizard submit", values))
 			}
 		>
+			{GenderIdentity()}
 			{DateOfBirth()}
+			{GenderViolence()}
+			{ViolenceLocation()}
+			{ExternalSupport()}
+			{FinancialNeed()}
+			{SupportType()}
 			{BasicRegisterInformation()}
 			{Geolocation()}
 			{DiversityInformation()}
-			{GenderIdentity()}
-			{SupportType()}
-			{GenderViolence()}
-			{ExternalSupport()}
-			{ViolenceLocation()}
-			{FinancialNeed()}
 		</MultiStepFormWrapper>
 	);
 }

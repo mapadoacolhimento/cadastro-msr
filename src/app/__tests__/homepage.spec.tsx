@@ -56,7 +56,7 @@ describe("<Homepage />", () => {
 	});
 
 	it("should render button", () => {
-		const button = screen.getByRole("button", { name: "Quero ser acolhida" });
+		const button = screen.getByRole("link", { name: "Quero ser acolhida" });
 		expect(button).toBeInTheDocument();
 	});
 

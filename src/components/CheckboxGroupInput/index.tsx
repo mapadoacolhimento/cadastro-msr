@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useField } from "formik";
 import { Box, CheckboxCards, Text } from "@radix-ui/themes";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 import ErrorMessage from "../ErrorMessage";
 import "./CheckboxGroupInput.css";
@@ -37,6 +39,23 @@ export default function CheckboxGroupInput({
 		helpers.setValue([...oldValues, newValue]);
 	}
 
+	useEffect(() => {
+		const checkboxButtons = document.querySelectorAll(
+			"button[role='checkbox']"
+		);
+		checkboxButtons.forEach((checkboxButton) => {
+			if (checkboxButton && checkboxButton.textContent === "") {
+				const checkboxButtonValue = checkboxButton.getAttribute("value");
+				const hiddenCheckboxButtonContent = document.getElementById(
+					`checkbox-group-button-content-${checkboxButtonValue}`
+				);
+				checkboxButton.appendChild(
+					hiddenCheckboxButtonContent?.cloneNode(true) as Node
+				);
+			}
+		});
+	}, []);
+
 	return (
 		<CheckboxCards.Root
 			defaultValue={field.value}
@@ -52,14 +71,21 @@ export default function CheckboxGroupInput({
 			</Box>
 			{options.map((option: CheckboxOption, i) => {
 				return (
-					<CheckboxCards.Item
-						key={option.value}
-						onClick={() => handleClick(field.value, option.value)}
-						value={option.value}
-						className={field.value.includes(option.value) ? "is-checked" : ""}
-					>
-						<Text>{option.name}</Text>
-					</CheckboxCards.Item>
+					<>
+						<CheckboxCards.Item
+							key={option.value}
+							onClick={() => handleClick(field.value, option.value)}
+							value={option.value}
+							className={field.value.includes(option.value) ? "is-checked" : ""}
+						>
+							<Text>{option.name}</Text>
+						</CheckboxCards.Item>
+						<VisuallyHidden.Root
+							id={`checkbox-group-button-content-${option.value}`}
+						>
+							{option.name}
+						</VisuallyHidden.Root>
+					</>
 				);
 			})}
 			<ErrorMessage name={name} />

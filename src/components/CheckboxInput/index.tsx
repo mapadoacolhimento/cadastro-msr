@@ -19,7 +19,9 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({ name, children }) => {
 	useEffect(() => {
 		const button = document.querySelector("button[role='checkbox']");
 		if (button && button.textContent === "") {
-			const buttonContent = document.querySelector(".checkbox-button-content");
+			const buttonContent = document.querySelector(
+				"span.checkbox-input-button-content"
+			);
 			button.appendChild(buttonContent?.cloneNode(true) as Node);
 		}
 	}, []);
@@ -37,7 +39,7 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({ name, children }) => {
 					<Text as="span" size="2">
 						{children}
 					</Text>
-					<VisuallyHidden.Root className={"checkbox-button-content"}>
+					<VisuallyHidden.Root className={"checkbox-input-button-content"}>
 						{name}
 					</VisuallyHidden.Root>
 				</Flex>

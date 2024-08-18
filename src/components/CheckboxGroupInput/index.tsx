@@ -2,24 +2,24 @@ import { useField } from "formik";
 import { Box, CheckboxCards, Text } from "@radix-ui/themes";
 
 import ErrorMessage from "../ErrorMessage";
-import "./CheckboxInput.css";
+import "./CheckboxGroupInput.css";
 
 type CheckboxOption = {
 	value: string;
 	name: string;
 };
 
-type CheckboxInputProps = {
+type CheckboxGroupInputProps = {
 	name: string;
 	options: CheckboxOption[];
 	question: React.ReactNode;
 };
 
-export default function CheckboxInput({
+export default function CheckboxGroupInput({
 	options,
 	name,
 	question,
-}: Readonly<CheckboxInputProps>) {
+}: Readonly<CheckboxGroupInputProps>) {
 	const [field, _meta, helpers] = useField({
 		name,
 		type: "checkbox",

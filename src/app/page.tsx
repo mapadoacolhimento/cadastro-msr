@@ -6,7 +6,6 @@ import {
 	Flex,
 	Heading,
 	Link as ExternalLink,
-	Separator,
 	Text,
 	Strong,
 } from "@radix-ui/themes";
@@ -120,23 +119,22 @@ function CriteriaBox() {
 		>
 			<ul style={{ margin: 0, padding: 0 }}>
 				{criteria.map(({ icon: { alt, src }, text }, i) => (
-					<>
-						<Flex
-							align={"center"}
-							gap={"4"}
-							py={"4"}
-							asChild
-							style={{
-								borderBottom: i < criteria.length - 1 ? "1px solid" : 0,
-								borderColor: "var(--gray-a6)",
-							}}
-						>
-							<li key={`criteria-${alt}`}>
-								<Image src={src} alt={alt} width={30} height={30} />
-								<Text>{text}</Text>
-							</li>
-						</Flex>
-					</>
+					<Flex
+						key={`criteria-${i}`}
+						align={"center"}
+						gap={"4"}
+						py={"4"}
+						asChild
+						style={{
+							borderBottom: i < criteria.length - 1 ? "1px solid" : 0,
+							borderColor: "var(--gray-a6)",
+						}}
+					>
+						<li key={`criteria-${alt}`}>
+							<Image src={src} alt={alt} width={30} height={30} />
+							<Text>{text}</Text>
+						</li>
+					</Flex>
 				))}
 			</ul>
 		</Box>

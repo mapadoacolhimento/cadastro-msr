@@ -102,6 +102,9 @@ importers:
       eslint-plugin-jest-dom:
         specifier: ^5.4.0
         version: 5.4.0(@testing-library/dom@10.2.0)(eslint@8.57.0)
+      eslint-plugin-jsx-a11y:
+        specifier: ^6.9.0
+        version: 6.9.0(eslint@8.57.0)
       eslint-plugin-testing-library:
         specifier: ^6.2.2
         version: 6.2.2(eslint@8.57.0)(typescript@5.5.2)

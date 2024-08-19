@@ -4,15 +4,21 @@ import mockedDb from "../../lib/__mocks__/db";
 import msrPayload from "../../lib/__mocks__/payloads";
 import createFetchResponse from "../../lib/__mocks__/fetch";
 import { POST } from "../handle-request/route";
-import { BASE_URL, MATCH_LAMBDA_URL } from "../../lib";
+import { BASE_URL, MATCH_LAMBDA_URL, msrOrganizationId } from "../../lib";
 import { emailDuplicated } from "../../lib/handleDuplicatedSupportRequest";
 import * as validateAndUpsertZendeskTicket from "../../lib/zendesk/validateAndUpsertZendeskTicket";
+import * as validateAndUpsertZendeskUser from "../../lib/zendesk/validateAndUpsertZendeskUser";
 
 const mockPayloadLegal = msrPayload({ supportType: ["legal"] });
 const mockPayloadPsychlogical = msrPayload({ supportType: ["psychological"] });
 const mockPayloadBoth = msrPayload({ supportType: ["legal", "psychological"] });
 const mockValidateAndUpsertZendeskTicket = vi.spyOn(
 	validateAndUpsertZendeskTicket,
+	"default"
+);
+
+const mockValidateAndUpsertZendeskUser = vi.spyOn(
+	validateAndUpsertZendeskUser,
 	"default"
 );
 
@@ -139,9 +145,13 @@ describe("POST handle-request", () => {
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResCheckEligibilityNew)
 		);
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
+		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
+			Response.json(mockResZendeskUser)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicketLegal));
+		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
+			Response.json(mockResTicketLegal)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
 
 		const request = new NextRequest(
@@ -162,15 +172,9 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/user`, {
-			body: JSON.stringify({
-				...mockPayloadLegal,
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		expect(mockValidateAndUpsertZendeskUser).toHaveBeenCalledWith(
+			mockPayloadLegal
+		);
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/db/upsert-msr`, {
 			body: JSON.stringify({
@@ -181,22 +185,17 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
-			body: JSON.stringify({
-				ticketId: null,
-				msrZendeskUserId: mockPayloadLegal.msrZendeskUserId,
-				status: "new",
-				subject: "[Jurídico] Msr, SALVADOR - BA",
-				statusAcolhimento: "solicitação_recebida",
-				supportType: "legal",
-				comment: {
-					body: `${mockPayloadLegal.firstName} solicitou acolhimento pelo cadastro`,
-					public: false,
-				},
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
+			ticketId: null,
+			msrZendeskUserId: mockPayloadLegal.msrZendeskUserId,
+			status: "new",
+			subject: "[Jurídico] Msr, SALVADOR - BA",
+			statusAcolhimento: "solicitação_recebida",
+			msrName: mockPayloadLegal.firstName,
+			supportType: "legal",
+			comment: {
+				body: `${mockPayloadLegal.firstName} solicitou acolhimento pelo cadastro`,
+				public: false,
 			},
 		});
 		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
@@ -272,18 +271,23 @@ describe("POST handle-request", () => {
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResCheckEligibilityNew)
 		);
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
+		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
+			Response.json(mockResZendeskUser)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicketLegal));
+		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
+			Response.json(mockResTicketLegal)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
-
+		mockValidateAndUpsertZendeskUser.mockResolvedValue(
+			Response.json(mockResZendeskUser)
+		);
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResCheckEligibilityNew)
 		);
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
-		fetch.mockResolvedValueOnce(
-			createFetchResponse(mockResTicketPsychological)
+		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
+			Response.json(mockResTicketPsychological)
 		);
 		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchPsychological]));
 
@@ -302,15 +306,9 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/user`, {
-			body: JSON.stringify({
-				...mockPayloadBoth,
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		expect(mockValidateAndUpsertZendeskUser).toHaveBeenCalledWith(
+			mockPayloadBoth
+		);
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/db/upsert-msr`, {
 			body: JSON.stringify({
@@ -321,22 +319,17 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
-			body: JSON.stringify({
-				ticketId: null,
-				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "new",
-				subject: "[Jurídico] Msr, SALVADOR - BA",
-				statusAcolhimento: "solicitação_recebida",
-				supportType: "legal",
-				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
-					public: false,
-				},
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
+			ticketId: null,
+			msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
+			status: "new",
+			subject: "[Jurídico] Msr, SALVADOR - BA",
+			statusAcolhimento: "solicitação_recebida",
+			msrName: mockPayloadBoth.firstName,
+			supportType: "legal",
+			comment: {
+				body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
+				public: false,
 			},
 		});
 		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
@@ -354,15 +347,9 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/user`, {
-			body: JSON.stringify({
-				...mockPayloadBoth,
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		expect(mockValidateAndUpsertZendeskUser).toHaveBeenCalledWith(
+			mockPayloadBoth
+		);
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/db/upsert-msr`, {
 			body: JSON.stringify({
@@ -373,22 +360,17 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
-			body: JSON.stringify({
-				ticketId: null,
-				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "new",
-				subject: "[Psicológico] Msr, SALVADOR - BA",
-				statusAcolhimento: "solicitação_recebida",
-				supportType: "psychological",
-				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
-					public: false,
-				},
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
+			ticketId: null,
+			msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
+			status: "new",
+			subject: "[Psicológico] Msr, SALVADOR - BA",
+			statusAcolhimento: "solicitação_recebida",
+			msrName: mockPayloadBoth.firstName,
+			supportType: "psychological",
+			comment: {
+				body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
+				public: false,
 			},
 		});
 		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
@@ -410,9 +392,13 @@ describe("POST handle-request", () => {
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResCheckEligibilityLegal)
 		);
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
+		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
+			Response.json(mockResZendeskUser)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicketLegal));
+		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
+			Response.json(mockResTicketLegal)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse(mockMatchLegal));
 
 		mockedDb.supportRequests.findFirst.mockResolvedValue(
@@ -443,15 +429,9 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/user`, {
-			body: JSON.stringify({
-				...mockPayloadBoth,
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		expect(mockValidateAndUpsertZendeskUser).toHaveBeenCalledWith(
+			mockPayloadBoth
+		);
 
 		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/db/upsert-msr`, {
 			body: JSON.stringify({
@@ -462,22 +442,17 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
-			body: JSON.stringify({
-				ticketId: mockResCheckEligibilityLegal.ticketId,
-				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "new",
-				subject: "[Jurídico] Msr, SALVADOR - BA",
-				statusAcolhimento: "solicitação_recebida",
-				supportType: "legal",
-				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
-					public: false,
-				},
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
+			ticketId: mockResCheckEligibilityLegal.ticketId,
+			msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
+			status: "new",
+			subject: "[Jurídico] Msr, SALVADOR - BA",
+			statusAcolhimento: "solicitação_recebida",
+			msrName: mockPayloadBoth.firstName,
+			supportType: "legal",
+			comment: {
+				body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
+				public: false,
 			},
 		});
 		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/handle-match`, {

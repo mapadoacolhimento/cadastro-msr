@@ -6,6 +6,8 @@ import {
 	JWT_SECRET,
 	BASE_URL,
 	handleDuplicatedSupportRequest,
+	validateAndUpsertZendeskTicket,
+	validateAndUpsertZendeskUser,
 } from "../../lib";
 import { Gender, Race, SupportType } from "@prisma/client";
 
@@ -71,13 +73,7 @@ export async function POST(request: Request) {
 				await resEligibilitily.json();
 
 			if (shouldCreateMatch) {
-				const resZendeskUser = await fetch(`${BASE_URL}/zendesk/user`, {
-					body: JSON.stringify(payload),
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
+				const resZendeskUser = await validateAndUpsertZendeskUser(payload);
 
 				if (!resZendeskUser.ok) {
 					throw new Error(await resZendeskUser.text());
@@ -106,6 +102,7 @@ export async function POST(request: Request) {
 					status: "new",
 					subject: subject({ ...payload, supportType: supportType }),
 					statusAcolhimento: "solicitação_recebida",
+					msrName: payload.firstName,
 					supportType: supportType,
 					comment: {
 						body: `${payload.firstName} solicitou acolhimento pelo cadastro`,
@@ -113,19 +110,15 @@ export async function POST(request: Request) {
 					},
 				};
 
-				const resZendeskTicket = await fetch(`${BASE_URL}/zendesk/ticket`, {
-					body: JSON.stringify(bodyTicket),
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
-
+				const resZendeskTicket =
+					await validateAndUpsertZendeskTicket(bodyTicket);
+				//console.log(resZendeskTicket)
 				if (!resZendeskTicket.ok) {
 					throw new Error(await resZendeskTicket.text());
 				}
 
 				const ticket = await resZendeskTicket.json();
+
 				const lambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequestId ? "handle-match" : "compose"}`;
 				const jwtSecret = JWT_SECRET;
 				const authToken = sign({ sub: "cadastro-msr" }, jwtSecret!, {

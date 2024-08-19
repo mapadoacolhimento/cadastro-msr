@@ -13,7 +13,7 @@ export type ZendeskUser = {
 		neighborhood: string;
 		cor: string | null;
 		whatsapp: string;
-		date_of_birth: string;
+		date_of_birth: string | null;
 		tipo_de_acolhimento: string;
 	};
 };

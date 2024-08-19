@@ -16,6 +16,10 @@ import {
 	violenceLocation,
 	financialNeed,
 	dateOfBirth,
+	zipcode,
+	neighborhood,
+	state,
+	city,
 } from "../fixtures/userData.json";
 
 Cypress.Commands.add("goThroughHomePage", () => {
@@ -48,7 +52,6 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {
-	const { zipcode, neighborhood, state, city } = userData;
 	cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
 
 	// zipcode

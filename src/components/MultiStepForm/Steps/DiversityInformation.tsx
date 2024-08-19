@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Box } from "@radix-ui/themes";
 
 import Step from "../Step";
-import CheckboxInfo from "../../CheckboxInfo";
+import CheckboxInput from "../../CheckboxInput";
 import { SelectInput } from "../..";
 import { colorOptions, DISABILITY_OPTIONS, sleep } from "../../../lib";
 
@@ -42,7 +42,7 @@ export default function DiversityInformation() {
 				label={"Você é PcD (Pessoa com deficiência)?"}
 				placeholder="Você é PcD (Pessoa com deficiência)?"
 			/>
-			<CheckboxInfo name="terms">
+			<CheckboxInput name="terms">
 				Ao inserir seus dados, você concorda em ter seus dados compartilhados
 				com os organizadores dessa página e aceita receber emails de
 				atualização, conforme descrito na{" "}
@@ -53,7 +53,7 @@ export default function DiversityInformation() {
 					política de privacidade
 				</a>
 				. Você pode cancelar o recebimento desses e-mails a qualquer momento.
-			</CheckboxInfo>
+			</CheckboxInput>
 		</Step>
 	);
 }

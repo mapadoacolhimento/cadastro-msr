@@ -40,11 +40,8 @@ describe("<CriteriaDenied />", () => {
 		});
 		expect(image1).toBeInTheDocument();
 
-		const heading1 = screen.getByRole("heading", {
-			name: "Onde e como posso pedir ajuda?",
-			level: 3,
-		});
-		expect(heading1).toBeInTheDocument();
+		const title1 = screen.getByText("Onde e como posso pedir ajuda?");
+		expect(title1).toBeInTheDocument();
 
 		const description1 = screen.getByText(
 			"Conheça os serviços públicos de proteção que você pode acessar."
@@ -56,11 +53,8 @@ describe("<CriteriaDenied />", () => {
 		});
 		expect(image2).toBeInTheDocument();
 
-		const heading2 = screen.getByRole("heading", {
-			name: "Sofri violência, e agora?",
-			level: 3,
-		});
-		expect(heading2).toBeInTheDocument();
+		const title2 = screen.getByText("Sofri violência, e agora?");
+		expect(title2).toBeInTheDocument();
 
 		const description2 = screen.getByText(
 			"Um guia prático para deixar o ciclo da violência."

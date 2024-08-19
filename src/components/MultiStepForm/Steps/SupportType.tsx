@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 import Step from "../Step";
-import CheckboxInput from "../../CheckboxInput";
+import CheckboxGroupInput from "../../CheckboxGroupInput";
 import { sleep, supportTypeOptions } from "../../../lib";
 import { Strong } from "@radix-ui/themes";
 
@@ -22,7 +22,7 @@ export default function SupportType() {
 				alt: "Ilustração com duas mulheres sentadas conversando",
 			}}
 		>
-			<CheckboxInput
+			<CheckboxGroupInput
 				name={"supportType"}
 				options={supportTypeOptions}
 				question={

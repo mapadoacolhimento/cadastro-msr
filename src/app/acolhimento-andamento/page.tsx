@@ -33,12 +33,14 @@ export default function Page() {
 					<Strong>3 dias úteis</Strong> para compreender o que houve e, se
 					necessário, te indicar outra voluntária. Se desejar, pode nos contatar
 					diretamente pelo e-mail{" "}
-					<Link
-						href={"mailto:atendimento@mapadoacolhimento.org"}
-						target={"_blank"}
-					>
-						atendimento@mapadoacolhimento.org
-					</Link>
+					<Strong>
+						<Link
+							href={"mailto:atendimento@mapadoacolhimento.org"}
+							target={"_blank"}
+						>
+							atendimento@mapadoacolhimento.org
+						</Link>
+					</Strong>
 				</Text>
 				<br />
 				<Box pb={{ initial: "7", sm: "8" }} asChild>

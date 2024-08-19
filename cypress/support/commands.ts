@@ -5,7 +5,7 @@ import "@testing-library/cypress/add-commands";
 import userData from "../fixtures/userData.json";
 
 Cypress.Commands.add("goThroughHomePage", () => {
-	cy.findByRole("button", { name: "Quero ser acolhida" }).click();
+	cy.findByRole("link", { name: "Quero ser acolhida" }).click();
 });
 
 Cypress.Commands.add("fillDateOfBirthStep", (dateOfBirth) => {

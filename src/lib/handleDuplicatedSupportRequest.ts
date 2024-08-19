@@ -1,5 +1,5 @@
 import { SupportType } from "@prisma/client";
-import { BASE_URL, db } from "./";
+import { db, validateAndUpsertZendeskTicket } from "./";
 
 export function emailDuplicated(firstName: string) {
 	return `Olá, ${firstName}!
@@ -42,26 +42,16 @@ const handleDuplicatedSupportRequest = async (
 		},
 	});
 
-	const resTicket = await fetch(`${BASE_URL}/zendesk/ticket`, {
-		body: JSON.stringify({
-			ticketId: supportRequest.ticketId,
-			status: "open",
-			statusAcolhimento: "solicitação_repetida",
-			supportType: supportRequest.supportType,
-			comment: {
-				body: emailDuplicated(supportRequest.firstName),
-				public: true,
-			},
-		}),
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
+	await validateAndUpsertZendeskTicket({
+		ticketId: supportRequest.ticketId,
+		status: "open",
+		statusAcolhimento: "solicitação_repetida",
+		supportType: supportRequest.supportType,
+		comment: {
+			body: emailDuplicated(supportRequest.firstName),
+			public: true,
 		},
 	});
-
-	if (!resTicket.ok) {
-		throw new Error(resTicket.statusText);
-	}
 };
 
 export default handleDuplicatedSupportRequest;

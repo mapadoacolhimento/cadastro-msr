@@ -6,10 +6,15 @@ import createFetchResponse from "../../lib/__mocks__/fetch";
 import { POST } from "../handle-request/route";
 import { BASE_URL, MATCH_LAMBDA_URL } from "../../lib";
 import { emailDuplicated } from "../../lib/handleDuplicatedSupportRequest";
+import * as validateAndUpsertZendeskTicket from "../../lib/zendesk/validateAndUpsertZendeskTicket";
 
 const mockPayloadLegal = msrPayload({ supportType: ["legal"] });
 const mockPayloadPsychlogical = msrPayload({ supportType: ["psychological"] });
 const mockPayloadBoth = msrPayload({ supportType: ["legal", "psychological"] });
+const mockValidateAndUpsertZendeskTicket = vi.spyOn(
+	validateAndUpsertZendeskTicket,
+	"default"
+);
 
 const mockResZendeskUser = {
 	msrZendeskUserId: 12346789 as unknown as bigint,
@@ -212,11 +217,12 @@ describe("POST handle-request", () => {
 		mockedDb.supportRequestStatusHistory.findFirst.mockResolvedValue(
 			mockSupportRequestStatusHistory
 		);
+
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResCheckEligibilityPsychological)
 		);
-		fetch.mockResolvedValueOnce(
-			createFetchResponse(mockResTicketPsychological)
+		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
+			mockResTicketPsychological
 		);
 
 		const request = new NextRequest(
@@ -233,20 +239,14 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
-			body: JSON.stringify({
-				ticketId: mockResTicketPsychological.ticketId,
-				status: "open",
-				statusAcolhimento: "solicitação_repetida",
-				supportType: "psychological",
-				comment: {
-					body: emailDuplicated(mockPayloadPsychlogical.firstName),
-					public: true,
-				},
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
+			ticketId: mockResTicketPsychological.ticketId,
+			status: "open",
+			statusAcolhimento: "solicitação_repetida",
+			supportType: "psychological",
+			comment: {
+				body: emailDuplicated(mockPayloadPsychlogical.firstName),
+				public: true,
 			},
 		});
 		expect(mockedDb.supportRequests.update).toHaveBeenCalledWith({
@@ -424,8 +424,8 @@ describe("POST handle-request", () => {
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResCheckEligibilityPsychological)
 		);
-		fetch.mockResolvedValueOnce(
-			createFetchResponse(mockResTicketPsychological)
+		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
+			mockResTicketPsychological
 		);
 
 		const request = new NextRequest(
@@ -494,20 +494,14 @@ describe("POST handle-request", () => {
 				"Content-Type": "application/json",
 			},
 		});
-		expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/zendesk/ticket`, {
-			body: JSON.stringify({
-				ticketId: mockResTicketPsychological.ticketId,
-				status: "open",
-				statusAcolhimento: "solicitação_repetida",
-				supportType: "psychological",
-				comment: {
-					body: emailDuplicated(mockPayloadBoth.firstName),
-					public: true,
-				},
-			}),
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
+			ticketId: mockResTicketPsychological.ticketId,
+			status: "open",
+			statusAcolhimento: "solicitação_repetida",
+			supportType: "psychological",
+			comment: {
+				body: emailDuplicated(mockPayloadBoth.firstName),
+				public: true,
 			},
 		});
 		expect(mockedDb.supportRequests.update).toHaveBeenCalledWith({

@@ -63,7 +63,7 @@ describe("POST /zendesk/ticket", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: statusAcolhimento is a required field"
+			"Validation error: msrName is a required field"
 		);
 	});
 

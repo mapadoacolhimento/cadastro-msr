@@ -76,7 +76,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: 222,
-			ticketId: 5678,
+			zendeskTicketId: 5678,
 			shouldCreateMatch: false,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
@@ -112,7 +112,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: 223,
-			ticketId: 9012,
+			zendeskTicketId: 9012,
 			shouldCreateMatch: true,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
@@ -146,7 +146,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: 224,
-			ticketId: 1234,
+			zendeskTicketId: 1234,
 			shouldCreateMatch: false,
 		});
 	});
@@ -162,7 +162,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: null,
-			ticketId: null,
+			zendeskTicketId: null,
 			shouldCreateMatch: true,
 		});
 	});
@@ -183,7 +183,7 @@ describe("POST /check-eligibility", () => {
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
 			supportRequestId: null,
-			ticketId: null,
+			zendeskTicketId: null,
 			shouldCreateMatch: true,
 		});
 	});

@@ -2,7 +2,21 @@
 /// <reference types="@testing-library/cypress" />
 
 import "@testing-library/cypress/add-commands";
-import userData from "../fixtures/userData.json";
+import {
+	firstName,
+	email,
+	confirmEmail,
+	phone,
+	hasDisability,
+	acceptOnlineSupport,
+	colorOption,
+	gender,
+	genderViolence,
+	externalSupport,
+	violenceLocation,
+	financialNeed,
+	dateOfBirth,
+} from "../fixtures/userData.json";
 
 Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();
@@ -14,8 +28,6 @@ Cypress.Commands.add("fillDateOfBirthStep", (dateOfBirth) => {
 });
 
 Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
-	const { firstName, email, confirmEmail, phone } = userData;
-
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.get("#firstName").type(firstName);
 	cy.get("#email").type(email);
@@ -24,8 +36,6 @@ Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
 });
 
 Cypress.Commands.add("fillDiversityInformationStep", () => {
-	const { hasDisability, colorOption } = userData;
-
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.findByRole("combobox", {
 		name: "Cor",
@@ -62,8 +72,6 @@ Cypress.Commands.add("fillGenderIdentityStep", (gender: string) => {
 });
 
 Cypress.Commands.add("fillAcceptsOnlineSupportStep", () => {
-	const { acceptOnlineSupport } = userData;
-
 	cy.findByRole("heading", { name: "Sobre o acolhimento" }).should("exist");
 	cy.contains("Você aceitaria ser atendida online?").should("exist");
 	cy.findByRole("radio", {
@@ -79,7 +87,6 @@ Cypress.Commands.add("fillAcceptsOnlineSupportStep", () => {
 });
 
 Cypress.Commands.add("fillSupportTypeStep", (supportType) => {
-	//const { supportTypes } = userData;
 	cy.contains("Que tipo de acolhimento você precisa?").should("exist");
 	if (supportType.psychological)
 		cy.findByLabelText(supportType.psychological).click({ force: true });
@@ -123,15 +130,7 @@ Cypress.Commands.add("checkForaCriteriosPage", () => {
 });
 
 Cypress.Commands.add("fillAllSteps", (supportTypes) => {
-	const {
-		gender,
-		genderViolence,
-		externalSupport,
-		violenceLocation,
-		financialNeed,
-	} = userData;
-
-	cy.fillDateOfBirthStep();
+	cy.fillDateOfBirthStep(dateOfBirth);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillBasicRegisterInformationStep();

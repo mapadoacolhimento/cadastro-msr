@@ -10,7 +10,7 @@ import { MSRPiiSec, SupportType } from "@prisma/client";
 
 type MsrSearchResponse = {
 	supportRequestId: number | null;
-	ticketId: bigint | null;
+	zendeskTicketId: bigint | null;
 	shouldCreateMatch: boolean;
 };
 
@@ -26,7 +26,7 @@ async function checkMatchEligibility(
 	if (!msrId) {
 		return {
 			supportRequestId: null,
-			ticketId: null,
+			zendeskTicketId: null,
 			shouldCreateMatch: true,
 		};
 	}
@@ -51,7 +51,7 @@ async function checkMatchEligibility(
 	if (ongoingMatch) {
 		return {
 			supportRequestId: ongoingMatch.supportRequestId,
-			ticketId: ongoingMatch.msrZendeskTicketId,
+			zendeskTicketId: ongoingMatch.msrZendeskTicketId,
 			shouldCreateMatch: false,
 		};
 	}
@@ -76,7 +76,7 @@ async function checkMatchEligibility(
 	if (!supportRequest) {
 		return {
 			supportRequestId: null,
-			ticketId: null,
+			zendeskTicketId: null,
 			shouldCreateMatch: true,
 		};
 	}
@@ -92,7 +92,7 @@ async function checkMatchEligibility(
 
 	return {
 		supportRequestId: supportRequest.supportRequestId,
-		ticketId: supportRequest.zendeskTicketId,
+		zendeskTicketId: supportRequest.zendeskTicketId,
 		shouldCreateMatch: !hasOngoingSupport,
 	};
 }

@@ -2,11 +2,10 @@ import * as Yup from "yup";
 import { sign } from "jsonwebtoken";
 import {
 	getErrorMessage,
-	db,
 	MATCH_LAMBDA_URL,
 	JWT_SECRET,
-	emailDuplicated,
 	BASE_URL,
+	handleDuplicatedSupportRequest,
 } from "../../lib";
 import { Gender, Race, SupportType } from "@prisma/client";
 
@@ -15,13 +14,6 @@ type SubjectInfo = {
 	firstName: string;
 	city: string;
 	state: string;
-};
-
-type DuplicatedRequest = {
-	firstName: string;
-	supportRequestId: number;
-	ticketId: number;
-	supportType: SupportType;
 };
 
 type RequestResponse = {
@@ -54,44 +46,6 @@ const subject = (subjectInfo: SubjectInfo) => {
 	return `[${type}] ${subjectInfo.firstName}, ${subjectInfo.city} - ${subjectInfo.state}`;
 };
 
-const handleDuplicated = async (supportRequest: DuplicatedRequest) => {
-	await db.supportRequests.update({
-		where: {
-			supportRequestId: supportRequest.supportRequestId,
-		},
-		data: {
-			status: "duplicated",
-		},
-	});
-
-	await db.supportRequestStatusHistory.create({
-		data: {
-			supportRequestId: supportRequest.supportRequestId,
-			status: "duplicated",
-		},
-	});
-
-	const resTicket = await fetch(`${BASE_URL}/zendesk/ticket`, {
-		body: JSON.stringify({
-			ticketId: supportRequest.ticketId,
-			status: "open",
-			statusAcolhimento: "solicitação_repetida",
-			supportType: supportRequest.supportType,
-			comment: {
-				body: emailDuplicated(supportRequest.firstName),
-				public: true,
-			},
-		}),
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-
-	if (!resTicket.ok) {
-		throw new Error(resTicket.statusText);
-	}
-};
 export async function POST(request: Request) {
 	try {
 		const payload = await request.json();
@@ -208,7 +162,7 @@ export async function POST(request: Request) {
 					? match.status
 					: match[0].status;
 			} else {
-				await handleDuplicated({
+				await handleDuplicatedSupportRequest({
 					firstName: payload.firstName,
 					supportRequestId,
 					ticketId,

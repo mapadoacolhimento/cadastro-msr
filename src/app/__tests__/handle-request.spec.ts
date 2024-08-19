@@ -4,7 +4,8 @@ import mockedDb from "../../lib/__mocks__/db";
 import msrPayload from "../../lib/__mocks__/payloads";
 import createFetchResponse from "../../lib/__mocks__/fetch";
 import { POST } from "../handle-request/route";
-import { BASE_URL, MATCH_LAMBDA_URL, emailDuplicated } from "../../lib";
+import { BASE_URL, MATCH_LAMBDA_URL } from "../../lib";
+import { emailDuplicated } from "../../lib/handleDuplicatedSupportRequest";
 
 const mockPayloadLegal = msrPayload({ supportType: ["legal"] });
 const mockPayloadPsychlogical = msrPayload({ supportType: ["psychological"] });

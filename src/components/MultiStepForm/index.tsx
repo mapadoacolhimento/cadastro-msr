@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
@@ -14,6 +13,7 @@ import {
 	DateOfBirth,
 } from "./Steps";
 import { useRouter } from "next/navigation";
+import { formatValues } from "../../lib";
 
 export interface Values {
 	email: string;
@@ -38,7 +38,6 @@ export interface Values {
 	lat: number | null;
 	lng: number | null;
 }
-import { parseValues } from "../../lib";
 
 export default function MultiStepForm() {
 	const router = useRouter();
@@ -49,7 +48,7 @@ export default function MultiStepForm() {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: parseValues(values),
+			body: formatValues(values),
 		});
 		console.log(response);
 		if (!response.ok) {

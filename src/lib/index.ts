@@ -8,7 +8,7 @@ export { default as createOrUpdateUser } from "./zendesk/createOrUpdateUser";
 export { default as createOrUpdateTicket } from "./zendesk/createOrUpdateTicket";
 export { default as isAdult } from "./isAdult";
 export { default as emailDuplicated } from "./emailDuplicated";
-export { default as parseValues } from "./parseValues";
+export { default as formatValues } from "./formatValues";
 
 export * from "./constants";
 export * from "./types";

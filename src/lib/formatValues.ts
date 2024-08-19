@@ -12,7 +12,7 @@ function capitalizeFirst(value: string) {
 function getFirsWord(value: string) {
 	return value.split(" ")[0];
 }
-export default function parseValues(values: Values) {
+export default function formatValues(values: Values) {
 	const parseValues = {
 		...values,
 		gender: values.genderIdentity,

@@ -125,6 +125,10 @@ export async function POST(request: Request) {
 					},
 				});
 
+				if (!resZendeskUser.ok) {
+					throw new Error(await resZendeskUser.text());
+				}
+
 				const user = await resZendeskUser.json();
 
 				const resMsr = await fetch(`${BASE_URL}/db/upsert-msr`, {
@@ -137,6 +141,11 @@ export async function POST(request: Request) {
 						"Content-Type": "application/json",
 					},
 				});
+
+				if (!resMsr.ok) {
+					throw new Error(await resMsr.text());
+				}
+
 				const bodyTicket = {
 					ticketId: ticketId,
 					msrZendeskUserId: user.msrZendeskUserId,
@@ -157,6 +166,10 @@ export async function POST(request: Request) {
 						"Content-Type": "application/json",
 					},
 				});
+
+				if (!resZendeskTicket.ok) {
+					throw new Error(await resZendeskTicket.text());
+				}
 
 				const ticket = await resZendeskTicket.json();
 				const lambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequestId ? "handle-match" : "compose"}`;
@@ -185,6 +198,11 @@ export async function POST(request: Request) {
 						Authorization: authToken,
 					},
 				});
+
+				if (!resLambda.ok) {
+					throw new Error(await resLambda.text());
+				}
+
 				const match = await resLambda.json();
 				response[supportType] = match.status;
 			} else {

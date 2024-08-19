@@ -1,6 +1,7 @@
+import { NextRequest } from "next/server";
 import { getErrorMessage, validateAndUpsertZendeskUser } from "../../../lib";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
 	try {
 		const payload = await request.json();
 

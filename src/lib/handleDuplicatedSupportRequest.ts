@@ -19,7 +19,7 @@ Equipe do Mapa do Acolhimento`;
 type DuplicatedRequest = {
 	firstName: string;
 	supportRequestId: number;
-	ticketId: number;
+	zendeskTicketId: number;
 	supportType: SupportType;
 };
 
@@ -43,7 +43,7 @@ const handleDuplicatedSupportRequest = async (
 	});
 
 	await validateAndUpsertZendeskTicket({
-		ticketId: supportRequest.ticketId,
+		ticketId: supportRequest.zendeskTicketId,
 		status: "open",
 		statusAcolhimento: "solicitação_repetida",
 		supportType: supportRequest.supportType,

@@ -11,6 +11,7 @@ export { default as validateAndUpsertZendeskUser } from "./zendesk/validateAndUp
 export { default as isAdult } from "./isAdult";
 export { default as handleDuplicatedSupportRequest } from "./handleDuplicatedSupportRequest";
 export { default as formatValues } from "./formatValues";
-
+export { default as upsertMsr } from "./upsertMsr";
+export { default as checkMatchEligibility } from "./checkMatchEligibility";
 export * from "./constants";
 export * from "./types";

@@ -8,6 +8,8 @@ import {
 	handleDuplicatedSupportRequest,
 	validateAndUpsertZendeskTicket,
 	validateAndUpsertZendeskUser,
+	upsertMsr,
+	checkMatchEligibility,
 } from "../../lib";
 import { Gender, Race, SupportType } from "@prisma/client";
 
@@ -59,17 +61,11 @@ export async function POST(request: Request) {
 		for (let i = 0; payload.supportType.length > i; i++) {
 			const supportType: SupportType = payload.supportType[i];
 
-			const resEligibilitily = await fetch(`${BASE_URL}/check-eligibility`, {
-				body: JSON.stringify({
-					email: payload.email,
-					supportType: supportType,
-				}),
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
+			const resEligibilitily = await checkMatchEligibility({
+				email: payload.email,
+				supportType: supportType,
 			});
-			const { supportRequestId, ticketId, shouldCreateMatch } =
+			const { supportRequestId, zendeskTicketId, shouldCreateMatch } =
 				await resEligibilitily.json();
 
 			if (shouldCreateMatch) {
@@ -81,15 +77,9 @@ export async function POST(request: Request) {
 
 				const user = await resZendeskUser.json();
 
-				const resMsr = await fetch(`${BASE_URL}/db/upsert-msr`, {
-					body: JSON.stringify({
-						msrZendeskUserId: user.msrZendeskUserId,
-						...payload,
-					}),
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
+				const resMsr = await upsertMsr({
+					msrZendeskUserId: user.msrZendeskUserId,
+					...payload,
 				});
 
 				if (!resMsr.ok) {
@@ -97,7 +87,7 @@ export async function POST(request: Request) {
 				}
 
 				const bodyTicket = {
-					ticketId: ticketId,
+					ticketId: zendeskTicketId,
 					msrZendeskUserId: user.msrZendeskUserId,
 					status: "new",
 					subject: subject({ ...payload, supportType: supportType }),
@@ -112,7 +102,7 @@ export async function POST(request: Request) {
 
 				const resZendeskTicket =
 					await validateAndUpsertZendeskTicket(bodyTicket);
-				//console.log(resZendeskTicket)
+
 				if (!resZendeskTicket.ok) {
 					throw new Error(await resZendeskTicket.text());
 				}
@@ -158,7 +148,7 @@ export async function POST(request: Request) {
 				await handleDuplicatedSupportRequest({
 					firstName: payload.firstName,
 					supportRequestId,
-					ticketId,
+					zendeskTicketId,
 					supportType,
 				});
 

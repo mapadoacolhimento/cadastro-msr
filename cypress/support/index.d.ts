@@ -19,7 +19,8 @@ declare namespace Cypress {
 		fillFinancialNeedStep(option: string): Chainable<any>;
 		fillGeolocationStep(): Chainable<any>;
 		fillDiversityInformationStep(): Chainable<any>;
-		fillDateOfBirthStep(dateOfBirth?: string): Chainable<any>;
+		fillDateOfBirthStep(dateOfBirth: string): Chainable<any>;
 		fillAllSteps(supportType): Chainable<any>;
+		checkForaCriteriosPage(): Chainable<any>;
 	}
 }

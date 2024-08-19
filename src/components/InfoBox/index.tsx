@@ -1,4 +1,4 @@
-import { Box, Heading, Flex, Text, Card } from "@radix-ui/themes";
+import { Box, Flex, Text, Card } from "@radix-ui/themes";
 import Image from "next/image";
 import "./InfoBox.css";
 
@@ -30,9 +30,16 @@ const InfoBox = ({ imgSrc, imgAlt, title, description }: InfoBoxProps) => (
 				<Image src={imgSrc} alt={imgAlt} width={100} height={100} />
 			</Flex>
 			<Box>
-				<Heading as={"h3"} size={"4"} color={"purple"} highContrast>
+				<Text
+					as={"p"}
+					color={"purple"}
+					size={"4"}
+					highContrast
+					weight={"bold"}
+					style={{ fontFamily: "var(--heading-font-family)" }}
+				>
 					{title}
-				</Heading>
+				</Text>
 				<Text size={"2"}>{description}</Text>
 			</Box>
 		</Flex>

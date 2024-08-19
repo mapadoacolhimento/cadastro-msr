@@ -1,68 +1,52 @@
+import { useEffect } from "react";
+import { Checkbox, Flex, Text } from "@radix-ui/themes";
 import { useField } from "formik";
-import { Box, CheckboxCards, Text } from "@radix-ui/themes";
-
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import ErrorMessage from "../ErrorMessage";
-import "./CheckboxInput.css";
 
-type CheckboxOption = {
-	value: string;
+interface CheckboxInputProps {
 	name: string;
-};
+	children: React.ReactNode;
+}
 
-type CheckboxInputProps = {
-	name: string;
-	options: CheckboxOption[];
-	question: React.ReactNode;
-};
+const CheckboxInput: React.FC<CheckboxInputProps> = ({ name, children }) => {
+	const [field, _meta, helpers] = useField(name);
 
-export default function CheckboxInput({
-	options,
-	name,
-	question,
-}: Readonly<CheckboxInputProps>) {
-	const [field, _meta, helpers] = useField({
-		name,
-		type: "checkbox",
-		multiple: true,
-	});
+	const handleCheckedChange = (checked: boolean) => {
+		helpers.setValue(checked === true);
+	};
 
-	function handleClick(oldValues: string[], newValue: string) {
-		if (oldValues.includes(newValue)) {
-			const newFilteredValues = oldValues.filter(
-				(oldValue: string) => oldValue !== newValue
+	useEffect(() => {
+		const button = document.querySelector("button[role='checkbox']");
+		if (button && button.textContent === "") {
+			const buttonContent = document.querySelector(
+				"span.checkbox-input-button-content"
 			);
-			return helpers.setValue(newFilteredValues);
+			button.appendChild(buttonContent?.cloneNode(true) as Node);
 		}
-
-		helpers.setValue([...oldValues, newValue]);
-	}
+	}, []);
 
 	return (
-		<CheckboxCards.Root
-			defaultValue={field.value}
-			columns={"1"}
-			aria-labelledby={"question"}
-			id={`checkbox-group-${name}`}
-			color={"purple"}
-		>
-			<Box asChild pb={{ initial: "7", sm: "8" }}>
-				<Text asChild align={"center"} id={"question"}>
-					<legend>{question}</legend>
-				</Text>
-			</Box>
-			{options.map((option: CheckboxOption, i) => {
-				return (
-					<CheckboxCards.Item
-						key={option.value}
-						onClick={() => handleClick(field.value, option.value)}
-						value={option.value}
-						className={field.value.includes(option.value) ? "is-checked" : ""}
-					>
-						<Text>{option.name}</Text>
-					</CheckboxCards.Item>
-				);
-			})}
+		<>
+			<Text as="label" htmlFor={name}>
+				<Flex align="start" as="span" gap={"2"} maxWidth={"18.75rem"}>
+					<Checkbox
+						id={name}
+						checked={field.value}
+						onCheckedChange={handleCheckedChange}
+						color="purple"
+					/>
+					<Text as="span" size="2">
+						{children}
+					</Text>
+					<VisuallyHidden.Root className={"checkbox-input-button-content"}>
+						{name}
+					</VisuallyHidden.Root>
+				</Flex>
+			</Text>
 			<ErrorMessage name={name} />
-		</CheckboxCards.Root>
+		</>
 	);
-}
+};
+
+export default CheckboxInput;

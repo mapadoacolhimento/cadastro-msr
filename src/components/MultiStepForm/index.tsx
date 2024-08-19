@@ -94,16 +94,16 @@ export default function MultiStepForm() {
 			}}
 			onSubmit={onSubmit}
 		>
+			{GenderIdentity()}
 			{DateOfBirth()}
+			{GenderViolence()}
+			{ViolenceLocation()}
+			{ExternalSupport()}
+			{FinancialNeed()}
+			{SupportType()}
 			{BasicRegisterInformation()}
 			{Geolocation()}
 			{DiversityInformation()}
-			{GenderIdentity()}
-			{SupportType()}
-			{GenderViolence()}
-			{ExternalSupport()}
-			{ViolenceLocation()}
-			{FinancialNeed()}
 		</MultiStepFormWrapper>
 	);
 }

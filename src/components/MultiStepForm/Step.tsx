@@ -4,7 +4,7 @@ import { type AnyObjectSchema } from "yup";
 import { type Values } from "./";
 
 export interface StepChildrenProps {
-	onSubmit: (
+	onSubmit?: (
 		values: Values,
 		bag: FormikHelpers<Values>
 	) => Promise<{

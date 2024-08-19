@@ -204,7 +204,9 @@ export async function POST(request: Request) {
 				}
 
 				const match = await resLambda.json();
-				response[supportType] = match.status;
+				response[supportType] = supportRequestId
+					? match.status
+					: match[0].status;
 			} else {
 				await handleDuplicated({
 					firstName: payload.firstName,
@@ -212,6 +214,7 @@ export async function POST(request: Request) {
 					ticketId,
 					supportType,
 				});
+
 				response[supportType] = "duplicated";
 			}
 		}

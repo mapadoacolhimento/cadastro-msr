@@ -43,7 +43,7 @@ const bodyCheckEligibilityPsychological = {
 	supportType: "psychological",
 };
 
-const mockResCheckEligibility = {
+const mockResCheckEligibilityNew = {
 	supportRequestId: null,
 	ticketId: null,
 	shouldCreateMatch: true,
@@ -69,26 +69,20 @@ const mockResCheckEligibilityPsychological = {
 	shouldCreateMatch: false,
 };
 
-const mockResLambdaLegal = {
+const mockMatchLegal = {
 	matchId: 3456,
 	supportRequestId: mockSupportRequestsLegal.supportRequestId,
-	msrId: 12346789 as unknown as bigint,
-	volunteerId: 1,
 	msrZendeskTicketId: mockResTicketLegal.ticketId,
-	volunteerZendeskTicketId: 4567,
 	supportType: "legal",
-	createdAt: "2024-08-13",
-	updatedAt: "2024-08-13",
-	status: "matched",
+	status: "waiting_contact",
 };
 
-const mockResLambdaPsychological = {
-	...mockResLambdaLegal,
+const mockMatchPsychological = {
+	matchId: 3457,
 	supportType: "psychological",
 	supportRequestId: mockSupportRequestsPsychological.supportRequestId,
 	msrZendeskTicketId: mockResTicketLegal.ticketId,
-	matchId: 3457,
-	volunteerZendeskTicketId: 4568,
+	status: "waiting_contact",
 };
 
 const bodyComposeLegal = {
@@ -116,13 +110,7 @@ const bodyComposePsychological = {
 	supportType: "psychological",
 	zendeskTicketId: mockResTicketPsychological.ticketId,
 };
-const bodyHandleMatchPsychological = {
-	supportRequest: {
-		...bodyComposeLegal,
-		supportRequestId: mockResCheckEligibilityPsychological.supportRequestId,
-		zendeskTicketId: mockResTicketPsychological.ticketId,
-	},
-};
+
 describe("POST handle-request", () => {
 	beforeEach(() => {
 		mockReset(mockedDb);
@@ -142,11 +130,13 @@ describe("POST handle-request", () => {
 	});
 
 	it("should create match for support request legal", async () => {
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResCheckEligibility));
+		fetch.mockResolvedValueOnce(
+			createFetchResponse(mockResCheckEligibilityNew)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicketLegal));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResLambdaLegal));
+		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
 
 		const request = new NextRequest(
 			new Request("http://localhost:3000/db/handle-request", {
@@ -211,7 +201,7 @@ describe("POST handle-request", () => {
 			},
 		});
 		expect(response.status).toEqual(200);
-		expect(await response.json()).toEqual({ legal: "matched" });
+		expect(await response.json()).toEqual({ legal: "waiting_contact" });
 	});
 
 	it("should just update ticket and psychological support request as duplicated", async () => {
@@ -278,21 +268,23 @@ describe("POST handle-request", () => {
 	});
 
 	it("should create matches for support requests legal and psychological", async () => {
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResCheckEligibility));
+		fetch.mockResolvedValueOnce(
+			createFetchResponse(mockResCheckEligibilityNew)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicketLegal));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResLambdaLegal));
+		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
 
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResCheckEligibility));
+		fetch.mockResolvedValueOnce(
+			createFetchResponse(mockResCheckEligibilityNew)
+		);
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
 		fetch.mockResolvedValueOnce(
 			createFetchResponse(mockResTicketPsychological)
 		);
-		fetch.mockResolvedValueOnce(
-			createFetchResponse(mockResLambdaPsychological)
-		);
+		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchPsychological]));
 
 		const request = new NextRequest(
 			new Request("http://localhost:3000/db/handle-request", {
@@ -408,8 +400,8 @@ describe("POST handle-request", () => {
 
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toEqual({
-			psychological: "matched",
-			legal: "matched",
+			psychological: "waiting_contact",
+			legal: "waiting_contact",
 		});
 	});
 
@@ -420,7 +412,7 @@ describe("POST handle-request", () => {
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResZendeskUser));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResMsr));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockResTicketLegal));
-		fetch.mockResolvedValueOnce(createFetchResponse(mockResLambdaLegal));
+		fetch.mockResolvedValueOnce(createFetchResponse(mockMatchLegal));
 
 		mockedDb.supportRequests.findFirst.mockResolvedValue(
 			mockSupportRequestsPsychological
@@ -535,7 +527,7 @@ describe("POST handle-request", () => {
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toEqual({
 			psychological: "duplicated",
-			legal: "matched",
+			legal: "waiting_contact",
 		});
 	});
 });

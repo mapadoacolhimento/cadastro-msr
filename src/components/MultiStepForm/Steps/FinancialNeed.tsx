@@ -4,7 +4,7 @@ import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
 import CheckboxInfo from "../../CheckboxInfo";
-import { financialNeedOptions, parseValues } from "../../../lib";
+import { financialNeedOptions } from "../../../lib";
 import type { Values } from "..";
 
 const financialNeedSchema = Yup.object({
@@ -22,28 +22,6 @@ export default function FinancialNeed() {
 				redirectTo: "/fora-criterios",
 			};
 		}
-
-		const response = await fetch("/handle-request", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: parseValues(values),
-		});
-
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
-		const data = await response.json();
-		let redirectEndpoint = "/acolhimento-andamento";
-		for (let key in data) {
-			if (data[key] && data[key] != "duplicated") {
-				redirectEndpoint = "/cadastro-finalizado";
-			}
-		}
-		return {
-			redirectTo: redirectEndpoint,
-		};
 	}
 	return (
 		<Step

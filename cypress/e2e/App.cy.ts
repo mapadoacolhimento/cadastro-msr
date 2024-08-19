@@ -233,7 +233,7 @@ describe("When MSR does not meet the criteria", () => {
 });
 
 describe("Submit the form", () => {
-	it("should redirect to `cadastro-finalizado` when handle-quest return none of supportquests as `duplicated`", () => {
+	it("should redirect to `cadastro-finalizado` when handle-request return both support requests with match status", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
@@ -253,7 +253,7 @@ describe("Submit the form", () => {
 		cy.url().should("include", "/cadastro-finalizado");
 	});
 
-	it("should redirect to `acolhimento-andamento` when handle-quest return the supportquest as `duplicated`", () => {
+	it("should redirect to `acolhimento-andamento` when handle-request return the support reques with status `duplicated`", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
@@ -272,7 +272,7 @@ describe("Submit the form", () => {
 		cy.url().should("include", "/acolhimento-andamento");
 	});
 
-	it("should redirect to `cadastro-finalizado` when handle-quest return the supportquest not as `duplicated`", () => {
+	it("should redirect to `cadastro-finalizado` when handle-request return the support request with match status", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
@@ -291,7 +291,7 @@ describe("Submit the form", () => {
 		cy.url().should("include", "/cadastro-finalizado");
 	});
 
-	it("should redirect to `cadastro-finalizado` when handle-quest return only one the supportquest as `duplicated`", () => {
+	it("should redirect to `cadastro-finalizado` when handle-request return at least one support request with match status", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
@@ -311,7 +311,7 @@ describe("Submit the form", () => {
 		cy.url().should("include", "/cadastro-finalizado");
 	});
 
-	it("should redirect to `acolhimento-andamento` when handle-quest return both the supportquests as `duplicated`", () => {
+	it("should redirect to `acolhimento-andamento` when handle-request return both  support requests with status `duplicated`", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {

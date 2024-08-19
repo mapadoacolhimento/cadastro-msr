@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
@@ -13,7 +13,7 @@ import {
 	DiversityInformation,
 	DateOfBirth,
 } from "./Steps";
-import { sleep } from "../../lib";
+import { useRouter } from "next/navigation";
 
 export interface Values {
 	email: string;
@@ -38,8 +38,36 @@ export interface Values {
 	lat: number | null;
 	lng: number | null;
 }
+import { parseValues } from "../../lib";
 
 export default function MultiStepForm() {
+	const router = useRouter();
+
+	async function onSubmit(values: Values) {
+		const response = await fetch("/handle-request", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: parseValues(values),
+		});
+		console.log(response);
+		if (!response.ok) {
+			throw new Error(response.statusText);
+		}
+		const data = await response.json();
+
+		let redirectEndpoint = "/acolhimento-andamento";
+
+		for (let key in data) {
+			if (data[key] && data[key] != "duplicated") {
+				redirectEndpoint = "/cadastro-finalizado";
+			}
+		}
+
+		router.push(redirectEndpoint);
+	}
+
 	return (
 		<MultiStepFormWrapper
 			initialValues={{
@@ -65,9 +93,7 @@ export default function MultiStepForm() {
 				lng: null,
 				zipcode: "",
 			}}
-			onSubmit={async (values: Values) =>
-				sleep(300).then(() => console.log("Wizard submit", values))
-			}
+			onSubmit={onSubmit}
 		>
 			{DateOfBirth()}
 			{BasicRegisterInformation()}

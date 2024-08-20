@@ -13,7 +13,7 @@ import {
 	DateOfBirth,
 } from "./Steps";
 import { useRouter } from "next/navigation";
-import { formatValues } from "../../lib";
+import { formatRegisterFormValues } from "../../lib";
 
 export interface Values {
 	email: string;
@@ -48,9 +48,8 @@ export default function MultiStepForm() {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: formatValues(values),
+			body: formatRegisterFormValues(values),
 		});
-		console.log(response);
 		if (!response.ok) {
 			throw new Error(response.statusText);
 		}

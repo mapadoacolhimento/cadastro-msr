@@ -10,7 +10,7 @@ export { default as validateAndUpsertZendeskTicket } from "./zendesk/validateAnd
 export { default as validateAndUpsertZendeskUser } from "./zendesk/validateAndUpsertZendeskUser";
 export { default as isAdult } from "./isAdult";
 export { default as handleDuplicatedSupportRequest } from "./handleDuplicatedSupportRequest";
-export { default as formatValues } from "./formatValues";
+export { default as formatRegisterFormValues } from "./formatRegisterFormValues";
 export { default as upsertMsr } from "./upsertMsr";
 export { default as checkMatchEligibility } from "./checkMatchEligibility";
 export * from "./constants";

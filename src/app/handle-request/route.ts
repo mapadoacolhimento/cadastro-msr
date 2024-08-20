@@ -55,40 +55,39 @@ export async function POST(request: Request) {
 		const payload = await request.json();
 
 		await payloadSchema.validate(payload);
-
+		let msrZendeskUserId = null;
 		let response: RequestResponse = {};
 
 		for (let i = 0; payload.supportType.length > i; i++) {
 			const supportType: SupportType = payload.supportType[i];
 
-			const resEligibilitily = await checkMatchEligibility({
-				email: payload.email,
-				supportType: supportType,
-			});
 			const { supportRequestId, zendeskTicketId, shouldCreateMatch } =
-				await resEligibilitily.json();
-
-			if (shouldCreateMatch) {
-				const resZendeskUser = await validateAndUpsertZendeskUser(payload);
-
-				if (!resZendeskUser.ok) {
-					throw new Error(await resZendeskUser.text());
-				}
-
-				const user = await resZendeskUser.json();
-
-				const resMsr = await upsertMsr({
-					msrZendeskUserId: user.msrZendeskUserId,
-					...payload,
+				await checkMatchEligibility({
+					email: payload.email,
+					supportType: supportType,
 				});
 
-				if (!resMsr.ok) {
-					throw new Error(await resMsr.text());
+			if (shouldCreateMatch) {
+				if (!msrZendeskUserId) {
+					const resZendeskUser = await validateAndUpsertZendeskUser(payload);
+
+					if (!resZendeskUser.ok) {
+						throw new Error(await resZendeskUser.text());
+					}
+
+					const user = await resZendeskUser.json();
+
+					msrZendeskUserId = user.msrZendeskUserId;
+
+					await upsertMsr({
+						msrZendeskUserId: msrZendeskUserId,
+						...payload,
+					});
 				}
 
 				const bodyTicket = {
-					ticketId: zendeskTicketId,
-					msrZendeskUserId: user.msrZendeskUserId,
+					ticketId: zendeskTicketId as unknown as number,
+					msrZendeskUserId: msrZendeskUserId,
 					status: "new",
 					subject: subject({ ...payload, supportType: supportType }),
 					statusAcolhimento: "solicitação_recebida",
@@ -108,7 +107,6 @@ export async function POST(request: Request) {
 				}
 
 				const ticket = await resZendeskTicket.json();
-
 				const lambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequestId ? "handle-match" : "compose"}`;
 				const jwtSecret = JWT_SECRET;
 				const authToken = sign({ sub: "cadastro-msr" }, jwtSecret!, {
@@ -116,7 +114,7 @@ export async function POST(request: Request) {
 				});
 				const bodyLambda = {
 					supportRequestId: supportRequestId,
-					msrId: user.msrZendeskUserId,
+					msrId: msrZendeskUserId,
 					zendeskTicketId: ticket.ticketId,
 					supportType: supportType,
 					status: "open",
@@ -126,6 +124,7 @@ export async function POST(request: Request) {
 					city: payload.city,
 					state: payload.state,
 				};
+
 				const resLambda = await fetch(lambdaUrl, {
 					body: JSON.stringify(
 						supportRequestId ? { supportRequest: bodyLambda } : [bodyLambda]
@@ -145,14 +144,16 @@ export async function POST(request: Request) {
 					? match.status
 					: match[0].status;
 			} else {
-				await handleDuplicatedSupportRequest({
-					firstName: payload.firstName,
-					supportRequestId,
-					zendeskTicketId,
-					supportType,
-				});
+				if (supportRequestId && zendeskTicketId) {
+					await handleDuplicatedSupportRequest({
+						firstName: payload.firstName,
+						supportRequestId,
+						zendeskTicketId: zendeskTicketId as unknown as number,
+						supportType,
+					});
 
-				response[supportType] = "duplicated";
+					response[supportType] = "duplicated";
+				}
 			}
 		}
 		return Response.json(response);

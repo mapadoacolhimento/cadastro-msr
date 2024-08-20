@@ -78,7 +78,7 @@ export default async function upsertMsr(
 		},
 	});
 
-	return Response.json({
-		msrId: msrResult.msrId.toString(),
-	});
+	return {
+		msrId: msrResult.msrId,
+	};
 }

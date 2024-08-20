@@ -24,7 +24,7 @@ const mockValidateAndUpsertZendeskUser = vi.spyOn(
 	"default"
 );
 
-const mockUpserMsr = vi.spyOn(upsertMsr, "default");
+const mockUpsertMsr = vi.spyOn(upsertMsr, "default");
 
 const mockcheckMatchEligibility = vi.spyOn(checkMatchEligibility, "default");
 
@@ -33,10 +33,7 @@ const mockResZendeskUser = {
 };
 
 const mockResMsr = {
-	data: {
-		msrId: 12346789 as unknown as bigint,
-		status: "inscrita",
-	},
+	msrId: 12346789 as unknown as bigint,
 };
 
 const mockSupportRequestsLegal = {
@@ -77,13 +74,13 @@ const mockResTicketPsychological = {
 
 const mockResCheckEligibilityLegal = {
 	supportRequestId: 1234,
-	zendeskTicketId: 1234,
+	zendeskTicketId: 1234 as unknown as bigint,
 	shouldCreateMatch: true,
 };
 
 const mockResCheckEligibilityPsychological = {
 	supportRequestId: 5678,
-	zendeskTicketId: 7890,
+	zendeskTicketId: 7890 as unknown as bigint,
 	shouldCreateMatch: false,
 };
 
@@ -148,13 +145,11 @@ describe("POST handle-request", () => {
 	});
 
 	it("should create match for support request legal", async () => {
-		mockcheckMatchEligibility.mockResolvedValueOnce(
-			Response.json(mockResCheckEligibilityNew)
-		);
+		mockcheckMatchEligibility.mockResolvedValueOnce(mockResCheckEligibilityNew);
 		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
 			Response.json(mockResZendeskUser)
 		);
-		mockUpserMsr.mockResolvedValueOnce(Response.json(mockResMsr));
+		mockUpsertMsr.mockResolvedValueOnce(mockResMsr);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 			Response.json(mockResTicketLegal)
 		);
@@ -176,7 +171,7 @@ describe("POST handle-request", () => {
 			mockPayloadLegal
 		);
 
-		expect(mockUpserMsr).toHaveBeenCalledWith(mockPayloadLegal);
+		expect(mockUpsertMsr).toHaveBeenCalledWith(mockPayloadLegal);
 		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
 			ticketId: null,
 			msrZendeskUserId: mockPayloadLegal.msrZendeskUserId,
@@ -210,7 +205,7 @@ describe("POST handle-request", () => {
 		);
 
 		mockcheckMatchEligibility.mockResolvedValueOnce(
-			Response.json(mockResCheckEligibilityPsychological)
+			mockResCheckEligibilityPsychological
 		);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 			mockResTicketPsychological
@@ -256,24 +251,17 @@ describe("POST handle-request", () => {
 	});
 
 	it("should create matches for support requests legal and psychological", async () => {
-		mockcheckMatchEligibility.mockResolvedValueOnce(
-			Response.json(mockResCheckEligibilityNew)
-		);
+		mockcheckMatchEligibility.mockResolvedValueOnce(mockResCheckEligibilityNew);
 		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
 			Response.json(mockResZendeskUser)
 		);
-		mockUpserMsr.mockResolvedValueOnce(Response.json(mockResMsr));
+		mockUpsertMsr.mockResolvedValueOnce(mockResMsr);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 			Response.json(mockResTicketLegal)
 		);
 		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
-		mockValidateAndUpsertZendeskUser.mockResolvedValue(
-			Response.json(mockResZendeskUser)
-		);
-		mockcheckMatchEligibility.mockResolvedValueOnce(
-			Response.json(mockResCheckEligibilityNew)
-		);
-		mockUpserMsr.mockResolvedValueOnce(Response.json(mockResMsr));
+
+		mockcheckMatchEligibility.mockResolvedValueOnce(mockResCheckEligibilityNew);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 			Response.json(mockResTicketPsychological)
 		);
@@ -294,7 +282,7 @@ describe("POST handle-request", () => {
 			mockPayloadBoth
 		);
 
-		expect(mockUpserMsr).toHaveBeenCalledWith(mockPayloadBoth);
+		expect(mockUpsertMsr).toHaveBeenCalledWith(mockPayloadBoth);
 		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
 			ticketId: null,
 			msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
@@ -319,10 +307,6 @@ describe("POST handle-request", () => {
 		expect(mockcheckMatchEligibility).toHaveBeenCalledWith(
 			bodyCheckEligibilityPsychological
 		);
-		expect(mockValidateAndUpsertZendeskUser).toHaveBeenCalledWith(
-			mockPayloadBoth
-		);
-		expect(mockUpserMsr).toHaveBeenCalledWith(mockPayloadBoth);
 		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
 			ticketId: null,
 			msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
@@ -353,12 +337,12 @@ describe("POST handle-request", () => {
 
 	it("should just update ticket and psychological support request as duplicated and create match for legal support request", async () => {
 		mockcheckMatchEligibility.mockResolvedValueOnce(
-			Response.json(mockResCheckEligibilityLegal)
+			mockResCheckEligibilityLegal
 		);
 		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
 			Response.json(mockResZendeskUser)
 		);
-		mockUpserMsr.mockResolvedValueOnce(Response.json(mockResMsr));
+		mockUpsertMsr.mockResolvedValueOnce(mockResMsr);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 			Response.json(mockResTicketLegal)
 		);
@@ -371,7 +355,7 @@ describe("POST handle-request", () => {
 			mockSupportRequestStatusHistory
 		);
 		mockcheckMatchEligibility.mockResolvedValueOnce(
-			Response.json(mockResCheckEligibilityPsychological)
+			mockResCheckEligibilityPsychological
 		);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 			mockResTicketPsychological
@@ -392,7 +376,7 @@ describe("POST handle-request", () => {
 			mockPayloadBoth
 		);
 
-		expect(mockUpserMsr).toHaveBeenCalledWith(mockPayloadBoth);
+		expect(mockUpsertMsr).toHaveBeenCalledWith(mockPayloadBoth);
 		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
 			ticketId: mockResCheckEligibilityLegal.zendeskTicketId,
 			msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,

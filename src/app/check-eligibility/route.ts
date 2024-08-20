@@ -4,7 +4,9 @@ export async function POST(request: Request) {
 	try {
 		const payload = await request.json();
 
-		return await checkMatchEligibility(payload);
+		const data = await checkMatchEligibility(payload);
+
+		return Response.json(data);
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {

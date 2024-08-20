@@ -101,7 +101,7 @@ describe("POST /db/upsert-msr", () => {
 		expect(mockedDb.mSRPiiSec.upsert).toHaveBeenCalledTimes(1);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({
-			msrId: mockPayload.msrZendeskUserId.toString(),
+			msrId: mockPayload.msrZendeskUserId,
 		});
 	});
 
@@ -119,7 +119,7 @@ describe("POST /db/upsert-msr", () => {
 		expect(mockedDb.mSRPiiSec.upsert).toHaveBeenCalledTimes(1);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({
-			msrId: mockPayload2.msrZendeskUserId.toString(),
+			msrId: mockPayload2.msrZendeskUserId,
 		});
 	});
 

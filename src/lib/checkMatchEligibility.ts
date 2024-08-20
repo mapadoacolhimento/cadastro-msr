@@ -7,12 +7,6 @@ import {
 } from "../lib";
 import { SupportType } from "@prisma/client";
 
-type MsrSearchResponse = {
-	supportRequestId: number | null;
-	zendeskTicketId: bigint | null;
-	shouldCreateMatch: boolean;
-};
-
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
 	supportType: Yup.string().oneOf(Object.values(SupportType)).required(),
@@ -36,11 +30,11 @@ export default async function checkMatchEligibility(
 	const msrId = msr?.msrId;
 
 	if (!msrId) {
-		return Response.json({
+		return {
 			supportRequestId: null,
 			zendeskTicketId: null,
 			shouldCreateMatch: true,
-		});
+		};
 	}
 
 	const ongoingMatch = await db.matches.findFirst({
@@ -61,11 +55,11 @@ export default async function checkMatchEligibility(
 	});
 
 	if (ongoingMatch) {
-		return Response.json({
+		return {
 			supportRequestId: ongoingMatch.supportRequestId,
 			zendeskTicketId: ongoingMatch.msrZendeskTicketId,
 			shouldCreateMatch: false,
-		});
+		};
 	}
 
 	const supportRequest = await db.supportRequests.findFirst({
@@ -86,11 +80,11 @@ export default async function checkMatchEligibility(
 	});
 
 	if (!supportRequest) {
-		return Response.json({
+		return {
 			supportRequestId: null,
 			zendeskTicketId: null,
 			shouldCreateMatch: true,
-		});
+		};
 	}
 
 	const statusOngoingSupportRequest: string[] = [
@@ -102,9 +96,9 @@ export default async function checkMatchEligibility(
 		supportRequest.status
 	);
 
-	return Response.json({
+	return {
 		supportRequestId: supportRequest.supportRequestId,
 		zendeskTicketId: supportRequest.zendeskTicketId,
 		shouldCreateMatch: !hasOngoingSupport,
-	});
+	};
 }

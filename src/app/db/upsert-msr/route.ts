@@ -4,8 +4,9 @@ import { getErrorMessage, upsertMsr } from "../../../lib";
 export async function POST(request: NextRequest) {
 	try {
 		const payload = await request.json();
+		const data = await upsertMsr(payload);
 
-		return await upsertMsr(payload);
+		return Response.json(data);
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {

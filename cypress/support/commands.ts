@@ -132,8 +132,26 @@ Cypress.Commands.add("checkForaCriteriosPage", () => {
 	).should("exist");
 });
 
-Cypress.Commands.add("fillAllSteps", (supportTypes) => {
+Cypress.Commands.add("fillAllSteps", (supportTypes: any) => {
+	cy.fillGenderIdentityStep(gender);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
 	cy.fillDateOfBirthStep(dateOfBirth);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillGenderViolenceStep(genderViolence);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillViolenceLocationStep(violenceLocation);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillExternalSupportStep(externalSupport);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillFinancialNeedStep(financialNeed);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillSupportTypeStep(supportTypes);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillBasicRegisterInformationStep();
@@ -143,24 +161,7 @@ Cypress.Commands.add("fillAllSteps", (supportTypes) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillGenderIdentityStep(gender);
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillSupportTypeStep(supportTypes);
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillGenderViolenceStep(genderViolence);
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillExternalSupportStep(externalSupport);
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillViolenceLocationStep(violenceLocation);
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillFinancialNeedStep(financialNeed);
+	cy.findByRole("button", { name: "Enviar" }).click();
 });
 
 export {};

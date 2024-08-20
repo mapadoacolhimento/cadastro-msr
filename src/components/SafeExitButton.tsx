@@ -2,7 +2,7 @@ import React from "react";
 import { Flex, Button } from "@radix-ui/themes";
 import Image from "next/image";
 
-const handleClick = () => {
+export const handleClick = () => {
 	window.location.replace("https://www.google.com");
 };
 

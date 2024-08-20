@@ -3,6 +3,7 @@ import { Box } from "@radix-ui/themes";
 
 import Step from "../Step";
 import { TextInput } from "../..";
+import { sleep } from "../../../lib";
 
 const basicRegisterInformationSchema = Yup.object({
 	firstName: Yup.string().required("Insira seu primeiro nome."),
@@ -21,31 +22,11 @@ const basicRegisterInformationSchema = Yup.object({
 });
 
 export default function BasicRegisterInformation() {
-	async function handleSubmit(
-		values: Yup.InferType<typeof basicRegisterInformationSchema>
-	) {
-		const response = await fetch("/validate", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				phone: values.phone,
-				email: values.email,
-			}),
-		});
-
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
-
-		const data = await response.json();
-		return data;
-	}
-
 	return (
 		<Step
-			onSubmit={handleSubmit}
+			onSubmit={async (values) =>
+				await sleep(300).then(() => console.log(values))
+			}
 			validationSchema={basicRegisterInformationSchema}
 			title={"Seus dados"}
 			img={{

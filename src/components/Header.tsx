@@ -13,11 +13,12 @@ export default function Header() {
 					}}
 					pb={"4"}
 				>
-					<img
-						src={"/logo.svg"}
+					<Image
+						src="/logo.svg"
 						alt="Logo Mapa do Acolhimento"
-						height={"30px"}
-						width={"auto"}
+						height={30}
+						width={0}
+						style={{ width: "auto" }}
 					/>
 
 					<Flex display={{ initial: "flex", md: "none" }} justify={"end"}>

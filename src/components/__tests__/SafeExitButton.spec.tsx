@@ -2,6 +2,13 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import SafeExitButton from "../SafeExitButton";
 import { vi } from "vitest";
 
+vi.mock("next/image", () => ({
+	__esModule: true,
+	default: (props: any) => {
+		return <img {...props} />;
+	},
+}));
+
 describe("SafeExitButton", () => {
 	it("should render the button with correct text and icon", () => {
 		render(<SafeExitButton />);
@@ -14,19 +21,24 @@ describe("SafeExitButton", () => {
 	});
 
 	it("should redirect to Google when clicked", () => {
-		const mockOpen = vi.spyOn(window, "open").mockImplementation(() => {});
+		const originalLocation = window.location;
+
+		const mockLocation = {
+			replace: vi.fn(),
+		};
+
+		Object.defineProperty(window, "location", {
+			writable: true,
+			value: mockLocation,
+		});
 
 		render(<SafeExitButton />);
 
 		const button = screen.getByRole("button", { name: /sair desse site/i });
 		fireEvent.click(button);
 
-		expect(mockOpen).toHaveBeenCalledWith(
-			"https://www.google.com",
-			"_self",
-			"noopener,noreferrer"
-		);
+		expect(mockLocation.replace).toHaveBeenCalledWith("https://www.google.com");
 
-		mockOpen.mockRestore();
+		window.location = originalLocation;
 	});
 });

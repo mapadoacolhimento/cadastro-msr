@@ -3,7 +3,7 @@ import { Flex, Button } from "@radix-ui/themes";
 import Image from "next/image";
 
 const handleClick = () => {
-	window.open("https://www.google.com", "_self", "noopener,noreferrer");
+	window.location.replace("https://www.google.com");
 };
 
 const SafeExitButton = () => (

@@ -14,7 +14,7 @@ const payloadSchema = Yup.object({
 	color: Yup.string().oneOf(Object.values(Race)).required(),
 	zipcode: Yup.string().min(8).max(9).required(),
 	status: Yup.string().oneOf(Object.values(MSRStatus)).required(),
-	dateOfBirth: Yup.date().required().nullable(),
+	dateOfBirth: Yup.string().required().nullable(),
 	gender: Yup.string().oneOf(Object.values(Gender)).required(),
 	hasDisability: Yup.boolean().required().nullable(),
 	acceptsOnlineSupport: Yup.boolean().required(),

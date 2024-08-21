@@ -9,3 +9,5 @@ export { default as ExternalSupport } from "./ExternalSupport";
 export { default as FinancialNeed } from "./FinancialNeed";
 export { default as DateOfBirth } from "./DateOfBirth";
 export { default as Geolocation } from "./Geolocation";
+export { default as LoadingStep } from "./LoadingStep";
+export { default as ErrorStep } from "./ErrorStep";

@@ -5,12 +5,12 @@ import { type FormikHelpers, useFormikContext } from "formik";
 import { MSRs, SupportRequests } from "@prisma/client";
 
 import Step from "../Step";
-import TextInput from "../../TextInput";
-import SelectInput from "../../SelectInput";
+import { TextInput, SelectInput } from "../..";
 import {
 	BRAZILIAN_STATES_OPTIONS,
 	formatZipcode,
 	normalizeCity,
+	Status,
 } from "../../../lib";
 import { Values } from "..";
 
@@ -25,12 +25,6 @@ const geolocationSchema = Yup.object({
 		.required("Insira seu CEP")
 		.length(8, "CEP inválido"),
 });
-
-enum Status {
-	error,
-	idle,
-	loading,
-}
 
 type CityOption = {
 	value: string;

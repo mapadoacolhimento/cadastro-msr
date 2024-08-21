@@ -12,8 +12,7 @@ import {
 	DiversityInformation,
 	DateOfBirth,
 } from "./Steps";
-import { useRouter } from "next/navigation";
-import { formatRegisterFormValues } from "../../lib";
+import { formatRegisterFormValues, HandleRequestResponse } from "../../lib";
 
 export interface Values {
 	email: string;
@@ -40,9 +39,7 @@ export interface Values {
 }
 
 export default function MultiStepForm() {
-	const router = useRouter();
-
-	async function onSubmit(values: Values) {
+	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
 		const response = await fetch("/handle-request", {
 			method: "POST",
 			headers: {
@@ -50,20 +47,14 @@ export default function MultiStepForm() {
 			},
 			body: formatRegisterFormValues(values),
 		});
+
 		if (!response.ok) {
 			throw new Error(response.statusText);
 		}
+
 		const data = await response.json();
 
-		let redirectEndpoint = "/acolhimento-andamento";
-
-		for (let key in data) {
-			if (data[key] && data[key] != "duplicated") {
-				redirectEndpoint = "/cadastro-finalizado";
-			}
-		}
-
-		router.push(redirectEndpoint);
+		return data;
 	}
 
 	return (
@@ -94,7 +85,7 @@ export default function MultiStepForm() {
 			onSubmit={onSubmit}
 		>
 			{GenderIdentity()}
-			{DateOfBirth()}
+			{/* {DateOfBirth()}
 			{GenderViolence()}
 			{ViolenceLocation()}
 			{ExternalSupport()}
@@ -102,7 +93,7 @@ export default function MultiStepForm() {
 			{SupportType()}
 			{BasicRegisterInformation()}
 			{Geolocation()}
-			{DiversityInformation()}
+			{DiversityInformation()} */}
 		</MultiStepFormWrapper>
 	);
 }

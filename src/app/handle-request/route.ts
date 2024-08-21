@@ -1,28 +1,23 @@
+import { Gender, Race, SupportType } from "@prisma/client";
 import * as Yup from "yup";
 import { sign } from "jsonwebtoken";
 import {
 	getErrorMessage,
 	MATCH_LAMBDA_URL,
 	JWT_SECRET,
-	BASE_URL,
 	handleDuplicatedSupportRequest,
 	validateAndUpsertZendeskTicket,
 	validateAndUpsertZendeskUser,
 	upsertMsr,
 	checkMatchEligibility,
+	HandleRequestResponse,
 } from "../../lib";
-import { Gender, Race, SupportType } from "@prisma/client";
 
 type SubjectInfo = {
 	supportType: SupportType;
 	firstName: string;
 	city: string;
 	state: string;
-};
-
-type RequestResponse = {
-	psychological?: string | null;
-	legal?: string | null;
 };
 
 type CreateMatch = {
@@ -32,6 +27,7 @@ type CreateMatch = {
 	zendeskTicketId: bigint | null;
 	payload: Yup.InferType<typeof payloadSchema>;
 };
+
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
 	phone: Yup.string().min(10).required(),
@@ -152,7 +148,7 @@ export async function POST(request: Request) {
 
 		await payloadSchema.validate(payload);
 		let msrZendeskUserId = null;
-		let response: RequestResponse = {};
+		let response: HandleRequestResponse = {};
 
 		for (let i = 0; payload.supportType.length > i; i++) {
 			const supportType: SupportType = payload.supportType[i];

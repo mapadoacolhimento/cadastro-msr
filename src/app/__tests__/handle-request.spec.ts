@@ -4,7 +4,7 @@ import mockedDb from "../../lib/__mocks__/db";
 import msrPayload from "../../lib/__mocks__/payloads";
 import createFetchResponse from "../../lib/__mocks__/fetch";
 import { POST } from "../handle-request/route";
-import { BASE_URL, MATCH_LAMBDA_URL, msrOrganizationId } from "../../lib";
+import { MATCH_LAMBDA_URL } from "../../lib";
 import { emailDuplicated } from "../../lib/handleDuplicatedSupportRequest";
 import * as validateAndUpsertZendeskTicket from "../../lib/zendesk/validateAndUpsertZendeskTicket";
 import * as validateAndUpsertZendeskUser from "../../lib/zendesk/validateAndUpsertZendeskUser";

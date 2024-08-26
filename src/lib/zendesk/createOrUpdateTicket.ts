@@ -26,12 +26,15 @@ export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
 			throw new Error(response.statusText);
 		}
 
-		return response;
-	} catch (e) {
-		const error = e as Record<string, unknown>;
+		const data = await response.json();
 
-		return new Response(getErrorMessage(error), {
-			status: 500,
-		});
+		return data;
+	} catch (e) {
+		console.error(
+			`[upsertTicket] - Something went wrong when upserting this ticket '${
+				ticket.id
+			}' for this user '${ticket.requester_id}': ${getErrorMessage(e)}`
+		);
+		return null;
 	}
 }

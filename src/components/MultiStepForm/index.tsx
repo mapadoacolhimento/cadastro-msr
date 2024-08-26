@@ -1,5 +1,4 @@
 "use client";
-
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
@@ -13,7 +12,7 @@ import {
 	DiversityInformation,
 	DateOfBirth,
 } from "./Steps";
-import { sleep } from "../../lib";
+import { formatRegisterFormValues, HandleRequestResponse } from "../../lib";
 
 export interface Values {
 	email: string;
@@ -25,7 +24,7 @@ export interface Values {
 	hasDisability: string;
 	acceptsOnlineSupport: string;
 	supportType: string[];
-	genderIdentity: string;
+	gender: string;
 	genderViolence: string;
 	violenceLocation: string;
 	externalSupport: string;
@@ -40,6 +39,24 @@ export interface Values {
 }
 
 export default function MultiStepForm() {
+	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
+		const response = await fetch("/handle-request", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: formatRegisterFormValues(values),
+		});
+
+		if (!response.ok) {
+			throw new Error(response.statusText);
+		}
+
+		const data = await response.json();
+
+		return data;
+	}
+
 	return (
 		<MultiStepFormWrapper
 			initialValues={{
@@ -50,9 +67,9 @@ export default function MultiStepForm() {
 				dateOfBirth: "",
 				color: "",
 				hasDisability: "",
-				acceptsOnlineSupport: "",
+				acceptsOnlineSupport: "yes",
 				supportType: [],
-				genderIdentity: "",
+				gender: "",
 				genderViolence: "",
 				violenceLocation: "",
 				externalSupport: "",
@@ -65,9 +82,7 @@ export default function MultiStepForm() {
 				lng: null,
 				zipcode: "",
 			}}
-			onSubmit={async (values: Values) =>
-				sleep(300).then(() => console.log("Wizard submit", values))
-			}
+			onSubmit={onSubmit}
 		>
 			{GenderIdentity()}
 			{DateOfBirth()}

@@ -10,16 +10,18 @@ import { Box, Flex, Heading, IconButton } from "@radix-ui/themes";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
-import StepsController from "./StepsController";
-import { Illustration } from "../";
-import { type StepChildrenProps } from "./Step";
-import { type Values } from "./";
-import LoadingStep from "./Steps/LoadingStep";
-import ErrorStep from "./Steps/ErrorStep";
+import { StepsController, Illustration } from "../";
+import { LoadingStep, ErrorStep } from "./Steps";
+import type { Values } from "./";
+import {
+	type HandleRequestResponse,
+	Status,
+	type StepChildrenProps,
+} from "../../lib";
 
 interface MultiStepFormWrapperProps {
 	initialValues: Values;
-	onSubmit: (values: Values, bag: FormikHelpers<Values>) => Promise<void>;
+	onSubmit: (values: Values) => Promise<HandleRequestResponse>;
 }
 
 export default function MultiStepFormWrapper({
@@ -29,8 +31,7 @@ export default function MultiStepFormWrapper({
 }: PropsWithChildren<MultiStepFormWrapperProps>) {
 	const [stepIndex, setStepIndex] = useState(0);
 	const [snapshot, setSnapshot] = useState(initialValues);
-	const [isLoading, setIsLoading] = useState(false);
-	const [submitError, setSubmitError] = useState<string | null>(null);
+	const [status, setStatus] = useState<Status | null>(Status.idle);
 	const childrenSteps = Children.toArray(children);
 	const router = useRouter();
 
@@ -52,7 +53,8 @@ export default function MultiStepFormWrapper({
 
 	const handleSubmit = async (values: Values, bag: FormikHelpers<Values>) => {
 		try {
-			setSubmitError(null);
+			setStatus(Status.idle);
+
 			if (step.props.onSubmit) {
 				const submit = await step.props.onSubmit(values, bag);
 				if (submit && submit.redirectTo) {
@@ -61,15 +63,27 @@ export default function MultiStepFormWrapper({
 			}
 
 			if (isLastStep) {
-				setIsLoading(true);
-				return onSubmit(values, bag);
+				setStatus(Status.loading);
+
+				const data = await onSubmit(values);
+
+				setStatus(Status.idle);
+				const shouldRedirectToSuccessPage = Object.values(data).find(
+					(support) => support !== "duplicated"
+				);
+				if (!shouldRedirectToSuccessPage) {
+					return router.push("/acolhimento-andamento");
+				}
+
+				return router.push("/cadastro-finalizado");
 			}
 
 			await bag.setTouched({});
-			setIsLoading(false);
+			setStatus(Status.idle);
 			nextStep(values);
 		} catch (error: any) {
-			setSubmitError(error.message || "Ocorreu um erro durante a submissão");
+			console.error(error);
+			setStatus(Status.error);
 		}
 	};
 
@@ -94,39 +108,46 @@ export default function MultiStepFormWrapper({
 									Voltar para o passo anterior
 								</VisuallyHidden.Root>
 							</IconButton>
-
-							<Box asChild pt={"4"}>
-								<Heading
-									as={"h1"}
-									size={"8"}
-									color={"purple"}
-									highContrast
-									align={"center"}
-								>
-									{!isLoading && step.props.title}
-								</Heading>
-							</Box>
-
-							<Flex
-								direction={"column"}
-								align={"center"}
-								justify={"center"}
-								gapY={"4"}
-							>
-								{!isLoading && !submitError ? step : null}
-								{isLoading ? <LoadingStep /> : null}
-								{submitError && !isSubmitting ? (
-									<ErrorStep message={submitError} />
-								) : null}
-							</Flex>
 						</Box>
-						<StepsController
-							stepName={step.props.title}
-							stepNumber={stepNumber}
-							isButtonDisabled={isSubmitting}
-							progress={progress}
-							isLastStep={isLastStep}
-						/>
+
+						{status === Status.idle ? (
+							<>
+								<Box px={"5"}>
+									<Box asChild pt={"4"}>
+										<Heading
+											as={"h1"}
+											size={"8"}
+											color={"purple"}
+											highContrast
+											align={"center"}
+										>
+											{step.props.title}
+										</Heading>
+									</Box>
+
+									<Flex
+										direction={"column"}
+										align={"center"}
+										justify={"center"}
+										gapY={"4"}
+									>
+										{step}
+									</Flex>
+								</Box>
+								<StepsController
+									stepName={step.props.title}
+									stepNumber={stepNumber}
+									isButtonDisabled={isSubmitting}
+									progress={progress}
+									isLastStep={isLastStep}
+								/>
+							</>
+						) : null}
+
+						{status === Status.loading ? <LoadingStep /> : null}
+						{status === Status.error ? (
+							<ErrorStep message={"Ocorreu um erro durante a submissão"} />
+						) : null}
 					</Form>
 				)}
 			</Formik>

@@ -3,7 +3,7 @@ import { mockReset } from "vitest-mock-extended";
 import { type Gender, type MSRStatus, type Race } from "@prisma/client";
 import mockedDb from "../../lib/__mocks__/db";
 import msrPayload from "../../lib/__mocks__/payloads";
-import { POST } from "../create/route";
+import { POST } from "../db/upsert-msr/route";
 
 const mockPayload = msrPayload();
 
@@ -82,7 +82,7 @@ const mockMsrPii2 = {
 	updatedAt: new Date(),
 };
 
-describe("POST /create", () => {
+describe("POST /db/upsert-msr", () => {
 	beforeEach(() => {
 		mockReset(mockedDb);
 	});
@@ -91,7 +91,7 @@ describe("POST /create", () => {
 		mockedDb.mSRs.upsert.mockResolvedValueOnce(mockMsr);
 		mockedDb.mSRPiiSec.upsert.mockResolvedValueOnce(mockMsrPii);
 		const request = new NextRequest(
-			new Request("http://localhost:3000/create", {
+			new Request("http://localhost:3000/db/upsert-msr", {
 				method: "POST",
 				body: JSON.stringify(mockPayload),
 			})
@@ -101,7 +101,7 @@ describe("POST /create", () => {
 		expect(mockedDb.mSRPiiSec.upsert).toHaveBeenCalledTimes(1);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({
-			msrId: mockPayload.msrZendeskUserId.toString(),
+			msrId: mockPayload.msrZendeskUserId,
 		});
 	});
 
@@ -109,7 +109,7 @@ describe("POST /create", () => {
 		mockedDb.mSRs.upsert.mockResolvedValueOnce(mockMsr2);
 		mockedDb.mSRPiiSec.upsert.mockResolvedValueOnce(mockMsrPii2);
 		const request = new NextRequest(
-			new Request("http://localhost:3000/create", {
+			new Request("http://localhost:3000/db/upsert-msr", {
 				method: "POST",
 				body: JSON.stringify(mockPayload2),
 			})
@@ -119,13 +119,13 @@ describe("POST /create", () => {
 		expect(mockedDb.mSRPiiSec.upsert).toHaveBeenCalledTimes(1);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({
-			msrId: mockPayload2.msrZendeskUserId.toString(),
+			msrId: mockPayload2.msrZendeskUserId,
 		});
 	});
 
 	it("returns error when dont have a valid payload", async () => {
 		const request = new NextRequest(
-			new Request("http://localhost:3000/create", {
+			new Request("http://localhost:3000/db/upsert-msr", {
 				method: "POST",
 				body: JSON.stringify(mockIncompletePayload),
 			})

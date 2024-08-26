@@ -63,7 +63,7 @@ describe("POST /zendesk/ticket", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: statusAcolhimento is a required field"
+			"Validation error: msrName is a required field"
 		);
 	});
 
@@ -136,6 +136,6 @@ describe("POST /zendesk/ticket", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(500);
-		expect(await response.text()).toEqual("Invalid body");
+		expect(await response.text()).toEqual("Unable to upsert ticket on Zendesk");
 	});
 });

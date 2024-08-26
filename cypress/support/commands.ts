@@ -2,7 +2,25 @@
 /// <reference types="@testing-library/cypress" />
 
 import "@testing-library/cypress/add-commands";
-import userData from "../fixtures/userData.json";
+import {
+	firstName,
+	email,
+	confirmEmail,
+	phone,
+	hasDisability,
+	acceptOnlineSupport,
+	colorOption,
+	gender,
+	genderViolence,
+	externalSupport,
+	violenceLocation,
+	financialNeed,
+	dateOfBirth,
+	zipcode,
+	neighborhood,
+	state,
+	city,
+} from "../fixtures/userData.json";
 
 Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();
@@ -14,8 +32,6 @@ Cypress.Commands.add("fillDateOfBirthStep", (dateOfBirth) => {
 });
 
 Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
-	const { firstName, email, confirmEmail, phone } = userData;
-
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.get("#firstName").type(firstName);
 	cy.get("#email").type(email);
@@ -24,8 +40,6 @@ Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
 });
 
 Cypress.Commands.add("fillDiversityInformationStep", () => {
-	const { hasDisability, colorOption } = userData;
-
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.findByRole("combobox", {
 		name: "Cor",
@@ -38,7 +52,6 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {
-	const { zipcode, neighborhood, state, city } = userData;
 	cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
 
 	// zipcode
@@ -62,8 +75,6 @@ Cypress.Commands.add("fillGenderIdentityStep", (gender: string) => {
 });
 
 Cypress.Commands.add("fillAcceptsOnlineSupportStep", () => {
-	const { acceptOnlineSupport } = userData;
-
 	cy.findByRole("heading", { name: "Sobre o acolhimento" }).should("exist");
 	cy.contains("Você aceitaria ser atendida online?").should("exist");
 	cy.findByRole("radio", {
@@ -78,11 +89,12 @@ Cypress.Commands.add("fillAcceptsOnlineSupportStep", () => {
 	}).click();
 });
 
-Cypress.Commands.add("fillSupportTypeStep", () => {
-	const { supportTypes } = userData;
+Cypress.Commands.add("fillSupportTypeStep", (supportType) => {
 	cy.contains("Que tipo de acolhimento você precisa?").should("exist");
-	cy.findByLabelText(supportTypes.psychological).click({ force: true });
-	cy.findByLabelText(supportTypes.legal).click({ force: true });
+	if (supportType.psychological)
+		cy.findByLabelText(supportType.psychological).click({ force: true });
+	if (supportType.legal)
+		cy.findByLabelText(supportType.legal).click({ force: true });
 });
 
 Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
@@ -118,6 +130,38 @@ Cypress.Commands.add("checkForaCriteriosPage", () => {
 	cy.findByText(
 		"O Mapa do Acolhimento atende mulheres cis, trans ou travestis maiores de 18 anos, que vivem no Brasil e enfrentam situações de vulnerabilidade socioeconômica."
 	).should("exist");
+});
+
+Cypress.Commands.add("fillAllSteps", (supportTypes: any) => {
+	cy.fillGenderIdentityStep(gender);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillDateOfBirthStep(dateOfBirth);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillGenderViolenceStep(genderViolence);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillViolenceLocationStep(violenceLocation);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillExternalSupportStep(externalSupport);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillFinancialNeedStep(financialNeed);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillSupportTypeStep(supportTypes);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillBasicRegisterInformationStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillGeolocationStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillDiversityInformationStep();
+	cy.findByRole("button", { name: "Enviar" }).click();
 });
 
 export {};

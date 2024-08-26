@@ -16,12 +16,12 @@ const mockPayload = {
 	color: "black",
 	zipcode: "40210245",
 	dateOfBirth: new Date("1990-03-14"),
-	supportTypes: ["legal", "psychological"],
+	supportType: ["legal", "psychological"],
 };
 
 const mockPayloadUpdate = {
 	...mockPayload,
-	supportTypes: ["legal"],
+	supportType: ["legal"],
 };
 
 const mockUser = {
@@ -67,7 +67,7 @@ describe("POST /zendesk/user", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: supportTypes is a required field"
+			"Validation error: supportType is a required field"
 		);
 	});
 
@@ -139,6 +139,8 @@ describe("POST /zendesk/user", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(500);
-		expect(await response.text()).toStrictEqual("Could not create a new user");
+		expect(await response.text()).toStrictEqual(
+			"Unable to upsert user on Zendesk"
+		);
 	});
 });

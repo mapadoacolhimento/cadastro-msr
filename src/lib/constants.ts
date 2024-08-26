@@ -32,7 +32,7 @@ export const BRAZILIAN_STATES_OPTIONS = [
 
 export const colorOptions = [
 	{ value: "black", label: "Preta" },
-	{ value: "mixed", label: "Parda" },
+	{ value: "brown", label: "Parda" },
 	{ value: "indigenous", label: "Indígena" },
 	{ value: "asian", label: "Amarela" },
 	{ value: "white", label: "Branca" },
@@ -63,9 +63,9 @@ export const supportTypeOptions = [
 ];
 
 export const genderIdentityOptions = [
-	{ value: "ciswoman", name: "Eu sou uma mulher cis" },
+	{ value: "cis_woman", name: "Eu sou uma mulher cis" },
 	{
-		value: "transwoman",
+		value: "trans_woman",
 		name: "Eu sou uma mulher trans/travesti",
 	},
 	{
@@ -124,6 +124,8 @@ export const ZENDESK_SUBDOMAIN = process.env["ZENDESK_SUBDOMAIN"];
 export const ZENDESK_API_USER = `${process.env["ZENDESK_API_USER"]}/token`;
 export const ZENDESK_API_TOKEN = process.env["ZENDESK_API_TOKEN"];
 export const VOLUNTEER_API_URL = process.env["VOLUNTEER_API_URL"];
+export const MATCH_LAMBDA_URL = process.env["MATCH_LAMBDA_URL"];
+export const JWT_SECRET = process.env["JWT_SECRET"];
 
 export const ZENDESK_CUSTOM_FIELDS_DICIO = {
 	nomeMsr: 360016681971,

@@ -6,6 +6,7 @@ const {
 	externalSupport,
 	violenceLocation,
 	financialNeed,
+	supportTypes,
 	dateOfBirth,
 } = userData;
 
@@ -39,7 +40,7 @@ describe("Happy path", () => {
 				cy.fillFinancialNeedStep(financialNeed);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.fillSupportTypeStep();
+				cy.fillSupportTypeStep(supportTypes);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
 				cy.fillBasicRegisterInformationStep();
@@ -101,7 +102,7 @@ describe("Happy path", () => {
 				cy.fillFinancialNeedStep(financialNeed);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.fillSupportTypeStep();
+				cy.fillSupportTypeStep(supportTypes);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
 				cy.fillBasicRegisterInformationStep();
@@ -223,5 +224,90 @@ describe("When MSR does not meet the criteria", () => {
 
 		cy.url().should("include", "/fora-criterios");
 		cy.checkForaCriteriosPage();
+	});
+});
+
+describe("Submit the form", () => {
+	it("should redirect to `cadastro-finalizado` when handle-request return both support requests with match status", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: "waiting_contact",
+				legal: "waiting_contact",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps(supportTypes);
+
+		cy.url().should("include", "/cadastro-finalizado");
+	});
+
+	it("should redirect to `acolhimento-andamento` when handle-request return the support request with status `duplicated`", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: "duplicated",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps({ psychological: "Acolhimento psicológico" });
+
+		cy.url().should("include", "/acolhimento-andamento");
+	});
+
+	it("should redirect to `cadastro-finalizado` when handle-request return the support request with match status", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				legal: "waiting_contact",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps({ legal: "Acolhimento jurídico" });
+
+		cy.url().should("include", "/cadastro-finalizado");
+	});
+
+	it("should redirect to `cadastro-finalizado` when handle-request return at least one support request with match status", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: "duplicated",
+				legal: "waiting_contact",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps(supportTypes);
+
+		cy.url().should("include", "/cadastro-finalizado");
+	});
+
+	it("should redirect to `acolhimento-andamento` when handle-request return both  support requests with status `duplicated`", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: "duplicated",
+				legal: "duplicated",
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps(supportTypes);
+
+		cy.url().should("include", "/acolhimento-andamento");
 	});
 });

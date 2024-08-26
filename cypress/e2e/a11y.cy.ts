@@ -5,6 +5,7 @@ import {
 	violenceLocation,
 	dateOfBirth,
 	financialNeed,
+	supportTypes,
 } from "../fixtures/userData.json";
 
 function terminalLog(violations) {
@@ -281,7 +282,7 @@ describe("Accessbility", () => {
 						cy.fillFinancialNeedStep(financialNeed);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillSupportTypeStep();
+						cy.fillSupportTypeStep(supportTypes);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.get("#firstName").should("exist");
@@ -311,7 +312,7 @@ describe("Accessbility", () => {
 						cy.fillFinancialNeedStep(financialNeed);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillSupportTypeStep();
+						cy.fillSupportTypeStep(supportTypes);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillBasicRegisterInformationStep();
@@ -344,7 +345,7 @@ describe("Accessbility", () => {
 						cy.fillFinancialNeedStep(financialNeed);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillSupportTypeStep();
+						cy.fillSupportTypeStep(supportTypes);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillBasicRegisterInformationStep();

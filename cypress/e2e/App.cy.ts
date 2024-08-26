@@ -325,7 +325,7 @@ describe("Submit the form", () => {
 			statusCode: 200,
 			body: {
 				psychological: "duplicated",
-				egal: "waiting_contact",
+				legal: "waiting_contact",
 			},
 		});
 

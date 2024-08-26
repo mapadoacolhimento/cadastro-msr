@@ -1,9 +1,9 @@
 import * as Yup from "yup";
-import Step from "../Step";
-import { externalSupportOptions } from "../../../lib";
-import RadioInput from "../../RadioInput";
 import { Strong } from "@radix-ui/themes";
-import type { Values } from "..";
+
+import Step from "../Step";
+import RadioInput from "../../RadioInput";
+import { externalSupportOptions } from "../../../lib";
 
 const externalSupportSchema = Yup.object({
 	externalSupport: Yup.string()
@@ -12,18 +12,8 @@ const externalSupportSchema = Yup.object({
 });
 
 export default function ExternalSupport() {
-	async function handleSubmit(values: Values) {
-		const hasGovernmentLegalSupport =
-			values.supportType.includes("legal") && values.externalSupport === "yes";
-		if (hasGovernmentLegalSupport) {
-			return {
-				redirectTo: "/fora-criterios",
-			};
-		}
-	}
 	return (
 		<Step
-			onSubmit={handleSubmit}
 			validationSchema={externalSupportSchema}
 			title={"Sobre a violência"}
 			img={{

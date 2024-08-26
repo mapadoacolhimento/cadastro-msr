@@ -3,7 +3,6 @@ import { Box } from "@radix-ui/themes";
 
 import Step from "../Step";
 import { TextInput } from "../..";
-import { sleep } from "../../../lib";
 
 const basicRegisterInformationSchema = Yup.object({
 	firstName: Yup.string().required("Insira seu primeiro nome."),

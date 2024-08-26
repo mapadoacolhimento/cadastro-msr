@@ -80,9 +80,7 @@ export default async function validateAndUpsertZendeskTicket(
 	} & Yup.InferType<typeof payloadSchemaUpdate>
 ) {
 	const schema = payload.ticketId ? payloadSchemaUpdate : payloadSchemaCreate;
-	const validatedPayload = (await schema.validate(payload)) as Yup.InferType<
-		typeof schema
-	>;
+	const validatedPayload = await schema.validate(payload);
 
 	const ticketId = payload.ticketId
 		? {

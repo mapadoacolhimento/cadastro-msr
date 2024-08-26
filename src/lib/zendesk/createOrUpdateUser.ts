@@ -33,7 +33,7 @@ export default async function createOrUpdateUser(user: ZendeskUser) {
 	} catch (e) {
 		console.error(
 			`[upsertUser] - Something went wrong when upserting this user on Zendesk '${
-				user.id || user.email
+				user.id ?? user.email
 			}': ${getErrorMessage(e)}`
 		);
 

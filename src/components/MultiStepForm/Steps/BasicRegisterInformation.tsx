@@ -24,9 +24,6 @@ const basicRegisterInformationSchema = Yup.object({
 export default function BasicRegisterInformation() {
 	return (
 		<Step
-			onSubmit={async (values) =>
-				await sleep(300).then(() => console.log(values))
-			}
 			validationSchema={basicRegisterInformationSchema}
 			title={"Seus dados"}
 			img={{

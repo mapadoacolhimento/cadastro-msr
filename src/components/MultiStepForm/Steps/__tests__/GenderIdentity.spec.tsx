@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
+
 import GenderIdentity from "../GenderIdentity";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep } from "../../../../lib";
+import { sleep, genderIdentityOptions } from "../../../../lib";
 import { type Values } from "../..";
-import { genderIdentityOptions } from "../../../../lib/constants";
 
 const setup = () => {
 	return render(
@@ -15,7 +15,7 @@ const setup = () => {
 			}
 			initialValues={
 				{
-					genderIdentity: "",
+					gender: "",
 				} as Values
 			}
 		>

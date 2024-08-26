@@ -24,7 +24,7 @@ export interface Values {
 	hasDisability: string;
 	acceptsOnlineSupport: string;
 	supportType: string[];
-	genderIdentity: string;
+	gender: string;
 	genderViolence: string;
 	violenceLocation: string;
 	externalSupport: string;
@@ -67,9 +67,9 @@ export default function MultiStepForm() {
 				dateOfBirth: "",
 				color: "",
 				hasDisability: "",
-				acceptsOnlineSupport: "",
+				acceptsOnlineSupport: "yes",
 				supportType: [],
-				genderIdentity: "",
+				gender: "",
 				genderViolence: "",
 				violenceLocation: "",
 				externalSupport: "",

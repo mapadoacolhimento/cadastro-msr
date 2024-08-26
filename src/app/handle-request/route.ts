@@ -174,16 +174,17 @@ export async function POST(request: Request) {
 					? match.status
 					: match[0].status;
 			} else {
-				if (supportRequestId && zendeskTicketId) {
-					await handleDuplicatedSupportRequest({
-						firstName: payload.firstName,
-						supportRequestId,
-						zendeskTicketId: zendeskTicketId as unknown as number,
-						supportType,
-					});
+				if (!supportRequestId || !zendeskTicketId)
+					throw new Error("Invalid check match eligibility response!");
 
-					response[supportType] = "duplicated";
-				}
+				await handleDuplicatedSupportRequest({
+					firstName: payload.firstName,
+					supportRequestId: supportRequestId,
+					zendeskTicketId: zendeskTicketId as unknown as number,
+					supportType,
+				});
+
+				response[supportType] = "duplicated";
 			}
 		}
 		return Response.json(response);

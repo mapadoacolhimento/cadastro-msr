@@ -104,5 +104,6 @@ export default async function validateAndUpsertZendeskTicket(
 		([_, value]) => value !== null && typeof value !== "undefined"
 	);
 	const validTicket = Object.fromEntries(ticketWithoutEmptyProperties);
+
 	return await createOrUpdateTicket(validTicket);
 }

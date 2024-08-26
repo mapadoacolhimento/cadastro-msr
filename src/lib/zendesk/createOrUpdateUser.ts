@@ -27,12 +27,16 @@ export default async function createOrUpdateUser(user: ZendeskUser) {
 			throw new Error(response.statusText);
 		}
 
-		return response;
-	} catch (e) {
-		const error = e as Record<string, unknown>;
+		const data = await response.json();
 
-		return new Response(getErrorMessage(error), {
-			status: 500,
-		});
+		return data;
+	} catch (e) {
+		console.error(
+			`[upsertUser] - Something went wrong when upserting this user on Zendesk '${
+				user.id || user.email
+			}': ${getErrorMessage(e)}`
+		);
+
+		return null;
 	}
 }

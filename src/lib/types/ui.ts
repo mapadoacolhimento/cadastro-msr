@@ -3,7 +3,7 @@ import { type AnyObjectSchema } from "yup";
 import { Values } from "../../components/MultiStepForm";
 
 export interface StepChildrenProps {
-	onSubmit: (
+	onSubmit?: (
 		values: Values,
 		bag: FormikHelpers<Values>
 	) => Promise<{

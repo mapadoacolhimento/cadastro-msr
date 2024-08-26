@@ -225,40 +225,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.url().should("include", "/fora-criterios");
 		cy.checkForaCriteriosPage();
 	});
-
-	// skipping for now because this condition will change shortly
-	it.skip("should redirect to `fora-criterios` page if MSR asks for legal support and they select that they already have external legal support", () => {
-		cy.visit("/cadastro");
-
-		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDateOfBirthStep(dateOfBirth);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGenderViolenceStep(genderViolence);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillViolenceLocationStep(violenceLocation);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillBasicRegisterInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGeolocationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDiversityInformationStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillSupportTypeStep(supportTypes);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillExternalSupportStep("Sim");
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.url().should("include", "/fora-criterios");
-	});
 });
 
 describe("Submit the form", () => {

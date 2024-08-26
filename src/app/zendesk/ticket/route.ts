@@ -4,13 +4,11 @@ import { getErrorMessage, validateAndUpsertZendeskTicket } from "../../../lib";
 export async function POST(request: NextRequest) {
 	try {
 		const payload = await request.json();
-		const response = await validateAndUpsertZendeskTicket(payload);
+		const data = await validateAndUpsertZendeskTicket(payload);
 
-		if (!response.ok) {
-			throw new Error(await response.text());
+		if (!data) {
+			throw new Error("Unable to upsert ticket on Zendesk");
 		}
-
-		const data = await response.json();
 
 		return Response.json({
 			ticketId: data.ticket.id,

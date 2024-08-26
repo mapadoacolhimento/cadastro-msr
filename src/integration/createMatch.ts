@@ -29,7 +29,7 @@ export default async function createMatch(
 			),
 			method: "POST",
 			headers: {
-				Authorization: authToken,
+				Authorization: authToken.message,
 			},
 		});
 

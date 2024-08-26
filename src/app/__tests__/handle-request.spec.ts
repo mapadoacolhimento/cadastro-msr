@@ -111,6 +111,10 @@ const bodyComposeLegal = {
 	lng: mockPayloadLegal.lng,
 	city: mockPayloadLegal.city,
 	state: mockPayloadLegal.state,
+	acceptsOnlineSupport: mockPayloadLegal.acceptsOnlineSupport,
+	requiresLibras: null,
+	supportExpertise: null,
+	priority: null,
 };
 
 const bodyHandleMatchLegal = {
@@ -146,13 +150,12 @@ describe("POST handle-request", () => {
 
 	it("should create match for support request legal", async () => {
 		mockcheckMatchEligibility.mockResolvedValueOnce(mockResCheckEligibilityNew);
-		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
-			Response.json(mockResZendeskUser)
-		);
+		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(mockResZendeskUser);
 		mockUpsertMsr.mockResolvedValueOnce(mockResMsr);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
-			Response.json(mockResTicketLegal)
+			mockResTicketLegal
 		);
+		fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
 		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
 
 		const request = new NextRequest(
@@ -185,6 +188,9 @@ describe("POST handle-request", () => {
 				public: false,
 			},
 		});
+		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/sign`, {
+			method: "GET",
+		});
 		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
 			body: JSON.stringify([bodyComposeLegal]),
 			method: "POST",
@@ -204,9 +210,14 @@ describe("POST handle-request", () => {
 			mockSupportRequestStatusHistory
 		);
 
+		mockUpsertMsr.mockResolvedValueOnce(mockResMsr);
+
 		mockcheckMatchEligibility.mockResolvedValueOnce(
 			mockResCheckEligibilityPsychological
 		);
+
+		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(mockResZendeskUser);
+
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 			mockResTicketPsychological
 		);
@@ -218,9 +229,13 @@ describe("POST handle-request", () => {
 			})
 		);
 		const response = await POST(request);
+		expect(mockValidateAndUpsertZendeskUser).toHaveBeenCalledWith(
+			mockPayloadPsychlogical
+		);
 		expect(mockcheckMatchEligibility).toHaveBeenCalledWith(
 			bodyCheckEligibilityPsychological
 		);
+
 		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
 			ticketId: mockResTicketPsychological.ticketId,
 			status: "open",
@@ -252,19 +267,19 @@ describe("POST handle-request", () => {
 
 	it("should create matches for support requests legal and psychological", async () => {
 		mockcheckMatchEligibility.mockResolvedValueOnce(mockResCheckEligibilityNew);
-		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
-			Response.json(mockResZendeskUser)
-		);
+		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(mockResZendeskUser);
 		mockUpsertMsr.mockResolvedValueOnce(mockResMsr);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
-			Response.json(mockResTicketLegal)
+			mockResTicketLegal
 		);
+		fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
 		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
 
 		mockcheckMatchEligibility.mockResolvedValueOnce(mockResCheckEligibilityNew);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
-			Response.json(mockResTicketPsychological)
+			mockResTicketPsychological
 		);
+		fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
 		fetch.mockResolvedValueOnce(createFetchResponse([mockMatchPsychological]));
 
 		const request = new NextRequest(
@@ -296,6 +311,9 @@ describe("POST handle-request", () => {
 				public: false,
 			},
 		});
+		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/sign`, {
+			method: "GET",
+		});
 		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
 			body: JSON.stringify([bodyComposeLegal]),
 			method: "POST",
@@ -320,6 +338,9 @@ describe("POST handle-request", () => {
 				public: false,
 			},
 		});
+		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/sign`, {
+			method: "GET",
+		});
 		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/compose`, {
 			body: JSON.stringify([bodyComposePsychological]),
 			method: "POST",
@@ -339,13 +360,12 @@ describe("POST handle-request", () => {
 		mockcheckMatchEligibility.mockResolvedValueOnce(
 			mockResCheckEligibilityLegal
 		);
-		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
-			Response.json(mockResZendeskUser)
-		);
+		mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(mockResZendeskUser);
 		mockUpsertMsr.mockResolvedValueOnce(mockResMsr);
 		mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
-			Response.json(mockResTicketLegal)
+			mockResTicketLegal
 		);
+		fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
 		fetch.mockResolvedValueOnce(createFetchResponse(mockMatchLegal));
 
 		mockedDb.supportRequests.findFirst.mockResolvedValue(
@@ -369,14 +389,13 @@ describe("POST handle-request", () => {
 		);
 		const response = await POST(request);
 
+		expect(mockUpsertMsr).toHaveBeenCalledWith(mockPayloadBoth);
 		expect(mockcheckMatchEligibility).toHaveBeenCalledWith(
 			bodyCheckEligibilityLegal
 		);
 		expect(mockValidateAndUpsertZendeskUser).toHaveBeenCalledWith(
 			mockPayloadBoth
 		);
-
-		expect(mockUpsertMsr).toHaveBeenCalledWith(mockPayloadBoth);
 		expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
 			ticketId: mockResCheckEligibilityLegal.zendeskTicketId,
 			msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
@@ -389,6 +408,9 @@ describe("POST handle-request", () => {
 				body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
 				public: false,
 			},
+		});
+		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/sign`, {
+			method: "GET",
 		});
 		expect(fetch).toHaveBeenCalledWith(`${MATCH_LAMBDA_URL}/handle-match`, {
 			body: JSON.stringify(bodyHandleMatchLegal),

@@ -121,6 +121,7 @@ export async function POST(request: Request) {
 		await payloadSchema.validate(payload);
 
 		let response: HandleRequestResponse = {};
+
 		const msrZendeskUserId = await handleUpsertMsr(payload);
 
 		for (let i = 0; payload.supportType.length > i; i++) {

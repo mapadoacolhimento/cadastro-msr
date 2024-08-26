@@ -92,7 +92,7 @@ describe("POST /zendesk/ticket", () => {
 			})
 		);
 		const response = await POST(request);
-		//	expect(response.status).toEqual(200);
+		expect(response.status).toEqual(200);
 		expect(fetch).toHaveBeenCalledWith(endpoint, {
 			body: JSON.stringify({ ticket: mockCreateTicket }),
 			method: "POST",

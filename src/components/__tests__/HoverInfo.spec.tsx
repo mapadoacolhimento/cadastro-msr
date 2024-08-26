@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import HoverInfo from "../HoverInfo"; // ajuste o caminho se necessário
+import HoverInfo from "../HoverInfo";
 
 test("shows and hides the description", async () => {
 	render(<HoverInfo title="Hover test" description="Some info test" />);

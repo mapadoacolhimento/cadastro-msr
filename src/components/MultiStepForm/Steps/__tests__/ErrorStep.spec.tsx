@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ErrorStep from "../ErrorStep"; // ajuste o caminho conforme necessário
+import ErrorStep from "../ErrorStep";
 
 describe("ErrorStep Component", () => {
 	test("renders the error message and description", () => {

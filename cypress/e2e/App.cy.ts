@@ -242,13 +242,10 @@ describe("Submit the form", () => {
 
 		cy.fillAllSteps(supportTypes);
 
-		cy.get("#terms").click();
-		cy.findByRole("button", { name: "Enviar" }).click();
-
 		cy.url().should("include", "/cadastro-finalizado");
 	});
 
-	it("should redirect to `acolhimento-andamento` when handle-request return the support reques with status `duplicated`", () => {
+	it("should redirect to `acolhimento-andamento` when handle-request return the support request with status `duplicated`", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
@@ -260,9 +257,6 @@ describe("Submit the form", () => {
 		cy.goThroughHomePage();
 
 		cy.fillAllSteps({ psychological: "Acolhimento psicológico" });
-
-		cy.get("#terms").click();
-		cy.findByRole("button", { name: "Enviar" }).click();
 
 		cy.url().should("include", "/acolhimento-andamento");
 	});
@@ -279,9 +273,6 @@ describe("Submit the form", () => {
 		cy.goThroughHomePage();
 
 		cy.fillAllSteps({ legal: "Acolhimento jurídico" });
-
-		cy.get("#terms").click();
-		cy.findByRole("button", { name: "Enviar" }).click();
 
 		cy.url().should("include", "/cadastro-finalizado");
 	});
@@ -300,9 +291,6 @@ describe("Submit the form", () => {
 
 		cy.fillAllSteps(supportTypes);
 
-		cy.get("#terms").click();
-		cy.findByRole("button", { name: "Enviar" }).click();
-
 		cy.url().should("include", "/cadastro-finalizado");
 	});
 
@@ -319,9 +307,6 @@ describe("Submit the form", () => {
 		cy.goThroughHomePage();
 
 		cy.fillAllSteps(supportTypes);
-
-		cy.get("#terms").click();
-		cy.findByRole("button", { name: "Enviar" }).click();
 
 		cy.url().should("include", "/acolhimento-andamento");
 	});

@@ -5,13 +5,12 @@ export async function POST(request: NextRequest) {
 	try {
 		const payload = await request.json();
 
-		const response = await validateAndUpsertZendeskUser(payload);
+		const data = await validateAndUpsertZendeskUser(payload);
 
-		if (!response.ok) {
-			throw new Error(await response.text());
+		if (!data) {
+			throw new Error("Unable to upsert user on Zendesk");
 		}
 
-		const data = await response.json();
 		let msrZendeskUserId;
 
 		if (data.data) {

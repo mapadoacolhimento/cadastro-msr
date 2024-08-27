@@ -29,7 +29,15 @@ export default async function createOrUpdateUser(user: ZendeskUser) {
 
 		const data = await response.json();
 
-		return data;
+		let msrZendeskUserId;
+
+		if (data.data) {
+			msrZendeskUserId = data.data.user.id;
+		} else {
+			msrZendeskUserId = data.user.id;
+		}
+
+		return { msrZendeskUserId };
 	} catch (e) {
 		console.error(
 			`[upsertUser] - Something went wrong when upserting this user on Zendesk '${

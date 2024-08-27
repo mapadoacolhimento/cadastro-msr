@@ -43,15 +43,20 @@ export default async function insertSupportRequests(
 		});
 
 		if (matchStatus) {
-			await db.matches.create({
-				data: {
-					msrId: MSR_ZENDESK_USER_ID,
-					volunteerId:
+			const volunteer = await db.volunteers.findFirst({
+				where: {
+					zendeskUserId:
 						supportType === "legal"
 							? LAWYER_ZENDESK_USER_ID
 							: THERAPIST_ZENDESK_USER_ID,
+				},
+			});
+			await db.matches.create({
+				data: {
+					msrId: MSR_ZENDESK_USER_ID,
+					volunteerId: volunteer?.id,
 					msrZendeskTicketId: zendeskTicketId,
-					volunteerZendeskTicketId: Math.random(),
+					volunteerZendeskTicketId: Math.ceil(Math.random()),
 					supportType: supportType,
 					matchType: "msr",
 					matchStage: "ideal",

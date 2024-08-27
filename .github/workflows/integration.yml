@@ -62,7 +62,10 @@ jobs:
         run: pnpm run build
 
       - name: Run unit tests
-        run: pnpm run test:ci
+        run: pnpm run test:unit:ci
+
+      - name: Run integration tests
+        run: pnpm run test:int:ci
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

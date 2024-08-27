@@ -28,7 +28,9 @@ export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
 
 		const data = await response.json();
 
-		return data;
+		return {
+			ticketId: data.ticket.id,
+		};
 	} catch (e) {
 		console.error(
 			`[upsertTicket] - Something went wrong when upserting this ticket '${

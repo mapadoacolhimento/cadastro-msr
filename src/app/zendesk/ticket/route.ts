@@ -11,9 +11,7 @@ export async function POST(request: NextRequest) {
 			throw new Error("Unable to upsert ticket on Zendesk");
 		}
 
-		return Response.json({
-			ticketId: data.ticket.id,
-		});
+		return Response.json(data);
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {

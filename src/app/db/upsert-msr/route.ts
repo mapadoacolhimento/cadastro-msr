@@ -1,12 +1,13 @@
 import { NextRequest } from "next/server";
 import { getErrorMessage, upsertMsr } from "../../../lib";
+import { stringifyBigInt } from "../../../utils";
 
 export async function POST(request: NextRequest) {
 	try {
 		const payload = await request.json();
 		const data = await upsertMsr(payload);
 
-		return Response.json(data);
+		return Response.json(stringifyBigInt(data));
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {

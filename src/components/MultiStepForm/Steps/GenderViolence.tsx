@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
-import { genderViolenceOptions } from "../../../lib";
+import { genderViolenceOptions } from "@/constants";
 import type { Values } from "..";
 
 const genderViolenceSchema = Yup.object({

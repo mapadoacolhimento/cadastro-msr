@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ExternalSupport from "../ExternalSupport";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep, externalSupportOptions } from "../../../../lib";
+import { sleep } from "@/utils";
+import { externalSupportOptions } from "@/constants";
 import { type Values } from "../..";
 
 const setup = () => {

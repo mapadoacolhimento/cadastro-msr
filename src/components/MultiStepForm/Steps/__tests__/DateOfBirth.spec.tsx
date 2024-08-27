@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import DateOfBirth from "../DateOfBirth";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep } from "../../../../lib";
+import { sleep } from "@/utils";
 import { type Values } from "../..";
 
 const setup = () => {

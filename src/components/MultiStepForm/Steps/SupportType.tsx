@@ -4,8 +4,8 @@ import { Strong } from "@radix-ui/themes";
 import { useFormikContext } from "formik";
 
 import Step from "../Step";
-import CheckboxGroupInput from "../../CheckboxGroupInput";
-import { supportTypeOptions } from "../../../lib";
+import { CheckboxGroupInput } from "@/components";
+import { supportTypeOptions } from "@/constants";
 import { Values } from "..";
 
 const supportTypeSchema = Yup.object({

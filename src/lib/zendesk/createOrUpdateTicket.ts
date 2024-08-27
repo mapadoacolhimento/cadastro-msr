@@ -2,9 +2,9 @@ import {
 	ZENDESK_API_TOKEN,
 	ZENDESK_API_USER,
 	ZENDESK_SUBDOMAIN,
-} from "../constants";
-import getErrorMessage from "../getErrorMessage";
-import { ZendeskTicket } from "../types";
+} from "@/constants";
+import { getErrorMessage } from "@/utils";
+import { ZendeskTicket } from "@/types";
 
 export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
 	try {

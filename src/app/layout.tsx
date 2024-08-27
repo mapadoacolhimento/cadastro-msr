@@ -11,7 +11,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { nunitoSans, idealista } from "@/fonts";
 import Providers from "./providers";
 import BaseLayout from "@/components/BaseLayout";
-import { GOOGLE_ANALYTICS_ID } from "@/lib";
+import { GOOGLE_ANALYTICS_ID } from "@/constants";
 
 export const metadata: Metadata = {
 	title: "Quero ser acolhida - Mapa do Acolhimento",

@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getErrorMessage, upsertMsr } from "../../../lib";
-import { stringifyBigInt } from "../../../utils";
+import { upsertMsr } from "@/lib";
+import { stringifyBigInt, getErrorMessage } from "@/utils";
 
 export async function POST(request: NextRequest) {
 	try {

@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
-import { violenceLocationOptions } from "../../../lib";
+import { violenceLocationOptions } from "@/constants";
 import { Strong } from "@radix-ui/themes";
 import type { Values } from "..";
 

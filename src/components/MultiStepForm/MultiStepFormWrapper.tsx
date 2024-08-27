@@ -17,11 +17,11 @@ import {
 	type HandleRequestResponse,
 	Status,
 	type StepChildrenProps,
-} from "../../lib";
+} from "@/types";
 
 interface MultiStepFormWrapperProps {
 	initialValues: Values;
-	onSubmit: (values: Values) => Promise<HandleRequestResponse>;
+	onSubmit: (values: Values) => Promise<HandleRequestResponse | void>;
 }
 
 export default function MultiStepFormWrapper({

@@ -10,7 +10,7 @@ import Geolocation from "../Geolocation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import createFetchResponse from "../../../../lib/__mocks__/fetch";
 import type { Values } from "../..";
-import { normalizeCity } from "../../../../lib";
+import { normalizeCity } from "@/utils";
 
 const setup = (props?: any) => {
 	return render(

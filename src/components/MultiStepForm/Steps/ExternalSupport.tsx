@@ -3,7 +3,7 @@ import { Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
-import { externalSupportOptions } from "../../../lib";
+import { externalSupportOptions } from "@/constants";
 
 const externalSupportSchema = Yup.object({
 	externalSupport: Yup.string()

@@ -3,8 +3,8 @@ import {
 	ZENDESK_API_USER,
 	ZENDESK_SUBDOMAIN,
 } from "../constants";
-import { ZendeskUser } from "../types";
-import getErrorMessage from "../getErrorMessage";
+import { ZendeskUser } from "@/types";
+import { getErrorMessage } from "@/utils";
 
 export default async function createOrUpdateUser(user: ZendeskUser) {
 	try {

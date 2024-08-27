@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 import MultiStepFormWrapper from "../MultiStepFormWrapper";
 import Step from "../Step";
 import ErrorMessage from "../../ErrorMessage";
-import { sleep } from "../../../lib";
+import { sleep } from "@/utils";
 import { type Values } from "..";
 
 const img = {

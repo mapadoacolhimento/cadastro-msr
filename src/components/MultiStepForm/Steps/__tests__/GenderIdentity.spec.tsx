@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 
 import GenderIdentity from "../GenderIdentity";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep, genderIdentityOptions } from "../../../../lib";
+import { genderIdentityOptions } from "@/constants";
+import { sleep } from "@/utils";
 import { type Values } from "../..";
 
 const setup = () => {

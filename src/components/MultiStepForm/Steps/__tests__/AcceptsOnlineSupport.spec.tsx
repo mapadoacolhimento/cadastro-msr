@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 
 import AcceptsOnlineSupport from "../AcceptsOnlineSupport";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep } from "../../../../lib";
+import { sleep } from "@/utils";
 import type { Values } from "../..";
 
 const setup = () => {

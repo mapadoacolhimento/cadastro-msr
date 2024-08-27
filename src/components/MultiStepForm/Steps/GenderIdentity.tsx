@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import { RadioInput, HoverInfo } from "../..";
-import { genderIdentityOptions } from "../../../lib";
+import { genderIdentityOptions } from "@/constants";
 import type { Values } from "..";
 
 const genderIdentitySchema = Yup.object({

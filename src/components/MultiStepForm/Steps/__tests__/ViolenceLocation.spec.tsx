@@ -1,11 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
+
 import ViolenceLocation from "../ViolenceLocation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep } from "../../../../lib";
+import { sleep } from "@/utils";
+import { violenceLocationOptions } from "@/constants";
 import { type Values } from "../..";
-import { violenceLocationOptions } from "../../../../lib/constants";
 
 const setup = () => {
 	return render(

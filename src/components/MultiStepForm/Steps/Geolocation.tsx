@@ -5,13 +5,10 @@ import { type FormikHelpers, useFormikContext } from "formik";
 import { MSRs, SupportRequests } from "@prisma/client";
 
 import Step from "../Step";
-import { TextInput, SelectInput } from "../..";
-import {
-	BRAZILIAN_STATES_OPTIONS,
-	formatZipcode,
-	normalizeCity,
-	Status,
-} from "../../../lib";
+import { TextInput, SelectInput } from "@/components";
+import { BRAZILIAN_STATES_OPTIONS } from "@/constants";
+import { Status } from "@/types";
+import { formatZipcode, normalizeCity } from "@/utils";
 import { Values } from "..";
 
 const geolocationSchema = Yup.object({

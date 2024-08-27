@@ -12,7 +12,8 @@ import {
 	DiversityInformation,
 	DateOfBirth,
 } from "./Steps";
-import { formatRegisterFormValues, HandleRequestResponse } from "../../lib";
+import { formatRegisterFormValues } from "@/lib";
+import type { HandleRequestResponse } from "@/types";
 
 export interface Values {
 	email: string;

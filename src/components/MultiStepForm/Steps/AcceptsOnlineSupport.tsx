@@ -1,9 +1,10 @@
 import * as Yup from "yup";
+import { Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
-import { sleep, acceptsOnlineSupportOptions } from "../../../lib";
-import { Strong } from "@radix-ui/themes";
+import { acceptsOnlineSupportOptions } from "@/constants";
+import { sleep } from "@/utils";
 
 const acceptsOnlineSupportSchema = Yup.object({
 	acceptsOnlineSupport: Yup.string()

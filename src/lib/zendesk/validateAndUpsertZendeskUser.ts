@@ -1,5 +1,6 @@
 import * as Yup from "yup";
-import { colorOptions, createOrUpdateUser, msrOrganizationId } from "../../lib";
+import { createOrUpdateUser } from "@/lib";
+import { colorOptions, msrOrganizationId } from "@/constants";
 import { Race, SupportType } from "@prisma/client";
 
 const payloadSchema = Yup.object({

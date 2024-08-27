@@ -12,31 +12,8 @@ import {
 	DiversityInformation,
 	DateOfBirth,
 } from "./Steps";
-import { formatRegisterFormValues, HandleRequestResponse } from "../../lib";
-
-export interface Values {
-	email: string;
-	firstName: string;
-	confirmEmail: string;
-	phone: string;
-	dateOfBirth: string;
-	color: string;
-	hasDisability: string;
-	acceptsOnlineSupport: string;
-	supportType: string[];
-	gender: string;
-	genderViolence: string;
-	violenceLocation: string;
-	externalSupport: string;
-	financialNeed: string;
-	terms: boolean;
-	zipcode: string;
-	neighborhood: string;
-	city: string;
-	state: string;
-	lat: number | null;
-	lng: number | null;
-}
+import { formatRegisterFormValues } from "@/lib";
+import type { HandleRequestResponse, Values } from "@/types";
 
 export default function MultiStepForm() {
 	async function onSubmit(values: Values): Promise<HandleRequestResponse> {

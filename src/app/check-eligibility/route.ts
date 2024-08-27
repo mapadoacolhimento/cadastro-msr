@@ -1,4 +1,5 @@
-import { getErrorMessage, checkMatchEligibility } from "../../lib";
+import { checkMatchEligibility } from "@/lib";
+import { getErrorMessage } from "@/utils";
 
 export async function POST(request: Request) {
 	try {

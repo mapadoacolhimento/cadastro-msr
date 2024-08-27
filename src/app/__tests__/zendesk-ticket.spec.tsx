@@ -4,7 +4,7 @@ import {
 	ZENDESK_SUBDOMAIN,
 	ZENDESK_API_TOKEN,
 	ZENDESK_API_USER,
-} from "../../lib";
+} from "@/constants";
 
 const mockPayloadCreate = {
 	msrZendeskUserId: 12345678,

@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
-import { getErrorMessage, validateAndUpsertZendeskTicket } from "../../../lib";
+import { validateAndUpsertZendeskTicket } from "@/lib";
+import { getErrorMessage } from "@/utils";
 
 export async function POST(request: NextRequest) {
 	try {

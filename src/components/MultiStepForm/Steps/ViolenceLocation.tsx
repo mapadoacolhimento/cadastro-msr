@@ -1,9 +1,10 @@
 import * as Yup from "yup";
+import { Strong } from "@radix-ui/themes";
+
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
-import { violenceLocationOptions } from "../../../lib";
-import { Strong } from "@radix-ui/themes";
-import type { Values } from "..";
+import { violenceLocationOptions } from "@/constants";
+import type { Values } from "@/types";
 
 const violenceLocationSchema = Yup.object({
 	violenceLocation: Yup.string()

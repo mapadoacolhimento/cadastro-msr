@@ -10,14 +10,14 @@ import { Box, Flex, Heading, IconButton } from "@radix-ui/themes";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
-import { StepsController, Illustration } from "../";
+import { StepsController, Illustration } from "@/components";
 import { LoadingStep, ErrorStep } from "./Steps";
-import type { Values } from "./";
 import {
 	type HandleRequestResponse,
 	Status,
 	type StepChildrenProps,
-} from "../../lib";
+	type Values,
+} from "@/types";
 
 interface MultiStepFormWrapperProps {
 	initialValues: Values;

@@ -2,15 +2,15 @@ import { Gender, Race, SupportRequests, SupportType } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import * as Yup from "yup";
 import {
-	getErrorMessage,
 	handleDuplicatedSupportRequest,
 	validateAndUpsertZendeskTicket,
 	validateAndUpsertZendeskUser,
 	upsertMsr,
 	checkMatchEligibility,
-	HandleRequestResponse,
-} from "../../lib";
-import { createMatch } from "../../integration";
+	createMatch,
+} from "@/lib";
+import type { HandleRequestResponse } from "@/types";
+import { getErrorMessage } from "@/utils";
 
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),

@@ -4,7 +4,7 @@ import {
 	statusOnGoingMatch,
 	statusSupportRequestisAlreadyInQueue,
 	statusSupportRequestOngoingSocialWorker,
-} from "../lib";
+} from "@/lib";
 import { SupportType } from "@prisma/client";
 
 const payloadSchema = Yup.object({

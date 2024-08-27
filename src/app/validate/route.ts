@@ -1,4 +1,5 @@
-import { db, getErrorMessage } from "../../lib";
+import { db } from "@/lib";
+import { getErrorMessage } from "@/utils";
 import * as Yup from "yup";
 
 const payloadSchema = Yup.object({

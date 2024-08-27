@@ -1,5 +1,6 @@
 import { SupportRequests } from "@prisma/client";
-import { MATCH_LAMBDA_URL, getErrorMessage } from "../lib";
+import { MATCH_LAMBDA_URL } from "@/constants";
+import { getErrorMessage } from "@/utils";
 
 export default async function createMatch(
 	supportRequest: Omit<

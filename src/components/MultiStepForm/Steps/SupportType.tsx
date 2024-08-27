@@ -6,7 +6,7 @@ import { useFormikContext } from "formik";
 import Step from "../Step";
 import { CheckboxGroupInput } from "@/components";
 import { supportTypeOptions } from "@/constants";
-import { Values } from "..";
+import { Values } from "@/types";
 
 const supportTypeSchema = Yup.object({
 	supportType: Yup.array()

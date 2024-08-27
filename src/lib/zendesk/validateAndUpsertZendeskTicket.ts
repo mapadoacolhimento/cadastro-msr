@@ -1,11 +1,8 @@
 import * as Yup from "yup";
-import {
-	createOrUpdateTicket,
-	msrOrganizationId,
-	ZendeskTicket,
-	ZENDESK_CUSTOM_FIELDS_DICIO,
-} from "../";
 import { SupportType } from "@prisma/client";
+import { createOrUpdateTicket, msrOrganizationId } from "@/lib";
+import { ZENDESK_CUSTOM_FIELDS_DICIO } from "@/constants";
+import type { ZendeskTicket } from "@/types";
 
 type CustomFields = {
 	id: number;

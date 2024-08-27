@@ -5,9 +5,9 @@ import userEvent from "@testing-library/user-event";
 
 import MultiStepFormWrapper from "../MultiStepFormWrapper";
 import Step from "../Step";
-import ErrorMessage from "../../ErrorMessage";
+import { ErrorMessage } from "@/components";
 import { sleep } from "@/utils";
-import { type Values } from "..";
+import { type Values } from "@/types";
 
 const img = {
 	src: "https://picsum.photos/seed/picsum/200/300",

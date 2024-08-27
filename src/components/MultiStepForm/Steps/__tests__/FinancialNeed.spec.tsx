@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import FinancialNeed from "../FinancialNeed";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import { sleep } from "@/utils";
-import { type Values } from "../..";
+import { type Values } from "@/types";
 import { financialNeedOptions } from "@/constants";
 
 const setup = () => {

@@ -1,4 +1,4 @@
-import { Values } from "../components/MultiStepForm";
+import { Values } from "@/types";
 
 const getDateFormat = (date: string) => {
 	let [day, month, year] = date.split("/");

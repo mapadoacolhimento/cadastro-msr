@@ -1,8 +1,8 @@
 export type ZendeskUser = {
-	id?: bigint;
+	id?: number;
 	name: string;
 	role: string;
-	organization_id: bigint;
+	organization_id: number;
 	email: string;
 	phone: string;
 	user_fields: {
@@ -19,13 +19,13 @@ export type ZendeskUser = {
 };
 
 export type ZendeskTicket = {
-	id?: number;
-	requester_id?: number;
+	id?: bigint;
+	requester_id?: ZendeskUser["id"];
 	submitter_id?: number;
 	assignee_id?: number;
 	status?: string;
 	subject?: string;
-	organization_id?: bigint;
+	organization_id?: number;
 	comment?: {
 		body: string;
 		public: boolean;

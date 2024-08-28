@@ -12,17 +12,7 @@ export async function POST(request: NextRequest) {
 			throw new Error("Unable to upsert user on Zendesk");
 		}
 
-		let msrZendeskUserId;
-
-		if (data.data) {
-			msrZendeskUserId = data.data.user.id;
-		} else {
-			msrZendeskUserId = data.user.id;
-		}
-
-		return Response.json({
-			msrZendeskUserId: msrZendeskUserId,
-		});
+		return Response.json(data);
 	} catch (e) {
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {

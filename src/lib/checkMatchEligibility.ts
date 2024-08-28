@@ -1,11 +1,11 @@
 import * as Yup from "yup";
+import { SupportType } from "@prisma/client";
 import {
 	db,
 	statusOnGoingMatch,
 	statusSupportRequestisAlreadyInQueue,
 	statusSupportRequestOngoingSocialWorker,
 } from "@/lib";
-import { SupportType } from "@prisma/client";
 
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
@@ -26,16 +26,17 @@ export default async function checkMatchEligibility(
 			email: true,
 		},
 	});
-	const supportType: SupportType = payload.supportType;
-	const msrId = msr?.msrId;
 
-	if (!msrId) {
+	if (!msr) {
 		return {
 			supportRequestId: null,
 			zendeskTicketId: null,
 			shouldCreateMatch: true,
 		};
 	}
+
+	const supportType: SupportType = payload.supportType;
+	const msrId = msr.msrId;
 
 	const ongoingMatch = await db.matches.findFirst({
 		where: {
@@ -91,7 +92,6 @@ export default async function checkMatchEligibility(
 		...statusSupportRequestisAlreadyInQueue,
 		...statusSupportRequestOngoingSocialWorker,
 	];
-
 	const hasOngoingSupport = statusOngoingSupportRequest.includes(
 		supportRequest.status
 	);

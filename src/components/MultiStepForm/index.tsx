@@ -12,7 +12,7 @@ import {
 	DiversityInformation,
 	DateOfBirth,
 } from "./Steps";
-import { formatRegisterFormValues } from "@/lib";
+import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
 
 export default function MultiStepForm() {

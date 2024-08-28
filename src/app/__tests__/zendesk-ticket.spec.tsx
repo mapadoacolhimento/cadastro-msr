@@ -125,7 +125,7 @@ describe("POST /zendesk/ticket", () => {
 		expect(await response.json()).toEqual({ ticketId: 5678 });
 	});
 
-	it("should return a error when createOrUpdateTicket return a error", async () => {
+	it("should return a error when upsertZendeskTicket returns an error", async () => {
 		fetch.mockRejectedValueOnce(new Error("Invalid body"));
 
 		const request = new NextRequest(
@@ -136,6 +136,8 @@ describe("POST /zendesk/ticket", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(500);
-		expect(await response.text()).toEqual("Unable to upsert ticket on Zendesk");
+		expect(await response.text()).toEqual(
+			"Unable to upsert ticket '' from user '12345678' on Zendesk"
+		);
 	});
 });

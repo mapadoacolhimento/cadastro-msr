@@ -1,11 +1,10 @@
 export { default as db } from "./db";
-export { default as createOrUpdateUser } from "./zendesk/createOrUpdateUser";
-export { default as createOrUpdateTicket } from "./zendesk/createOrUpdateTicket";
+export { default as upsertZendeskUser } from "./zendesk/upsertZendeskUser";
+export { default as upsertZendeskTicket } from "./zendesk/upsertZendeskTicket";
 export { default as validateAndUpsertZendeskTicket } from "./zendesk/validateAndUpsertZendeskTicket";
 export { default as validateAndUpsertZendeskUser } from "./zendesk/validateAndUpsertZendeskUser";
 export { default as handleDuplicatedSupportRequest } from "./handleDuplicatedSupportRequest";
-export { default as formatRegisterFormValues } from "./formatRegisterFormValues";
-export { default as upsertMsr } from "./upsertMsr";
+export { default as upsertMsrOnDb } from "./upsertMsrOnDb";
 export { default as checkMatchEligibility } from "./checkMatchEligibility";
 export { default as createMatch } from "./createMatch";
 export * from "./constants";

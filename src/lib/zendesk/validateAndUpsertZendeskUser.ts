@@ -1,6 +1,10 @@
 import * as Yup from "yup";
-import { createOrUpdateUser } from "@/lib";
-import { colorOptions, msrOrganizationId } from "@/constants";
+import { upsertZendeskUser } from "@/lib";
+import {
+	colorOptions,
+	ZENDESK_MSR_ORGANIZATION_ID,
+	ZENDESK_NEW_USER_STATUS,
+} from "@/constants";
 import { Race, SupportType } from "@prisma/client";
 
 const payloadSchema = Yup.object({
@@ -18,12 +22,12 @@ const payloadSchema = Yup.object({
 		.required(),
 }).required();
 
-function getColor(color: string) {
+function getColor(color: Race) {
 	const option = colorOptions.find((option) => option.value === color);
 	return option ? option.label.toLowerCase().normalize("NFD") : null;
 }
 
-function getSupportType(supportType: SupportType[]) {
+function getZendeskSupportType(supportType: SupportType[]) {
 	if (supportType.length === 2) {
 		return "psicológico_e_jurídico";
 	}
@@ -41,21 +45,21 @@ export default async function validateAndUpsertZendeskUser(
 	const user = {
 		name: payload.firstName,
 		role: "end-user",
-		organization_id: msrOrganizationId,
+		organization_id: ZENDESK_MSR_ORGANIZATION_ID,
 		email: payload.email,
 		phone: payload.phone,
 		user_fields: {
-			condition: "inscrita",
+			condition: ZENDESK_NEW_USER_STATUS,
 			state: payload.state,
 			city: payload.city,
 			cep: payload.zipcode,
 			neighborhood: payload.neighborhood,
 			cor: getColor(payload.color),
-			whatsapp: payload.phone,
+			whatsapp: `https://wa.me/55${payload.phone}`,
 			date_of_birth: payload.dateOfBirth,
-			tipo_de_acolhimento: getSupportType(payload.supportType),
+			tipo_de_acolhimento: getZendeskSupportType(payload.supportType),
 		},
 	};
 
-	return await createOrUpdateUser(user);
+	return await upsertZendeskUser(user);
 }

@@ -20,7 +20,7 @@ const payloadSchema = Yup.object({
 	acceptsOnlineSupport: Yup.boolean().required(),
 }).required();
 
-export default async function upsertMsr(
+export default async function upsertMsrOnDb(
 	payload: Yup.InferType<typeof payloadSchema>
 ) {
 	await payloadSchema.validate(payload);

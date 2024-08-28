@@ -37,7 +37,7 @@ const mockUser = {
 		cep: mockPayload.zipcode,
 		neighborhood: mockPayload.neighborhood,
 		cor: "preta",
-		whatsapp: mockPayload.phone,
+		whatsapp: `https://wa.me/55${mockPayload.phone}`,
 		date_of_birth: mockPayload.dateOfBirth.toISOString(),
 		tipo_de_acolhimento: "psicológico_e_jurídico",
 	},

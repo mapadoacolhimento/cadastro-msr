@@ -1,14 +1,13 @@
 import {
 	render,
 	screen,
-	waitFor,
 	waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Geolocation from "../Geolocation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import createFetchResponse from "../../../../lib/__mocks__/fetch";
+import createFetchResponse from "@/tests/unit/fetch";
 import type { Values } from "@/types";
 import { normalizeCity } from "@/utils";
 

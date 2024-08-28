@@ -16,17 +16,22 @@ export default async function createMatch(
 		});
 
 		if (!token.ok) {
-			throw new Error(await token.text());
+			throw new Error(token.statusText);
 		}
 
 		const authToken = await token.json();
 
+		const handleMatchPayload = {
+			supportRequest,
+			shouldRandomize: true,
+			matchType: "msr",
+		};
+		const composePayload = [supportRequest];
+
 		const createMatchLambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequest?.supportRequestId ? "handle-match" : "compose"}`;
 		const resCreateMatch = await fetch(createMatchLambdaUrl, {
 			body: JSON.stringify(
-				supportRequest.supportRequestId
-					? { supportRequest: supportRequest }
-					: [supportRequest]
+				supportRequest.supportRequestId ? handleMatchPayload : composePayload
 			),
 			method: "POST",
 			headers: {
@@ -35,7 +40,7 @@ export default async function createMatch(
 		});
 
 		if (!resCreateMatch.ok) {
-			throw new Error(await resCreateMatch.text());
+			throw new Error(resCreateMatch.statusText);
 		}
 
 		const match = await resCreateMatch.json();

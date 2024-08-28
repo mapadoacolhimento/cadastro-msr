@@ -71,9 +71,8 @@ export default function CheckboxGroupInput({
 			</Box>
 			{options.map((option: CheckboxOption, i) => {
 				return (
-					<>
+					<Box key={option.value}>
 						<CheckboxCards.Item
-							key={option.value}
 							onClick={() => handleClick(field.value, option.value)}
 							value={option.value}
 							className={field.value.includes(option.value) ? "is-checked" : ""}
@@ -85,7 +84,7 @@ export default function CheckboxGroupInput({
 						>
 							{option.name}
 						</VisuallyHidden.Root>
-					</>
+					</Box>
 				);
 			})}
 			<ErrorMessage name={name} />

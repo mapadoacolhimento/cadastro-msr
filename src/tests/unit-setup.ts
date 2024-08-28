@@ -26,4 +26,3 @@ vi.stubEnv("ZENDESK_API_TOKEN", "XXXXXXXXXX");
 vi.stubEnv("ZENDESK_API_USER", "user@email.org");
 vi.stubEnv("ZENDESK_SUBDOMAIN", "https://subdomain.zendesk.com");
 vi.stubEnv("MATCH_LAMBDA_URL", "https://localhost:5000");
-vi.stubEnv("JWT_SECRET", "secret");

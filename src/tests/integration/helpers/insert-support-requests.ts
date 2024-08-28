@@ -3,6 +3,8 @@ import {
 	THERAPIST_ZENDESK_USER_ID,
 	LAWYER_ZENDESK_USER_ID,
 	MSR_ZENDESK_USER_ID,
+	THERAPIST_ZENDESK_TICKET_ID,
+	LAWYER_ZENDESK_TICKET_ID,
 } from "./constants";
 import {
 	MatchStatus,
@@ -56,7 +58,10 @@ export default async function insertSupportRequests(
 					msrId: MSR_ZENDESK_USER_ID,
 					volunteerId: volunteer?.id,
 					msrZendeskTicketId: zendeskTicketId,
-					volunteerZendeskTicketId: Math.ceil(Math.random()),
+					volunteerZendeskTicketId:
+						supportType === "legal"
+							? LAWYER_ZENDESK_TICKET_ID
+							: THERAPIST_ZENDESK_TICKET_ID,
 					supportType: supportType,
 					matchType: "msr",
 					matchStage: "ideal",

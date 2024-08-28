@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
-import mockedDb from "../../lib/__mocks__/db";
-import msrPayload from "../../lib/__mocks__/payloads";
-import createFetchResponse from "../../lib/__mocks__/fetch";
+import mockedDb from "@/tests/unit/db";
+import { msrPayload } from "@/tests/unit/payloads";
+import createFetchResponse from "@/tests/unit/fetch";
 import { POST } from "../handle-request/route";
 import { MATCH_LAMBDA_URL } from "@/constants";
 import { emailDuplicated } from "@/lib/handleDuplicatedSupportRequest";

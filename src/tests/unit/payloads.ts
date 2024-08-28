@@ -1,6 +1,6 @@
 import { MSRPiiSec, MSRs, SupportRequests } from "@prisma/client";
 
-function msrPayload(
+export function msrPayload(
 	msr?: { supportType: string[] } & Partial<
 		Omit<SupportRequests, "supportType">
 	> &
@@ -28,5 +28,3 @@ function msrPayload(
 		...msr,
 	};
 }
-
-export default msrPayload;

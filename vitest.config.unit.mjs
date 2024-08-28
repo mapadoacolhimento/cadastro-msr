@@ -12,7 +12,7 @@ export default defineConfig({
 		},
 		environment: "jsdom",
 		globals: true,
-		setupFiles: ["./src/tests/unit-setup.ts"],
+		setupFiles: ["./src/tests/unit/setup.ts"],
 		exclude: ["node_modules", "cypress", "dist", "src/tests/integration/**"],
 	},
 });

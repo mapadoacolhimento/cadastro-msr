@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
-import mockedDb from "../../lib/__mocks__/db";
+import mockedDb from "@/tests/unit/db";
 import { POST } from "../check-eligibility/route";
 
 describe("POST /check-eligibility", () => {

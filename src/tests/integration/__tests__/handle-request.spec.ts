@@ -6,7 +6,7 @@ import {
 import initDB from "../helpers/init-db";
 import insertSupportRequests from "../helpers/insert-support-requests";
 import { POST } from "../../../app/handle-request/route";
-import msrPayload from "@/lib/__mocks__/payloads";
+import { msrPayload } from "@/tests/unit/payloads";
 import { db } from "@/lib";
 
 describe("/handle-request", async () => {

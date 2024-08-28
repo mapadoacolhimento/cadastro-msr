@@ -102,7 +102,7 @@ const handleCreateMatch = async ({
 
 	if (!zendeskTicket) {
 		throw new Error(
-			`Unable to upsert ticket ${zendeskTicketId || ""} from user '${msr.msrId}' on Zendesk`
+			`Unable to upsert ticket ${zendeskTicketId ?? ""} from user '${msr.msrId}' on Zendesk`
 		);
 	}
 

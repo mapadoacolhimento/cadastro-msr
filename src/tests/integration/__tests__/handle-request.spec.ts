@@ -12,8 +12,8 @@ import resetDb from "../helpers/reset-db";
 
 describe("/handle-request", async () => {
 	beforeEach(async () => {
-		await initDB();
 		await resetDb();
+		await initDB();
 	});
 
 	describe("MSR registers asking for LEGAL support, already having an ongoing PSYCHOLOGICAL support", () => {

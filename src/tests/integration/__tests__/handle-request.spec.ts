@@ -8,10 +8,12 @@ import insertSupportRequests from "../helpers/insert-support-requests";
 import { POST } from "../../../app/handle-request/route";
 import { msrPayload } from "@/tests/unit/payloads";
 import { db } from "@/lib";
+import resetDb from "../helpers/reset-db";
 
 describe("/handle-request", async () => {
 	beforeEach(async () => {
 		await initDB();
+		await resetDb();
 	});
 
 	describe("MSR registers asking for LEGAL support, already having an ongoing PSYCHOLOGICAL support", () => {

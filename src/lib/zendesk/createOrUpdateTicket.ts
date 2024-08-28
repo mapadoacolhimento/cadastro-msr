@@ -3,14 +3,15 @@ import {
 	ZENDESK_API_USER,
 	ZENDESK_SUBDOMAIN,
 } from "@/constants";
-import { getErrorMessage } from "@/utils";
+import { getErrorMessage, stringifyBigInt } from "@/utils";
 import { ZendeskTicket } from "@/types";
 
 export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
 	try {
+		const body = stringifyBigInt(ticket);
 		const endpoint = `${ZENDESK_SUBDOMAIN}/api/v2/tickets/${ticket.id ? ticket.id : ""}`;
 		const response = await fetch(endpoint, {
-			body: JSON.stringify({ ticket }),
+			body: JSON.stringify({ ticket: body }),
 			method: ticket.id ? "PUT" : "POST",
 			headers: {
 				"Content-Type": "application/json",

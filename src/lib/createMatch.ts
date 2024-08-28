@@ -22,11 +22,9 @@ export default async function createMatch(
 		const authToken = await token.json();
 
 		const handleMatchPayload = {
-			supportRequest: {
-				...supportRequest,
-				matchType: "msr",
-				shouldRandomize: true,
-			},
+			supportRequest,
+			shouldRandomize: true,
+			matchType: "msr",
 		};
 		const composePayload = [supportRequest];
 

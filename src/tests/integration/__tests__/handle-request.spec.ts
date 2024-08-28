@@ -14,13 +14,14 @@ describe("/handle-request", async () => {
 		await initDB();
 	});
 
-	describe("msr registers asking for legal support, already having a ongoing request for psychological support", () => {
-		it("should create match for legal support", async () => {
+	describe("MSR registers asking for LEGAL support, already having an ongoing PSYCHOLOGICAL support", () => {
+		it("should create match for LEGAL support", async () => {
 			const supportRequest = {
 				supportType: "psychological" as const,
 				status: "social_worker" as const,
 				zendeskTicketId: PSYCHOLOGICAL_ZENDESK_TICKET_ID as unknown as bigint,
 			};
+
 			insertSupportRequests([supportRequest]);
 
 			const mockPayloadLegal = msrPayload({
@@ -36,13 +37,13 @@ describe("/handle-request", async () => {
 			);
 
 			const response = await POST(request);
-			expect(response.status).toEqual(200);
-			expect(await response.json()).toEqual({ legal: "waiting_contact" });
+			expect(response.status).toStrictEqual(200);
+			expect(await response.json()).toStrictEqual({ legal: "waiting_contact" });
 		});
 	});
 
-	describe("msr registers asking for psychological support, already having a ongoing request for legal support", () => {
-		it("should create match for psychological support", async () => {
+	describe("MSR registers asking for PSYCHOLOGICAL support, already having an ongoing LEGAL support", () => {
+		it("should create match for PSYCHOLOGICAL support", async () => {
 			const supportRequest = {
 				supportType: "legal" as const,
 				status: "matched" as const,
@@ -64,15 +65,46 @@ describe("/handle-request", async () => {
 			);
 
 			const response = await POST(request);
-			expect(response.status).toEqual(200);
-			expect(await response.json()).toEqual({
+			expect(response.status).toStrictEqual(200);
+			expect(await response.json()).toStrictEqual({
 				psychological: "waiting_contact",
 			});
 		});
 	});
 
-	describe("msr registers asking for legal and psychological support, already having a ongoing request for psychological support with status `encaminhamento realizado`", () => {
-		it("should create match for legal support and update psychological support to duplicated", async () => {
+	describe("MSR registers asking for LEGAL and PSYCHOLOGICAL support, already having a ongoing request for PSYCHOLOGICAL support with status 'Encaminhamento: Realizado para Serviço Público'", () => {
+		it("should create match for both support requests", async () => {
+			const supportRequest = {
+				supportType: "psychological" as const,
+				status: "public_service" as const,
+				zendeskTicketId: PSYCHOLOGICAL_ZENDESK_TICKET_ID as unknown as bigint,
+			};
+			insertSupportRequests([supportRequest]);
+
+			const mockPayload = msrPayload({
+				supportType: ["psychological", "legal"],
+				email: "msr.dev.mapa@gmail.com",
+			});
+
+			const request = new NextRequest(
+				new Request("http://localhost:3000/db/handle-request", {
+					method: "POST",
+					body: JSON.stringify(mockPayload),
+				})
+			);
+
+			const response = await POST(request);
+
+			expect(response.status).toStrictEqual(200);
+			expect(await response.json()).toStrictEqual({
+				legal: "waiting_contact",
+				psychological: "waiting_contact",
+			});
+		});
+	});
+
+	describe("MSR registers asking for LEGAL and PSYCHOLOGICAL support, already having a ongoing request for PSYCHOLOGICAL support with status 'Encaminhamento: Realizado'", () => {
+		it("should create match for LEGAL support and update PSYCHOLOGICAL support to 'duplicated'", async () => {
 			const supportRequest = {
 				supportType: "psychological" as const,
 				status: "matched" as const,
@@ -98,16 +130,16 @@ describe("/handle-request", async () => {
 				where: { zendeskTicketId: PSYCHOLOGICAL_ZENDESK_TICKET_ID },
 			});
 
-			expect(response.status).toEqual(200);
-			expect(await response.json()).toEqual({
+			expect(response.status).toStrictEqual(200);
+			expect(await response.json()).toStrictEqual({
 				legal: "waiting_contact",
 				psychological: "duplicated",
 			});
-			expect(supportRequestUpdated?.status).toEqual("duplicated");
+			expect(supportRequestUpdated?.status).toStrictEqual("duplicated");
 		});
 	});
 
-	describe("msr registers asking for legal and psychological support, already having a expered legal support", () => {
+	describe("MSR registers asking for LEGAL and PSYCHOLOGICAL support, already having an expired LEGAL support", () => {
 		it("should create match for both support requests", async () => {
 			const supportRequest = {
 				supportType: "legal" as const,
@@ -131,16 +163,16 @@ describe("/handle-request", async () => {
 
 			const response = await POST(request);
 
-			expect(response.status).toEqual(200);
-			expect(await response.json()).toEqual({
+			expect(response.status).toStrictEqual(200);
+			expect(await response.json()).toStrictEqual({
 				legal: "waiting_contact",
 				psychological: "waiting_contact",
 			});
 		});
 	});
 
-	describe("msr registers asking for legal and psychological support, already having a ongoing legal support with status `atendimento: iniciado`", () => {
-		it("should create match for psychological support and update legal support to duplicated", async () => {
+	describe("MSR registers asking for LEGAL and PSYCHOLOGICAL support, already having a ongoing LEGAL support with status 'Atendimento: Iniciado'", () => {
+		it("should create match for PSYCHOLOGICAL support and update LEGAL support to 'duplicated'", async () => {
 			const supportRequest = {
 				supportType: "legal" as const,
 				status: "matched" as const,
@@ -166,12 +198,12 @@ describe("/handle-request", async () => {
 				where: { zendeskTicketId: LEGAL_ZENDESK_TICKET_ID },
 			});
 
-			expect(response.status).toEqual(200);
-			expect(await response.json()).toEqual({
+			expect(response.status).toStrictEqual(200);
+			expect(await response.json()).toStrictEqual({
 				legal: "duplicated",
 				psychological: "waiting_contact",
 			});
-			expect(supportRequestUpdated?.status).toEqual("duplicated");
+			expect(supportRequestUpdated?.status).toStrictEqual("duplicated");
 		});
 	});
 });

@@ -9,8 +9,8 @@ export default function Header() {
 				<Flex
 					style={{
 						borderBottom: "1px solid var(--gray-4)",
-						justifyContent: "space-between",
 					}}
+					justify={"between"}
 					pb={"4"}
 				>
 					<Image
@@ -22,11 +22,7 @@ export default function Header() {
 					/>
 
 					<Flex display={{ initial: "flex", md: "none" }} justify={"end"}>
-						<Button
-							style={{ backgroundColor: "#EBE5EF" }}
-							size={"2"}
-							onClick={handleClick}
-						>
+						<Button variant={"soft"} size={"3"} onClick={handleClick}>
 							<Image
 								src="/icons/mobile-return.svg"
 								alt="ícone de seta de retorno"

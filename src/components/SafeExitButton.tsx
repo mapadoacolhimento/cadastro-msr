@@ -11,9 +11,15 @@ const SafeExitButton = () => (
 		display={{ initial: "none", md: "flex" }}
 		justify={"end"}
 		mt={"7"}
-		mr={"4"}
+		mr={"6"}
 	>
-		<Button color="pink" size={"4"} onClick={handleClick}>
+		<Button
+			color={"purple"}
+			size={"4"}
+			onClick={handleClick}
+			style={{ cursor: "pointer" }}
+			highContrast
+		>
 			<Image
 				src="/icons/return.svg"
 				alt="ícone de seta de retorno"

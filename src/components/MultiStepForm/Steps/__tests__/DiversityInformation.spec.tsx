@@ -3,8 +3,8 @@ import userEvent from "@testing-library/user-event";
 
 import DiversityInformation from "../DiversityInformation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep } from "../../../../lib";
-import { type Values } from "../..";
+import { sleep } from "@/utils";
+import { type Values } from "@/types";
 
 const setup = () => {
 	return render(

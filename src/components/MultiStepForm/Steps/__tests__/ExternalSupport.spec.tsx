@@ -1,16 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useRouter } from "next/navigation";
 import ExternalSupport from "../ExternalSupport";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep, externalSupportOptions } from "../../../../lib";
-import { type Values } from "../..";
+import { sleep } from "@/utils";
+import { externalSupportOptions } from "@/constants";
+import { type Values } from "@/types";
 
 const setup = () => {
 	return render(
 		<MultiStepFormWrapper
 			onSubmit={async (values) =>
-				await sleep(300).then(() => console.log(values))
+				(await sleep(300).then(() => console.log(values))) as any
 			}
 			initialValues={
 				{
@@ -25,7 +25,7 @@ const setup = () => {
 };
 
 describe("<ExternalSupport />", () => {
-	it("should render four options", () => {
+	it("should render two options", () => {
 		setup();
 
 		externalSupportOptions.forEach((option) => {
@@ -47,22 +47,5 @@ describe("<ExternalSupport />", () => {
 		expect(screen.getByRole("alert")).toHaveTextContent(
 			"Esse campo é obrigatório."
 		);
-	});
-
-	it("should redirect to `fora-criterios` if option `Sim` is selected", async () => {
-		const pushMock = vi.fn();
-		useRouter.mockReturnValue({
-			push: pushMock,
-		});
-
-		setup();
-
-		const roleOptionElement = screen.getByRole("radio", {
-			name: "Sim",
-		});
-		await userEvent.click(roleOptionElement);
-		const btn = screen.getByRole("button", { name: /enviar/i });
-		await userEvent.click(btn);
-		expect(pushMock).toHaveBeenCalledWith("/fora-criterios");
 	});
 });

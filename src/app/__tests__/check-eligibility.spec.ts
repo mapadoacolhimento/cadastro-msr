@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
-import mockedDb from "../../lib/__mocks__/db";
+import mockedDb from "@/tests/unit/db";
 import { POST } from "../check-eligibility/route";
 
 describe("POST /check-eligibility", () => {
@@ -10,17 +10,17 @@ describe("POST /check-eligibility", () => {
 
 	const msr = {
 		email: "lua@email.com",
-		supportTypes: ["psychological"],
+		supportType: "psychological",
 	};
 
 	const msr2 = {
 		email: "sol@email.com",
-		supportTypes: ["psychological", "legal"],
+		supportType: "psychological",
 	};
 
 	const msr3 = {
 		email: "venus@email.com",
-		supportTypes: ["legal"],
+		supportType: "legal",
 	};
 
 	const mockMsrPiiSec = {
@@ -43,12 +43,14 @@ describe("POST /check-eligibility", () => {
 			supportRequestId: 222,
 			status: "social_worker",
 			supportType: "psychological",
+			zendeskTicketId: 5678,
 		},
 
 		{
 			supportRequestId: 223,
 			status: "matched",
 			supportType: "legal",
+			zendeskTicketId: 9012,
 		},
 	];
 
@@ -56,6 +58,7 @@ describe("POST /check-eligibility", () => {
 		supportRequestId: 224,
 		status: "waiting_contact",
 		supportType: "legal",
+		msrZendeskTicketId: 1234,
 	};
 
 	it("should return `psychological: {shouldCreateMatch: false, supportRequestId: 222}` when msr and support request exists", async () => {
@@ -72,32 +75,30 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			psychological: {
-				supportRequestId: 222,
-				shouldCreateMatch: false,
-			},
+			supportRequestId: 222,
+			zendeskTicketId: 5678,
+			shouldCreateMatch: false,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
 			select: {
 				supportRequestId: true,
 				status: true,
 				supportType: true,
+				zendeskTicketId: true,
 			},
 			orderBy: {
 				createdAt: "asc",
 			},
 			where: {
 				msrId: mockMsrPiiSec.msrId,
-				supportType: msr.supportTypes[0],
+				supportType: msr.supportType,
 				status: { not: "duplicated" },
 			},
 		});
 	});
 
-	it("should return `psychological: {shouldCreateMatch: false, supportRequestId: 222}, legal: {shouldCreateMatch: true, supportRequestId: 223}` when msr exists and has one match", async () => {
+	it("should return `psychological: {shouldCreateMatch: false, legal: {shouldCreateMatch: true, supportRequestId: 223}` when msr exists and has one match", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec2);
-
-		mockedDb.matches.findFirst.mockResolvedValueOnce(mockMatch);
 
 		mockedDb.supportRequests.findFirst.mockResolvedValue(mockSupportRequest[1]);
 
@@ -110,29 +111,26 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			psychological: {
-				supportRequestId: 224,
-				shouldCreateMatch: false,
-			},
-			legal: {
-				supportRequestId: 223,
-				shouldCreateMatch: true,
-			},
+			supportRequestId: 223,
+			zendeskTicketId: 9012,
+			shouldCreateMatch: true,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
 			select: {
 				supportRequestId: true,
 				status: true,
 				supportType: true,
+				zendeskTicketId: true,
 			},
 			orderBy: { createdAt: "asc" },
 			where: {
 				msrId: mockMsrPiiSec2.msrId,
-				supportType: msr2.supportTypes[1],
+				supportType: msr2.supportType,
 				status: { not: "duplicated" },
 			},
 		});
 	});
+
 	it("should return `legal: {shouldCreateMatch: false, supportRequestId: 224}` when msr exists and has one match", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec3);
 
@@ -147,10 +145,9 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			legal: {
-				supportRequestId: 224,
-				shouldCreateMatch: false,
-			},
+			supportRequestId: 224,
+			zendeskTicketId: 1234,
+			shouldCreateMatch: false,
 		});
 	});
 
@@ -164,14 +161,13 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			psychological: {
-				supportRequestId: null,
-				shouldCreateMatch: true,
-			},
+			supportRequestId: null,
+			zendeskTicketId: null,
+			shouldCreateMatch: true,
 		});
 	});
 
-	it("should return `psychological: {supportRequestId: null,  shouldCreateMatch: true}` when msr exists but she has no matches and no supprt_requests", async () => {
+	it("should return `psychological: {supportRequestId: null,  shouldCreateMatch: true}` when msr exists but she has no matches and no support_requests", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec);
 
 		mockedDb.matches.findFirst.mockResolvedValue(null);
@@ -186,10 +182,9 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(200);
 		expect(await response.json()).toStrictEqual({
-			psychological: {
-				supportRequestId: null,
-				shouldCreateMatch: true,
-			},
+			supportRequestId: null,
+			zendeskTicketId: null,
+			shouldCreateMatch: true,
 		});
 	});
 
@@ -203,7 +198,7 @@ describe("POST /check-eligibility", () => {
 		const response = await POST(request);
 		expect(response.status).toStrictEqual(400);
 		expect(await response.text()).toStrictEqual(
-			"Validation error: supportTypes is a required field"
+			"Validation error: supportType is a required field"
 		);
 	});
 });

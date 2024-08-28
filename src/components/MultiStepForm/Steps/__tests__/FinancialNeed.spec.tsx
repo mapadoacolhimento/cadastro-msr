@@ -1,11 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
+
 import FinancialNeed from "../FinancialNeed";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep } from "../../../../lib";
-import { type Values } from "../..";
-import { financialNeedOptions } from "../../../../lib/constants";
+import { sleep } from "@/utils";
+import { type Values } from "@/types";
+import { financialNeedOptions } from "@/constants";
 
 const setup = () => {
 	return render(

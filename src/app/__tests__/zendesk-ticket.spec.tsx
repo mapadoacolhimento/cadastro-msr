@@ -4,7 +4,7 @@ import {
 	ZENDESK_SUBDOMAIN,
 	ZENDESK_API_TOKEN,
 	ZENDESK_API_USER,
-} from "../../lib";
+} from "@/constants";
 
 const mockPayloadCreate = {
 	msrZendeskUserId: 12345678,
@@ -63,7 +63,7 @@ describe("POST /zendesk/ticket", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: statusAcolhimento is a required field"
+			"Validation error: msrName is a required field"
 		);
 	});
 
@@ -125,7 +125,7 @@ describe("POST /zendesk/ticket", () => {
 		expect(await response.json()).toEqual({ ticketId: 5678 });
 	});
 
-	it("should return a error when createOrUpdateTicket return a error", async () => {
+	it("should return a error when upsertZendeskTicket returns an error", async () => {
 		fetch.mockRejectedValueOnce(new Error("Invalid body"));
 
 		const request = new NextRequest(
@@ -136,6 +136,8 @@ describe("POST /zendesk/ticket", () => {
 		);
 		const response = await POST(request);
 		expect(response.status).toEqual(500);
-		expect(await response.text()).toEqual("Invalid body");
+		expect(await response.text()).toEqual(
+			"Unable to upsert ticket '' from user '12345678' on Zendesk"
+		);
 	});
 });

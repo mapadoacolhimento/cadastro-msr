@@ -1,17 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
+
 import ViolenceLocation from "../ViolenceLocation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep } from "../../../../lib";
-import { type Values } from "../..";
-import { violenceLocationOptions } from "../../../../lib/constants";
+import { sleep } from "@/utils";
+import { violenceLocationOptions } from "@/constants";
+import { type Values } from "@/types";
 
 const setup = () => {
 	return render(
 		<MultiStepFormWrapper
 			onSubmit={async (values) =>
-				await sleep(300).then(() => console.log(values))
+				(await sleep(300).then(() => console.log(values))) as any
 			}
 			initialValues={
 				{

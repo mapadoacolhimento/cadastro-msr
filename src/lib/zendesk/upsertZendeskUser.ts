@@ -3,10 +3,10 @@ import {
 	ZENDESK_API_USER,
 	ZENDESK_SUBDOMAIN,
 } from "../constants";
-import { ZendeskUser } from "../types";
-import getErrorMessage from "../getErrorMessage";
+import { ZendeskUser } from "@/types";
+import { getErrorMessage } from "@/utils";
 
-export default async function createOrUpdateUser(user: ZendeskUser) {
+export default async function upsertZendeskUser(user: ZendeskUser) {
 	try {
 		const endpoint = ZENDESK_SUBDOMAIN + "/api/v2/users/create_or_update";
 
@@ -27,12 +27,24 @@ export default async function createOrUpdateUser(user: ZendeskUser) {
 			throw new Error(response.statusText);
 		}
 
-		return response;
-	} catch (e) {
-		const error = e as Record<string, unknown>;
+		const data = await response.json();
 
-		return new Response(getErrorMessage(error), {
-			status: 500,
-		});
+		let msrZendeskUserId;
+
+		if (data.data) {
+			msrZendeskUserId = data.data.user.id;
+		} else {
+			msrZendeskUserId = data.user.id;
+		}
+
+		return { msrZendeskUserId };
+	} catch (e) {
+		console.error(
+			`[upsertZendeskUser] - Something went wrong when upserting this user on Zendesk '${
+				user.id ?? user.email
+			}': ${getErrorMessage(e)}`
+		);
+
+		return null;
 	}
 }

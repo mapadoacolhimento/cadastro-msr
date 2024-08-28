@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 import * as Yup from "yup";
-import { getErrorMessage, VOLUNTEER_API_URL } from "../../lib";
+import { VOLUNTEER_API_URL } from "@/constants";
+import { getErrorMessage } from "@/utils";
 
 const zipcodeParamSchema = Yup.string()
 	.required()

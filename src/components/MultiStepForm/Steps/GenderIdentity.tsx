@@ -1,20 +1,20 @@
 import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
+
 import Step from "../Step";
-import RadioInput from "../../RadioInput";
-import HoverInfo from "../../HoverInfo";
-import { genderIdentityOptions } from "../../../lib";
-import type { Values } from "..";
+import { RadioInput, HoverInfo } from "@/components";
+import { genderIdentityOptions } from "@/constants";
+import type { Values } from "@/types";
 
 const genderIdentitySchema = Yup.object({
-	genderIdentity: Yup.string()
+	gender: Yup.string()
 		.oneOf(genderIdentityOptions.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
 });
 
 export default function GenderIdentity() {
 	async function handleSubmit(values: Values) {
-		const isNotWoman = values.genderIdentity === "no-woman";
+		const isNotWoman = values.gender === "no-woman";
 		if (isNotWoman) {
 			return {
 				redirectTo: "/fora-criterios",
@@ -32,7 +32,7 @@ export default function GenderIdentity() {
 			}}
 		>
 			<RadioInput
-				name="genderIdentity"
+				name="gender"
 				options={genderIdentityOptions}
 				question={
 					<>

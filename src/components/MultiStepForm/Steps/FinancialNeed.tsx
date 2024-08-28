@@ -3,8 +3,8 @@ import { Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
-import { financialNeedOptions } from "../../../lib";
-import type { Values } from "..";
+import { financialNeedOptions } from "@/constants";
+import type { Values } from "@/types";
 
 const financialNeedSchema = Yup.object({
 	financialNeed: Yup.string()

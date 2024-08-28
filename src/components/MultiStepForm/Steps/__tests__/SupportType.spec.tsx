@@ -3,18 +3,19 @@ import userEvent from "@testing-library/user-event";
 
 import SupportType from "../SupportType";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { sleep } from "../../../../lib";
-import { type Values } from "../..";
+import { sleep } from "@/utils";
+import { type Values } from "@/types";
 
-const setup = () => {
+const setup = (props?: any) => {
 	return render(
 		<MultiStepFormWrapper
 			onSubmit={async (values) =>
-				await sleep(300).then(() => console.log(values))
+				(await sleep(300).then(() => console.log(values))) as any
 			}
 			initialValues={
 				{
 					supportType: [] as string[],
+					...props?.initialValues,
 				} as Values
 			}
 		>
@@ -50,5 +51,15 @@ describe("<SupportType />", () => {
 		expect(screen.getByRole("alert")).toHaveTextContent(
 			"Esse campo é obrigatório."
 		);
+	});
+
+	it("should block legal support if external support is yes", async () => {
+		setup({ initialValues: { externalSupport: "yes" } });
+
+		const legalSupportCheckbox = screen.getByRole("checkbox", {
+			name: /acolhimento jurídico/i,
+		}) as HTMLInputElement;
+
+		expect(legalSupportCheckbox).toBeDisabled();
 	});
 });

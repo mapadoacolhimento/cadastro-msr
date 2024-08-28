@@ -1,26 +1,8 @@
-export interface Values {
-	email: string;
-	firstName: string;
-	confirmEmail: string;
-	phone: string;
-	dateOfBirth: string;
-	color: string;
-	hasDisability: string;
-	acceptsOnlineSupport: string;
-	supportType: string[];
-	genderIdentity: string;
-	genderViolence: string;
-	violenceLocation: string;
-	externalSupport: string;
-	financialNeed: string;
-	terms: boolean;
-}
-
 export type ZendeskUser = {
-	id?: bigint;
+	id?: number;
 	name: string;
 	role: string;
-	organization_id: bigint;
+	organization_id: number;
 	email: string;
 	phone: string;
 	user_fields: {
@@ -31,19 +13,19 @@ export type ZendeskUser = {
 		neighborhood: string;
 		cor: string | null;
 		whatsapp: string;
-		date_of_birth: string;
+		date_of_birth: Date | null;
 		tipo_de_acolhimento: string;
 	};
 };
 
 export type ZendeskTicket = {
-	id?: number;
-	requester_id?: number;
+	id?: bigint;
+	requester_id?: ZendeskUser["id"];
 	submitter_id?: number;
 	assignee_id?: number;
 	status?: string;
 	subject?: string;
-	organization_id?: bigint;
+	organization_id?: number;
 	comment?: {
 		body: string;
 		public: boolean;

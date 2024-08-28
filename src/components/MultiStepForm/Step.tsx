@@ -1,22 +1,5 @@
-import { type PropsWithChildren } from "react";
-import { type FormikHelpers } from "formik";
-import { type AnyObjectSchema } from "yup";
-import { type Values } from "./";
-
-export interface StepChildrenProps {
-	onSubmit: (
-		values: Values,
-		bag: FormikHelpers<Values>
-	) => Promise<{
-		redirectTo: string;
-	} | null | void>;
-	validationSchema: AnyObjectSchema;
-	title: string;
-	img: {
-		src: string;
-		alt: string;
-	};
-}
+import type { PropsWithChildren } from "react";
+import type { StepChildrenProps } from "@/types";
 
 export default function Step({
 	children,

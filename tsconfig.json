@@ -20,7 +20,8 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@/fonts": ["./src/theme/fonts"],
-			"@/theme": ["./src/theme"]
+			"@/theme": ["./src/theme"],
+			"@/constants": ["./src/lib/constants.ts"]
 		},
 		"types": ["vitest/globals", "vitest/jsdom"]
 	},

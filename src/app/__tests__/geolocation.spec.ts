@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { GET } from "../geolocation/route";
-import { VOLUNTEER_API_URL } from "../../lib";
-import createFetchResponse from "../../lib/__mocks__/fetch";
+import { VOLUNTEER_API_URL } from "@/constants";
+import createFetchResponse from "@/tests/unit/fetch";
 
 const geolocationResponse = {
 	coordinates: {

@@ -1,6 +1,5 @@
-import Illustration from "../../Illustration";
 import { Box, Flex, Heading, Text } from "@radix-ui/themes";
-import Image from "next/image";
+import Illustration from "../../Illustration";
 
 interface ErrorStepProps {
 	message: string;

@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 import * as Yup from "yup";
-import { db, getErrorMessage } from "../../lib";
+import { db } from "@/lib";
+import { getErrorMessage } from "@/utils";
 
 const stateParamsSchema = Yup.string().required().length(2);
 

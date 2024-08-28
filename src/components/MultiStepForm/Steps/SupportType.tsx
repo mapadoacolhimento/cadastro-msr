@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import * as Yup from "yup";
+import { Strong } from "@radix-ui/themes";
+import { useFormikContext } from "formik";
 
 import Step from "../Step";
-import CheckboxGroupInput from "../../CheckboxGroupInput";
-import { sleep, supportTypeOptions } from "../../../lib";
-import { Strong } from "@radix-ui/themes";
+import { CheckboxGroupInput } from "@/components";
+import { supportTypeOptions } from "@/constants";
+import { Values } from "@/types";
 
 const supportTypeSchema = Yup.object({
 	supportType: Yup.array()
@@ -11,10 +14,35 @@ const supportTypeSchema = Yup.object({
 		.min(1, "Esse campo é obrigatório."),
 });
 
+function SupportTypeChild() {
+	const { values } = useFormikContext<Values>();
+
+	useEffect(() => {
+		if (values.externalSupport === "yes") {
+			const stepBtns = document.getElementsByTagName("button");
+			const legalSupportBtn = Array.from(stepBtns).find(
+				(btn) => btn.textContent === "Acolhimento jurídico"
+			);
+			legalSupportBtn?.setAttribute("disabled", "true");
+		}
+	}, [values.externalSupport]);
+
+	return (
+		<CheckboxGroupInput
+			name={"supportType"}
+			options={supportTypeOptions}
+			question={
+				<>
+					Que <Strong>tipo de acolhimento</Strong> você precisa?
+				</>
+			}
+		/>
+	);
+}
+
 export default function SupportType() {
 	return (
 		<Step
-			onSubmit={() => sleep(300).then(() => console.log("Step3 onSubmit"))}
 			validationSchema={supportTypeSchema}
 			title={"Sobre o acolhimento"}
 			img={{
@@ -22,15 +50,7 @@ export default function SupportType() {
 				alt: "Ilustração com duas mulheres sentadas conversando",
 			}}
 		>
-			<CheckboxGroupInput
-				name={"supportType"}
-				options={supportTypeOptions}
-				question={
-					<>
-						Que <Strong>tipo de acolhimento</Strong> você precisa?
-					</>
-				}
-			/>
+			<SupportTypeChild />
 		</Step>
 	);
 }

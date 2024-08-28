@@ -3,7 +3,7 @@ import { Box, Strong, Text } from "@radix-ui/themes";
 
 import Step from "../Step";
 import { TextInput } from "../..";
-import { isDateValid, isAdult } from "../../../lib";
+import { isDateValid, isAdult } from "@/utils";
 
 const dateOfBirthSchema = Yup.object({
 	dateOfBirth: Yup.string()

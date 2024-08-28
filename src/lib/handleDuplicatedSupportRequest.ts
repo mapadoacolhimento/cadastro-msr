@@ -1,8 +1,8 @@
-import { SupportType } from "@prisma/client";
+import { MSRPiiSec, SupportRequests } from "@prisma/client";
 import { db, validateAndUpsertZendeskTicket } from "./";
 
-export function emailDuplicated(firstName: string) {
-	return `Olá, ${firstName}!
+export function emailDuplicated(firstName: MSRPiiSec["firstName"]) {
+	return `Olá${", " + firstName}!
 
 Nossa equipe identificou que você solicitou ajuda em nosso site mais de uma vez. No momento do seu primeiro cadastro, nós enviamos uma resposta por email sobre o seu atendimento. Por isso, queremos saber, como podemos te ajudar?
 
@@ -16,15 +16,12 @@ Um abraço,
 Equipe do Mapa do Acolhimento`;
 }
 
-type DuplicatedRequest = {
-	firstName: string;
-	supportRequestId: number;
-	zendeskTicketId: number;
-	supportType: SupportType;
-};
-
 const handleDuplicatedSupportRequest = async (
-	supportRequest: DuplicatedRequest
+	supportRequest: Pick<
+		SupportRequests,
+		"supportRequestId" | "zendeskTicketId" | "supportType"
+	>,
+	msrFirstName: MSRPiiSec["firstName"]
 ) => {
 	await db.supportRequests.update({
 		where: {
@@ -43,12 +40,12 @@ const handleDuplicatedSupportRequest = async (
 	});
 
 	await validateAndUpsertZendeskTicket({
-		ticketId: supportRequest.zendeskTicketId,
+		ticketId: supportRequest.zendeskTicketId as never,
 		status: "open",
 		statusAcolhimento: "solicitação_repetida",
 		supportType: supportRequest.supportType,
 		comment: {
-			body: emailDuplicated(supportRequest.firstName),
+			body: emailDuplicated(msrFirstName),
 			public: true,
 		},
 	});

@@ -1,15 +1,18 @@
 import * as Yup from "yup";
-import { SupportType } from "@prisma/client";
-import { createOrUpdateTicket, msrOrganizationId } from "@/lib";
-import { ZENDESK_CUSTOM_FIELDS_DICIO } from "@/constants";
+import { type SupportRequests, SupportType } from "@prisma/client";
+import { upsertZendeskTicket } from "@/lib";
+import {
+	ZENDESK_CUSTOM_FIELDS_DICIO,
+	ZENDESK_MSR_ORGANIZATION_ID,
+} from "@/constants";
 import type { ZendeskTicket } from "@/types";
 
-type CustomFields = {
+type CustomFieldsType = {
 	id: number;
 	value: string;
 };
 
-const payloadSchemaCreate = Yup.object({
+const ticketSchemaCreate = Yup.object({
 	msrZendeskUserId: Yup.number().required(),
 	subject: Yup.string().required(),
 	status: Yup.string().required(),
@@ -22,7 +25,7 @@ const payloadSchemaCreate = Yup.object({
 	msrName: Yup.string().required(),
 }).required();
 
-const payloadSchemaUpdate = Yup.object({
+const ticketSchemaUpdate = Yup.object({
 	ticketId: Yup.number().required(),
 	subject: Yup.string(),
 	status: Yup.string(),
@@ -33,7 +36,7 @@ const payloadSchemaUpdate = Yup.object({
 		public: Yup.boolean().required(),
 	}).default(null),
 	msrZendeskUserId: Yup.number(),
-	msrName: Yup.string(),
+	msrName: Yup.string().nullable(),
 }).test(
 	"atLeastOneField",
 	"Must have at least one field to update",
@@ -47,10 +50,13 @@ const payloadSchemaUpdate = Yup.object({
 	}
 );
 
-function getCustomFieldsTicket(
-	payload: Omit<Yup.InferType<typeof payloadSchemaUpdate>, "ticketId">
-) {
-	let custom_fields: CustomFields[] = [];
+type UpdateZendeskTicketType = Omit<
+	Yup.InferType<typeof ticketSchemaUpdate>,
+	"ticketId"
+>;
+
+function getCustomFieldsTicket(payload: UpdateZendeskTicketType) {
+	let custom_fields: CustomFieldsType[] = [];
 
 	if (payload.msrName) {
 		custom_fields.push({
@@ -73,10 +79,10 @@ function getCustomFieldsTicket(
 
 export default async function validateAndUpsertZendeskTicket(
 	payload: {
-		ticketId?: number;
-	} & Yup.InferType<typeof payloadSchemaUpdate>
+		ticketId: SupportRequests["zendeskTicketId"] | null;
+	} & UpdateZendeskTicketType
 ) {
-	const schema = payload.ticketId ? payloadSchemaUpdate : payloadSchemaCreate;
+	const schema = payload.ticketId ? ticketSchemaUpdate : ticketSchemaCreate;
 	const validatedPayload = await schema.validate(payload);
 
 	const ticketId = payload.ticketId
@@ -89,7 +95,7 @@ export default async function validateAndUpsertZendeskTicket(
 		...ticketId,
 		requester_id: validatedPayload.msrZendeskUserId,
 		subject: validatedPayload.subject,
-		organization_id: msrOrganizationId,
+		organization_id: ZENDESK_MSR_ORGANIZATION_ID,
 		status: validatedPayload.status,
 		comment: validatedPayload.comment,
 		custom_fields: getCustomFieldsTicket(validatedPayload),
@@ -100,5 +106,5 @@ export default async function validateAndUpsertZendeskTicket(
 	);
 	const validTicket = Object.fromEntries(ticketWithoutEmptyProperties);
 
-	return await createOrUpdateTicket(validTicket);
+	return await upsertZendeskTicket(validTicket);
 }

@@ -5,10 +5,13 @@ import { getErrorMessage } from "@/utils";
 export async function POST(request: NextRequest) {
 	try {
 		const payload = await request.json();
+
 		const data = await validateAndUpsertZendeskTicket(payload);
 
 		if (!data) {
-			throw new Error("Unable to upsert ticket on Zendesk");
+			throw new Error(
+				`Unable to upsert ticket '${payload?.ticketId || ""}' from user '${payload?.msrZendeskUserId}' on Zendesk`
+			);
 		}
 
 		return Response.json(data);

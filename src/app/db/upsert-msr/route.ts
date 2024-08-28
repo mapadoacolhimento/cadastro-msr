@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
-import { upsertMsr } from "@/lib";
+import { upsertMsrOnDb } from "@/lib";
 import { stringifyBigInt, getErrorMessage } from "@/utils";
 
 export async function POST(request: NextRequest) {
 	try {
 		const payload = await request.json();
-		const data = await upsertMsr(payload);
+		const data = await upsertMsrOnDb(payload);
 
 		return Response.json(stringifyBigInt(data));
 	} catch (e) {

@@ -6,7 +6,7 @@ import {
 import { getErrorMessage, stringifyBigInt } from "@/utils";
 import { ZendeskTicket } from "@/types";
 
-export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
+export default async function upserZendeskTicket(ticket: ZendeskTicket) {
 	try {
 		const body = stringifyBigInt(ticket);
 		const endpoint = `${ZENDESK_SUBDOMAIN}/api/v2/tickets/${ticket.id ? ticket.id : ""}`;
@@ -34,7 +34,7 @@ export default async function createOrUpdateTicket(ticket: ZendeskTicket) {
 		};
 	} catch (e) {
 		console.error(
-			`[upsertTicket] - Something went wrong when upserting this ticket '${
+			`[upsertZendeskTicket] - Something went wrong when upserting this ticket '${
 				ticket.id
 			}' for this user '${ticket.requester_id}': ${getErrorMessage(e)}`
 		);

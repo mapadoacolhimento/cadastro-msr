@@ -1,16 +1,22 @@
-import { Gender, Race, SupportRequests, SupportType } from "@prisma/client";
-import { Decimal } from "@prisma/client/runtime/library";
+import {
+	Gender,
+	SupportType,
+	Race,
+	type MSRPiiSec,
+	type SupportRequests,
+} from "@prisma/client";
 import * as Yup from "yup";
 import {
 	handleDuplicatedSupportRequest,
 	validateAndUpsertZendeskTicket,
 	validateAndUpsertZendeskUser,
-	upsertMsr,
+	upsertMsrOnDb,
 	checkMatchEligibility,
 	createMatch,
 } from "@/lib";
 import type { HandleRequestResponse } from "@/types";
 import { getErrorMessage } from "@/utils";
+import { ZENDESK_NEW_TICKET_STATUS } from "@/constants";
 
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
@@ -32,18 +38,18 @@ const payloadSchema = Yup.object({
 	).required(),
 }).required();
 
-const handleUpsertMsr = async (
+const handleUpsertMsrOnZendeskAndDb = async (
 	payload: Yup.InferType<typeof payloadSchema>
 ) => {
 	const zendeskUser = await validateAndUpsertZendeskUser(payload);
 
 	if (!zendeskUser) {
-		throw new Error("Unable to upsert user on Zendesk");
+		throw new Error(`Unable to upsert user on Zendesk`);
 	}
 
 	const msrZendeskUserId = zendeskUser.msrZendeskUserId;
 
-	await upsertMsr({
+	await upsertMsrOnDb({
 		...payload,
 		msrZendeskUserId: zendeskUser.msrZendeskUserId,
 		status: "registered",
@@ -52,16 +58,26 @@ const handleUpsertMsr = async (
 	return msrZendeskUserId;
 };
 
-type CreateMatch = Pick<SupportRequests, "msrId" | "supportType"> & {
-	msr: Yup.InferType<typeof payloadSchema>;
+type CreateMatch = {
+	msr: Pick<MSRPiiSec, "firstName"> &
+		Pick<
+			SupportRequests,
+			| "lat"
+			| "lng"
+			| "msrId"
+			| "city"
+			| "state"
+			| "hasDisability"
+			| "acceptsOnlineSupport"
+		>;
 	supportRequestId: SupportRequests["supportRequestId"] | null;
 	zendeskTicketId: SupportRequests["zendeskTicketId"] | null;
+	supportType: SupportRequests["supportType"];
 };
 
 const handleCreateMatch = async ({
 	supportType,
 	supportRequestId,
-	msrId,
 	zendeskTicketId,
 	msr,
 }: CreateMatch) => {
@@ -69,11 +85,11 @@ const handleCreateMatch = async ({
 		supportType === "legal" ? "Jurídico" : "Psicológico";
 
 	const bodyTicket = {
-		ticketId: zendeskTicketId as unknown as number,
-		msrZendeskUserId: msrId as unknown as number,
+		ticketId: zendeskTicketId,
+		msrZendeskUserId: msr.msrId as unknown as number,
 		status: "new",
 		subject: `[${subjectSupportType}] ${msr.firstName}, ${msr.city} - ${msr.state}`,
-		statusAcolhimento: "solicitação_recebida",
+		statusAcolhimento: ZENDESK_NEW_TICKET_STATUS,
 		msrName: msr.firstName,
 		supportType: supportType,
 		comment: {
@@ -85,30 +101,34 @@ const handleCreateMatch = async ({
 	const zendeskTicket = await validateAndUpsertZendeskTicket(bodyTicket);
 
 	if (!zendeskTicket) {
-		throw new Error("Unable to upsert ticket on Zendesk");
+		throw new Error(
+			`Unable to upsert ticket ${zendeskTicketId || ""} from user '${msr.msrId}' on Zendesk`
+		);
 	}
 
 	const matchBody = {
-		supportRequestId: supportRequestId,
-		msrId: msrId,
+		msrId: msr.msrId,
 		zendeskTicketId: zendeskTicket.ticketId,
 		supportType: supportType,
 		status: "open" as const,
-		hasDisability: msr.hasDisability,
-		lat: msr.lat as unknown as Decimal,
-		lng: msr.lng as unknown as Decimal,
-		city: msr.city,
-		state: msr.state,
-		acceptsOnlineSupport: msr.acceptsOnlineSupport,
-		requiresLibras: null,
 		supportExpertise: null,
 		priority: null,
+		hasDisability: msr.hasDisability,
+		requiresLibras: null,
+		acceptsOnlineSupport: msr.acceptsOnlineSupport,
+		lat: msr.lat,
+		lng: msr.lng,
+		city: msr.city,
+		state: msr.state,
+		supportRequestId: supportRequestId,
 	};
 
 	const match = await createMatch(matchBody);
 
 	if (!match) {
-		throw new Error("Unable to create match");
+		throw new Error(
+			`Unable to create match for MSR '${msr.msrId}' of supportRequestId '${supportRequestId}'`
+		);
 	}
 
 	return match;
@@ -122,7 +142,7 @@ export async function POST(request: Request) {
 
 		let response: HandleRequestResponse = {};
 
-		const msrZendeskUserId = await handleUpsertMsr(payload);
+		const msrZendeskUserId = await handleUpsertMsrOnZendeskAndDb(payload);
 
 		for (let i = 0; payload.supportType.length > i; i++) {
 			const supportType: SupportType = payload.supportType[i];
@@ -137,21 +157,25 @@ export async function POST(request: Request) {
 				const match = await handleCreateMatch({
 					supportType,
 					supportRequestId,
-					msrId: msrZendeskUserId,
 					zendeskTicketId,
-					msr: payload,
+					msr: {
+						...payload,
+						msrId: msrZendeskUserId,
+					},
 				});
 
 				response[supportType] = supportRequestId
 					? match.status
 					: match[0].status;
 			} else {
-				await handleDuplicatedSupportRequest({
-					firstName: payload.firstName,
-					supportRequestId: supportRequestId!,
-					zendeskTicketId: zendeskTicketId as unknown as number,
-					supportType,
-				});
+				await handleDuplicatedSupportRequest(
+					{
+						supportRequestId: supportRequestId!,
+						zendeskTicketId: zendeskTicketId!,
+						supportType,
+					},
+					payload.firstName
+				);
 
 				response[supportType] = "duplicated";
 			}

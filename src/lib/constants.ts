@@ -137,6 +137,9 @@ export const ZENDESK_CUSTOM_FIELDS_DICIO = {
 	cidade: 360021879811,
 };
 
-export const msrOrganizationId = 360273031591 as unknown as bigint;
+export const ZENDESK_MSR_ORGANIZATION_ID = 360273031591;
 
 export const GOOGLE_ANALYTICS_ID = "G-H4HVJY8T0V";
+
+export const ZENDESK_NEW_USER_STATUS = "inscrita";
+export const ZENDESK_NEW_TICKET_STATUS = "solicitação_recebida";

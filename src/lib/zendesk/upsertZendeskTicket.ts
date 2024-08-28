@@ -35,7 +35,7 @@ export default async function upserZendeskTicket(ticket: ZendeskTicket) {
 	} catch (e) {
 		console.error(
 			`[upsertZendeskTicket] - Something went wrong when upserting this ticket '${
-				ticket.id
+				ticket?.id || ""
 			}' for this user '${ticket.requester_id}': ${getErrorMessage(e)}`
 		);
 		return null;

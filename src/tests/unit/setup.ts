@@ -21,8 +21,8 @@ vi.mock("jsonwebtoken", () => ({
 	sign: vi.fn(),
 }));
 
-vi.stubEnv("VOLUNTEER_API", "http://voluntaria.mapa.org.br");
+vi.stubEnv("VOLUNTEER_API", "http://127.0.0.1:8000/");
 vi.stubEnv("ZENDESK_API_TOKEN", "XXXXXXXXXX");
 vi.stubEnv("ZENDESK_API_USER", "user@email.org");
 vi.stubEnv("ZENDESK_SUBDOMAIN", "https://subdomain.zendesk.com");
-vi.stubEnv("MATCH_LAMBDA_URL", "https://localhost:5000");
+vi.stubEnv("MATCH_LAMBDA_URL", "http://localhost:5000");

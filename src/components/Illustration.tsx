@@ -1,5 +1,6 @@
 import { Box, Flex } from "@radix-ui/themes";
 import type { Responsive } from "@radix-ui/themes/props";
+import Image from "next/image";
 
 export default function Illustration({
 	img,
@@ -25,7 +26,13 @@ export default function Illustration({
 				height={"100%"}
 			>
 				<aside>
-					<img src={img.src} alt={img.alt} style={{ maxWidth: "95%" }} />
+					<Image
+						src={img.src}
+						alt={img.alt}
+						style={{ maxWidth: "95%" }}
+						width={600}
+						height={600}
+					/>
 				</aside>
 			</Flex>
 			<Box

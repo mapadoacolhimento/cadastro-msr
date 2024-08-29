@@ -3,6 +3,7 @@
 import { type PropsWithChildren } from "react";
 import { Grid } from "@radix-ui/themes";
 import { Header } from "./";
+import SafeExitButton from "./SafeExitButton";
 
 export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 	return (
@@ -11,6 +12,7 @@ export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 				<Header />
 				<main>{children}</main>
 			</div>
+			<SafeExitButton />
 		</Grid>
 	);
 }

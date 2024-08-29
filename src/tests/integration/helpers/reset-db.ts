@@ -1,7 +1,7 @@
 import { db } from "@/lib";
 
-export default async function resetDb() {
-	await db.$transaction([
+export default function resetDb() {
+	return [
 		db.mSRStatusHistory.deleteMany(),
 		db.mSRPiiSec.deleteMany(),
 		db.mSRs.deleteMany(),
@@ -9,5 +9,5 @@ export default async function resetDb() {
 		db.supportRequestStatusHistory.deleteMany(),
 		db.supportRequests.deleteMany(),
 		db.volunteers.deleteMany(),
-	]);
+	];
 }

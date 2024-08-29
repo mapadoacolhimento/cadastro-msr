@@ -5,9 +5,11 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
 	plugins: [react(), tsconfigPaths()],
 	test: {
+		pool: "forks",
 		poolOptions: {
-			threads: {
+			forks: {
 				singleThread: true,
+				isolate: true,
 			},
 		},
 		include: ["src/tests/integration/__tests__/**"],

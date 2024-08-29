@@ -12,11 +12,12 @@ import resetDb from "../helpers/reset-db";
 
 describe("/handle-request", async () => {
 	beforeEach(async () => {
-		await db.$transaction([...resetDb(), ...initDB()]);
+		await db.$transaction(resetDb());
 	});
 
 	describe("MSR registers asking for LEGAL support, already having an ongoing PSYCHOLOGICAL support", () => {
 		it("should create match for LEGAL support", async () => {
+			await db.$transaction(initDB());
 			const supportRequest = {
 				supportType: "psychological" as const,
 				status: "social_worker" as const,
@@ -45,6 +46,8 @@ describe("/handle-request", async () => {
 
 	describe("MSR registers asking for PSYCHOLOGICAL support, already having an ongoing LEGAL support", () => {
 		it("should create match for PSYCHOLOGICAL support", async () => {
+			await db.$transaction(initDB());
+
 			const supportRequest = {
 				supportType: "legal" as const,
 				status: "matched" as const,
@@ -75,6 +78,8 @@ describe("/handle-request", async () => {
 
 	describe("MSR registers asking for LEGAL and PSYCHOLOGICAL support, already having a ongoing request for PSYCHOLOGICAL support with status 'Encaminhamento: Realizado para Serviço Público'", () => {
 		it("should create match for both support requests", async () => {
+			await db.$transaction(initDB());
+
 			const supportRequest = {
 				supportType: "psychological" as const,
 				status: "public_service" as const,
@@ -106,6 +111,8 @@ describe("/handle-request", async () => {
 
 	describe("MSR registers asking for LEGAL and PSYCHOLOGICAL support, already having a ongoing request for PSYCHOLOGICAL support with status 'Encaminhamento: Realizado'", () => {
 		it("should create match for LEGAL support and update PSYCHOLOGICAL support to 'duplicated'", async () => {
+			await db.$transaction(initDB());
+
 			const supportRequest = {
 				supportType: "psychological" as const,
 				status: "matched" as const,
@@ -142,6 +149,8 @@ describe("/handle-request", async () => {
 
 	describe("MSR registers asking for LEGAL and PSYCHOLOGICAL support, already having an expired LEGAL support", () => {
 		it("should create match for both support requests", async () => {
+			await db.$transaction(initDB());
+
 			const supportRequest = {
 				supportType: "legal" as const,
 				status: "matched" as const,
@@ -174,6 +183,8 @@ describe("/handle-request", async () => {
 
 	describe("MSR registers asking for LEGAL and PSYCHOLOGICAL support, already having a ongoing LEGAL support with status 'Atendimento: Iniciado'", () => {
 		it("should create match for PSYCHOLOGICAL support and update LEGAL support to 'duplicated'", async () => {
+			await db.$transaction(initDB());
+
 			const supportRequest = {
 				supportType: "legal" as const,
 				status: "matched" as const,

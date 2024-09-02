@@ -113,7 +113,7 @@ export default function MultiStepFormWrapper({
 						{status === Status.idle ? (
 							<>
 								<Box px={"5"}>
-									<Box asChild pt={"4"}>
+									<Box asChild pt={"4"} pb={"3"}>
 										<Heading
 											as={"h1"}
 											size={"8"}

@@ -31,7 +31,13 @@ export default function StepsController({
 				max={100}
 				aria-label="Barra de progresso de preenchimento do formulário."
 			/>
-			<Flex p={"6"} width={"100%"} justify={"between"} align={"center"}>
+			<Flex
+				px={"6"}
+				py={"4"}
+				width={"100%"}
+				justify={"between"}
+				align={"center"}
+			>
 				<Heading color="purple" highContrast size={"4"} as="h2">
 					{stepNumber}. {stepName}
 				</Heading>

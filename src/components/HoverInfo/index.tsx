@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./HoverInfo.css";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { Text } from "@radix-ui/themes";
+import { Text, Box, Flex } from "@radix-ui/themes";
 
 interface HoverInfoProps {
 	title: string;
@@ -16,20 +16,30 @@ const HoverInfo: React.FC<HoverInfoProps> = ({ title, description }) => {
 	const handleMouseLeave = () => setVisible(false);
 
 	return (
-		<div
-			className="info-container"
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-		>
-			<Text>{title}</Text>
-			<ChevronDownIcon className={`arrow ${visible ? "rotated" : ""}`} />
-			<Text
-				className={`description ${visible ? "visible" : "hidden"}`}
-				aria-hidden={!!visible}
+		<>
+			<Flex
+				align={"center"}
+				onMouseEnter={handleMouseEnter}
+				onMouseLeave={handleMouseLeave}
+				style={{ cursor: "pointer" }}
 			>
-				{description}
-			</Text>
-		</div>
+				<Text weight={"medium"}>{title}</Text>
+				<ChevronDownIcon
+					className={`arrow ${visible ? "rotated" : ""}`}
+					color={"purple"}
+				/>
+			</Flex>
+			<Box className={`description ${visible ? "visible" : "hidden"}`}>
+				<Text
+					aria-hidden={!!visible}
+					size={"2"}
+					style={{ textAlign: "center" }}
+					as={"p"}
+				>
+					{description}
+				</Text>
+			</Box>
+		</>
 	);
 };
 

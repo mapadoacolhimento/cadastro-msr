@@ -14,16 +14,11 @@ import Illustration from "../components/Illustration";
 export default function Homepage() {
 	return (
 		<>
-			<Flex
-				width={"100%"}
-				py={{ initial: "8", md: "9" }}
-				px={{ initial: "6", md: "7" }}
-				justify={"center"}
-			>
+			<Flex py={{ initial: "8", md: "7" }} justify={"center"}>
 				<Flex
 					direction={"column"}
 					align={"center"}
-					gap={{ initial: "7", md: "8" }}
+					gap={{ initial: "7", md: "6" }}
 					maxWidth={{ initial: "100%", xs: "25rem" }}
 				>
 					<Box>
@@ -36,7 +31,7 @@ export default function Homepage() {
 						>
 							Estamos aqui por você
 						</Heading>
-						<Text align={"center"} mt={"4"} as={"p"}>
+						<Text align={"center"} mt={"5"} as={"p"}>
 							Preencha o formulário a seguir para solicitar atendimento
 							psicológico e/ou jurídico de nossas profissionais voluntárias.
 						</Text>
@@ -44,30 +39,30 @@ export default function Homepage() {
 
 					<CriteriaBox />
 
-					<Flex direction={"column"} align={"center"}>
-						<Box asChild width={"15.625rem"}>
-							<Button size={"4"} asChild>
-								<Link href={"/cadastro"}>Quero ser acolhida</Link>
-							</Button>
-						</Box>
+					<Flex
+						direction={"column"}
+						align={"center"}
+						pt={"4"}
+						gap={{ initial: "5", md: "6" }}
+					>
+						<Button size={"4"} asChild>
+							<Link href={"/cadastro"}>Quero ser acolhida</Link>
+						</Button>
 
-						<Text
-							as={"p"}
-							size={"2"}
-							align={"center"}
-							mt={{ initial: "5", md: "6" }}
-						>
-							Ao responder as perguntas você está de acordo com a nossa{" "}
-							<Strong>
-								<ExternalLink
-									href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
-									target="_blank"
-								>
-									política de privacidade
-								</ExternalLink>
-							</Strong>
-							.
-						</Text>
+						<Box asChild maxWidth={"18rem"}>
+							<Text as={"p"} size={"2"} align={"center"}>
+								Ao responder as perguntas você está de acordo com a nossa{" "}
+								<Strong>
+									<ExternalLink
+										href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
+										target="_blank"
+									>
+										política de privacidade
+									</ExternalLink>
+								</Strong>
+								.
+							</Text>
+						</Box>
 					</Flex>
 				</Flex>
 			</Flex>

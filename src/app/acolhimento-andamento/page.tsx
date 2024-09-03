@@ -1,5 +1,4 @@
 import { Box, Flex, Heading, Strong, Text, Link } from "@radix-ui/themes";
-import Contact from "../../components/Contact";
 import ExtraSupport from "../../components/ExtraSupport";
 import Illustration from "../../components/Illustration";
 
@@ -47,7 +46,6 @@ export default function Page() {
 					<Text align={"center"}>Obrigada pela confiança!</Text>
 				</Box>
 				<ExtraSupport />
-				<Contact />
 			</Flex>
 			<Illustration
 				img={{

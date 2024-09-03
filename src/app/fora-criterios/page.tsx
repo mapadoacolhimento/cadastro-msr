@@ -1,18 +1,12 @@
-import { Box, Flex, Heading, Text } from "@radix-ui/themes";
-import Contact from "../../components/Contact";
+import { Box, Heading, Text } from "@radix-ui/themes";
 import ExtraSupport from "../../components/ExtraSupport";
 import Illustration from "../../components/Illustration";
 
 export default function Page() {
 	return (
-		<Flex
-			width={"100%"}
-			justify={"center"}
-			py={{ initial: "8", md: "9" }}
-			px={{ initial: "6", md: "7" }}
-		>
-			<Flex direction={"column"} align={"center"} maxWidth={"30rem"}>
-				<Box asChild pb={"4"}>
+		<>
+			<Box>
+				<Box asChild pb={"5"}>
 					<Heading
 						as={"h1"}
 						size={"8"}
@@ -23,16 +17,13 @@ export default function Page() {
 						Sentimos muito
 					</Heading>
 				</Box>
-				<Box pb={{ initial: "7", sm: "8" }} asChild>
-					<Text align={"center"} as={"p"}>
-						O Mapa do Acolhimento atende mulheres cis, trans ou travestis
-						maiores de 18 anos, que vivem no Brasil e enfrentam situações de
-						vulnerabilidade socioeconômica.
-					</Text>
-				</Box>
-				<ExtraSupport />
-				<Contact />
-			</Flex>
+				<Text align={"center"} as={"p"}>
+					O Mapa do Acolhimento atende mulheres cis, trans ou travestis maiores
+					de 18 anos, que vivem no Brasil e enfrentam situações de
+					vulnerabilidade socioeconômica.
+				</Text>
+			</Box>
+			<ExtraSupport />
 			<Illustration
 				isForm={false}
 				img={{
@@ -40,6 +31,6 @@ export default function Page() {
 					alt: "Computador branco com rosa, com a logo roxa do mapa do acolhimento na tela do monitor",
 				}}
 			/>
-		</Flex>
+		</>
 	);
 }

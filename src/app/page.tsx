@@ -14,56 +14,54 @@ import Illustration from "../components/Illustration";
 export default function Homepage() {
 	return (
 		<>
-			<Flex py={{ initial: "8", md: "7" }} justify={"center"}>
+			<Flex
+				direction={"column"}
+				align={"center"}
+				gap={{ initial: "7", md: "6" }}
+				maxWidth={{ initial: "100%", xs: "25rem" }}
+			>
+				<Box>
+					<Heading
+						as={"h1"}
+						size={"8"}
+						align={"center"}
+						color={"purple"}
+						highContrast
+					>
+						Estamos aqui por você
+					</Heading>
+					<Text align={"center"} mt={"5"} as={"p"}>
+						Preencha o formulário a seguir para solicitar atendimento
+						psicológico e/ou jurídico de nossas profissionais voluntárias.
+					</Text>
+				</Box>
+
+				<CriteriaBox />
+
 				<Flex
 					direction={"column"}
 					align={"center"}
-					gap={{ initial: "7", md: "6" }}
-					maxWidth={{ initial: "100%", xs: "25rem" }}
+					pt={"4"}
+					gap={{ initial: "5", md: "6" }}
 				>
-					<Box>
-						<Heading
-							as={"h1"}
-							size={"8"}
-							align={"center"}
-							color={"purple"}
-							highContrast
-						>
-							Estamos aqui por você
-						</Heading>
-						<Text align={"center"} mt={"5"} as={"p"}>
-							Preencha o formulário a seguir para solicitar atendimento
-							psicológico e/ou jurídico de nossas profissionais voluntárias.
+					<Button size={"4"} asChild>
+						<Link href={"/cadastro"}>Quero ser acolhida</Link>
+					</Button>
+
+					<Box asChild maxWidth={"18rem"}>
+						<Text as={"p"} size={"2"} align={"center"}>
+							Ao responder as perguntas você está de acordo com a nossa{" "}
+							<Strong>
+								<ExternalLink
+									href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
+									target="_blank"
+								>
+									política de privacidade
+								</ExternalLink>
+							</Strong>
+							.
 						</Text>
 					</Box>
-
-					<CriteriaBox />
-
-					<Flex
-						direction={"column"}
-						align={"center"}
-						pt={"4"}
-						gap={{ initial: "5", md: "6" }}
-					>
-						<Button size={"4"} asChild>
-							<Link href={"/cadastro"}>Quero ser acolhida</Link>
-						</Button>
-
-						<Box asChild maxWidth={"18rem"}>
-							<Text as={"p"} size={"2"} align={"center"}>
-								Ao responder as perguntas você está de acordo com a nossa{" "}
-								<Strong>
-									<ExternalLink
-										href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
-										target="_blank"
-									>
-										política de privacidade
-									</ExternalLink>
-								</Strong>
-								.
-							</Text>
-						</Box>
-					</Flex>
 				</Flex>
 			</Flex>
 			<Illustration

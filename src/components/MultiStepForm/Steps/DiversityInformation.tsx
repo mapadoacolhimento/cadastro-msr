@@ -29,7 +29,7 @@ export default function DiversityInformation() {
 				alt: "Ilustração com uma mulher flutuando.",
 			}}
 		>
-			<Box pt={{ initial: "7", sm: "8" }} width={"100%"} maxWidth={"22rem"}>
+			<Box pt={"3"}>
 				<SelectInput
 					name="color"
 					label="Cor"
@@ -43,18 +43,20 @@ export default function DiversityInformation() {
 				label={"Você é PcD (Pessoa com deficiência)?"}
 				placeholder="Você é PcD (Pessoa com deficiência)?"
 			/>
-			<CheckboxInput name="terms">
-				Ao inserir seus dados, você concorda em ter seus dados compartilhados
-				com os organizadores dessa página e aceita receber emails de
-				atualização, conforme descrito na{" "}
-				<a
-					href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
-					target="_blank"
-				>
-					política de privacidade
-				</a>
-				. Você pode cancelar o recebimento desses e-mails a qualquer momento.
-			</CheckboxInput>
+			<Box pt={"6"}>
+				<CheckboxInput name="terms">
+					Ao inserir seus dados, você concorda em ter seus dados compartilhados
+					com os organizadores dessa página e aceita receber emails de
+					atualização, conforme descrito na{" "}
+					<a
+						href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
+						target="_blank"
+					>
+						política de privacidade
+					</a>
+					. Você pode cancelar o recebimento desses e-mails a qualquer momento.
+				</CheckboxInput>
+			</Box>
 		</Step>
 	);
 }

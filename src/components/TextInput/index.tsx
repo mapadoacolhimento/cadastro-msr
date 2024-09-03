@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useField } from "formik";
-import { Spinner, TextField } from "@radix-ui/themes";
+import { Box, Spinner, Text, TextField } from "@radix-ui/themes";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import InputMask from "react-input-mask";
 import ErrorMessage from "../ErrorMessage";
@@ -57,14 +57,16 @@ const TextInput: React.FC<TextInputProps> = (props) => {
 	}
 
 	return (
-		<div className={"input-text-container"}>
-			<label
-				htmlFor={props.name}
-				className={isActive ? "active" : ""}
-				style={{ color: hasError ? "var(--red-9)" : "var(--purple-9)" }}
-			>
-				{props.label}
-			</label>
+		<Box position={"relative"} className={"input-text-container"}>
+			<Text asChild size={"1"} color={"purple"} weight={"bold"}>
+				<label
+					htmlFor={props.name}
+					className={isActive ? "active" : ""}
+					style={{ color: hasError ? "var(--red-9)" : "var(--purple-9)" }}
+				>
+					{props.label}
+				</label>
+			</Text>
 			{props.mask ? (
 				<InputMask
 					{...field}
@@ -99,7 +101,7 @@ const TextInput: React.FC<TextInputProps> = (props) => {
 				</TextField.Root>
 			)}
 			<ErrorMessage name={props.name} />
-		</div>
+		</Box>
 	);
 };
 

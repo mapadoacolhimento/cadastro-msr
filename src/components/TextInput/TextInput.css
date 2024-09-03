@@ -1,9 +1,7 @@
-.input-text-container {
-	position: relative;
-	max-width: 22rem;
-	width: 100%;
-	border-radius: var(--radius-4);
-	background-color: var(--gray-6);
+.input-text-container .rt-TextFieldRoot {
+	height: var(--space-8);
+	background-color: var(--gray-2);
+	font-size: var(--font-size-2);
 }
 
 .input-text-container label {
@@ -17,12 +15,9 @@
 }
 
 .input-text-container label.active {
-	top: -1rem;
+	top: 0;
 	left: 1rem;
-	font-size: var(--font-size-1);
-	color: var(--purple-9);
-	margin-top: 1rem;
 	visibility: visible;
 	background-color: white;
-	font-weight: 700;
+	line-height: 1;
 }

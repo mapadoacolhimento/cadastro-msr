@@ -1,24 +1,27 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import HoverInfo from "../HoverInfo";
 
-test("shows and hides the description", async () => {
-	render(<HoverInfo title="Hover test" description="Some info test" />);
+describe("<HoverInfo />", async () => {
+	const text = "Some info test";
 
-	const descriptionElement = screen.queryByText("Some info test");
-	expect(descriptionElement).toHaveClass("hidden");
-
-	fireEvent.mouseEnter(screen.getByText("Hover test"));
-
-	await waitFor(() => {
-		const visibleDescription = screen.getByText("Some info test");
-		expect(visibleDescription).toHaveClass("visible");
+	it("should hide description on idle state", () => {
+		render(<HoverInfo title="Hover test" description={text} />);
+		expect(screen.getByText(text)).not.toBeVisible();
 	});
 
-	fireEvent.mouseLeave(screen.getByText("Hover test"));
+	it("should show description when hovering", () => {
+		render(<HoverInfo title="Hover test" description={text} />);
+		fireEvent.mouseEnter(screen.getByText("Hover test"));
+		expect(screen.getByText("Some info test")).toBeVisible();
+	});
 
-	await waitFor(() => {
-		const hiddenDescription = screen.queryByText("Some info test");
+	it("should hide description when not hovering", async () => {
+		render(<HoverInfo title="Hover test" description={text} />);
+		fireEvent.mouseEnter(screen.getByText("Hover test"));
+		const infoTextElement = screen.getByText("Some info test");
+		expect(infoTextElement).toBeVisible();
 
-		expect(hiddenDescription).toHaveClass("hidden");
+		fireEvent.mouseLeave(screen.getByText("Hover test"));
+		expect(infoTextElement).not.toBeVisible();
 	});
 });

@@ -34,7 +34,8 @@ const HoverInfo: React.FC<HoverInfoProps> = ({ title, description }) => {
 			</Flex>
 			<Box className={`description ${visible ? "visible" : "hidden"}`}>
 				<Text
-					aria-hidden={!!visible}
+					aria-hidden={!visible}
+					hidden={!visible}
 					size={"2"}
 					style={{ textAlign: "center" }}
 					as={"p"}

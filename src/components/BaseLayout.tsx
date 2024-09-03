@@ -16,8 +16,8 @@ export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 						align={"center"}
 						maxWidth={"25rem"}
 						asChild
-						justify={"between"}
-						height={"calc(100vh - 100px)"}
+						minHeight={"calc(100vh - 100px - 40px)"}
+						gap={"8"}
 					>
 						<main>{children}</main>
 					</Flex>

@@ -34,12 +34,16 @@ export default function Page() {
 					</Text>
 
 					<InfoBox
+						link={"https://www.servicospublicos.mapadoacolhimento.org/"}
 						imgSrc="/illustrations/woman-getting-support.svg"
 						imgAlt="Mulher recebendo atendimento por outra mulher"
 						title="Onde e como posso pedir ajuda?"
 						description="Conheça os serviços públicos de proteção que você pode acessar."
 					/>
 					<InfoBox
+						link={
+							"https://drive.google.com/file/d/1f0BX_DEARQYgsR21yjVl71kjOlL7Rt08/view"
+						}
 						imgSrc="/illustrations/woman-covering-ears.svg"
 						imgAlt="Mulher de cabeça baixa tampando os ouvidos"
 						title="Sofri violência, e agora?"

@@ -56,7 +56,7 @@ export default function DateOfBirth() {
 			}}
 		>
 			<Box width={"100%"} maxWidth={"22rem"}>
-				<Box asChild pb={{ initial: "7", sm: "8" }} pt={"3"}>
+				<Box asChild pb={{ initial: "7", sm: "8" }}>
 					<Text asChild align={"center"} as={"p"}>
 						<legend>
 							Qual a sua <Strong>data de nascimento?</Strong>

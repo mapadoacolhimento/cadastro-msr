@@ -22,6 +22,9 @@ const HoverInfo: React.FC<HoverInfoProps> = ({ title, description }) => {
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 				style={{ cursor: "pointer" }}
+				width={"100%"}
+				justify={"center"}
+				pt={"2"}
 			>
 				<Text weight={"medium"}>{title}</Text>
 				<ChevronDownIcon

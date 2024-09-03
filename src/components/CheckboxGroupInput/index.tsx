@@ -63,9 +63,10 @@ export default function CheckboxGroupInput({
 			aria-labelledby={"question"}
 			id={`checkbox-group-${name}`}
 			color={"purple"}
+			style={{ width: "100%" }}
 		>
-			<Box asChild pb={{ initial: "7", sm: "8" }}>
-				<Text asChild align={"center"} id={"question"}>
+			<Box asChild pb={{ initial: "5", sm: "6" }}>
+				<Text asChild align={"center"} id={"question"} as={"p"}>
 					<legend>{question}</legend>
 				</Text>
 			</Box>

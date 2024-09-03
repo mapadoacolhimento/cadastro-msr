@@ -4,7 +4,6 @@
 	transition:
 		visibility 0s,
 		opacity 0.2s linear;
-	max-width: 21rem;
 }
 
 .description.visible {

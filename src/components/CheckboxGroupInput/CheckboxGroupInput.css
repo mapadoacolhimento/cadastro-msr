@@ -1,7 +1,3 @@
-.rt-CheckboxCardsItem {
-	min-width: 22rem;
-}
-
 .is-checked::after {
 	box-shadow: none;
 	border: 1px solid var(--accent-8);

@@ -10,7 +10,13 @@ export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 		<Grid columns={{ initial: "1", md: "1fr 55%" }} width="auto">
 			<div>
 				<Header />
-				<Flex width={"100%"} justify={"center"} align={"center"} py={"7"}>
+				<Flex
+					width={"100%"}
+					justify={"center"}
+					align={"center"}
+					py={"7"}
+					px={"5"}
+				>
 					<Flex
 						direction={"column"}
 						align={"center"}
@@ -18,6 +24,7 @@ export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 						asChild
 						minHeight={"calc(100vh - 100px - 40px)"}
 						gap={"8"}
+						width={"100%"}
 					>
 						<main>{children}</main>
 					</Flex>

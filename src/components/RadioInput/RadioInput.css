@@ -6,16 +6,3 @@
 .radio[aria-checked="true"] {
 	--card-background-color: var(--accent-a3);
 }
-
-.radio,
-.radio label {
-	cursor: pointer;
-	min-width: 22rem;
-	max-width: 22rem;
-	display: flex;
-	justify-content: center;
-}
-
-#question {
-	max-width: 22rem;
-}

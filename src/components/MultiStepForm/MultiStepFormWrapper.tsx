@@ -95,8 +95,8 @@ export default function MultiStepFormWrapper({
 				validationSchema={step.props.validationSchema}
 			>
 				{({ isSubmitting, values }) => (
-					<Form>
-						<Box px={"5"}>
+					<Form style={{ width: "100%" }}>
+						<Box asChild position={"absolute"} left={"6"}>
 							<IconButton
 								onClick={() => previousStep(values)}
 								variant="ghost"
@@ -112,28 +112,26 @@ export default function MultiStepFormWrapper({
 
 						{status === Status.idle ? (
 							<>
-								<Box px={"5"}>
-									<Box asChild pt={"4"} pb={"3"}>
-										<Heading
-											as={"h1"}
-											size={"8"}
-											color={"purple"}
-											highContrast
-											align={"center"}
-										>
-											{step.props.title}
-										</Heading>
-									</Box>
-
-									<Flex
-										direction={"column"}
+								<Box asChild pt={"5"} pb={"3"}>
+									<Heading
+										as={"h1"}
+										size={"8"}
+										color={"purple"}
+										highContrast
 										align={"center"}
-										justify={"center"}
-										gapY={"4"}
 									>
-										{step}
-									</Flex>
+										{step.props.title}
+									</Heading>
 								</Box>
+
+								<Flex
+									direction={"column"}
+									align={"center"}
+									justify={"center"}
+									gapY={"4"}
+								>
+									{step}
+								</Flex>
 								<StepsController
 									stepName={step.props.title}
 									stepNumber={stepNumber}

@@ -16,7 +16,7 @@ describe("SafeExitButton", () => {
 		const button = screen.getByRole("button", { name: /sair desse site/i });
 		expect(button).toBeInTheDocument();
 
-		const icon = screen.getByAltText(/ícone de seta de retorno/i);
+		const icon = screen.getByAltText(/seta de retorno/i);
 		expect(icon).toBeInTheDocument();
 	});
 

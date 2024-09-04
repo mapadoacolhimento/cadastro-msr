@@ -53,7 +53,7 @@ function GeolocationFields() {
 					label: "Carregando cidades...",
 				},
 			]);
-			setFieldValue("city", "");
+			setFieldValue("city", "", false);
 			const response = await fetch(`/cities?state=${state}`, {
 				method: "GET",
 			});
@@ -163,15 +163,15 @@ export default function Geolocation() {
 		);
 
 		if (!response.ok) {
-			setFieldValue("lat", null);
-			setFieldValue("lng", null);
+			setFieldValue("lat", null, false);
+			setFieldValue("lng", null, false);
 			return null;
 		}
 
 		const geolocation = (await response.json()) as GeolocationResponseData;
 
-		setFieldValue("lat", geolocation.lat);
-		setFieldValue("lng", geolocation.lng);
+		setFieldValue("lat", geolocation.lat, false);
+		setFieldValue("lng", geolocation.lng, false);
 	}
 
 	return (

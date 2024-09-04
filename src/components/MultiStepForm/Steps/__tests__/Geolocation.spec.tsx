@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import {
 	render,
 	screen,
@@ -200,9 +201,12 @@ describe("Geolocation", () => {
 				await screen.findByRole("option", { name: "São Paulo" })
 			);
 
-			expect(await screen.findByRole("alert")).toHaveTextContent(
-				"Erro ao buscar cidades"
-			);
+			const cityError = await screen.findAllByRole("alert");
+			expect(
+				cityError.find(
+					(error) => error.textContent === "Erro ao buscar cidades"
+				)
+			).toBeDefined();
 		});
 	});
 

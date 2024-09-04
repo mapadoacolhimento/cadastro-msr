@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import CriteriaDenied from "../fora-criterios/page";
 

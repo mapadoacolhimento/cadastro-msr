@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Box, Strong, Text } from "@radix-ui/themes";
+import { Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
 import { Question, TextInput } from "../..";

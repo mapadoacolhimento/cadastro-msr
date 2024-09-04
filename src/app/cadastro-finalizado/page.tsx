@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@radix-ui/themes";
+import { Box, Text } from "@radix-ui/themes";
 import Illustration from "@/components/Illustration";
 import ExtraSupport from "@/components/ExtraSupport";
 import MainTitle from "@/components/MainTitle";

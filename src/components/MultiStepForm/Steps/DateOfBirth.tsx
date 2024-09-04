@@ -51,7 +51,7 @@ export default function DateOfBirth() {
 			validationSchema={dateOfBirthSchema}
 			title={"Sobre você"}
 			img={{
-				src: "/illustrations/woman-self-hug.svg",
+				src: "/illustrations/woman-self-hug.webp",
 				alt: "Ilustração de uma mulher com cabelo roxo se abraçando",
 			}}
 		>

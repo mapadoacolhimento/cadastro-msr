@@ -22,7 +22,7 @@ export default function Page() {
 				isForm={false}
 				align={"end"}
 				img={{
-					src: "/illustrations/woman-self-hug.svg",
+					src: "/illustrations/woman-self-hug.webp",
 					alt: "Ilustração de uma mulher com cabelo roxo se abraçando",
 				}}
 			/>

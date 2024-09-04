@@ -3,6 +3,7 @@ import { Box, Card, Flex, Text } from "@radix-ui/themes";
 
 import ErrorMessage from "../ErrorMessage";
 import "./RadioInput.css";
+import Question from "../Question";
 
 type RadioOption = {
 	value: string;
@@ -27,11 +28,7 @@ export default function RadioInput({
 	}
 	return (
 		<Box role="radiogroup" aria-labelledby={"question"} width={"100%"}>
-			<Box asChild pb={{ initial: "7", sm: "8" }}>
-				<Text asChild align={"center"} id={"question"}>
-					<legend>{question}</legend>
-				</Text>
-			</Box>
+			<Question id={"question"}>{question}</Question>
 			<Flex gap={"4"} direction={"column"} width={"100%"} align={"center"}>
 				{options.map((option: RadioOption, i) => {
 					return (

@@ -22,7 +22,7 @@ export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 						align={"center"}
 						maxWidth={"25rem"}
 						asChild
-						minHeight={"calc(100vh - 100px - 40px)"}
+						height={"fit-content"}
 						gap={"8"}
 						width={"100%"}
 					>

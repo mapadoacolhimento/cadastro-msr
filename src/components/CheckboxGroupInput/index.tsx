@@ -4,6 +4,7 @@ import { Box, CheckboxCards, Text } from "@radix-ui/themes";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 import ErrorMessage from "../ErrorMessage";
+import Question from "../Question";
 import "./CheckboxGroupInput.css";
 
 type CheckboxOption = {
@@ -65,11 +66,7 @@ export default function CheckboxGroupInput({
 			color={"purple"}
 			style={{ width: "100%" }}
 		>
-			<Box asChild pb={{ initial: "5", sm: "6" }}>
-				<Text asChild align={"center"} id={"question"} as={"p"}>
-					<legend>{question}</legend>
-				</Text>
-			</Box>
+			<Question id={"question"}>{question}</Question>
 			{options.map((option: CheckboxOption, i) => {
 				return (
 					<Box key={option.value}>

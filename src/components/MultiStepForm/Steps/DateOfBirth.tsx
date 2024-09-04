@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Box, Strong, Text } from "@radix-ui/themes";
 
 import Step from "../Step";
-import { TextInput } from "../..";
+import { Question, TextInput } from "../..";
 import { isDateValid, isAdult } from "@/utils";
 
 const dateOfBirthSchema = Yup.object({
@@ -56,13 +56,9 @@ export default function DateOfBirth() {
 			}}
 		>
 			<Box width={"100%"} maxWidth={"22rem"}>
-				<Box asChild pb={{ initial: "7", sm: "8" }}>
-					<Text asChild align={"center"} as={"p"}>
-						<legend>
-							Qual a sua <Strong>data de nascimento?</Strong>
-						</legend>
-					</Text>
-				</Box>
+				<Question>
+					Qual a sua <Strong>data de nascimento?</Strong>
+				</Question>
 				<TextInput
 					name="dateOfBirth"
 					type="text"

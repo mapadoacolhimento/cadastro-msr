@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
+import { Box, Text } from "@radix-ui/themes";
 import { useField } from "formik";
 import Select, { SingleValue } from "react-select";
 import ErrorMessage from "../ErrorMessage";
 import "./SelectInput.css";
-import { Box, Text } from "@radix-ui/themes";
 
 type Option = { value: string; label: string };
 
@@ -63,7 +63,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 				classNamePrefix={`${field.value ? "custom-select--with-value" : ""} custom-select`}
 				options={options}
 				name={field.name}
-				id={field.name}
+				inputId={field.name}
 				value={
 					options ? options.find((option) => option.value === field.value) : ""
 				}

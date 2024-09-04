@@ -9,7 +9,8 @@
 	transform: translateY(-50%);
 	transition: all 0.2s ease;
 	pointer-events: none;
-	visibility: hidden;
+	/* visibility cant be hidden, otherwise a11y tests wont pass */
+	/* visibility: hidden; */
 }
 
 .select-input-container label.active {

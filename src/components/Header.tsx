@@ -21,11 +21,15 @@ export default function Header() {
 						style={{ width: "auto" }}
 					/>
 
-					<Flex display={{ initial: "flex", md: "none" }} justify={"end"}>
+					<Flex
+						display={{ initial: "flex", md: "none" }}
+						justify={"end"}
+						style={{ color: "purple" }}
+					>
 						<Button variant={"soft"} size={"3"} onClick={handleClick}>
 							<Image
-								src="/icons/mobile-return.svg"
-								alt="ícone de seta de retorno"
+								src="/icons/return.svg"
+								alt="Seta de retorno"
 								width={"16"}
 								height={"16"}
 							/>

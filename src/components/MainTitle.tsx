@@ -15,7 +15,7 @@ export default function MainTitle({
 		<Box asChild pt={pt ?? "0"} pb={"3"}>
 			<Heading
 				as={"h1"}
-				size={size ?? "8"}
+				size={size ?? { initial: "7", md: "8" }}
 				color={"purple"}
 				highContrast
 				align={"center"}

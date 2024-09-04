@@ -34,9 +34,9 @@ export default function Illustration({
 					<Image
 						src={img.src}
 						alt={img.alt}
-						style={{ width: "auto" }}
+						style={{ height: "auto" }}
 						width={600}
-						height={600}
+						height={300}
 					/>
 				</aside>
 			</Flex>

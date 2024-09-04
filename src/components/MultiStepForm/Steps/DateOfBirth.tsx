@@ -55,18 +55,16 @@ export default function DateOfBirth() {
 				alt: "Ilustração de uma mulher com cabelo roxo se abraçando",
 			}}
 		>
-			<Box width={"100%"} maxWidth={"22rem"}>
-				<Question>
-					Qual a sua <Strong>data de nascimento?</Strong>
-				</Question>
-				<TextInput
-					name="dateOfBirth"
-					type="text"
-					label="Data de nascimento"
-					placeholder="DD/MM/AAAA"
-					mask="99/99/9999"
-				/>
-			</Box>
+			<Question>
+				Qual a sua <Strong>data de nascimento?</Strong>
+			</Question>
+			<TextInput
+				name="dateOfBirth"
+				type="text"
+				label="Data de nascimento"
+				placeholder="DD/MM/AAAA"
+				mask="99/99/9999"
+			/>
 		</Step>
 	);
 }

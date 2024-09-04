@@ -14,8 +14,8 @@ export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 					width={"100%"}
 					justify={"center"}
 					align={"center"}
-					py={"7"}
-					px={"5"}
+					py={{ initial: "5", md: "7" }}
+					px={"7"}
 				>
 					<Flex
 						direction={"column"}
@@ -23,7 +23,7 @@ export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 						maxWidth={"25rem"}
 						asChild
 						height={"fit-content"}
-						gap={"8"}
+						gap={{ initial: "5", md: "6" }}
 						width={"100%"}
 					>
 						<main>{children}</main>

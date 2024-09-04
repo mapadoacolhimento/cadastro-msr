@@ -1,45 +1,29 @@
-import { Box, Flex, Heading, Text } from "@radix-ui/themes";
-import Illustration from "../../Illustration";
+import { Flex, Text } from "@radix-ui/themes";
 import Image from "next/image";
+import Illustration from "@/components/Illustration";
+import MainTitle from "@/components/MainTitle";
 
 export default function LoadingStep() {
 	return (
-		<Flex
-			width={"100%"}
-			justify={"center"}
-			py={{ initial: "8", md: "9" }}
-			px={{ initial: "6", md: "7" }}
-		>
-			<Flex direction={"column"} align={"center"} maxWidth={"30rem"}>
-				<Box asChild pb={"4"}>
-					<Heading
-						as={"h1"}
-						size={"8"}
-						align={"center"}
-						color={"purple"}
-						highContrast
-					>
-						Por favor, aguarde
-					</Heading>
-				</Box>
-				<Flex
-					align="center"
-					gap="4"
-					direction={"column"}
-					maxWidth={"20rem"}
-					justify={"center"}
-				>
-					<Image
-						src="/icons/spinner.svg"
-						alt="Ícone de círculo em movimento indicando carregamento"
-						width={50}
-						height={50}
-					/>
-					<Text align={"center"}>
-						Nesse momento estamos analisando seus dados e em breve buscaremos
-						uma voluntária para te atender
-					</Text>
-				</Flex>
+		<>
+			<Flex
+				height={"calc(100vh - 100px - 80px)"}
+				justify={"center"}
+				direction={"column"}
+				align={"center"}
+				gap={"6"}
+			>
+				<MainTitle>Cadastro realizado</MainTitle>
+				<Image
+					src="/icons/spinner.svg"
+					alt="Ícone de círculo em movimento indicando carregamento"
+					width={50}
+					height={50}
+				/>
+				<Text align={"center"}>
+					Nesse momento estamos analisando seus dados e buscando uma voluntária
+					para te atender
+				</Text>
 			</Flex>
 			<Illustration
 				img={{
@@ -47,6 +31,6 @@ export default function LoadingStep() {
 					alt: "Ilustração de uma mulher com cabelo castanho escuro e blusa roxa com um coração branco do mapa do acolhimento",
 				}}
 			/>
-		</Flex>
+		</>
 	);
 }

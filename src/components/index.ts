@@ -13,3 +13,4 @@ export { default as ExtraSupport } from "./ExtraSupport";
 export { default as InfoBox } from "./InfoBox";
 export { default as CheckboxInput } from "./CheckboxInput";
 export { default as Question } from "./Question";
+export { default as MainTitle } from "./MainTitle";

@@ -1,22 +1,13 @@
-import { Box, Heading, Strong, Text, Link } from "@radix-ui/themes";
-import ExtraSupport from "../../components/ExtraSupport";
-import Illustration from "../../components/Illustration";
+import { Box, Strong, Text, Link } from "@radix-ui/themes";
+import ExtraSupport from "@/components/ExtraSupport";
+import Illustration from "@/components/Illustration";
+import MainTitle from "@/components/MainTitle";
 
 export default function Page() {
 	return (
 		<>
 			<Box>
-				<Box asChild pb={"5"}>
-					<Heading
-						as={"h1"}
-						size={"8"}
-						align={"center"}
-						color={"purple"}
-						highContrast
-					>
-						Você já recebeu uma voluntária
-					</Heading>
-				</Box>
+				<MainTitle>Você já recebeu uma voluntária</MainTitle>
 				<Text align={"center"} as={"p"}>
 					Verificamos que você já solicitou ajuda anteriormente. O contato da
 					voluntária foi enviado para o seu e-mail.

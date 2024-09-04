@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import { Heading, Text, Button, Flex, Container } from "@radix-ui/themes";
-import Illustration from "../components/Illustration";
+import Illustration from "@/components/Illustration";
+import MainTitle from "@/components/MainTitle";
 
 export default function Custom404() {
 	return (
@@ -12,9 +13,7 @@ export default function Custom404() {
 				justify={"center"}
 				gapY={"2"}
 			>
-				<Heading as="h1" size="9" color="purple" highContrast>
-					404
-				</Heading>
+				<MainTitle size={"9"}>404</MainTitle>
 
 				<Flex align={"center"} direction={"column"}>
 					<Heading as={"h2"} size="4">

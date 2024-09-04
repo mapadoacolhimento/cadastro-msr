@@ -6,11 +6,11 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { type FormikHelpers, Form, Formik } from "formik";
-import { Box, Flex, Heading, IconButton } from "@radix-ui/themes";
+import { Box, Flex, IconButton } from "@radix-ui/themes";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
-import { StepsController, Illustration } from "@/components";
+import { StepsController, Illustration, MainTitle } from "@/components";
 import { LoadingStep, ErrorStep } from "./Steps";
 import {
 	type HandleRequestResponse,
@@ -112,17 +112,7 @@ export default function MultiStepFormWrapper({
 
 						{status === Status.idle ? (
 							<>
-								<Box asChild pt={"5"} pb={"3"}>
-									<Heading
-										as={"h1"}
-										size={"8"}
-										color={"purple"}
-										highContrast
-										align={"center"}
-									>
-										{step.props.title}
-									</Heading>
-								</Box>
+								<MainTitle pt={"5"}>{step.props.title}</MainTitle>
 
 								<Flex
 									direction={"column"}

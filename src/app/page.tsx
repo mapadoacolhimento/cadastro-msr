@@ -4,12 +4,12 @@ import {
 	Box,
 	Button,
 	Flex,
-	Heading,
 	Link as ExternalLink,
 	Text,
 	Strong,
 } from "@radix-ui/themes";
-import Illustration from "../components/Illustration";
+import Illustration from "@/components/Illustration";
+import MainTitle from "@/components/MainTitle";
 
 export default function Homepage() {
 	return (
@@ -21,16 +21,8 @@ export default function Homepage() {
 				maxWidth={{ initial: "100%", xs: "25rem" }}
 			>
 				<Box>
-					<Heading
-						as={"h1"}
-						size={"8"}
-						align={"center"}
-						color={"purple"}
-						highContrast
-					>
-						Estamos aqui por você
-					</Heading>
-					<Text align={"center"} mt={"5"} as={"p"}>
+					<MainTitle>Estamos aqui por você</MainTitle>
+					<Text align={"center"} as={"p"}>
 						Preencha o formulário a seguir para solicitar atendimento
 						psicológico e/ou jurídico de nossas profissionais voluntárias.
 					</Text>

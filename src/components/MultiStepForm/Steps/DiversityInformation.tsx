@@ -5,7 +5,6 @@ import Step from "../Step";
 import CheckboxInput from "../../CheckboxInput";
 import { SelectInput } from "../..";
 import { colorOptions, DISABILITY_OPTIONS } from "@/constants";
-import { sleep } from "@/utils";
 
 const diversityInformationSchema = Yup.object({
 	color: Yup.string().required("Selecione sua cor."),
@@ -21,7 +20,6 @@ const diversityInformationSchema = Yup.object({
 export default function DiversityInformation() {
 	return (
 		<Step
-			onSubmit={() => sleep(300).then(() => console.log("Step2 onSubmit"))}
 			validationSchema={diversityInformationSchema}
 			title={"Seus dados"}
 			img={{

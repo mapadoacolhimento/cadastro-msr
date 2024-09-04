@@ -4,7 +4,6 @@ import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
 import { acceptsOnlineSupportOptions } from "@/constants";
-import { sleep } from "@/utils";
 
 const acceptsOnlineSupportSchema = Yup.object({
 	acceptsOnlineSupport: Yup.string()
@@ -15,7 +14,6 @@ const acceptsOnlineSupportSchema = Yup.object({
 export default function AcceptsOnlineSupport() {
 	return (
 		<Step
-			onSubmit={() => sleep(300).then(() => console.log("Step2 onSubmit"))}
 			validationSchema={acceptsOnlineSupportSchema}
 			title={"Sobre o acolhimento"}
 			img={{

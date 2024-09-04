@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import RegistrationCompleted from "../cadastro-finalizado/page";
 
@@ -20,8 +21,15 @@ describe("<RegistrationCompleted />", () => {
 		);
 		expect(description1).toBeInTheDocument();
 
+		const heading2 = screen.getByRole("heading", {
+			name: "Como podemos te ajudar:",
+			level: 2,
+		});
+
+		expect(heading2).toBeInTheDocument();
+
 		const description2 = screen.getByText(
-			"Enquanto isso, preparamos esses materiais para te apoiar no seu caminho:"
+			"Conheça a rede de apoio que você pode acessar e um material preparado com cuidado para te ajudar nesse momento difícil:"
 		);
 		expect(description2).toBeInTheDocument();
 	});

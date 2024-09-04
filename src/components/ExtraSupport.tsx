@@ -53,8 +53,11 @@ const ExtraSupport = () => (
 					</Text>
 					<Text size={"2"} as={"p"}>
 						Fale conosco em{" "}
-						<Link href={"mailto:contato@mapa.org.br"} target={"_blank"}>
-							contato@mapa.org.br
+						<Link
+							href={"mailto:atendimento@mapadoacolhimento.org"}
+							target={"_blank"}
+						>
+							atendimento@mapadoacolhimento.org
 						</Link>
 					</Text>
 				</Box>

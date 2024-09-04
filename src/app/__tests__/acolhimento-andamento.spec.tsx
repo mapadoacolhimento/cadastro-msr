@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import SupportInProgress from "../acolhimento-andamento/page";
 
@@ -24,10 +25,10 @@ describe("<SupportInProgress />", () => {
 		);
 		expect(description).toBeInTheDocument();
 
-		const link = screen.getByRole("link", {
+		const link = screen.getAllByRole("link", {
 			name: "atendimento@mapadoacolhimento.org",
 		});
-		expect(link).toBeInTheDocument();
+		expect(link).toHaveLength(2);
 
 		const description2 = screen.getByText(
 			"Conheça a rede de apoio que você pode acessar e um material preparado com cuidado para te ajudar nesse momento difícil:"
@@ -79,7 +80,9 @@ describe("<SupportInProgress />", () => {
 		const text2 = screen.getByText("Fale conosco em");
 		expect(text2).toBeInTheDocument();
 
-		const link = screen.getByRole("link", { name: "contato@mapa.org.br" });
-		expect(link).toBeInTheDocument();
+		const link = screen.getAllByRole("link", {
+			name: "atendimento@mapadoacolhimento.org",
+		});
+		expect(link).toHaveLength(2);
 	});
 });

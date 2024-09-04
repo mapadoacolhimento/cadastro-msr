@@ -76,7 +76,9 @@ describe("<CriteriaDenied />", () => {
 		const text2 = screen.getByText("Fale conosco em");
 		expect(text2).toBeInTheDocument();
 
-		const link = screen.getByRole("link", { name: "contato@mapa.org.br" });
+		const link = screen.getByRole("link", {
+			name: "atendimento@mapadoacolhimento.org",
+		});
 		expect(link).toBeInTheDocument();
 	});
 });

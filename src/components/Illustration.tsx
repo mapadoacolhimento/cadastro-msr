@@ -40,14 +40,22 @@ export default function Illustration({
 					/>
 				</aside>
 			</Flex>
-			<Box
-				position={"absolute"}
-				right={"0"}
-				bottom={isForm ? "115px" : "0"}
-				display={{ initial: "block", md: "none" }}
-			>
-				<img src={img.src} height={"150px"} alt={img.alt} />
-			</Box>
+			{isForm ? (
+				<Box
+					position={"absolute"}
+					right={"0"}
+					bottom={isForm ? "80px" : "0"}
+					display={{ initial: "block", md: "none" }}
+				>
+					<Image
+						src={img.src}
+						height={150}
+						width={150}
+						style={{ height: "auto" }}
+						alt={img.alt}
+					/>
+				</Box>
+			) : null}
 		</>
 	);
 }

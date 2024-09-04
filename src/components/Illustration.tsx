@@ -6,17 +6,22 @@ export default function Illustration({
 	img,
 	align = "center",
 	isForm = true,
+	backgroundColor,
 }: Readonly<{
 	img: { src: string; alt: string };
 	align?: Responsive<"center" | "start" | "end" | "baseline" | "stretch">;
 	isForm?: boolean;
+	backgroundColor?: string;
 }>) {
 	return (
 		<>
 			<Flex
 				display={{ initial: "none", md: "flex" }}
 				asChild
-				style={{ backgroundColor: "var(--yellow-2)", zIndex: "-1" }}
+				style={{
+					backgroundColor: backgroundColor ?? "var(--yellow-2)",
+					zIndex: "-1",
+				}}
 				justify={"center"}
 				align={align}
 				position={"absolute"}
@@ -29,7 +34,7 @@ export default function Illustration({
 					<Image
 						src={img.src}
 						alt={img.alt}
-						style={{ maxWidth: "95%" }}
+						style={{ width: "auto" }}
 						width={600}
 						height={600}
 					/>

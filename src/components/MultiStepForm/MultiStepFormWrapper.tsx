@@ -11,7 +11,7 @@ import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 import { StepsController, Illustration, MainTitle } from "@/components";
-import { LoadingStep, ErrorStep } from "./Steps";
+import { TransitoryStep } from "./Steps";
 import {
 	type HandleRequestResponse,
 	Status,
@@ -87,7 +87,19 @@ export default function MultiStepFormWrapper({
 		}
 	};
 
-	return (
+	if (status === Status.loading) {
+		return <TransitoryStep.Loading />;
+	}
+
+	if (status === Status.error) {
+		return (
+			<TransitoryStep.Error
+				errorMsg={"Ocorreu um erro durante o envio do formulário"}
+			/>
+		);
+	}
+
+	return status === Status.idle ? (
 		<>
 			<Formik
 				initialValues={snapshot}
@@ -110,36 +122,29 @@ export default function MultiStepFormWrapper({
 							</IconButton>
 						</Box>
 
-						{status === Status.idle ? (
-							<>
-								<MainTitle pt={"5"}>{step.props.title}</MainTitle>
+						<>
+							<MainTitle pt={"5"}>{step.props.title}</MainTitle>
 
-								<Flex
-									direction={"column"}
-									align={"center"}
-									justify={"center"}
-									gapY={"4"}
-								>
-									{step}
-								</Flex>
-								<StepsController
-									stepName={step.props.title}
-									stepNumber={stepNumber}
-									isButtonDisabled={isSubmitting}
-									progress={progress}
-									isLastStep={isLastStep}
-								/>
-							</>
-						) : null}
-
-						{status === Status.loading ? <LoadingStep /> : null}
-						{status === Status.error ? (
-							<ErrorStep message={"Ocorreu um erro durante a submissão"} />
-						) : null}
+							<Flex
+								direction={"column"}
+								align={"center"}
+								justify={"center"}
+								gapY={"4"}
+							>
+								{step}
+							</Flex>
+							<StepsController
+								stepName={step.props.title}
+								stepNumber={stepNumber}
+								isButtonDisabled={isSubmitting}
+								progress={progress}
+								isLastStep={isLastStep}
+							/>
+						</>
 					</Form>
 				)}
 			</Formik>
 			<Illustration img={step.props.img} />
 		</>
-	);
+	) : null;
 }

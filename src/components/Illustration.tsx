@@ -7,11 +7,13 @@ export default function Illustration({
 	align = "center",
 	isForm = true,
 	backgroundColor,
+	bottom,
 }: Readonly<{
 	img: { src: string; alt: string };
 	align?: Responsive<"center" | "start" | "end" | "baseline" | "stretch">;
 	isForm?: boolean;
 	backgroundColor?: string;
+	bottom?: string;
 }>) {
 	return (
 		<>
@@ -44,7 +46,9 @@ export default function Illustration({
 				<Box
 					position={"absolute"}
 					right={"0"}
-					bottom={isForm ? "80px" : "0"}
+					bottom={
+						typeof bottom !== "undefined" ? bottom : isForm ? "80px" : "0"
+					}
 					display={{ initial: "block", md: "none" }}
 				>
 					<Image

@@ -75,10 +75,10 @@ export const genderIdentityOptions = [
 ];
 
 export const genderViolenceOptions = [
-	{ value: "yes", name: "Sim" },
+	{ value: "yes", name: "Sim, sofro ou sofri violência" },
 	{
 		value: "no",
-		name: "Não",
+		name: "Não, não sofro ou sofri violência",
 	},
 ];
 

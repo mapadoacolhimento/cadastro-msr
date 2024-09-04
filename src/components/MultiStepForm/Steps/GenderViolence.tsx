@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
 import { genderViolenceOptions } from "@/constants";
@@ -32,7 +33,11 @@ export default function GenderViolence() {
 			<RadioInput
 				name="genderViolence"
 				options={genderViolenceOptions}
-				question={"Você sofreu ou está sofrendo violência de gênero?"}
+				question={
+					<>
+						Você sofreu ou está sofrendo <Strong>violência de gênero</Strong>?
+					</>
+				}
 			/>
 		</Step>
 	);

@@ -194,7 +194,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillGenderViolenceStep(genderViolence);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceLocationStep("Não");
+		cy.fillViolenceLocationStep("Não, aconteceu em outro país");
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");

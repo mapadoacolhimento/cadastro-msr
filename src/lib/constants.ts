@@ -83,10 +83,10 @@ export const genderViolenceOptions = [
 ];
 
 export const violenceLocationOptions = [
-	{ value: "yes", name: "Sim" },
+	{ value: "yes", name: "Sim, dentro do território brasileiro" },
 	{
 		value: "no",
-		name: "Não",
+		name: "Não, aconteceu em outro país",
 	},
 ];
 

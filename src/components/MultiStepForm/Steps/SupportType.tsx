@@ -15,7 +15,7 @@ const supportTypeSchema = Yup.object({
 });
 
 function SupportTypeChild() {
-	const { values } = useFormikContext<Values>();
+	const { values, setFieldValue } = useFormikContext<Values>();
 
 	useEffect(() => {
 		if (values.externalSupport === "yes") {
@@ -24,6 +24,13 @@ function SupportTypeChild() {
 				(btn) => btn.textContent === "Acolhimento jurídico"
 			);
 			legalSupportBtn?.setAttribute("disabled", "true");
+
+			if (values.supportType.includes("legal")) {
+				const supportTypeWithoutLegal = values.supportType.filter(
+					(type) => type !== "legal"
+				);
+				setFieldValue("supportType", supportTypeWithoutLegal, false);
+			}
 		}
 	}, [values.externalSupport]);
 

@@ -1,6 +1,7 @@
 import { Button, Flex, Section } from "@radix-ui/themes";
 import Image from "next/image";
 import { handleClick } from "./SafeExitButton";
+import Link from "next/link";
 
 export default function Header() {
 	return (
@@ -13,13 +14,15 @@ export default function Header() {
 					justify={"between"}
 					pb={"4"}
 				>
-					<Image
-						src="/logo.svg"
-						alt="Logo Mapa do Acolhimento"
-						height={30}
-						width={0}
-						style={{ width: "auto" }}
-					/>
+					<Link href={"/"}>
+						<Image
+							src="/logo.svg"
+							alt="Logo Mapa do Acolhimento"
+							height={30}
+							width={0}
+							style={{ width: "auto" }}
+						/>
+					</Link>
 
 					<Flex
 						display={{ initial: "flex", md: "none" }}

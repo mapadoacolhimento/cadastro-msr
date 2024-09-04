@@ -15,7 +15,7 @@ export default function BaseLayout({ children }: Readonly<PropsWithChildren>) {
 					justify={"center"}
 					align={"center"}
 					py={{ initial: "5", md: "7" }}
-					px={"7"}
+					px={"6"}
 				>
 					<Flex
 						direction={"column"}

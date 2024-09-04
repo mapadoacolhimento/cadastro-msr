@@ -6,7 +6,7 @@ export default function Step({
 	children,
 }: PropsWithChildren<StepChildrenProps>) {
 	return (
-		<Flex direction={"column"} gap={"4"}>
+		<Flex direction={"column"} gap={"4"} width={"100%"}>
 			{children}
 		</Flex>
 	);

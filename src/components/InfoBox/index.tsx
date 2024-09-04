@@ -24,7 +24,7 @@ const InfoBox = ({
 				borderRadius: "var(--radius-4)",
 				boxShadow: "none",
 			}}
-			size={"2"}
+			size={"1"}
 		>
 			<Flex direction={"row"} gap={"4"}>
 				<Flex
@@ -35,12 +35,14 @@ const InfoBox = ({
 					justify={"center"}
 					align={"center"}
 					px={"3"}
+					width={"6.25rem"}
+					height={"4.375rem"}
 				>
 					<Image
 						src={imgSrc}
 						alt={imgAlt}
-						width={0}
-						height={80}
+						width={70}
+						height={70}
 						style={{ width: "auto" }}
 					/>
 				</Flex>

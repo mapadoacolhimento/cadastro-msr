@@ -5,7 +5,6 @@ import Step from "../Step";
 import CheckboxInput from "../../CheckboxInput";
 import { SelectInput } from "../..";
 import { colorOptions, DISABILITY_OPTIONS } from "@/constants";
-import { sleep } from "@/utils";
 
 const diversityInformationSchema = Yup.object({
 	color: Yup.string().required("Selecione sua cor."),
@@ -21,7 +20,6 @@ const diversityInformationSchema = Yup.object({
 export default function DiversityInformation() {
 	return (
 		<Step
-			onSubmit={() => sleep(300).then(() => console.log("Step2 onSubmit"))}
 			validationSchema={diversityInformationSchema}
 			title={"Seus dados"}
 			img={{
@@ -29,7 +27,7 @@ export default function DiversityInformation() {
 				alt: "Ilustração com uma mulher flutuando.",
 			}}
 		>
-			<Box pt={{ initial: "7", sm: "8" }} width={"100%"} maxWidth={"22rem"}>
+			<Box pt={"3"}>
 				<SelectInput
 					name="color"
 					label="Cor"
@@ -43,18 +41,20 @@ export default function DiversityInformation() {
 				label={"Você é PcD (Pessoa com deficiência)?"}
 				placeholder="Você é PcD (Pessoa com deficiência)?"
 			/>
-			<CheckboxInput name="terms">
-				Ao inserir seus dados, você concorda em ter seus dados compartilhados
-				com os organizadores dessa página e aceita receber emails de
-				atualização, conforme descrito na{" "}
-				<a
-					href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
-					target="_blank"
-				>
-					política de privacidade
-				</a>
-				. Você pode cancelar o recebimento desses e-mails a qualquer momento.
-			</CheckboxInput>
+			<Box pt={"6"}>
+				<CheckboxInput name="terms">
+					Ao inserir seus dados, você concorda em ter seus dados compartilhados
+					com os organizadores dessa página e aceita receber emails de
+					atualização, conforme descrito na{" "}
+					<a
+						href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
+						target="_blank"
+					>
+						política de privacidade
+					</a>
+					. Você pode cancelar o recebimento desses e-mails a qualquer momento.
+				</CheckboxInput>
+			</Box>
 		</Step>
 	);
 }

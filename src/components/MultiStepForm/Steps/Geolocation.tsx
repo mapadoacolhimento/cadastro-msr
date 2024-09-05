@@ -53,6 +53,7 @@ function GeolocationFields() {
 					label: "Carregando cidades...",
 				},
 			]);
+			setFieldValue("city", "", false);
 			const response = await fetch(`/cities?state=${state}`, {
 				method: "GET",
 			});
@@ -109,7 +110,7 @@ function GeolocationFields() {
 
 	return (
 		<>
-			<Box pt={{ initial: "7", sm: "8" }} width={"100%"} maxWidth={"22rem"}>
+			<Box pt={"3"}>
 				<TextInput
 					mask="99999-999"
 					name="zipcode"
@@ -139,13 +140,7 @@ function GeolocationFields() {
 				isLoading={status === Status.loading}
 			/>
 			{error && status === Status.error ? (
-				<Text
-					color={"red"}
-					size={"2"}
-					role={"alert"}
-					as={"p"}
-					style={{ paddingTop: "var(--space-1)", backgroundColor: "white" }}
-				>
+				<Text color={"red"} size={"2"} role={"alert"}>
 					{error}
 				</Text>
 			) : null}
@@ -168,15 +163,15 @@ export default function Geolocation() {
 		);
 
 		if (!response.ok) {
-			setFieldValue("lat", null);
-			setFieldValue("lng", null);
+			setFieldValue("lat", null, false);
+			setFieldValue("lng", null, false);
 			return null;
 		}
 
 		const geolocation = (await response.json()) as GeolocationResponseData;
 
-		setFieldValue("lat", geolocation.lat);
-		setFieldValue("lng", geolocation.lng);
+		setFieldValue("lat", geolocation.lat, false);
+		setFieldValue("lng", geolocation.lng, false);
 	}
 
 	return (

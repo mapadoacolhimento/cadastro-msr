@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import CriteriaDenied from "../fora-criterios/page";
 
@@ -76,7 +77,9 @@ describe("<CriteriaDenied />", () => {
 		const text2 = screen.getByText("Fale conosco em");
 		expect(text2).toBeInTheDocument();
 
-		const link = screen.getByRole("link", { name: "contato@mapa.org.br" });
+		const link = screen.getByRole("link", {
+			name: "atendimento@mapadoacolhimento.org",
+		});
 		expect(link).toBeInTheDocument();
 	});
 });

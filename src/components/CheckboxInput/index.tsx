@@ -29,7 +29,7 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({ name, children }) => {
 	return (
 		<>
 			<Text as="label" htmlFor={name}>
-				<Flex align="start" as="span" gap={"2"} maxWidth={"18.75rem"}>
+				<Flex align="start" as="span" gap={"4"}>
 					<Checkbox
 						id={name}
 						checked={field.value}

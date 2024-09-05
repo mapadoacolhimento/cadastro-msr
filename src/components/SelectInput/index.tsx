@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { Box, Text } from "@radix-ui/themes";
 import { useField } from "formik";
 import Select, { SingleValue } from "react-select";
 import ErrorMessage from "../ErrorMessage";
@@ -46,21 +47,23 @@ const SelectInput: React.FC<SelectInputProps> = ({
 	};
 
 	return (
-		<div className="select-input-container">
-			<label
-				className={isFocused || field.value ? "active" : ""}
-				htmlFor={field.name}
-				id={`select-label-${field.name}`}
-			>
-				{label}
-			</label>
+		<Box position={"relative"} className={"select-input-container"}>
+			<Text asChild size={"1"} color={"purple"} weight={"bold"}>
+				<label
+					className={isFocused || field.value ? "active" : ""}
+					htmlFor={field.name}
+					id={`select-label-${field.name}`}
+				>
+					{label}
+				</label>
+			</Text>
 			<Select
 				aria-live={"polite"}
 				aria-busy={isLoading}
-				classNamePrefix="custom-select"
+				classNamePrefix={`${field.value ? "custom-select--with-value" : ""} custom-select`}
 				options={options}
 				name={field.name}
-				id={field.name}
+				inputId={field.name}
 				value={
 					options ? options.find((option) => option.value === field.value) : ""
 				}
@@ -73,7 +76,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 				isLoading={isLoading}
 			/>
 			<ErrorMessage name={name} />
-		</div>
+		</Box>
 	);
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Button } from "@radix-ui/themes";
+import { Flex, Button, Text } from "@radix-ui/themes";
 import Image from "next/image";
 
 export const handleClick = () => {
@@ -13,21 +13,25 @@ const SafeExitButton = () => (
 		mt={"7"}
 		mr={"6"}
 	>
-		<Button
-			color={"purple"}
-			size={"4"}
-			onClick={handleClick}
-			style={{ cursor: "pointer" }}
-			highContrast
-		>
-			<Image
-				src="/icons/return.svg"
-				alt="ícone de seta de retorno"
-				width={"18"}
-				height={"18"}
-			/>
-			Sair desse site
-		</Button>
+		<Flex asChild justify={"center"}>
+			<Button
+				color={"pink"}
+				size={"3"}
+				onClick={handleClick}
+				style={{ cursor: "pointer" }}
+			>
+				<Image
+					src="/icons/return.svg"
+					alt="Seta de retorno"
+					height={0}
+					width={18}
+					style={{ height: "auto", paddingBottom: "6px" }}
+				/>
+				<Text color={"purple"} highContrast>
+					Sair desse site
+				</Text>
+			</Button>
+		</Flex>
 	</Flex>
 );
 

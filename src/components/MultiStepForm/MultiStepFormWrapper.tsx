@@ -6,12 +6,12 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { type FormikHelpers, Form, Formik } from "formik";
-import { Box, Flex, Heading, IconButton } from "@radix-ui/themes";
+import { Box, Flex, IconButton } from "@radix-ui/themes";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
-import { StepsController, Illustration } from "@/components";
-import { LoadingStep, ErrorStep } from "./Steps";
+import { StepsController, Illustration, MainTitle } from "@/components";
+import { TransitoryStep } from "./Steps";
 import {
 	type HandleRequestResponse,
 	Status,
@@ -87,7 +87,19 @@ export default function MultiStepFormWrapper({
 		}
 	};
 
-	return (
+	if (status === Status.loading) {
+		return <TransitoryStep.Loading />;
+	}
+
+	if (status === Status.error) {
+		return (
+			<TransitoryStep.Error
+				errorMsg={"Ocorreu um erro durante o envio do formulário"}
+			/>
+		);
+	}
+
+	return status === Status.idle ? (
 		<>
 			<Formik
 				initialValues={snapshot}
@@ -95,8 +107,8 @@ export default function MultiStepFormWrapper({
 				validationSchema={step.props.validationSchema}
 			>
 				{({ isSubmitting, values }) => (
-					<Form>
-						<Box px={"5"}>
+					<Form style={{ width: "100%" }}>
+						<Box asChild position={"absolute"} left={"6"}>
 							<IconButton
 								onClick={() => previousStep(values)}
 								variant="ghost"
@@ -110,48 +122,29 @@ export default function MultiStepFormWrapper({
 							</IconButton>
 						</Box>
 
-						{status === Status.idle ? (
-							<>
-								<Box px={"5"}>
-									<Box asChild pt={"4"}>
-										<Heading
-											as={"h1"}
-											size={"8"}
-											color={"purple"}
-											highContrast
-											align={"center"}
-										>
-											{step.props.title}
-										</Heading>
-									</Box>
+						<>
+							<MainTitle pt={"5"}>{step.props.title}</MainTitle>
 
-									<Flex
-										direction={"column"}
-										align={"center"}
-										justify={"center"}
-										gapY={"4"}
-									>
-										{step}
-									</Flex>
-								</Box>
-								<StepsController
-									stepName={step.props.title}
-									stepNumber={stepNumber}
-									isButtonDisabled={isSubmitting}
-									progress={progress}
-									isLastStep={isLastStep}
-								/>
-							</>
-						) : null}
-
-						{status === Status.loading ? <LoadingStep /> : null}
-						{status === Status.error ? (
-							<ErrorStep message={"Ocorreu um erro durante a submissão"} />
-						) : null}
+							<Flex
+								direction={"column"}
+								align={"center"}
+								justify={"center"}
+								gapY={"4"}
+							>
+								{step}
+							</Flex>
+							<StepsController
+								stepName={step.props.title}
+								stepNumber={stepNumber}
+								isButtonDisabled={isSubmitting}
+								progress={progress}
+								isLastStep={isLastStep}
+							/>
+						</>
 					</Form>
 				)}
 			</Formik>
 			<Illustration img={step.props.img} />
 		</>
-	);
+	) : null;
 }

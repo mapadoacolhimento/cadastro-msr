@@ -75,18 +75,18 @@ export const genderIdentityOptions = [
 ];
 
 export const genderViolenceOptions = [
-	{ value: "yes", name: "Sim" },
+	{ value: "yes", name: "Sim, sofro ou sofri violência" },
 	{
 		value: "no",
-		name: "Não",
+		name: "Não, não sofro ou sofri violência",
 	},
 ];
 
 export const violenceLocationOptions = [
-	{ value: "yes", name: "Sim" },
+	{ value: "yes", name: "Sim, dentro do território brasileiro" },
 	{
 		value: "no",
-		name: "Não",
+		name: "Não, aconteceu em outro país",
 	},
 ];
 

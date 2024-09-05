@@ -1,3 +1,8 @@
 .info-box-card {
-	--card-background-color: var(--pink-3);
+	--card-background-color: #fff3ef;
+	--base-card-surface-box-shadow: none;
+}
+
+.info-box-card::after {
+	border: 1px solid #f2ddd7;
 }

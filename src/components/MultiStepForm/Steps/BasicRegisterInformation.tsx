@@ -30,7 +30,7 @@ export default function BasicRegisterInformation() {
 				alt: "Ilustração com uma mulher flutuando.",
 			}}
 		>
-			<Box pt={{ initial: "7", sm: "8" }} width={"100%"} maxWidth={"22rem"}>
+			<Box pt={"3"}>
 				<TextInput
 					name="firstName"
 					label="Primeiro nome"

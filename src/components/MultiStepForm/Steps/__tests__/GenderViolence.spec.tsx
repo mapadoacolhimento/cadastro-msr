@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
@@ -59,7 +60,7 @@ describe("<GenderViolence />", () => {
 		setup();
 
 		const roleOptionElement = screen.getByRole("radio", {
-			name: "Não",
+			name: /Não/i,
 		});
 		await userEvent.click(roleOptionElement);
 		const btn = screen.getByRole("button", { name: /enviar/i });

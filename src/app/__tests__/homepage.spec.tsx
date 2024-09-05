@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Homepage from "../page";
 
@@ -61,9 +62,9 @@ describe("<Homepage />", () => {
 	});
 
 	it("should render background image", () => {
-		const desktopImage = screen.getAllByRole("img", {
+		const desktopImage = screen.getByRole("img", {
 			name: "Ilustração com duas mulheres sentadas em um sofá, uma delas está segurando um balão de pensamento com um coração dentro.",
 		});
-		expect(desktopImage).toHaveLength(2);
+		expect(desktopImage).toBeInTheDocument();
 	});
 });

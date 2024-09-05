@@ -6,17 +6,24 @@ export default function Illustration({
 	img,
 	align = "center",
 	isForm = true,
+	backgroundColor,
+	bottom,
 }: Readonly<{
 	img: { src: string; alt: string };
 	align?: Responsive<"center" | "start" | "end" | "baseline" | "stretch">;
 	isForm?: boolean;
+	backgroundColor?: string;
+	bottom?: string;
 }>) {
 	return (
 		<>
 			<Flex
 				display={{ initial: "none", md: "flex" }}
 				asChild
-				style={{ backgroundColor: "var(--yellow-2)", zIndex: "-1" }}
+				style={{
+					backgroundColor: backgroundColor ?? "var(--yellow-2)",
+					zIndex: "-1",
+				}}
 				justify={"center"}
 				align={align}
 				position={"absolute"}
@@ -29,20 +36,30 @@ export default function Illustration({
 					<Image
 						src={img.src}
 						alt={img.alt}
-						style={{ maxWidth: "95%" }}
+						style={{ height: "auto" }}
 						width={600}
-						height={600}
+						height={300}
 					/>
 				</aside>
 			</Flex>
-			<Box
-				position={"absolute"}
-				right={"0"}
-				bottom={isForm ? "115px" : "0"}
-				display={{ initial: "block", md: "none" }}
-			>
-				<img src={img.src} height={"150px"} alt={img.alt} />
-			</Box>
+			{isForm ? (
+				<Box
+					position={"absolute"}
+					right={"0"}
+					bottom={
+						typeof bottom !== "undefined" ? bottom : isForm ? "80px" : "0"
+					}
+					display={{ initial: "block", md: "none" }}
+				>
+					<Image
+						src={img.src}
+						height={150}
+						width={150}
+						style={{ height: "auto" }}
+						alt={img.alt}
+					/>
+				</Box>
+			) : null}
 		</>
 	);
 }

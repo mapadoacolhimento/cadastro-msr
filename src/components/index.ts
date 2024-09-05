@@ -10,6 +10,7 @@ export { default as SelectInput } from "./SelectInput";
 export { default as HoverInfo } from "./HoverInfo";
 export { default as BaseLayout } from "./BaseLayout";
 export { default as ExtraSupport } from "./ExtraSupport";
-export { default as Contact } from "./Contact";
 export { default as InfoBox } from "./InfoBox";
 export { default as CheckboxInput } from "./CheckboxInput";
+export { default as Question } from "./Question";
+export { default as MainTitle } from "./MainTitle";

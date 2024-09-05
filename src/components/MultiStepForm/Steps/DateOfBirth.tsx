@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import { Box, Strong, Text } from "@radix-ui/themes";
+import { Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
-import { TextInput } from "../..";
+import { Question, TextInput } from "../..";
 import { isDateValid, isAdult } from "@/utils";
 
 const dateOfBirthSchema = Yup.object({
@@ -51,26 +51,20 @@ export default function DateOfBirth() {
 			validationSchema={dateOfBirthSchema}
 			title={"Sobre você"}
 			img={{
-				src: "/illustrations/woman-self-hug.svg",
+				src: "/illustrations/woman-self-hug.webp",
 				alt: "Ilustração de uma mulher com cabelo roxo se abraçando",
 			}}
 		>
-			<Box width={"100%"} maxWidth={"22rem"}>
-				<Box asChild pb={{ initial: "7", sm: "8" }} pt={"3"}>
-					<Text asChild align={"center"} as={"p"}>
-						<legend>
-							Qual a sua <Strong>data de nascimento?</Strong>
-						</legend>
-					</Text>
-				</Box>
-				<TextInput
-					name="dateOfBirth"
-					type="text"
-					label="Data de nascimento"
-					placeholder="DD/MM/AAAA"
-					mask="99/99/9999"
-				/>
-			</Box>
+			<Question>
+				Qual a sua <Strong>data de nascimento?</Strong>
+			</Question>
+			<TextInput
+				name="dateOfBirth"
+				type="text"
+				label="Data de nascimento"
+				placeholder="DD/MM/AAAA"
+				mask="99/99/9999"
+			/>
 		</Step>
 	);
 }

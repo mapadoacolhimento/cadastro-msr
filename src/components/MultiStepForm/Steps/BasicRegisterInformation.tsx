@@ -51,7 +51,7 @@ export default function BasicRegisterInformation() {
 			/>
 			<TextInput
 				name="phone"
-				type="phone"
+				type="tel"
 				label="Whatsapp"
 				placeholder="Qual o seu whatsapp (com DDD)?"
 				mask="(99) 99999-9999"

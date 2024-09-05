@@ -60,7 +60,6 @@ export default function DateOfBirth() {
 			</Question>
 			<TextInput
 				name="dateOfBirth"
-				type="text"
 				label="Data de nascimento"
 				placeholder="DD/MM/AAAA"
 				mask="99/99/9999"

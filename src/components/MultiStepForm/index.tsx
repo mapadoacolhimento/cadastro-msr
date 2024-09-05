@@ -17,12 +17,14 @@ import type { HandleRequestResponse, Values } from "@/types";
 
 export default function MultiStepForm() {
 	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
+		const formattedValues = formatRegisterFormValues(values);
+
 		const response = await fetch("/handle-request", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: formatRegisterFormValues(values),
+			body: formattedValues,
 		});
 
 		if (!response.ok) {

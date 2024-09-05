@@ -8,6 +8,8 @@ export default function resetDb() {
 		db.matches.deleteMany(),
 		db.supportRequestStatusHistory.deleteMany(),
 		db.supportRequests.deleteMany(),
+		db.volunteerStatusHistory.deleteMany(),
+		db.volunteerAvailability.deleteMany(),
 		db.volunteers.deleteMany(),
 	];
 }

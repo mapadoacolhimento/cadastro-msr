@@ -44,16 +44,20 @@ export const handlers = [
 	}),
 
 	http.post(`${MATCH_LAMBDA_URL}/compose`, () => {
-		return HttpResponse.json([
-			{
-				status: "waiting_contact",
-			},
-		]);
+		return HttpResponse.json({
+			message: [
+				{
+					status: "waiting_contact",
+				},
+			],
+		});
 	}),
 
 	http.post(`${MATCH_LAMBDA_URL}/handle-match`, () => {
 		return HttpResponse.json({
-			status: "waiting_contact",
+			message: {
+				status: "waiting_contact",
+			},
 		});
 	}),
 ];

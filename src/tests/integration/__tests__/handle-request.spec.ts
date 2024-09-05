@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { NextRequest } from "next/server";
 import {
 	LEGAL_ZENDESK_TICKET_ID,

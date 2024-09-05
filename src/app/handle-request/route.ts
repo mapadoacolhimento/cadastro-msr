@@ -154,7 +154,7 @@ export async function POST(request: Request) {
 				});
 
 			if (shouldCreateMatch) {
-				const match = await handleCreateMatch({
+				const matchStatus = await handleCreateMatch({
 					supportType,
 					supportRequestId,
 					zendeskTicketId,
@@ -164,9 +164,7 @@ export async function POST(request: Request) {
 					},
 				});
 
-				response[supportType] = supportRequestId
-					? match.status
-					: match[0].status;
+				response[supportType] = matchStatus;
 			} else {
 				await handleDuplicatedSupportRequest(
 					{

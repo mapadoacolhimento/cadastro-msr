@@ -136,7 +136,9 @@ describe("POST handle-request", () => {
 				mockResTicketLegal
 			);
 			fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
-			fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
+			fetch.mockResolvedValueOnce(
+				createFetchResponse({ message: [mockMatchLegal] })
+			);
 		});
 
 		afterAll(() => {
@@ -197,8 +199,9 @@ describe("POST handle-request", () => {
 		});
 
 		it("should call match lambda with correct params", () => {
+			const { supportRequestId, ...rest } = bodyComposeLegal;
 			expect(fetch).toHaveBeenNthCalledWith(2, `${MATCH_LAMBDA_URL}/compose`, {
-				body: JSON.stringify([bodyComposeLegal]),
+				body: JSON.stringify([rest]),
 				method: "POST",
 				headers: {
 					Authorization: undefined,
@@ -315,7 +318,9 @@ describe("POST handle-request", () => {
 			);
 
 			fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
-			fetch.mockResolvedValueOnce(createFetchResponse([mockMatchLegal]));
+			fetch.mockResolvedValueOnce(
+				createFetchResponse({ message: [mockMatchLegal] })
+			);
 
 			fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
 			const mockMatchPsychological = {
@@ -326,7 +331,7 @@ describe("POST handle-request", () => {
 				status: "waiting_contact",
 			};
 			fetch.mockResolvedValueOnce(
-				createFetchResponse([mockMatchPsychological])
+				createFetchResponse({ message: [mockMatchPsychological] })
 			);
 		});
 
@@ -413,8 +418,9 @@ describe("POST handle-request", () => {
 		});
 
 		it("should call match lambda with correct params", () => {
+			const { supportRequestId: legalId, ...legalRest } = bodyComposeLegal;
 			expect(fetch).toHaveBeenNthCalledWith(2, `${MATCH_LAMBDA_URL}/compose`, {
-				body: JSON.stringify([bodyComposeLegal]),
+				body: JSON.stringify([legalRest]),
 				method: "POST",
 				headers: {
 					Authorization: undefined,
@@ -426,9 +432,9 @@ describe("POST handle-request", () => {
 				supportType: "psychological",
 				zendeskTicketId: mockResTicketPsychological.ticketId,
 			};
-
+			const { supportRequestId: psyId, ...psyRest } = bodyComposePsychological;
 			expect(fetch).toHaveBeenNthCalledWith(4, `${MATCH_LAMBDA_URL}/compose`, {
-				body: JSON.stringify([bodyComposePsychological]),
+				body: JSON.stringify([psyRest]),
 				method: "POST",
 				headers: {
 					Authorization: undefined,
@@ -457,7 +463,9 @@ describe("POST handle-request", () => {
 			);
 
 			fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
-			fetch.mockResolvedValueOnce(createFetchResponse(mockMatchLegal));
+			fetch.mockResolvedValueOnce(
+				createFetchResponse({ message: mockMatchLegal })
+			);
 		});
 
 		afterAll(() => {

@@ -180,7 +180,7 @@ export default function Geolocation() {
 			validationSchema={geolocationSchema}
 			title={"Seu endereço"}
 			img={{
-				src: "/illustrations/woman-floating.svg",
+				src: "/illustrations/woman-floating.webp",
 				alt: "Ilustração com uma mulher flutuando.",
 			}}
 		>

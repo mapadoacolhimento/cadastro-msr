@@ -27,7 +27,7 @@ export default function FinancialNeed() {
 			validationSchema={financialNeedSchema}
 			title={"Sobre sua renda"}
 			img={{
-				src: "/illustrations/notebook.svg",
+				src: "/illustrations/notebook.webp",
 				alt: "Ilustração de um caderno, um lápis amarelo e alguns clips",
 			}}
 		>

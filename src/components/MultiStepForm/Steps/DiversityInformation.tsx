@@ -23,7 +23,7 @@ export default function DiversityInformation() {
 			validationSchema={diversityInformationSchema}
 			title={"Seus dados"}
 			img={{
-				src: "/illustrations/woman-floating.svg",
+				src: "/illustrations/woman-floating.webp",
 				alt: "Ilustração com uma mulher flutuando.",
 			}}
 		>

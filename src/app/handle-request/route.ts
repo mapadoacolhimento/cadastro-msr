@@ -155,6 +155,11 @@ export async function POST(request: Request) {
 					supportType: supportType,
 				});
 
+			console.log("[handle-request]", {
+				supportRequestId,
+				zendeskTicketId,
+				shouldCreateMatch,
+			});
 			if (shouldCreateMatch) {
 				const matchStatus = await handleCreateMatch({
 					supportType,

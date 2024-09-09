@@ -10,6 +10,10 @@ export default async function upserZendeskTicket(ticket: ZendeskTicket) {
 	try {
 		const body = stringifyBigInt(ticket);
 		const endpoint = `${ZENDESK_SUBDOMAIN}/api/v2/tickets/${ticket.id ? ticket.id : ""}`;
+		console.log("[upsertZendeskTicket]:", {
+			endpoint,
+			body: JSON.stringify(body, null, 2),
+		});
 		const response = await fetch(endpoint, {
 			body: JSON.stringify({ ticket: body }),
 			method: ticket.id ? "PUT" : "POST",

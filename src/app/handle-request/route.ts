@@ -18,6 +18,8 @@ import type { HandleRequestResponse } from "@/types";
 import { getErrorMessage } from "@/utils";
 import { ZENDESK_NEW_TICKET_STATUS } from "@/constants";
 
+export const maxDuration = 30;
+
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
 	phone: Yup.string().min(10).required(),

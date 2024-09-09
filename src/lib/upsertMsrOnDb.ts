@@ -52,29 +52,28 @@ export default async function upsertMsrOnDb(
 		where: {
 			msrId: payload.msrZendeskUserId,
 		},
-		update: msr,
+		update: {
+			...msr,
+			MSRStatusHistory: {
+				create: {
+					status: msr.status,
+				},
+			},
+			MSRPii: {
+				update: msrPii,
+			},
+		},
 		create: {
 			msrId: payload.msrZendeskUserId,
 			...msr,
-		},
-	});
-
-	await db.mSRPiiSec.upsert({
-		where: {
-			msrId: payload.msrZendeskUserId,
-			email: payload.email,
-		},
-		update: msrPii,
-		create: {
-			msrId: payload.msrZendeskUserId,
-			...msrPii,
-		},
-	});
-
-	await db.mSRStatusHistory.create({
-		data: {
-			msrId: payload.msrZendeskUserId,
-			status: payload.status,
+			MSRStatusHistory: {
+				create: {
+					status: msr.status,
+				},
+			},
+			MSRPii: {
+				create: msrPii,
+			},
 		},
 	});
 

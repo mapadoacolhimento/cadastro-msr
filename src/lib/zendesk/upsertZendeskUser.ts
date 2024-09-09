@@ -9,9 +9,6 @@ import { getErrorMessage } from "@/utils";
 export default async function upsertZendeskUser(user: ZendeskUser) {
 	try {
 		const endpoint = ZENDESK_SUBDOMAIN + "/api/v2/users/create_or_update";
-		console.log("[upsertZendeskUser]:", {
-			user: JSON.stringify(user, null, 2),
-		});
 
 		const response = await fetch(endpoint, {
 			body: JSON.stringify({ user }),
@@ -29,9 +26,7 @@ export default async function upsertZendeskUser(user: ZendeskUser) {
 		const data = await response.json();
 
 		if (data.error && response.status !== 200) {
-			throw new Error(
-				`${data?.error?.title}: ${data?.error?.message || data?.error?.description} - ${JSON.stringify(data?.error?.details ?? {})}`
-			);
+			throw new Error(getErrorMessage(data));
 		}
 
 		let msrZendeskUserId;

@@ -28,9 +28,7 @@ export default async function upsertZendeskTicket(
 		const data = await response.json();
 
 		if (data.error && response.status !== 200) {
-			throw new Error(
-				`${data?.error?.title}: ${data?.error?.message || data?.error?.description} - ${JSON.stringify(data?.error?.details ?? {})}`
-			);
+			throw new Error(getErrorMessage(data));
 		}
 
 		return {

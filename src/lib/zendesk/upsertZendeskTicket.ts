@@ -6,14 +6,12 @@ import {
 import { getErrorMessage, stringifyBigInt } from "@/utils";
 import { ZendeskTicket } from "@/types";
 
-export default async function upserZendeskTicket(ticket: ZendeskTicket) {
+export default async function upsertZendeskTicket(
+	ticket: Partial<ZendeskTicket>
+) {
 	try {
 		const body = stringifyBigInt(ticket);
 		const endpoint = `${ZENDESK_SUBDOMAIN}/api/v2/tickets/${ticket.id ? ticket.id : ""}`;
-		console.log("[upsertZendeskTicket]:", {
-			endpoint,
-			body: JSON.stringify(body, null, 2),
-		});
 		const response = await fetch(endpoint, {
 			body: JSON.stringify({ ticket: body }),
 			method: ticket.id ? "PUT" : "POST",
@@ -27,11 +25,13 @@ export default async function upserZendeskTicket(ticket: ZendeskTicket) {
 			},
 		});
 
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
-
 		const data = await response.json();
+
+		if (data.error && response.status !== 200) {
+			throw new Error(
+				`${data?.error?.title}: ${data?.error?.message || data?.error?.description} - ${JSON.stringify(data?.error?.details ?? {})}`
+			);
+		}
 
 		return {
 			ticketId: data.ticket.id,

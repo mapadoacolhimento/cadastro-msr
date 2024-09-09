@@ -26,11 +26,13 @@ export default async function upsertZendeskUser(user: ZendeskUser) {
 			},
 		});
 
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
-
 		const data = await response.json();
+
+		if (data.error && response.status !== 200) {
+			throw new Error(
+				`${data?.error?.title}: ${data?.error?.message || data?.error?.description} - ${JSON.stringify(data?.error?.details ?? {})}`
+			);
+		}
 
 		let msrZendeskUserId;
 

@@ -1,11 +1,7 @@
 import { MSRPiiSec, MSRs, SupportRequests } from "@prisma/client";
 
 export function msrPayload(
-	msr?: { supportType: string[] } & Partial<
-		Omit<SupportRequests, "supportType">
-	> &
-		Partial<MSRPiiSec> &
-		Partial<MSRs>
+	msr?: Partial<SupportRequests> & Partial<MSRPiiSec> & Partial<MSRs>
 ) {
 	return {
 		msrZendeskUserId: 12346789 as unknown as bigint,

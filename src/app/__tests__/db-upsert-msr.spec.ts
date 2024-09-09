@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
 import { type Gender, type MSRStatus, type Race } from "@prisma/client";
@@ -9,10 +10,8 @@ const mockPayload = msrPayload();
 
 const mockPayload2 = msrPayload({
 	gender: "cis_woman",
-	status: "registered",
-	dateOfBirth: "1990-03-14",
+	dateOfBirth: new Date("1990-03-14"),
 	hasDisability: false,
-	acceptsOnlineSupport: true,
 });
 
 const mockIncompletePayload = {
@@ -89,7 +88,6 @@ describe("POST /db/upsert-msr", () => {
 
 	it("should create new msr with basics fields on db", async () => {
 		mockedDb.mSRs.upsert.mockResolvedValueOnce(mockMsr);
-		mockedDb.mSRPiiSec.upsert.mockResolvedValueOnce(mockMsrPii);
 		const request = new NextRequest(
 			new Request("http://localhost:3000/db/upsert-msr", {
 				method: "POST",
@@ -98,7 +96,6 @@ describe("POST /db/upsert-msr", () => {
 		);
 		const response = await POST(request);
 		expect(mockedDb.mSRs.upsert).toHaveBeenCalledTimes(1);
-		expect(mockedDb.mSRPiiSec.upsert).toHaveBeenCalledTimes(1);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({
 			msrId: mockPayload.msrZendeskUserId,
@@ -107,7 +104,6 @@ describe("POST /db/upsert-msr", () => {
 
 	it("should create new msr with all fields on db", async () => {
 		mockedDb.mSRs.upsert.mockResolvedValueOnce(mockMsr2);
-		mockedDb.mSRPiiSec.upsert.mockResolvedValueOnce(mockMsrPii2);
 		const request = new NextRequest(
 			new Request("http://localhost:3000/db/upsert-msr", {
 				method: "POST",
@@ -116,7 +112,6 @@ describe("POST /db/upsert-msr", () => {
 		);
 		const response = await POST(request);
 		expect(mockedDb.mSRs.upsert).toHaveBeenCalledTimes(1);
-		expect(mockedDb.mSRPiiSec.upsert).toHaveBeenCalledTimes(1);
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({
 			msrId: mockPayload2.msrZendeskUserId,

@@ -29,6 +29,7 @@ export default function Page() {
 			</Box>
 			<ExtraSupport />
 			<Illustration
+				isForm={false}
 				img={{
 					src: "/illustrations/computer.webp",
 					alt: "Computador branco com rosa, com a logo roxa do mapa do acolhimento na tela do monitor",

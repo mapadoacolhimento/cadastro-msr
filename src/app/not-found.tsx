@@ -20,16 +20,19 @@ export default function Custom404() {
 						Página não encontrada
 					</Heading>
 
-					<Text>Sentimos muito, mas página que você buscou não existe.</Text>
+					<Text as={"p"} align={"center"}>
+						Sentimos muito, mas página que você buscou não existe.
+					</Text>
 				</Flex>
 
-				<NextLink href="/">
+				<NextLink href="/" prefetch={true}>
 					<Button style={{ cursor: "pointer", marginTop: "var(--space-3)" }}>
 						Ir para página inicial
 					</Button>
 				</NextLink>
 			</Flex>
 			<Illustration
+				isForm={false}
 				img={{
 					src: "/illustrations/woman-sitting-down.webp",
 					alt: "Mulher de blusa amarela e calça roxa, sentada de pernas cruzadas com uma almofada de coração roxa",

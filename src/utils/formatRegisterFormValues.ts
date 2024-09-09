@@ -3,13 +3,14 @@ import getFirstName from "./getFirstName";
 import capitalizeFirst from "./capitalizeFirst";
 import formatZipcode from "./formatZipcode";
 import normalizeCity from "./normalizeCity";
+import formatDate from "./formatDate";
 
 export default function formatRegisterFormValues(values: Values) {
 	const parseValues = {
 		...values,
 		firstName: getFirstName(values.firstName),
 		neighborhood: capitalizeFirst(values.neighborhood),
-		dateOfBirth: values.dateOfBirth.replaceAll("/", "-"),
+		dateOfBirth: new Date(formatDate(values.dateOfBirth)).toISOString(),
 		zipcode: formatZipcode(values.zipcode),
 		phone: values.phone.replace(/\D/g, ""),
 		city: normalizeCity(values.city),

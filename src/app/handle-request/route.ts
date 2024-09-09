@@ -32,8 +32,8 @@ const payloadSchema = Yup.object({
 	lat: Yup.number().required().nullable(),
 	lng: Yup.number().required().nullable(),
 	zipcode: Yup.string().min(8).max(9).required(),
-	dateOfBirth: Yup.date().required().nullable(),
-	hasDisability: Yup.boolean().required().nullable(),
+	dateOfBirth: Yup.string().datetime().required(),
+	hasDisability: Yup.boolean().required(),
 	acceptsOnlineSupport: Yup.boolean().required(),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()

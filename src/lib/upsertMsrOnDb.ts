@@ -14,7 +14,7 @@ const payloadSchema = Yup.object({
 	color: Yup.string().oneOf(Object.values(Race)).required(),
 	zipcode: Yup.string().min(8).max(9).required(),
 	status: Yup.string().oneOf(Object.values(MSRStatus)).required(),
-	dateOfBirth: Yup.date().required().nullable(),
+	dateOfBirth: Yup.string().datetime().required().nullable(),
 	gender: Yup.string().oneOf(Object.values(Gender)).required(),
 	hasDisability: Yup.boolean().required().nullable(),
 	acceptsOnlineSupport: Yup.boolean().required(),
@@ -43,9 +43,7 @@ export default async function upsertMsrOnDb(
 		firstName: payload.firstName,
 		email: payload.email,
 		phone: payload.phone,
-		dateOfBirth: payload.dateOfBirth
-			? new Date(payload.dateOfBirth).toISOString()
-			: null,
+		dateOfBirth: payload.dateOfBirth ?? null,
 	};
 
 	const msrResult = await db.mSRs.upsert({

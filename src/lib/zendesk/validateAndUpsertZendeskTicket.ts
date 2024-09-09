@@ -91,7 +91,7 @@ export default async function validateAndUpsertZendeskTicket(
 			}
 		: {};
 
-	const ticket: ZendeskTicket = {
+	const ticket = {
 		...ticketId,
 		requester_id: validatedPayload.msrZendeskUserId,
 		subject: validatedPayload.subject,

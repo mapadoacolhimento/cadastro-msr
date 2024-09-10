@@ -24,7 +24,12 @@ const payloadSchema = Yup.object({
 
 function getColor(color: Race) {
 	const option = colorOptions.find((option) => option.value === color);
-	return option ? option.label.toLowerCase().normalize("NFD") : null;
+	return option
+		? option.label
+				.toLowerCase()
+				.normalize("NFD")
+				.replace(/[\u0300-\u036f]/g, "")
+		: null;
 }
 
 function getZendeskSupportType(supportType: SupportType[]) {

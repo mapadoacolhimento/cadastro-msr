@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@radix-ui/themes";
+import { Box, Button, Flex, Link, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Illustration from "@/components/Illustration";
 import MainTitle from "@/components/MainTitle";
@@ -68,6 +68,12 @@ TransitoryStep.Error = ({ errorMsg }: Readonly<{ errorMsg: string }>) => {
 				</Text>
 				<Text align={"center"} as={"p"}>
 					Por favor, realize o cadastro novamente.
+				</Text>
+				<Text align={"center"} as={"p"}>
+					Caso o erro persista entre em contato com nossa equipe pelo e-mail{" "}
+					<Link href="mailto:atendimento@mapadoacolhimento.org">
+						atendimento@mapadoacolhimento.org
+					</Link>
 				</Text>
 			</Box>
 		</TransitoryStep>

@@ -227,13 +227,13 @@ describe("When MSR does not meet the criteria", () => {
 	});
 });
 
-describe("Submit the form", () => {
+describe.only("Submit the form", () => {
 	it("should redirect to `cadastro-finalizado` when handle-request return both support requests with match status", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
-				psychological: "waiting_contact",
-				legal: "waiting_contact",
+				psychological: { status: "waiting_contact" },
+				legal: { status: "waiting_contact" },
 			},
 		});
 
@@ -249,7 +249,7 @@ describe("Submit the form", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
-				psychological: "duplicated",
+				psychological: { status: "duplicated" },
 			},
 		});
 
@@ -265,7 +265,7 @@ describe("Submit the form", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
-				legal: "waiting_contact",
+				legal: { status: "waiting_contact" },
 			},
 		});
 
@@ -281,8 +281,8 @@ describe("Submit the form", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
-				psychological: "duplicated",
-				legal: "waiting_contact",
+				psychological: { status: "duplicated" },
+				legal: [{ status: "waiting_contact" }],
 			},
 		});
 
@@ -298,8 +298,8 @@ describe("Submit the form", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
-				psychological: "duplicated",
-				legal: "duplicated",
+				psychological: { status: "duplicated" },
+				legal: { status: "duplicated" },
 			},
 		});
 

@@ -89,7 +89,7 @@ const handleCreateMatch = async ({
 	const bodyTicket = {
 		ticketId: zendeskTicketId,
 		msrZendeskUserId: msr.msrId as unknown as number,
-		status: "new",
+		status: "pending",
 		subject: `[${subjectSupportType}] ${msr.firstName}, ${msr.city} - ${msr.state}`,
 		statusAcolhimento: ZENDESK_NEW_TICKET_STATUS,
 		msrName: msr.firstName,

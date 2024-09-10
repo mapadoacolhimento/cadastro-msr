@@ -180,7 +180,7 @@ describe("POST handle-request", () => {
 			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
 				ticketId: null,
 				msrZendeskUserId: mockPayloadLegal.msrZendeskUserId,
-				status: "new",
+				status: "pending",
 				subject: "[Jurídico] Msr, SALVADOR - BA",
 				statusAcolhimento: "solicitação_recebida",
 				msrName: mockPayloadLegal.firstName,
@@ -382,7 +382,7 @@ describe("POST handle-request", () => {
 			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(1, {
 				ticketId: null,
 				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "new",
+				status: "pending",
 				subject: "[Jurídico] Msr, SALVADOR - BA",
 				statusAcolhimento: "solicitação_recebida",
 				msrName: mockPayloadBoth.firstName,
@@ -396,7 +396,7 @@ describe("POST handle-request", () => {
 			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(2, {
 				ticketId: null,
 				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "new",
+				status: "pending",
 				subject: "[Psicológico] Msr, SALVADOR - BA",
 				statusAcolhimento: "solicitação_recebida",
 				msrName: mockPayloadBoth.firstName,
@@ -513,7 +513,7 @@ describe("POST handle-request", () => {
 			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(1, {
 				ticketId: mockResCheckEligibilityLegal.zendeskTicketId,
 				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "new",
+				status: "pending",
 				subject: "[Jurídico] Msr, SALVADOR - BA",
 				statusAcolhimento: "solicitação_recebida",
 				msrName: mockPayloadBoth.firstName,

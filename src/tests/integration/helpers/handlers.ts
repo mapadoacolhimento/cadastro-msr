@@ -43,19 +43,29 @@ export const handlers = [
 		});
 	}),
 
-	http.post(`${MATCH_LAMBDA_URL}/compose`, () => {
+	http.post(`${MATCH_LAMBDA_URL}/compose`, async (request) => {
+		const body: any = await request.request.json();
 		return HttpResponse.json({
 			message: [
 				{
+					matchId: 3456,
+					supportRequestId: 1,
+					msrZendeskTicketId: body[0]?.zendeskTicketId,
+					supportType: body[0]?.supportType,
 					status: "waiting_contact",
 				},
 			],
 		});
 	}),
 
-	http.post(`${MATCH_LAMBDA_URL}/handle-match`, () => {
+	http.post(`${MATCH_LAMBDA_URL}/handle-match`, async (request) => {
+		const body: any = await request.request.json();
 		return HttpResponse.json({
 			message: {
+				matchId: 3456,
+				supportRequestId: 1,
+				msrZendeskTicketId: body?.supportRequest.zendeskTicketId,
+				supportType: body?.supportRequest.supportType,
 				status: "waiting_contact",
 			},
 		});

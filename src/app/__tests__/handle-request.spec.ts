@@ -186,7 +186,7 @@ describe("POST handle-request", () => {
 				msrName: mockPayloadLegal.firstName,
 				supportType: "legal",
 				comment: {
-					body: `${mockPayloadLegal.firstName} solicitou acolhimento pelo cadastro`,
+					body: `${mockPayloadLegal.firstName} solicitou acolhimento jurídico pelo cadastro.`,
 					public: false,
 				},
 			});
@@ -388,7 +388,7 @@ describe("POST handle-request", () => {
 				msrName: mockPayloadBoth.firstName,
 				supportType: "legal",
 				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
+					body: `${mockPayloadBoth.firstName} solicitou acolhimento jurídico pelo cadastro.`,
 					public: false,
 				},
 			});
@@ -402,7 +402,7 @@ describe("POST handle-request", () => {
 				msrName: mockPayloadBoth.firstName,
 				supportType: "psychological",
 				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
+					body: `${mockPayloadBoth.firstName} solicitou acolhimento psicológico pelo cadastro.`,
 					public: false,
 				},
 			});
@@ -519,7 +519,7 @@ describe("POST handle-request", () => {
 				msrName: mockPayloadBoth.firstName,
 				supportType: "legal",
 				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento pelo cadastro`,
+					body: `${mockPayloadBoth.firstName} solicitou acolhimento jurídico pelo cadastro.`,
 					public: false,
 				},
 			});

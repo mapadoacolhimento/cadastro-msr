@@ -95,7 +95,7 @@ const handleCreateMatch = async ({
 		msrName: msr.firstName,
 		supportType: supportType,
 		comment: {
-			body: `${msr.firstName} solicitou acolhimento pelo cadastro`,
+			body: `${msr.firstName} solicitou acolhimento ${subjectSupportType.toLowerCase()} pelo cadastro.`,
 			public: false,
 		},
 	};

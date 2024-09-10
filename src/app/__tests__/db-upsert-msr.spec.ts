@@ -10,7 +10,6 @@ const mockPayload = msrPayload();
 
 const mockPayload2 = msrPayload({
 	gender: "cis_woman",
-	dateOfBirth: new Date("1990-03-14"),
 	hasDisability: false,
 });
 
@@ -22,7 +21,7 @@ const mockIncompletePayload = {
 	state: "BA",
 	neighborhood: "Bairro",
 	zipcode: "00000000",
-	dateOfBirth: "1990-10-10",
+	dateOfBirth: new Date("1990-10-10").toISOString(),
 	color: "black",
 	gender: "cis_woman",
 	status: "registered",
@@ -46,16 +45,6 @@ const mockMsr = {
 	updatedAt: new Date(),
 };
 
-const mockMsrPii = {
-	msrId: mockPayload.msrZendeskUserId,
-	firstName: mockPayload.firstName,
-	email: mockPayload.email,
-	phone: mockPayload.phone,
-	dateOfBirth: null,
-	createdAt: new Date(),
-	updatedAt: new Date(),
-};
-
 const mockMsr2 = {
 	msrId: mockPayload2.msrZendeskUserId,
 	city: mockPayload2.city,
@@ -67,16 +56,6 @@ const mockMsr2 = {
 	status: mockPayload2.status as MSRStatus,
 	hasDisability: mockPayload2.hasDisability,
 	acceptsOnlineSupport: mockPayload2.acceptsOnlineSupport,
-	createdAt: new Date(),
-	updatedAt: new Date(),
-};
-
-const mockMsrPii2 = {
-	msrId: mockPayload2.msrZendeskUserId,
-	firstName: mockPayload2.firstName,
-	email: mockPayload2.email,
-	phone: mockPayload2.phone,
-	dateOfBirth: new Date("1990-03-14"),
 	createdAt: new Date(),
 	updatedAt: new Date(),
 };

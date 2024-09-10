@@ -96,7 +96,7 @@ describe("/geolocation", () => {
 			expect(response.ok).toStrictEqual(false);
 			expect(response.status).toStrictEqual(500);
 			expect(await response.text()).toStrictEqual(
-				`[geolocation]: {"ok":false}`
+				'[geolocation]: {\n  "ok": false\n}'
 			);
 		});
 	});
@@ -148,7 +148,7 @@ describe("/geolocation", () => {
 			);
 		});
 
-		it("should return an error when fetch fails", async () => {
+		it("should return an error 500 when fetch fails", async () => {
 			fetch.mockRejectedValueOnce(createFetchResponse(null, false));
 
 			const request = new NextRequest(
@@ -161,7 +161,7 @@ describe("/geolocation", () => {
 			expect(response.ok).toStrictEqual(false);
 			expect(response.status).toStrictEqual(500);
 			expect(await response.text()).toStrictEqual(
-				`[geolocation]: {"ok":false}`
+				'[geolocation]: {\n  "ok": false\n}'
 			);
 		});
 	});

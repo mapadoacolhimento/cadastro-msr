@@ -5,6 +5,7 @@ export default function resetDb() {
 		db.mSRStatusHistory.deleteMany(),
 		db.mSRPiiSec.deleteMany(),
 		db.mSRs.deleteMany(),
+		db.matchStatusHistory.deleteMany(),
 		db.matches.deleteMany(),
 		db.supportRequestStatusHistory.deleteMany(),
 		db.supportRequests.deleteMany(),

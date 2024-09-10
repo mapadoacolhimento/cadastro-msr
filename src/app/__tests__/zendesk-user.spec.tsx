@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { NextRequest } from "next/server";
 import { POST } from "../zendesk/user/route";
 import {
@@ -5,6 +6,8 @@ import {
 	ZENDESK_API_TOKEN,
 	ZENDESK_API_USER,
 } from "@/constants";
+
+const mockedDateOfBirth = "1990-03-14";
 
 const mockPayload = {
 	email: "lua@email.com",
@@ -15,7 +18,7 @@ const mockPayload = {
 	neighborhood: "Federação",
 	color: "black",
 	zipcode: "40210245",
-	dateOfBirth: new Date("1990-03-14"),
+	dateOfBirth: new Date(mockedDateOfBirth).toISOString(),
 	supportType: ["legal", "psychological"],
 };
 
@@ -38,7 +41,7 @@ const mockUser = {
 		neighborhood: mockPayload.neighborhood,
 		cor: "preta",
 		whatsapp: `https://wa.me/55${mockPayload.phone}`,
-		date_of_birth: mockPayload.dateOfBirth.toISOString(),
+		date_of_birth: mockedDateOfBirth,
 		tipo_de_acolhimento: "psicológico_e_jurídico",
 	},
 };

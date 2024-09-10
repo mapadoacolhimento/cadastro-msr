@@ -34,6 +34,9 @@ const handleDuplicatedSupportRequest = async (
 		data: {
 			status: "duplicated",
 		},
+		select: {
+			status: true,
+		},
 	});
 
 	await db.supportRequestStatusHistory.create({

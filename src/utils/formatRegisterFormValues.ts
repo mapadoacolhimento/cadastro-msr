@@ -8,6 +8,7 @@ import formatDate from "./formatDate";
 export default function formatRegisterFormValues(values: Values) {
 	const parseValues = {
 		...values,
+		email: values.email.toLowerCase(),
 		firstName: getFirstName(values.firstName),
 		neighborhood: capitalizeFirst(values.neighborhood),
 		dateOfBirth: new Date(formatDate(values.dateOfBirth)).toISOString(),

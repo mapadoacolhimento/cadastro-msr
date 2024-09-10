@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Link, Text } from "@radix-ui/themes";
+import { Flex, Link, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Illustration from "@/components/Illustration";
 import MainTitle from "@/components/MainTitle";

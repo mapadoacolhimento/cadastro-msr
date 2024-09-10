@@ -183,7 +183,6 @@ export async function POST(request: Request) {
 
 		return Response.json(response);
 	} catch (e) {
-		console.log({ e: JSON.stringify(e, null, 2) });
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {
 			const errorMsg = `Validation error: ${getErrorMessage(error)}`;

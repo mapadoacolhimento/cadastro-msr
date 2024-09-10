@@ -28,7 +28,8 @@ export default async function upsertMsrOnDb(
 	const msr = {
 		gender: payload.gender,
 		raceColor: payload.color,
-		hasDisability: payload.hasDisability ? payload.hasDisability : null,
+		hasDisability:
+			typeof payload.hasDisability === "boolean" ? payload.hasDisability : null,
 		acceptsOnlineSupport: payload.acceptsOnlineSupport
 			? payload.acceptsOnlineSupport
 			: true,

@@ -227,7 +227,7 @@ describe("When MSR does not meet the criteria", () => {
 	});
 });
 
-describe.only("Submit the form", () => {
+describe("Submit the form", () => {
 	it("should redirect to `cadastro-finalizado` when handle-request return both support requests with match status", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,

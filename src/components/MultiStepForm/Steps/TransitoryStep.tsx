@@ -62,7 +62,7 @@ TransitoryStep.Error = ({ errorMsg }: Readonly<{ errorMsg: string }>) => {
 				width={"auto"}
 				color={"var(--purple-9)"}
 			/>
-			<Box>
+			<Flex direction={"column"} gap={"2"}>
 				<Text align={"center"} as={"p"}>
 					{errorMsg}
 				</Text>
@@ -75,7 +75,7 @@ TransitoryStep.Error = ({ errorMsg }: Readonly<{ errorMsg: string }>) => {
 						atendimento@mapadoacolhimento.org
 					</Link>
 				</Text>
-			</Box>
+			</Flex>
 		</TransitoryStep>
 	);
 };

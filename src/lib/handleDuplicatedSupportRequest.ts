@@ -1,5 +1,9 @@
 import { MSRPiiSec, SupportRequests } from "@prisma/client";
-import { db, validateAndUpsertZendeskTicket } from "./";
+import {
+	db,
+	validateAndUpsertZendeskTicket,
+	ZENDESK_DUPLICATED_TICKET_STATUS,
+} from "./";
 
 export function emailDuplicated(firstName: MSRPiiSec["firstName"]) {
 	return `Olá${", " + firstName}!
@@ -23,7 +27,7 @@ const handleDuplicatedSupportRequest = async (
 	>,
 	msrFirstName: MSRPiiSec["firstName"]
 ) => {
-	await db.supportRequests.update({
+	const supporRequest = await db.supportRequests.update({
 		where: {
 			supportRequestId: supportRequest.supportRequestId,
 		},
@@ -42,13 +46,15 @@ const handleDuplicatedSupportRequest = async (
 	await validateAndUpsertZendeskTicket({
 		ticketId: supportRequest.zendeskTicketId as never,
 		status: "open",
-		statusAcolhimento: "solicitação_repetida",
+		statusAcolhimento: ZENDESK_DUPLICATED_TICKET_STATUS,
 		supportType: supportRequest.supportType,
 		comment: {
 			body: emailDuplicated(msrFirstName),
 			public: true,
 		},
 	});
+
+	return supporRequest;
 };
 
 export default handleDuplicatedSupportRequest;

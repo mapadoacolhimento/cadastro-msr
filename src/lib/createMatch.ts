@@ -44,9 +44,9 @@ export default async function createMatch(
 			throw new Error(resCreateMatch.statusText);
 		}
 
-		const { message: body } = await resCreateMatch.json();
+		const { message } = await resCreateMatch.json();
 
-		return supportRequestId ? body.status : body[0].status;
+		return message;
 	} catch (e) {
 		console.error(
 			`[createMatch] - Something went wrong when creating a match for this support request '${

@@ -68,7 +68,7 @@ export default function MultiStepFormWrapper({
 				const data = await onSubmit(values);
 
 				const shouldRedirectToSuccessPage = Object.values(data).find(
-					(support) => support !== "duplicated"
+					(support) => support?.status !== "duplicated"
 				);
 				if (!shouldRedirectToSuccessPage) {
 					return router.push("/acolhimento-andamento");

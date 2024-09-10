@@ -156,7 +156,7 @@ export async function POST(request: Request) {
 				});
 
 			if (shouldCreateMatch) {
-				const matchStatus = await handleCreateMatch({
+				const match = await handleCreateMatch({
 					supportType,
 					supportRequestId,
 					zendeskTicketId,
@@ -166,9 +166,9 @@ export async function POST(request: Request) {
 					},
 				});
 
-				response[supportType] = matchStatus;
+				response[supportType] = match;
 			} else {
-				await handleDuplicatedSupportRequest(
+				const updatedSupportRequest = await handleDuplicatedSupportRequest(
 					{
 						supportRequestId: supportRequestId!,
 						zendeskTicketId: zendeskTicketId!,
@@ -177,12 +177,13 @@ export async function POST(request: Request) {
 					payload.firstName
 				);
 
-				response[supportType] = "duplicated";
+				response[supportType] = updatedSupportRequest;
 			}
 		}
 
 		return Response.json(response);
 	} catch (e) {
+		console.log({ e: JSON.stringify(e, null, 2) });
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {
 			const errorMsg = `Validation error: ${getErrorMessage(error)}`;

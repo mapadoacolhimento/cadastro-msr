@@ -1,4 +1,4 @@
 export type HandleRequestResponse = {
-	psychological?: string | null;
-	legal?: string | null;
+	psychological?: Record<string, unknown> | null;
+	legal?: Record<string, unknown> | null;
 };

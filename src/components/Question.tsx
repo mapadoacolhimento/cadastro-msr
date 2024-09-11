@@ -6,7 +6,7 @@ export default function Question({
 	...props
 }: Readonly<{ children: ReactNode; id?: string }>) {
 	return (
-		<Box asChild pb={{ initial: "5", sm: "6" }}>
+		<Box asChild pb={{ initial: "5", sm: "6" }} width={"100%"}>
 			<Text asChild align={"center"} as={"p"} size={"3"} {...props}>
 				<legend>{children}</legend>
 			</Text>

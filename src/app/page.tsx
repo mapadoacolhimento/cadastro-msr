@@ -30,7 +30,9 @@ export default function Homepage() {
 				gap={{ initial: "5", md: "6" }}
 			>
 				<Button size={"4"} asChild>
-					<Link href={"/cadastro"}>Quero ser acolhida</Link>
+					<Link href={"/cadastro"} prefetch={true}>
+						Quero ser acolhida
+					</Link>
 				</Button>
 
 				<Text as={"p"} size={"2"} align={"center"}>

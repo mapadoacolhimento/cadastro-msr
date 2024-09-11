@@ -14,7 +14,7 @@ export default function Header() {
 					justify={"between"}
 					pb={"4"}
 				>
-					<Link href={"/"}>
+					<Link href={"/"} prefetch={false}>
 						<Image
 							src="/logo.svg"
 							alt="Logo Mapa do Acolhimento"

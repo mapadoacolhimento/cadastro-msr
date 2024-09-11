@@ -1,7 +1,7 @@
 import { MSRPiiSec, MSRs, SupportRequests } from "@prisma/client";
 
 export function msrPayload(
-	msr?: { supportType: string[] } & Partial<
+	msr?: { supportType?: string[] } & Partial<
 		Omit<SupportRequests, "supportType">
 	> &
 		Partial<MSRPiiSec> &
@@ -18,9 +18,9 @@ export function msrPayload(
 		zipcode: "not_found",
 		color: "black",
 		status: "registered",
-		dateOfBirth: null,
+		dateOfBirth: new Date("1994-09-31").toISOString(),
 		gender: "not_found",
-		hasDisability: null,
+		hasDisability: false,
 		acceptsOnlineSupport: true,
 		lat: -12.995,
 		lng: -38.504,

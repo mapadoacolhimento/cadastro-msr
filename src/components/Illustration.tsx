@@ -47,15 +47,15 @@ export default function Illustration({
 					position={"absolute"}
 					right={"0"}
 					bottom={
-						typeof bottom !== "undefined" ? bottom : isForm ? "80px" : "0"
+						typeof bottom !== "undefined" ? bottom : isForm ? "75px" : "0"
 					}
 					display={{ initial: "block", md: "none" }}
 				>
 					<Image
 						src={img.src}
-						height={150}
-						width={150}
-						style={{ height: "auto" }}
+						height={130}
+						width={130}
+						style={{ width: "auto" }}
 						alt={img.alt}
 					/>
 				</Box>

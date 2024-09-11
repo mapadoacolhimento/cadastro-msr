@@ -16,7 +16,7 @@ const payloadSchema = Yup.object({
 	neighborhood: Yup.string().required(),
 	color: Yup.string().oneOf(Object.values(Race)).required(),
 	zipcode: Yup.string().min(8).max(9).required(),
-	dateOfBirth: Yup.date().required().nullable(),
+	dateOfBirth: Yup.string().datetime().required(),
 	supportType: Yup.array()
 		.of(Yup.string().oneOf(Object.values(SupportType)).required())
 		.required(),
@@ -24,7 +24,12 @@ const payloadSchema = Yup.object({
 
 function getColor(color: Race) {
 	const option = colorOptions.find((option) => option.value === color);
-	return option ? option.label.toLowerCase().normalize("NFD") : null;
+	return option
+		? option.label
+				.toLowerCase()
+				.normalize("NFD")
+				.replace(/[\u0300-\u036f]/g, "")
+		: null;
 }
 
 function getZendeskSupportType(supportType: SupportType[]) {
@@ -56,7 +61,7 @@ export default async function validateAndUpsertZendeskUser(
 			neighborhood: payload.neighborhood,
 			cor: getColor(payload.color),
 			whatsapp: `https://wa.me/55${payload.phone}`,
-			date_of_birth: payload.dateOfBirth,
+			date_of_birth: payload.dateOfBirth.split("T")[0],
 			tipo_de_acolhimento: getZendeskSupportType(payload.supportType),
 		},
 	};

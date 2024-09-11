@@ -5,7 +5,6 @@ import {
 	ZENDESK_CUSTOM_FIELDS_DICIO,
 	ZENDESK_MSR_ORGANIZATION_ID,
 } from "@/constants";
-import type { ZendeskTicket } from "@/types";
 
 type CustomFieldsType = {
 	id: number;
@@ -91,7 +90,7 @@ export default async function validateAndUpsertZendeskTicket(
 			}
 		: {};
 
-	const ticket: ZendeskTicket = {
+	const ticket = {
 		...ticketId,
 		requester_id: validatedPayload.msrZendeskUserId,
 		subject: validatedPayload.subject,

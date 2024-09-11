@@ -17,15 +17,7 @@ export async function POST(request: NextRequest) {
 				status: 400,
 			});
 		}
-		if (
-			error instanceof Error &&
-			"code" in error &&
-			(error as any).code === "P2002"
-		) {
-			return new Response(error.message, {
-				status: 400,
-			});
-		}
+
 		return new Response(getErrorMessage(error), {
 			status: 500,
 		});

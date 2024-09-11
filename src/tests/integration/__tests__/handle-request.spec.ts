@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { NextRequest } from "next/server";
 import {
 	LEGAL_ZENDESK_TICKET_ID,
@@ -9,6 +10,38 @@ import { POST } from "../../../app/handle-request/route";
 import { msrPayload } from "@/tests/unit/payloads";
 import { db } from "@/lib";
 import resetDb from "../helpers/reset-db";
+
+const mockMatchLegalOld = {
+	matchId: 3456,
+	supportRequestId: 1,
+	msrZendeskTicketId: LEGAL_ZENDESK_TICKET_ID,
+	supportType: "legal",
+	status: "waiting_contact",
+};
+
+const mockMatchPsychologicalOld = {
+	matchId: 3456,
+	supportRequestId: 1,
+	msrZendeskTicketId: PSYCHOLOGICAL_ZENDESK_TICKET_ID,
+	supportType: "psychological",
+	status: "waiting_contact",
+};
+
+const mockMatchLegalNew = {
+	matchId: 3456,
+	supportRequestId: 1,
+	msrZendeskTicketId: 1234,
+	supportType: "legal",
+	status: "waiting_contact",
+};
+
+const mockMatchPsychologicalNew = {
+	matchId: 3456,
+	supportRequestId: 1,
+	msrZendeskTicketId: 1234,
+	supportType: "psychological",
+	status: "waiting_contact",
+};
 
 describe("/handle-request", async () => {
 	beforeEach(async () => {
@@ -40,7 +73,9 @@ describe("/handle-request", async () => {
 
 			const response = await POST(request);
 			expect(response.status).toStrictEqual(200);
-			expect(await response.json()).toStrictEqual({ legal: "waiting_contact" });
+			expect(await response.json()).toStrictEqual({
+				legal: [mockMatchLegalNew],
+			});
 		});
 	});
 
@@ -71,7 +106,7 @@ describe("/handle-request", async () => {
 			const response = await POST(request);
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				psychological: "waiting_contact",
+				psychological: [mockMatchPsychologicalNew],
 			});
 		});
 	});
@@ -103,8 +138,8 @@ describe("/handle-request", async () => {
 
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: "waiting_contact",
-				psychological: "waiting_contact",
+				legal: [mockMatchLegalNew],
+				psychological: mockMatchPsychologicalOld,
 			});
 		});
 	});
@@ -140,8 +175,8 @@ describe("/handle-request", async () => {
 
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: "waiting_contact",
-				psychological: "duplicated",
+				legal: [mockMatchLegalNew],
+				psychological: { status: "duplicated" },
 			});
 			expect(supportRequestUpdated?.status).toStrictEqual("duplicated");
 		});
@@ -175,8 +210,8 @@ describe("/handle-request", async () => {
 
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: "waiting_contact",
-				psychological: "waiting_contact",
+				legal: mockMatchLegalOld,
+				psychological: [mockMatchPsychologicalNew],
 			});
 		});
 	});
@@ -212,8 +247,8 @@ describe("/handle-request", async () => {
 
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: "duplicated",
-				psychological: "waiting_contact",
+				legal: { status: "duplicated" },
+				psychological: [mockMatchPsychologicalNew],
 			});
 			expect(supportRequestUpdated?.status).toStrictEqual("duplicated");
 		});

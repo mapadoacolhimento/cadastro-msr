@@ -17,7 +17,7 @@ export default function ExternalSupport() {
 			validationSchema={externalSupportSchema}
 			title={"Sobre a violência"}
 			img={{
-				src: "/illustrations/woman-covering-ears.svg",
+				src: "/illustrations/woman-covering-ears.webp",
 				alt: "Ilustração de uma mulher de cabeça baixa tampando os ouvidos",
 			}}
 		>

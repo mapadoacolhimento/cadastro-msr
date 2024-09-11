@@ -26,12 +26,13 @@ export default async function createMatch(
 			shouldRandomize: true,
 			matchType: "msr",
 		};
-		const composePayload = [supportRequest];
+		const { supportRequestId, ...rest } = supportRequest;
+		const composePayload = [rest];
 
-		const createMatchLambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequest?.supportRequestId ? "handle-match" : "compose"}`;
+		const createMatchLambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequestId ? "handle-match" : "compose"}`;
 		const resCreateMatch = await fetch(createMatchLambdaUrl, {
 			body: JSON.stringify(
-				supportRequest.supportRequestId ? handleMatchPayload : composePayload
+				supportRequestId ? handleMatchPayload : composePayload
 			),
 			method: "POST",
 			headers: {
@@ -43,9 +44,9 @@ export default async function createMatch(
 			throw new Error(resCreateMatch.statusText);
 		}
 
-		const match = await resCreateMatch.json();
+		const { message } = await resCreateMatch.json();
 
-		return match;
+		return message;
 	} catch (e) {
 		console.error(
 			`[createMatch] - Something went wrong when creating a match for this support request '${

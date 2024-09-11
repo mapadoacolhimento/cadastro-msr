@@ -14,7 +14,7 @@ const genderIdentitySchema = Yup.object({
 
 export default function GenderIdentity() {
 	async function handleSubmit(values: Values) {
-		const isNotWoman = values.gender === "no-woman";
+		const isNotWoman = values.gender === "not_woman";
 		if (isNotWoman) {
 			return {
 				redirectTo: "/fora-criterios",

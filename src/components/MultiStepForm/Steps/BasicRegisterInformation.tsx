@@ -5,10 +5,13 @@ import Step from "../Step";
 import { TextInput } from "../..";
 
 const basicRegisterInformationSchema = Yup.object({
-	firstName: Yup.string().required("Insira seu primeiro nome."),
+	firstName: Yup.string()
+		.required("Insira seu primeiro nome.")
+		.max(200, "Insira apenas seu primeiro nome."),
 	email: Yup.string()
 		.email("Insira um e-mail válido.")
-		.required("Insira seu e-mail."),
+		.required("Insira seu e-mail.")
+		.max(200, "Insira apenas seu e-mail."),
 	confirmEmail: Yup.string()
 		.oneOf([Yup.ref("email")], "Os e-mails precisam ser iguais.")
 		.required("Esse campo é obrigatório."),
@@ -26,7 +29,7 @@ export default function BasicRegisterInformation() {
 			validationSchema={basicRegisterInformationSchema}
 			title={"Seus dados"}
 			img={{
-				src: "/illustrations/woman-floating.svg",
+				src: "/illustrations/woman-floating.webp",
 				alt: "Ilustração com uma mulher flutuando.",
 			}}
 		>
@@ -51,7 +54,7 @@ export default function BasicRegisterInformation() {
 			/>
 			<TextInput
 				name="phone"
-				type="phone"
+				type="tel"
 				label="Whatsapp"
 				placeholder="Qual o seu whatsapp (com DDD)?"
 				mask="(99) 99999-9999"

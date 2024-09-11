@@ -14,7 +14,7 @@ const payloadSchema = Yup.object({
 	color: Yup.string().oneOf(Object.values(Race)).required(),
 	zipcode: Yup.string().min(8).max(9).required(),
 	status: Yup.string().oneOf(Object.values(MSRStatus)).required(),
-	dateOfBirth: Yup.date().required().nullable(),
+	dateOfBirth: Yup.string().datetime().required().nullable(),
 	gender: Yup.string().oneOf(Object.values(Gender)).required(),
 	hasDisability: Yup.boolean().required().nullable(),
 	acceptsOnlineSupport: Yup.boolean().required(),
@@ -28,7 +28,8 @@ export default async function upsertMsrOnDb(
 	const msr = {
 		gender: payload.gender,
 		raceColor: payload.color,
-		hasDisability: payload.hasDisability ? payload.hasDisability : null,
+		hasDisability:
+			typeof payload.hasDisability === "boolean" ? payload.hasDisability : null,
 		acceptsOnlineSupport: payload.acceptsOnlineSupport
 			? payload.acceptsOnlineSupport
 			: true,
@@ -43,38 +44,35 @@ export default async function upsertMsrOnDb(
 		firstName: payload.firstName,
 		email: payload.email,
 		phone: payload.phone,
-		dateOfBirth: payload.dateOfBirth
-			? new Date(payload.dateOfBirth).toISOString()
-			: null,
+		dateOfBirth: payload.dateOfBirth ?? null,
 	};
 
 	const msrResult = await db.mSRs.upsert({
 		where: {
 			msrId: payload.msrZendeskUserId,
 		},
-		update: msr,
+		update: {
+			...msr,
+			MSRStatusHistory: {
+				create: {
+					status: msr.status,
+				},
+			},
+			MSRPii: {
+				update: msrPii,
+			},
+		},
 		create: {
 			msrId: payload.msrZendeskUserId,
 			...msr,
-		},
-	});
-
-	await db.mSRPiiSec.upsert({
-		where: {
-			msrId: payload.msrZendeskUserId,
-			email: payload.email,
-		},
-		update: msrPii,
-		create: {
-			msrId: payload.msrZendeskUserId,
-			...msrPii,
-		},
-	});
-
-	await db.mSRStatusHistory.create({
-		data: {
-			msrId: payload.msrZendeskUserId,
-			status: payload.status,
+			MSRStatusHistory: {
+				create: {
+					status: msr.status,
+				},
+			},
+			MSRPii: {
+				create: msrPii,
+			},
 		},
 	});
 

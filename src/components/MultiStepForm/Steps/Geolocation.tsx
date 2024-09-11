@@ -13,7 +13,9 @@ import { formatZipcode, normalizeCity } from "@/utils";
 const geolocationSchema = Yup.object({
 	city: Yup.string().transform(normalizeCity).required("Insira sua cidade"),
 	state: Yup.string().length(2).uppercase().required("Insira seu estado"),
-	neighborhood: Yup.string().required("Insira seu bairro"),
+	neighborhood: Yup.string()
+		.required("Insira seu bairro")
+		.max(100, "Insira apenas o nome do bairro."),
 	lat: Yup.number().max(90).min(-90).required().nullable(),
 	lng: Yup.number().max(180).min(-180).required().nullable(),
 	zipcode: Yup.string()
@@ -180,7 +182,7 @@ export default function Geolocation() {
 			validationSchema={geolocationSchema}
 			title={"Seu endereço"}
 			img={{
-				src: "/illustrations/woman-floating.svg",
+				src: "/illustrations/woman-floating.webp",
 				alt: "Ilustração com uma mulher flutuando.",
 			}}
 		>

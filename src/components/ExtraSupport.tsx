@@ -26,7 +26,7 @@ const ExtraSupport = () => (
 		<Flex gap={"4"} direction={"column"}>
 			<InfoBox
 				link={"https://www.servicospublicos.mapadoacolhimento.org/"}
-				imgSrc="/illustrations/woman-getting-support.svg"
+				imgSrc="/illustrations/woman-getting-support.webp"
 				imgAlt="Mulher recebendo atendimento por outra mulher"
 				title="Onde e como posso pedir ajuda?"
 				description="Conheça os serviços públicos de proteção que você pode acessar."
@@ -35,14 +35,14 @@ const ExtraSupport = () => (
 				link={
 					"https://drive.google.com/file/d/1f0BX_DEARQYgsR21yjVl71kjOlL7Rt08/view"
 				}
-				imgSrc="/illustrations/woman-covering-ears.svg"
+				imgSrc="/illustrations/woman-covering-ears.webp"
 				imgAlt="Mulher de cabeça baixa tampando os ouvidos"
 				title="Sofri violência, e agora?"
 				description="Um guia prático para deixar o ciclo da violência."
 			/>
 			<Flex gap={"3"} justify={"center"} align={"center"}>
 				<Image
-					src="/illustrations/chat-msg.svg"
+					src="/icons/chat-msg.svg"
 					alt="Balão de diálogo roxo com um coração dentro"
 					width={30}
 					height={30}

@@ -1,4 +1,9 @@
-import { MatchStatus, SupportRequestsStatus } from "@prisma/client";
+import {
+	Gender,
+	MatchStatus,
+	Race,
+	SupportRequestsStatus,
+} from "@prisma/client";
 
 export const BRAZILIAN_STATES_OPTIONS = [
 	{ value: "AC", label: "Acre" },
@@ -31,11 +36,11 @@ export const BRAZILIAN_STATES_OPTIONS = [
 ];
 
 export const colorOptions = [
-	{ value: "black", label: "Preta" },
-	{ value: "brown", label: "Parda" },
-	{ value: "indigenous", label: "Indígena" },
-	{ value: "asian", label: "Amarela" },
-	{ value: "white", label: "Branca" },
+	{ value: Race.black, label: "Preta" },
+	{ value: Race.brown, label: "Parda" },
+	{ value: Race.indigenous, label: "Indígena" },
+	{ value: Race.yellow, label: "Amarela" },
+	{ value: Race.white, label: "Branca" },
 ];
 
 export const DISABILITY_OPTIONS = [
@@ -63,13 +68,13 @@ export const supportTypeOptions = [
 ];
 
 export const genderIdentityOptions = [
-	{ value: "cis_woman", name: "Eu sou uma mulher cis" },
+	{ value: Gender.cis_woman, name: "Eu sou uma mulher cis" },
 	{
-		value: "trans_woman",
+		value: Gender.trans_woman,
 		name: "Eu sou uma mulher trans/travesti",
 	},
 	{
-		value: "no-woman",
+		value: "not_woman",
 		name: "Não me identifico como mulher",
 	},
 ];
@@ -143,3 +148,4 @@ export const GOOGLE_ANALYTICS_ID = "G-H4HVJY8T0V";
 
 export const ZENDESK_NEW_USER_STATUS = "inscrita";
 export const ZENDESK_NEW_TICKET_STATUS = "solicitação_recebida";
+export const ZENDESK_DUPLICATED_TICKET_STATUS = "solicitação_repetida";

@@ -23,11 +23,11 @@ export default async function upsertZendeskUser(user: ZendeskUser) {
 			},
 		});
 
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
-
 		const data = await response.json();
+
+		if (data.error && response.status !== 200) {
+			throw new Error(getErrorMessage(data));
+		}
 
 		let msrZendeskUserId;
 

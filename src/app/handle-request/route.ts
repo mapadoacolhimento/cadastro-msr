@@ -18,6 +18,8 @@ import type { HandleRequestResponse } from "@/types";
 import { getErrorMessage } from "@/utils";
 import { ZENDESK_NEW_TICKET_STATUS } from "@/constants";
 
+export const maxDuration = 30;
+
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
 	phone: Yup.string().min(10).required(),
@@ -30,8 +32,8 @@ const payloadSchema = Yup.object({
 	lat: Yup.number().required().nullable(),
 	lng: Yup.number().required().nullable(),
 	zipcode: Yup.string().min(8).max(9).required(),
-	dateOfBirth: Yup.date().required().nullable(),
-	hasDisability: Yup.boolean().required().nullable(),
+	dateOfBirth: Yup.string().datetime().required(),
+	hasDisability: Yup.boolean().required(),
 	acceptsOnlineSupport: Yup.boolean().required(),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
@@ -87,13 +89,13 @@ const handleCreateMatch = async ({
 	const bodyTicket = {
 		ticketId: zendeskTicketId,
 		msrZendeskUserId: msr.msrId as unknown as number,
-		status: "new",
+		status: "pending",
 		subject: `[${subjectSupportType}] ${msr.firstName}, ${msr.city} - ${msr.state}`,
 		statusAcolhimento: ZENDESK_NEW_TICKET_STATUS,
 		msrName: msr.firstName,
 		supportType: supportType,
 		comment: {
-			body: `${msr.firstName} solicitou acolhimento pelo cadastro`,
+			body: `${msr.firstName} solicitou acolhimento ${subjectSupportType.toLowerCase()} pelo cadastro.`,
 			public: false,
 		},
 	};
@@ -164,11 +166,9 @@ export async function POST(request: Request) {
 					},
 				});
 
-				response[supportType] = supportRequestId
-					? match.status
-					: match[0].status;
+				response[supportType] = match;
 			} else {
-				await handleDuplicatedSupportRequest(
+				const updatedSupportRequest = await handleDuplicatedSupportRequest(
 					{
 						supportRequestId: supportRequestId!,
 						zendeskTicketId: zendeskTicketId!,
@@ -177,7 +177,7 @@ export async function POST(request: Request) {
 					payload.firstName
 				);
 
-				response[supportType] = "duplicated";
+				response[supportType] = updatedSupportRequest;
 			}
 		}
 

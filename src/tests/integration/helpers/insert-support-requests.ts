@@ -74,7 +74,7 @@ export default async function insertSupportRequests(
 			}
 		}
 	} catch (error) {
-		console.log(
+		console.error(
 			`[integration-tests]: Error while creating support requests or matches: ${getErrorMessage(error)}`
 		);
 	}

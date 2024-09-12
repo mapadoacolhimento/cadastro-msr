@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
 import mockedDb from "@/tests/unit/db";
@@ -18,7 +19,7 @@ describe("POST /create", () => {
 		const response = await GET(request);
 		expect(response.status).toStrictEqual(400);
 		expect(await response.text()).toStrictEqual(
-			"[citites] - Validation error: this is a required field"
+			"Validation error: this is a required field"
 		);
 	});
 
@@ -31,7 +32,7 @@ describe("POST /create", () => {
 		);
 		const response = await GET(request);
 		expect(response.status).toStrictEqual(500);
-		expect(await response.text()).toStrictEqual("[cities]: []");
+		expect(await response.text()).toStrictEqual('"[]"');
 	});
 
 	it("should return correct cities payload if req is valid", async () => {

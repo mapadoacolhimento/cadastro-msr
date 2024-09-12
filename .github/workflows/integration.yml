@@ -59,6 +59,12 @@ jobs:
         run: |
           pnpm i --frozen-lockfile
 
+      - name: Create env file
+        run: |
+          cat << EOF > .env
+          NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}
+          EOF
+
       - name: Run build
         run: pnpm run build
 
@@ -202,6 +208,12 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm i --frozen-lockfile
+
+      - name: Create env file
+        run: |
+          cat << EOF > .env
+          NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}
+          EOF
 
       - name: Push current migrations to test database
         run: pnpm db:push

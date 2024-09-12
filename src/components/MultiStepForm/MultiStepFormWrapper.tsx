@@ -18,6 +18,7 @@ import {
 	type StepChildrenProps,
 	type Values,
 } from "@/types";
+import { logger } from "@/lib";
 
 interface MultiStepFormWrapperProps {
 	initialValues: Values;
@@ -81,7 +82,10 @@ export default function MultiStepFormWrapper({
 			setStatus(Status.idle);
 			nextStep(values);
 		} catch (error: any) {
-			console.error(error);
+			logger.error(error);
+			window.newrelic.noticeError(
+				Error("Something went wrong when submitting the form")
+			);
 			setStatus(Status.error);
 		}
 	};

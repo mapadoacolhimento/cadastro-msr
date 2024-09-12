@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { validateAndUpsertZendeskUser } from "@/lib";
+import { logger, validateAndUpsertZendeskUser } from "@/lib";
 import { getErrorMessage } from "@/utils";
 
 export async function POST(request: NextRequest) {
@@ -18,10 +18,13 @@ export async function POST(request: NextRequest) {
 		if (error["name"] === "ValidationError") {
 			const errorMsg = `Validation error: ${getErrorMessage(error)}`;
 
+			logger.error(`[upsertZendeskUser] - 400: ${errorMsg}`);
 			return new Response(errorMsg, {
 				status: 400,
 			});
 		}
+
+		logger.error(`[upsertZendeskUser] - 500: ${getErrorMessage(error)}`);
 		return new Response(getErrorMessage(error), {
 			status: 500,
 		});

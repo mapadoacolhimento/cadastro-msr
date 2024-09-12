@@ -13,6 +13,7 @@ import {
 	upsertMsrOnDb,
 	checkMatchEligibility,
 	createMatch,
+	logger,
 } from "@/lib";
 import type { HandleRequestResponse } from "@/types";
 import { getErrorMessage } from "@/utils";
@@ -187,11 +188,13 @@ export async function POST(request: Request) {
 		if (error["name"] === "ValidationError") {
 			const errorMsg = `Validation error: ${getErrorMessage(error)}`;
 
+			logger.error(`[checkMatchEligibility] - 400: ${errorMsg}`);
 			return new Response(errorMsg, {
 				status: 400,
 			});
 		}
 
+		logger.error(`[checkMatchEligibility] - 500: ${getErrorMessage(error)}`);
 		return new Response(getErrorMessage(error), {
 			status: 500,
 		});

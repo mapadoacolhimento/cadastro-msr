@@ -1,6 +1,6 @@
 import { type NextRequest } from "next/server";
 import * as Yup from "yup";
-import { db } from "@/lib";
+import { db, logger } from "@/lib";
 import { getErrorMessage } from "@/utils";
 
 const stateParamsSchema = Yup.string().required().length(2);
@@ -30,7 +30,9 @@ export async function GET(request: NextRequest) {
 		const error = e as Record<string, unknown>;
 
 		if (error["name"] === "ValidationError") {
-			const errorMsg = `[citites] - Validation error: ${getErrorMessage(error)}`;
+			const errorMsg = `Validation error: ${getErrorMessage(error)}`;
+
+			logger.error(`[cities] - 400: ${errorMsg}`);
 
 			return new Response(errorMsg, {
 				status: 400,
@@ -38,8 +40,8 @@ export async function GET(request: NextRequest) {
 		}
 
 		const errorMsg = getErrorMessage(error);
-
-		return new Response(`[cities]: ${errorMsg}`, {
+		logger.error(`[cities] - 500: ${errorMsg}`);
+		return new Response(getErrorMessage(errorMsg), {
 			status: 500,
 		});
 	}

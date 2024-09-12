@@ -5,6 +5,7 @@ import {
 } from "../constants";
 import { ZendeskUser } from "@/types";
 import { getErrorMessage } from "@/utils";
+import logger from "../logger";
 
 export default async function upsertZendeskUser(user: ZendeskUser) {
 	try {
@@ -39,7 +40,7 @@ export default async function upsertZendeskUser(user: ZendeskUser) {
 
 		return { msrZendeskUserId };
 	} catch (e) {
-		console.error(
+		logger.error(
 			`[upsertZendeskUser] - Something went wrong when upserting this user on Zendesk '${
 				user.id ?? user.email
 			}': ${getErrorMessage(e)}`

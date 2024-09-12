@@ -5,6 +5,7 @@ import {
 } from "@/constants";
 import { getErrorMessage, stringifyBigInt } from "@/utils";
 import { ZendeskTicket } from "@/types";
+import logger from "../logger";
 
 export default async function upsertZendeskTicket(
 	ticket: Partial<ZendeskTicket>
@@ -35,7 +36,7 @@ export default async function upsertZendeskTicket(
 			ticketId: data.ticket.id,
 		};
 	} catch (e) {
-		console.error(
+		logger.error(
 			`[upsertZendeskTicket] - Something went wrong when upserting this ticket '${
 				ticket?.id ?? ""
 			}' for this user '${ticket.requester_id}': ${getErrorMessage(e)}`

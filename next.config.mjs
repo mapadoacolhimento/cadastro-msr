@@ -1,7 +1,7 @@
 "use strict";
 
 /** @type {import('next').NextConfig} */
-const nrExternals = require("@newrelic/next/load-externals");
+import nrExternals from "newrelic/load-externals.js";
 
 const nextConfig = {
 	reactStrictMode: true,

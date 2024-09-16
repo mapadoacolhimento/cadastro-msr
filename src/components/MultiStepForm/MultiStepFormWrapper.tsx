@@ -4,13 +4,17 @@ import {
 	useState,
 	Children,
 } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { type FormikHelpers, Form, Formik } from "formik";
 import { Box, Flex, IconButton } from "@radix-ui/themes";
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
-import { StepsController, Illustration, MainTitle } from "@/components";
+import {
+	StepsController,
+	Illustration,
+	MainTitle,
+	VisuallyHidden,
+} from "@/components";
 import { TransitoryStep } from "./Steps";
 import {
 	type HandleRequestResponse,
@@ -114,10 +118,13 @@ export default function MultiStepFormWrapper({
 								disabled={stepIndex === 0}
 								type={"button"}
 							>
-								<ChevronLeftIcon width="24" height="24" />
-								<VisuallyHidden.Root>
-									Voltar para o passo anterior
-								</VisuallyHidden.Root>
+								<Image
+									width={24}
+									height={24}
+									src={"/icons/chevron-left.svg"}
+									alt="Ícone de seta para a esquerda"
+								/>
+								<VisuallyHidden>Voltar para o passo anterior</VisuallyHidden>
 							</IconButton>
 						</Box>
 

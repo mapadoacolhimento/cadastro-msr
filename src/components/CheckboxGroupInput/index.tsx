@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useField } from "formik";
+import dynamic from "next/dynamic";
 import { Box, CheckboxCards, Text } from "@radix-ui/themes";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 import ErrorMessage from "../ErrorMessage";
 import Question from "../Question";
 import "./CheckboxGroupInput.css";
+
+const VisuallyHidden = dynamic(() => import("../VisuallyHidden"));
 
 type CheckboxOption = {
 	value: string;
@@ -77,11 +79,11 @@ export default function CheckboxGroupInput({
 						>
 							<Text>{option.name}</Text>
 						</CheckboxCards.Item>
-						<VisuallyHidden.Root
+						<VisuallyHidden
 							id={`checkbox-group-button-content-${option.value}`}
 						>
 							{option.name}
-						</VisuallyHidden.Root>
+						</VisuallyHidden>
 					</Box>
 				);
 			})}

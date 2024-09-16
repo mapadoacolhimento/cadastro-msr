@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Checkbox, Flex, Text } from "@radix-ui/themes";
+import dynamic from "next/dynamic";
 import { useField } from "formik";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import ErrorMessage from "../ErrorMessage";
+
+const VisuallyHidden = dynamic(() => import("../VisuallyHidden"));
 
 interface CheckboxInputProps {
 	name: string;
@@ -39,9 +41,9 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({ name, children }) => {
 					<Text as="span" size="2">
 						{children}
 					</Text>
-					<VisuallyHidden.Root className={"checkbox-input-button-content"}>
+					<VisuallyHidden className={"checkbox-input-button-content"}>
 						{name}
-					</VisuallyHidden.Root>
+					</VisuallyHidden>
 				</Flex>
 			</Text>
 			<ErrorMessage name={name} />

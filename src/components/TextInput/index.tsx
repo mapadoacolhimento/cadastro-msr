@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { useField } from "formik";
+import dynamic from "next/dynamic";
 import { Box, Spinner, Text, TextField } from "@radix-ui/themes";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import InputMask from "react-input-mask";
 import ErrorMessage from "../ErrorMessage";
 import "./TextInput.css";
+
+const VisuallyHidden = dynamic(() => import("../VisuallyHidden"));
 
 interface TextInputProps {
 	name: string;
@@ -20,7 +22,7 @@ interface TextInputProps {
 function LoadingSpinner({ isLoading }: { isLoading: boolean }) {
 	return isLoading ? (
 		<>
-			<VisuallyHidden.Root>Carregando...</VisuallyHidden.Root>
+			<VisuallyHidden>Carregando...</VisuallyHidden>
 			<TextField.Slot
 				style={{ paddingLeft: "var(--space-3", paddingRight: 0 }}
 			></TextField.Slot>

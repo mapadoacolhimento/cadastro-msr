@@ -1,8 +1,9 @@
 "use client";
+
 import React, { useState } from "react";
-import "./HoverInfo.css";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import Image from "next/image";
 import { Text, Box, Flex } from "@radix-ui/themes";
+import "./HoverInfo.css";
 
 interface HoverInfoProps {
 	title: string;
@@ -27,9 +28,12 @@ const HoverInfo: React.FC<HoverInfoProps> = ({ title, description }) => {
 				pt={"2"}
 			>
 				<Text weight={"medium"}>{title}</Text>
-				<ChevronDownIcon
+				<Image
+					src={"/icons/chevron-down.svg"}
 					className={`arrow ${visible ? "rotated" : ""}`}
-					color={"purple"}
+					alt="Ícone de seta para baixo"
+					width={12}
+					height={8}
 				/>
 			</Flex>
 			<Box className={`description ${visible ? "visible" : "hidden"}`}>

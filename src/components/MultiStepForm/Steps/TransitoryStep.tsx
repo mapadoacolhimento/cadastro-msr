@@ -2,7 +2,6 @@ import { Flex, Link, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Illustration from "@/components/Illustration";
 import MainTitle from "@/components/MainTitle";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
 export default function TransitoryStep({
 	title,
@@ -57,10 +56,12 @@ TransitoryStep.Loading.displayName = "TransitoryStep.Loading";
 TransitoryStep.Error = ({ errorMsg }: Readonly<{ errorMsg: string }>) => {
 	return (
 		<TransitoryStep title={"Ocorreu um erro inesperado"}>
-			<ExclamationTriangleIcon
-				height={"32px"}
-				width={"auto"}
-				color={"var(--purple-9)"}
+			<Image
+				src={"/icons/exclamation-triangle.svg"}
+				alt={"Ícone de triângulo de exclamação"}
+				width={32}
+				height={32}
+				style={{ width: "auto" }}
 			/>
 			<Flex direction={"column"} gap={"2"}>
 				<Text align={"center"} as={"p"}>

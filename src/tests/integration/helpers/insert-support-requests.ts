@@ -1,4 +1,4 @@
-import { db } from "@/lib";
+import { db, logger } from "@/lib";
 import {
 	THERAPIST_ZENDESK_USER_ID,
 	LAWYER_ZENDESK_USER_ID,
@@ -74,7 +74,7 @@ export default async function insertSupportRequests(
 			}
 		}
 	} catch (error) {
-		console.error(
+		logger.error(
 			`[integration-tests]: Error while creating support requests or matches: ${getErrorMessage(error)}`
 		);
 	}

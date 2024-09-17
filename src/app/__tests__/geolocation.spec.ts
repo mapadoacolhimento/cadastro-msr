@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { NextRequest } from "next/server";
 import { GET } from "../geolocation/route";
 import { VOLUNTEER_API_URL } from "@/constants";
@@ -62,7 +63,7 @@ describe("/geolocation", () => {
 			expect(response.ok).toStrictEqual(false);
 			expect(response.status).toStrictEqual(400);
 			expect(await response.text()).toStrictEqual(
-				"[geolocation] - Validation error: this must be exactly 8 characters"
+				"Validation error: this must be exactly 8 characters"
 			);
 		});
 
@@ -79,7 +80,7 @@ describe("/geolocation", () => {
 			expect(response.ok).toStrictEqual(false);
 			expect(response.status).toStrictEqual(400);
 			expect(await response.text()).toStrictEqual(
-				'[geolocation] - Validation error: zipcode is "not_found"'
+				'Validation error: zipcode is "not_found"'
 			);
 		});
 
@@ -95,9 +96,7 @@ describe("/geolocation", () => {
 
 			expect(response.ok).toStrictEqual(false);
 			expect(response.status).toStrictEqual(500);
-			expect(await response.text()).toStrictEqual(
-				'[geolocation]: {\n  "ok": false\n}'
-			);
+			expect(await response.text()).toStrictEqual('{\n  "ok": false\n}');
 		});
 	});
 	describe("With state, city and neighborhood", () => {
@@ -144,7 +143,7 @@ describe("/geolocation", () => {
 			expect(response.ok).toStrictEqual(false);
 			expect(response.status).toStrictEqual(400);
 			expect(await response.text()).toStrictEqual(
-				"[geolocation] - Validation error: state is a required field"
+				"Validation error: state is a required field"
 			);
 		});
 
@@ -160,9 +159,7 @@ describe("/geolocation", () => {
 
 			expect(response.ok).toStrictEqual(false);
 			expect(response.status).toStrictEqual(500);
-			expect(await response.text()).toStrictEqual(
-				'[geolocation]: {\n  "ok": false\n}'
-			);
+			expect(await response.text()).toStrictEqual('{\n  "ok": false\n}');
 		});
 	});
 });

@@ -1,6 +1,7 @@
 import { SupportRequests } from "@prisma/client";
 import { MATCH_LAMBDA_URL } from "@/constants";
 import { getErrorMessage } from "@/utils";
+import logger from "./logger";
 
 export default async function createMatch(
 	supportRequest: Omit<
@@ -48,7 +49,7 @@ export default async function createMatch(
 
 		return message;
 	} catch (e) {
-		console.error(
+		logger.error(
 			`[createMatch] - Something went wrong when creating a match for this support request '${
 				supportRequest.supportRequestId
 			}' for this user '${supportRequest.msrId}': ${getErrorMessage(e)}`

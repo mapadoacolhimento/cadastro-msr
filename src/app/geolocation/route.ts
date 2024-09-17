@@ -2,6 +2,7 @@ import { type NextRequest } from "next/server";
 import * as Yup from "yup";
 import { VOLUNTEER_API_URL } from "@/constants";
 import { getErrorMessage } from "@/utils";
+import { logger } from "@/lib";
 
 const zipcodeParamSchema = Yup.string()
 	.required()
@@ -67,7 +68,8 @@ export async function GET(request: NextRequest) {
 		const error = e as Record<string, unknown>;
 
 		if (error["name"] === "ValidationError") {
-			const errorMsg = `[geolocation] - Validation error: ${getErrorMessage(error)}`;
+			const errorMsg = `Validation error: ${getErrorMessage(error)}`;
+			logger.error(`[geolocation] - 400: ${errorMsg}`);
 
 			return new Response(errorMsg, {
 				status: 400,
@@ -75,8 +77,8 @@ export async function GET(request: NextRequest) {
 		}
 
 		const errorMsg = getErrorMessage(error);
-
-		return new Response(`[geolocation]: ${errorMsg}`, {
+		logger.error(`[geolocation] - 400: ${errorMsg}`);
+		return new Response(getErrorMessage(error), {
 			status: 500,
 		});
 	}

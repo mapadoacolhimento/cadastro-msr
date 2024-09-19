@@ -6,6 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "NODE_OPTIONS='-r dotenv/config --loader newrelic/esm-loader.mjs -r newrelic' next start",
+		"start:ci": "next start",
 		"lint": "next lint",
 		"format": "prettier --check .",
 		"format:fix": "prettier --write .",

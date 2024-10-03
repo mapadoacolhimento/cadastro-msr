@@ -1,0 +1,44 @@
+generator clientC {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
+  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+  output          = "../../node_modules/@prisma-mongodb/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_DB_URL")
+}
+
+enum SupportType {
+  psychological
+  legal
+
+  @@map("support_type")
+
+}
+
+model MsrRegisterData {
+	id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  	email                 String @unique 
+  	firstName             String?
+	confirmEmail          String?
+	phone                 String?
+	dateOfBirth           String?
+	color                 String?
+	hasDisability         Boolean?
+	acceptsOnlineSupport  String?
+	supportType           SupportType[]
+	gender                String?
+	genderViolence        Boolean?
+	violenceLocation      Boolean?
+	externalSupport       Boolean?
+	financialNeed         Boolean?
+	terms                 Boolean?
+	zipcode               String?
+	neighborhood          String?
+	city                  String?
+	state                 String?
+	lat                   Float?
+	lng                   Float?
+}

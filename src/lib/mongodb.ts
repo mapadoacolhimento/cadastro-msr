@@ -10,11 +10,14 @@ import { PrismaClient } from "@prisma-mongodb/client";
 // Learn more:
 // https://pris.ly/d/help/next-js-best-practices
 
-const globalForPrismaMongodb = global as unknown as { prisma: PrismaClient };
+const globalForPrismaMongodb = global as unknown as {
+	prismaMongodb: PrismaClient;
+};
 
-export const prisma = globalForPrismaMongodb.prisma || new PrismaClient();
+export const prismaMongodb =
+	globalForPrismaMongodb.prismaMongodb || new PrismaClient();
 
 if (process.env.NODE_ENV !== "production")
-	globalForPrismaMongodb.prisma = prisma;
+	globalForPrismaMongodb.prismaMongodb = prismaMongodb;
 
-export default prisma;
+export default prismaMongodb;

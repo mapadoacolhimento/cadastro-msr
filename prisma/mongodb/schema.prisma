@@ -1,4 +1,4 @@
-generator clientC {
+generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["prismaSchemaFolder"]
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
@@ -26,14 +26,14 @@ model MsrRegisterData {
 	phone                 String?
 	dateOfBirth           String?
 	color                 String?
-	hasDisability         Boolean?
+	hasDisability         String?
 	acceptsOnlineSupport  String?
 	supportType           SupportType[]
 	gender                String?
-	genderViolence        Boolean?
-	violenceLocation      Boolean?
-	externalSupport       Boolean?
-	financialNeed         Boolean?
+	genderViolence        String?
+	violenceLocation      String?
+	externalSupport       String?
+	financialNeed         String?
 	terms                 Boolean?
 	zipcode               String?
 	neighborhood          String?

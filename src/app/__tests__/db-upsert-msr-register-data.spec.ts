@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
 //import { type Gender, type MSRStatus, type Race } from "@prisma/client";
 import mockedMongodb from "@/tests/unit/mongodb";
-import { POST } from "../upsert-msr-register-data/route";
+import { POST } from "../db/upsert-msr-register-data/route";
 
 const mockMsrIncompleteData = {
 	gender: "cis_woman",
@@ -53,7 +53,7 @@ describe("POST /upsert-msr-register-data", () => {
 			mockIncompleteMSRRegisterData
 		);
 		const request = new NextRequest(
-			new Request("http://localhost:3000/upsert-msr-register-data", {
+			new Request("http://localhost:3000/db/upsert-msr-register-data", {
 				method: "POST",
 				body: JSON.stringify(mockMsrIncompleteData),
 			})
@@ -71,7 +71,7 @@ describe("POST /upsert-msr-register-data", () => {
 			mockMSRRegisterData
 		);
 		const request = new NextRequest(
-			new Request("http://localhost:3000/upsert-msr-register-data", {
+			new Request("http://localhost:3000/db/upsert-msr-register-data", {
 				method: "POST",
 				body: JSON.stringify(mockMsrData),
 			})
@@ -86,7 +86,7 @@ describe("POST /upsert-msr-register-data", () => {
 
 	it("returns error when dont have a valid payload", async () => {
 		const request = new NextRequest(
-			new Request("http://localhost:3000/upsert-msr-register-data", {
+			new Request("http://localhost:3000/db/upsert-msr-register-data", {
 				method: "POST",
 				body: JSON.stringify({}),
 			})

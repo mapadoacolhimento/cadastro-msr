@@ -54,13 +54,13 @@ export async function POST(request: NextRequest) {
 		const error = e as Record<string, unknown>;
 		if (error["name"] === "ValidationError") {
 			const errorMsg = `Validation error: ${getErrorMessage(error)}`;
-			logger.error(`[saveFormData] - 400: ${errorMsg}`);
+			logger.error(`[upsertMsrRegisterData] - 400: ${errorMsg}`);
 			return new Response(errorMsg, {
 				status: 400,
 			});
 		}
 
-		logger.error(`[SaveFormData] - 500: ${getErrorMessage(error)}`);
+		logger.error(`[upsertMsrRegisterData] - 500: ${getErrorMessage(error)}`);
 		return new Response(getErrorMessage(error), {
 			status: 500,
 		});

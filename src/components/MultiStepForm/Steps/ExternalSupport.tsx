@@ -44,7 +44,7 @@ export default function ExternalSupport() {
 				options={externalSupportOptions}
 				question={
 					<>
-						Você está em atendimento psicológico e/ou jurídico
+						Você está em atendimento psicológico e/ou jurídico{" "}
 						<Strong>fora do Mapa do Acolhimento</Strong>?
 					</>
 				}

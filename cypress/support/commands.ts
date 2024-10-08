@@ -109,11 +109,13 @@ Cypress.Commands.add("fillViolenceLocationStep", (option: string) => {
 	cy.findByLabelText(option).click();
 });
 
-Cypress.Commands.add("fillExternalSupportStep", (option: string) => {
+Cypress.Commands.add("fillExternalSupportStep", (options: string[]) => {
 	cy.contains(
-		"Você está recebendo acompanhamento jurídico pela defensoria pública?"
+		"Você está em atendimento psicológico e/ou jurídico fora do Mapa do Acolhimento?"
 	).should("exist");
-	cy.findByLabelText(option).click();
+	options.forEach((option) => {
+		cy.findByRole("checkbox", { name: option }).click({ force: true });
+	});
 });
 
 Cypress.Commands.add("fillFinancialNeedStep", (option: string) => {

@@ -152,6 +152,7 @@ jobs:
         pnpm-version: [9.x]
     env:
       DATABASE_URL: postgresql://user:password@localhost:5432/mapa
+      MONGO_DB_URL: mongodb://root:password@localhost:27017/mapa-org?authSource=admin&replicaSet=rs0
     services:
       postgres:
         image: postgres
@@ -165,6 +166,19 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
+
+      mongodb:
+        image: prismagraphql/mongo-single-replica:4.4.3-bionic
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: password
+        options: >-
+          --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout repository
@@ -216,7 +230,7 @@ jobs:
           EOF
 
       - name: Push current migrations to test database
-        run: pnpm db:push
+        run: pnpm db:push && pnpm mongodb:push
 
       - name: Seed db
         run: pnpm db:seed

@@ -199,7 +199,7 @@ describe("Accessbility", () => {
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.contains(
-							"Você está recebendo acompanhamento jurídico pela defensoria pública?"
+							"Você está em atendimento psicológico e/ou jurídico fora do Mapa do Acolhimento?"
 						).should("exist");
 
 						cy.injectAxe();

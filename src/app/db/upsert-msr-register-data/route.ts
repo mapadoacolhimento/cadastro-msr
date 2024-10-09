@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
 			},
 			update: {
 				...payload,
+				updatedAt: new Date().toISOString(),
 			},
 			create: {
 				...payload,

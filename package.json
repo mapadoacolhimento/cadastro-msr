@@ -22,7 +22,7 @@
 		"postgres:generate": "prisma generate --schema prisma/postgres/schema.prisma",
 		"generate": "prisma generate --schema prisma/postgres/schema.prisma & prisma generate --schema prisma/mongodb/schema.prisma",
 		"mongodb:generate": "prisma generate --schema prisma/mongodb/schema.prisma",
-		"postinstall": "pnpm run generate",
+		"postinstall": "prisma generate --schema prisma/postgres/schema.prisma & prisma generate --schema prisma/mongodb/schema.prisma",
 		"db:seed": "node seed.mjs"
 	},
 	"dependencies": {

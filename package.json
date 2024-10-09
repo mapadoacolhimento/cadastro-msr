@@ -19,9 +19,10 @@
 		"mongodb:push": "prisma db push --schema prisma/mongodb/schema.prisma",
 		"e2e": "cypress open",
 		"e2e:ci": "cypress run --browser chrome",
-		"generate": "prisma generate --schema prisma/postgres/schema.prisma",
+		"postgres:generate": "prisma generate --schema prisma/postgres/schema.prisma",
+		"generate": "prisma generate --schema prisma/postgres/schema.prisma & prisma generate --schema prisma/mongodb/schema.prisma",
 		"mongodb:generate": "prisma generate --schema prisma/mongodb/schema.prisma",
-		"postinstall": "prisma generate --schema prisma/postgres/schema.prisma && prisma generate --schema prisma/mongodb/schema.prisma",
+		"postinstall": "pnpm run generate",
 		"db:seed": "node seed.mjs"
 	},
 	"dependencies": {

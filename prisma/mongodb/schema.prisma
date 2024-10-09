@@ -40,4 +40,5 @@ model MsrRegisterData {
 	state                 String?
 	lat                   Float?
 	lng                   Float?
+	createdAt             DateTime @default(now())
 }

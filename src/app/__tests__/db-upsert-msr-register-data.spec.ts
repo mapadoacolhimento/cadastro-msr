@@ -1,7 +1,6 @@
 import { expect } from "vitest";
 import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
-//import { type Gender, type MSRStatus, type Race } from "@prisma/client";
 import mockedMongodb from "@/tests/unit/mongodb";
 import { POST } from "../db/upsert-msr-register-data/route";
 

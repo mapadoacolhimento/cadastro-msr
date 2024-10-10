@@ -80,7 +80,20 @@ describe("GET /load-msr-register-data", () => {
 		});
 	});
 
-	it("should return an error when the query cannot be performed", async () => {
+	it("should return an error when the is not a valid email", async () => {
+		const request = new NextRequest(
+			new Request("http://localhost:3000/db/-msr-register-data/?email=msr", {
+				method: "GET",
+			})
+		);
+		const response = await GET(request);
+		expect(response.status).toEqual(400);
+		expect(await response.text()).toEqual(
+			"Validation error: this must be a valid email"
+		);
+	});
+
+	it("should return an error when the query fail", async () => {
 		mockedMongodb.msrRegisterData.findFirst.mockRejectedValue({
 			code: "P1001",
 			message: "Can’t reach database server at `localhost`:`27017`",

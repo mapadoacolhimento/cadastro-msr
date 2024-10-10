@@ -1,6 +1,9 @@
 import { NextRequest } from "next/server";
+import * as Yup from "yup";
 import { logger, mongodb } from "@/lib";
 import { getErrorMessage } from "@/utils";
+
+const paramSchema = Yup.string().email().required();
 
 export async function GET(request: NextRequest) {
 	try {
@@ -10,6 +13,8 @@ export async function GET(request: NextRequest) {
 		if (!email) {
 			return Response.json({ values: null });
 		}
+
+		await paramSchema.validate(email);
 
 		const msrRegisterData = await mongodb.msrRegisterData.findFirst({
 			where: {

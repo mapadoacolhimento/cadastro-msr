@@ -1,4 +1,5 @@
 export { default as db } from "./db";
+export { default as mongodb } from "./mongodb";
 export { default as upsertZendeskUser } from "./zendesk/upsertZendeskUser";
 export { default as upsertZendeskTicket } from "./zendesk/upsertZendeskTicket";
 export { default as validateAndUpsertZendeskTicket } from "./zendesk/validateAndUpsertZendeskTicket";

@@ -56,6 +56,16 @@ export default function MultiStepFormWrapper({
 		try {
 			setStatus(Status.idle);
 
+			if (values.email) {
+				await fetch("/db/upsert-msr-register-data", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(values),
+				});
+			}
+
 			if (step.props.onSubmit) {
 				const submit = await step.props.onSubmit(values, bag);
 				if (submit && submit.redirectTo) {

@@ -51,7 +51,7 @@ export default function MultiStepForm() {
 				gender: "",
 				genderViolence: "",
 				violenceLocation: "",
-				externalSupport: "",
+				externalSupport: [],
 				financialNeed: "",
 				terms: false,
 				city: "",

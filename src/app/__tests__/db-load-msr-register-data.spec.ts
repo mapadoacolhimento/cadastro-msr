@@ -31,6 +31,30 @@ const mockMsrData = {
 	updatedAt: "2024-10-09T19:16:59.312Z",
 };
 
+const mockValues = {
+	gender: "cis_woman",
+	dateOfBirth: new Date("1990-10-10").toISOString(),
+	genderViolence: "yes",
+	violenceLocation: "yes",
+	externalSupport: "no",
+	financialNeed: "yes",
+	SupportType: ["legal"],
+	email: "msr@email.br",
+	confirmEmail: "msr@email.br",
+	firstName: "Msr",
+	phone: "71999999999",
+	color: "white",
+	hasDisability: "no",
+	acceptsOnlineSupport: "yes",
+	terms: "yes",
+	zipcode: "41950-150",
+	neighborhood: "Rio Vermelho",
+	city: "SALVADOR",
+	state: "BA",
+	lat: "-12.971",
+	lng: "-38.511",
+};
+
 describe("GET /load-msr-register-data", () => {
 	beforeEach(() => {
 		mockReset(mockedMongodb);
@@ -54,7 +78,7 @@ describe("GET /load-msr-register-data", () => {
 		});
 		expect(response.status).toEqual(200);
 		expect(await response.json()).toStrictEqual({
-			values: mockMsrData,
+			values: mockValues,
 		});
 	});
 

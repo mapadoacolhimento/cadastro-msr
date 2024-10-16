@@ -1,8 +1,12 @@
-import * as Yup from "yup";
 import { Box } from "@radix-ui/themes";
+import * as Yup from "yup";
 
-import Step from "../Step";
+import { useFormikContext } from "formik";
+import { useState } from "react";
 import { TextInput } from "../..";
+import Step from "../Step";
+import { updateEmptyFields } from "@/utils";
+import { Values } from "@/types";
 
 const basicRegisterInformationSchema = Yup.object({
 	firstName: Yup.string()
@@ -23,16 +27,26 @@ const basicRegisterInformationSchema = Yup.object({
 		.required("Insira seu número de telefone celular."),
 });
 
-export default function BasicRegisterInformation() {
+function BasicRegisterInformationFields() {
+	const { values, setFieldValue, setValues } = useFormikContext();
+
+	async function loadMsrRegisterData(email: string) {
+		const response = await fetch(`/db/load-msr-register-data/?email=${email}`, {
+			method: "GET",
+		});
+		if (response.ok) {
+			const data = await response.json();
+			if (data.values) {
+				setFieldValue("confirmEmail", data.values.email);
+				setFieldValue("phone", data.values.phone);
+				const newValues = updateEmptyFields(values as Values, data.values);
+				setValues(newValues);
+			}
+		}
+	}
+
 	return (
-		<Step
-			validationSchema={basicRegisterInformationSchema}
-			title={"Seus dados"}
-			img={{
-				src: "/illustrations/woman-floating.webp",
-				alt: "Ilustração com uma mulher flutuando.",
-			}}
-		>
+		<>
 			<Box pt={"3"}>
 				<TextInput
 					name="firstName"
@@ -45,6 +59,7 @@ export default function BasicRegisterInformation() {
 				type="email"
 				label="E-mail"
 				placeholder="Qual o seu melhor e-mail?"
+				onBlur={loadMsrRegisterData}
 			/>
 			<TextInput
 				name="confirmEmail"
@@ -59,6 +74,21 @@ export default function BasicRegisterInformation() {
 				placeholder="Qual o seu whatsapp (com DDD)?"
 				mask="(99) 99999-9999"
 			/>
+		</>
+	);
+}
+
+export default function BasicRegisterInformation() {
+	return (
+		<Step
+			validationSchema={basicRegisterInformationSchema}
+			title={"Seus dados"}
+			img={{
+				src: "/illustrations/woman-floating.webp",
+				alt: "Ilustração com uma mulher flutuando.",
+			}}
+		>
+			<BasicRegisterInformationFields />
 		</Step>
 	);
 }

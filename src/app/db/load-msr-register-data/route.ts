@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 	try {
 		const searchParams = request.nextUrl.searchParams;
 		const email = searchParams.get("email");
-		var values = null;
+		let values = null;
 
 		await paramSchema.validate(email);
 

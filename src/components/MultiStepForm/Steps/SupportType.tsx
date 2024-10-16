@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
 import { useFormikContext } from "formik";
@@ -7,6 +7,7 @@ import Step from "../Step";
 import { CheckboxGroupInput } from "@/components";
 import { supportTypeOptions } from "@/constants";
 import { Values } from "@/types";
+import type { SupportType } from "@prisma/client";
 
 const supportTypeSchema = Yup.object({
 	supportType: Yup.array()
@@ -17,22 +18,48 @@ const supportTypeSchema = Yup.object({
 function SupportTypeChild() {
 	const { values, setFieldValue } = useFormikContext<Values>();
 
-	useEffect(() => {
-		if (values.externalSupport === "yes") {
+	const disbableUnavailableSupportType = useCallback(
+		(supportType: SupportType, btnText: string) => {
 			const stepBtns = document.getElementsByTagName("button");
-			const legalSupportBtn = Array.from(stepBtns).find(
-				(btn) => btn.textContent === "Acolhimento jurídico"
+			const supportBtn = Array.from(stepBtns).find(
+				(btn) => btn.textContent === btnText
 			);
-			legalSupportBtn?.setAttribute("disabled", "true");
+			supportBtn?.setAttribute("disabled", "true");
 
-			if (values.supportType.includes("legal")) {
-				const supportTypeWithoutLegal = values.supportType.filter(
-					(type) => type !== "legal"
+			if (values.supportType.includes(supportType)) {
+				const listWithoutUnavailableSupportType = values.supportType.filter(
+					(type) => type !== supportType
 				);
-				setFieldValue("supportType", supportTypeWithoutLegal, false);
+				setFieldValue("supportType", listWithoutUnavailableSupportType, false);
 			}
+		},
+		[values.supportType, setFieldValue]
+	);
+
+	useEffect(() => {
+		const hasExternalLegalSupport =
+			values.externalSupport.includes("privateLawyer") ||
+			values.externalSupport.includes("publicDefender");
+
+		const hasExternalPsychologicalSupport =
+			values.externalSupport.includes("privateTherapist");
+
+		if (hasExternalLegalSupport) {
+			disbableUnavailableSupportType("legal", "Acolhimento jurídico");
 		}
-	}, [values.externalSupport]);
+
+		if (hasExternalPsychologicalSupport) {
+			disbableUnavailableSupportType(
+				"psychological",
+				"Acolhimento psicológico"
+			);
+		}
+	}, [
+		values.externalSupport,
+		setFieldValue,
+		values.supportType,
+		disbableUnavailableSupportType,
+	]);
 
 	return (
 		<CheckboxGroupInput
@@ -47,7 +74,7 @@ function SupportTypeChild() {
 	);
 }
 
-export default function SupportType() {
+export default function SupportTypeStep() {
 	return (
 		<Step
 			validationSchema={supportTypeSchema}

@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -15,6 +16,7 @@ const setup = (props?: any) => {
 			initialValues={
 				{
 					supportType: [] as string[],
+					externalSupport: [],
 					...props?.initialValues,
 				} as Values
 			}
@@ -53,13 +55,33 @@ describe("<SupportType />", () => {
 		);
 	});
 
-	it("should block legal support if external support is yes", async () => {
-		setup({ initialValues: { externalSupport: "yes" } });
+	it("should block legal support if has private lawyer", async () => {
+		setup({ initialValues: { externalSupport: ["privateLawyer"] } });
 
 		const legalSupportCheckbox = screen.getByRole("checkbox", {
 			name: /acolhimento jurídico/i,
 		}) as HTMLInputElement;
 
 		expect(legalSupportCheckbox).toBeDisabled();
+	});
+
+	it("should block legal support if has public defender", async () => {
+		setup({ initialValues: { externalSupport: ["publicDefender"] } });
+
+		const legalSupportCheckbox = screen.getByRole("checkbox", {
+			name: /acolhimento jurídico/i,
+		}) as HTMLInputElement;
+
+		expect(legalSupportCheckbox).toBeDisabled();
+	});
+
+	it("should block psychologicak support if has private therapist", async () => {
+		setup({ initialValues: { externalSupport: ["privateTherapist"] } });
+
+		const psySupportCheckbox = screen.getByRole("checkbox", {
+			name: /acolhimento psicológico/i,
+		}) as HTMLInputElement;
+
+		expect(psySupportCheckbox).toBeDisabled();
 	});
 });

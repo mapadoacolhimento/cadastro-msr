@@ -34,7 +34,7 @@ export interface Values {
 	gender: string;
 	genderViolence: string;
 	violenceLocation: string;
-	externalSupport: string;
+	externalSupport: string[];
 	financialNeed: string;
 	terms: boolean;
 	zipcode: string;

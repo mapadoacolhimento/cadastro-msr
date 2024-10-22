@@ -1,3 +1,4 @@
+import { Responsive } from "@radix-ui/themes/props";
 import { type FormikHelpers } from "formik";
 import { type AnyObjectSchema } from "yup";
 export interface StepChildrenProps {
@@ -12,6 +13,8 @@ export interface StepChildrenProps {
 	img: {
 		src: string;
 		alt: string;
+		align?: Responsive<"center" | "start" | "end" | "baseline" | "stretch">;
+		bottom?: string;
 	};
 }
 

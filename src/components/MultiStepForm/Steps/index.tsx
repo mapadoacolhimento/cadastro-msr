@@ -10,3 +10,4 @@ export { default as FinancialNeed } from "./FinancialNeed";
 export { default as DateOfBirth } from "./DateOfBirth";
 export { default as Geolocation } from "./Geolocation";
 export { default as TransitoryStep } from "./TransitoryStep";
+export { default as BeginRegistration } from "./BeginRegistration";

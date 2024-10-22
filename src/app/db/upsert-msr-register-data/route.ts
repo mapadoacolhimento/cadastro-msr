@@ -1,10 +1,10 @@
 import { NextRequest } from "next/server";
 import { Gender, SupportType, Race } from "@prisma/client";
+import * as Yup from "yup";
 
-import { logger, mongodb } from "@/lib";
+import { externalSupportOptions, logger, mongodb } from "@/lib";
 import { getErrorMessage } from "@/utils";
 
-import * as Yup from "yup";
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
 	confirmEmail: Yup.string().email(),
@@ -23,7 +23,9 @@ const payloadSchema = Yup.object({
 	acceptsOnlineSupport: Yup.string(),
 	genderViolence: Yup.string(),
 	violenceLocation: Yup.string(),
-	externalSupport: Yup.array(Yup.string()),
+	externalSupport: Yup.array().of(
+		Yup.string().oneOf(externalSupportOptions.map((o) => o.value))
+	),
 	financialNeed: Yup.string(),
 	term: Yup.boolean(),
 	supportType: Yup.array(

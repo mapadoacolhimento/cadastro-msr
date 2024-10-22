@@ -23,7 +23,7 @@ const payloadSchema = Yup.object({
 	acceptsOnlineSupport: Yup.string(),
 	genderViolence: Yup.string(),
 	violenceLocation: Yup.string(),
-	externalSupport: Yup.string(),
+	externalSupport: Yup.array(Yup.string()),
 	financialNeed: Yup.string(),
 	term: Yup.boolean(),
 	supportType: Yup.array(

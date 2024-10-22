@@ -10,7 +10,7 @@ const mockMsrData = {
 	dateOfBirth: new Date("1990-10-10").toISOString(),
 	genderViolence: "yes",
 	violenceLocation: "yes",
-	externalSupport: "no",
+	externalSupport: ["no"],
 	financialNeed: "yes",
 	SupportType: ["legal"],
 	email: "msr@email.br",
@@ -36,7 +36,7 @@ const mockValues = {
 	dateOfBirth: new Date("1990-10-10").toISOString(),
 	genderViolence: "yes",
 	violenceLocation: "yes",
-	externalSupport: "no",
+	externalSupport: ["no"],
 	financialNeed: "yes",
 	SupportType: ["legal"],
 	email: "msr@email.br",
@@ -64,7 +64,7 @@ describe("GET /load-msr-register-data", () => {
 		mockedMongodb.msrRegisterData.findFirst.mockResolvedValueOnce(mockMsrData);
 		const request = new NextRequest(
 			new Request(
-				"http://localhost:3000/db/-msr-register-data/?email=msr@email.br",
+				"http://localhost:3000/db/load-msr-register-data/?email=msr@email.br",
 				{
 					method: "GET",
 				}
@@ -86,7 +86,7 @@ describe("GET /load-msr-register-data", () => {
 		mockedMongodb.msrRegisterData.findFirst.mockResolvedValueOnce(null);
 		const request = new NextRequest(
 			new Request(
-				"http://localhost:3000/db/-msr-register-data/?email=msr@email.br",
+				"http://localhost:3000/db/load-msr-register-data/?email=msr@email.br",
 				{
 					method: "GET",
 				}
@@ -106,9 +106,12 @@ describe("GET /load-msr-register-data", () => {
 
 	it("should return an error when the is not a valid email", async () => {
 		const request = new NextRequest(
-			new Request("http://localhost:3000/db/-msr-register-data/?email=msr", {
-				method: "GET",
-			})
+			new Request(
+				"http://localhost:3000/db/load-msr-register-data/?email=msr",
+				{
+					method: "GET",
+				}
+			)
 		);
 		const response = await GET(request);
 		expect(response.status).toEqual(400);
@@ -124,7 +127,7 @@ describe("GET /load-msr-register-data", () => {
 		});
 		const request = new NextRequest(
 			new Request(
-				"http://localhost:3000/db/-msr-register-data/?email=msr@email.br",
+				"http://localhost:3000/db/load-msr-register-data/?email=msr@email.br",
 				{
 					method: "GET",
 				}

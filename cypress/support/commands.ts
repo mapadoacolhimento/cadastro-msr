@@ -4,8 +4,6 @@
 import "@testing-library/cypress/add-commands";
 import {
 	firstName,
-	email,
-	confirmEmail,
 	phone,
 	hasDisability,
 	acceptOnlineSupport,
@@ -22,6 +20,8 @@ import {
 	city,
 } from "../fixtures/userData.json";
 
+import { generateEmail } from "../../src/utils";
+
 Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();
 });
@@ -31,11 +31,12 @@ Cypress.Commands.add("fillDateOfBirthStep", (dateOfBirth) => {
 	cy.findByRole("textbox").should("be.visible").type(dateOfBirth);
 });
 
-Cypress.Commands.add("fillBasicRegisterInformationStep", () => {
+Cypress.Commands.add("fillBasicRegisterInformationStep", (msrEmail) => {
+	const email = msrEmail ? msrEmail : generateEmail();
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.get("#firstName").type(firstName);
 	cy.get("#email").type(email);
-	cy.get("#confirmEmail").type(confirmEmail);
+	cy.get("#confirmEmail").type(email);
 	cy.get("#phone").type(phone);
 });
 

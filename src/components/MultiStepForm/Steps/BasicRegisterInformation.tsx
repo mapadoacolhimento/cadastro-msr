@@ -28,7 +28,7 @@ const basicRegisterInformationSchema = Yup.object({
 });
 
 function BasicRegisterInformationFields() {
-	const { values, setFieldValue, setValues } = useFormikContext();
+	const { values, setFieldValue, setValues } = useFormikContext<Values>();
 
 	async function loadMsrRegisterData(email: string) {
 		const response = await fetch(`/db/load-msr-register-data/?email=${email}`, {
@@ -37,9 +37,8 @@ function BasicRegisterInformationFields() {
 		if (response.ok) {
 			const data = await response.json();
 			if (data.values) {
-				setFieldValue("confirmEmail", data.values.email);
 				setFieldValue("phone", data.values.phone);
-				const newValues = updateEmptyFields(values as Values, data.values);
+				const newValues = updateEmptyFields(values, data.values);
 				setValues(newValues);
 			}
 		}
@@ -59,13 +58,13 @@ function BasicRegisterInformationFields() {
 				type="email"
 				label="E-mail"
 				placeholder="Qual o seu melhor e-mail?"
-				onBlur={loadMsrRegisterData}
 			/>
 			<TextInput
 				name="confirmEmail"
 				type="email"
 				label="Confirme seu e-mail"
 				placeholder="Confirme seu e-mail"
+				onBlur={loadMsrRegisterData}
 			/>
 			<TextInput
 				name="phone"

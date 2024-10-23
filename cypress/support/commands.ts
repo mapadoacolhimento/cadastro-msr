@@ -20,7 +20,7 @@ import {
 	city,
 } from "../fixtures/userData.json";
 
-import { generateEmail } from "../../src/utils";
+import { gerarEmail } from "../../src/utils";
 
 Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();
@@ -32,7 +32,7 @@ Cypress.Commands.add("fillDateOfBirthStep", (dateOfBirth) => {
 });
 
 Cypress.Commands.add("fillBasicRegisterInformationStep", (msrEmail) => {
-	const email = msrEmail ? msrEmail : generateEmail();
+	const email = msrEmail ? msrEmail : gerarEmail();
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.get("#firstName").type(firstName);
 	cy.get("#email").type(email);

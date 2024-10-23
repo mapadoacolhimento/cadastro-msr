@@ -1,11 +1,11 @@
 import { Values } from "@/types";
 
-export default function updateEmptyFields(
-	currentValues: Values,
-	loadValues: Values
+export default function getFinalFormValues(
+	currentFormValues: Values,
+	previousFormValues: Values
 ) {
 	const valuesWithoutEmptyProperties = Object.fromEntries(
-		Object.entries(currentValues).filter(
+		Object.entries(currentFormValues).filter(
 			([key, value]) =>
 				value !== null &&
 				typeof value !== "undefined" &&
@@ -13,5 +13,5 @@ export default function updateEmptyFields(
 				(!Array.isArray(value) || value.length > 0)
 		)
 	);
-	return { ...loadValues, ...valuesWithoutEmptyProperties };
+	return { ...previousFormValues, ...valuesWithoutEmptyProperties };
 }

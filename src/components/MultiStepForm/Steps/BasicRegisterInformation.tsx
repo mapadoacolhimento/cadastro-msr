@@ -2,11 +2,11 @@ import { Box } from "@radix-ui/themes";
 import * as Yup from "yup";
 
 import { useFormikContext } from "formik";
-import { useState } from "react";
 import { TextInput } from "../..";
 import Step from "../Step";
-import { updateEmptyFields } from "@/utils";
+import { getFinalFormValues } from "@/utils";
 import { Values } from "@/types";
+import { logger } from "@/lib";
 
 const basicRegisterInformationSchema = Yup.object({
 	firstName: Yup.string()
@@ -28,19 +28,25 @@ const basicRegisterInformationSchema = Yup.object({
 });
 
 function BasicRegisterInformationFields() {
-	const { values, setFieldValue, setValues } = useFormikContext<Values>();
+	const { values, setValues } = useFormikContext<Values>();
 
 	async function loadMsrRegisterData(email: string) {
-		const response = await fetch(`/db/load-msr-register-data/?email=${email}`, {
-			method: "GET",
-		});
-		if (response.ok) {
-			const data = await response.json();
-			if (data.values) {
-				setFieldValue("phone", data.values.phone);
-				const newValues = updateEmptyFields(values, data.values);
-				setValues(newValues);
+		try {
+			const response = await fetch(
+				`/db/load-msr-register-data/?email=${email}`,
+				{
+					method: "GET",
+				}
+			);
+			if (response.ok) {
+				const data = await response.json();
+				if (data.values) {
+					const newValues = getFinalFormValues(values, data.values);
+					setValues(newValues);
+				}
 			}
+		} catch (error: any) {
+			logger.error(error);
 		}
 	}
 

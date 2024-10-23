@@ -11,18 +11,16 @@ export async function GET(request: NextRequest) {
 		const email = searchParams.get("email");
 		let values = null;
 
-		await paramSchema.validate(email);
+		const validatedEmail = await paramSchema.validate(email);
+		const msrRegisterData = await mongodb.msrRegisterData.findFirst({
+			where: {
+				email: validatedEmail,
+			},
+		});
 
-		if (email) {
-			const msrRegisterData = await mongodb.msrRegisterData.findFirst({
-				where: {
-					email: email,
-				},
-			});
-			if (msrRegisterData) {
-				const { id, createdAt, updatedAt, ...data } = msrRegisterData;
-				values = data;
-			}
+		if (msrRegisterData) {
+			const { id, createdAt, updatedAt, ...data } = msrRegisterData;
+			values = data;
 		}
 
 		return Response.json({ values });

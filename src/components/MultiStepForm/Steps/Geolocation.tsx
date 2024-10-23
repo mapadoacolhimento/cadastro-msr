@@ -46,15 +46,6 @@ function GeolocationFields() {
 	const [status, setStatus] = useState<Status | null>(Status.idle);
 	const [error, setError] = useState<string | null>(null);
 
-	useEffect(() => {
-		if (values.city) {
-			setCityOptions([
-				...defaultCityOptions,
-				{ value: values.city, label: values.city },
-			]);
-		}
-	}, [values.city]);
-
 	async function handleStateChange(state: string) {
 		try {
 			setStatus(Status.loading);
@@ -82,6 +73,17 @@ function GeolocationFields() {
 			setStatus(Status.error);
 		}
 	}
+
+	useEffect(() => {
+		if (values.state) {
+			console.log(values.state);
+			setFieldValue("state", values.state);
+			handleStateChange(values.state);
+		}
+		if (values.city) {
+			setFieldValue("city", values.city);
+		}
+	}, [values.state, values.city]);
 
 	async function autofillGeolocation(zipcode: string) {
 		setStatus(Status.loading);

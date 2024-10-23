@@ -73,10 +73,13 @@ it("should fill addres information in the fields in the following step after loa
 
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.wait(5000);
 	cy.findByLabelText("CEP").should("have.value", "12345-678");
 	cy.findByLabelText("Bairro").should("have.value", neighborhood);
+	cy.get('input[type="hidden"][name="state"]').should("have.value", "SP");
+	cy.get('input[type="hidden"][name="city"]').should("have.value", "SÃO PAULO");
+
 	cy.findByRole("button", { name: "Continuar" }).click();
+
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.findByRole("combobox", {
 		name: "Cor",

@@ -75,15 +75,16 @@ function GeolocationFields() {
 	}
 
 	useEffect(() => {
-		if (values.state) {
-			console.log(values.state);
-			setFieldValue("state", values.state);
-			handleStateChange(values.state);
-		}
 		if (values.city) {
-			setFieldValue("city", values.city);
+			setCityOptions([
+				...defaultCityOptions,
+				{
+					value: values.city,
+					label: values.city.toString(),
+				},
+			]);
 		}
-	}, [values.state, values.city]);
+	}, []);
 
 	async function autofillGeolocation(zipcode: string) {
 		setStatus(Status.loading);

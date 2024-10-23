@@ -1,7 +1,9 @@
+import crypto from "crypto";
+
 export default function gerarEmail() {
 	const dominios = ["@teste.com", "@email.com", "@teste.com.br"];
-	const random = Math.random();
-	const name = "msr_" + random.toString(36).substring(7);
-	const email = name + dominios[Math.floor(Math.random() * dominios.length)];
+	const name = "msr_" + crypto.randomBytes(4).toString("hex");
+	const randomBytes = crypto.randomBytes(4);
+	const email = name + dominios[randomBytes.readUInt32BE(0) % dominios.length];
 	return email;
 }

@@ -5,7 +5,6 @@ const {
 	genderViolence,
 	externalSupport,
 	violenceLocation,
-	financialNeed,
 	supportTypes,
 	dateOfBirth,
 } = userData;
@@ -22,35 +21,7 @@ describe("Happy path", () => {
 				cy.visit("/");
 				cy.goThroughHomePage();
 
-				cy.fillGenderIdentityStep(gender);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillDateOfBirthStep(dateOfBirth);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillGenderViolenceStep(genderViolence);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillViolenceLocationStep(violenceLocation);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillExternalSupportStep(externalSupport);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillFinancialNeedStep(financialNeed);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillSupportTypeStep(supportTypes);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillBasicRegisterInformationStep();
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillGeolocationStep();
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillDiversityInformationStep();
-				cy.findByRole("button", { name: "Enviar" }).click();
+				cy.fillAllSteps(supportTypes);
 			});
 
 			it("should go back to the previous step when the back button is clicked", () => {
@@ -84,35 +55,7 @@ describe("Happy path", () => {
 				cy.visit("/");
 				cy.goThroughHomePage();
 
-				cy.fillGenderIdentityStep(gender);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillDateOfBirthStep(dateOfBirth);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillGenderViolenceStep(genderViolence);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillViolenceLocationStep(violenceLocation);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillExternalSupportStep(externalSupport);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillFinancialNeedStep(financialNeed);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillSupportTypeStep(supportTypes);
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillBasicRegisterInformationStep();
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillGeolocationStep();
-				cy.findByRole("button", { name: "Continuar" }).click();
-
-				cy.fillDiversityInformationStep();
-				cy.findByRole("button", { name: "Enviar" }).click();
+				cy.fillAllSteps(supportTypes);
 			});
 
 			it("should go back to the previous step when the back button is clicked", () => {

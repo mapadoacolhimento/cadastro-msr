@@ -89,13 +89,16 @@ Cypress.Commands.add("fillAcceptsOnlineSupportStep", () => {
 	}).click();
 });
 
-Cypress.Commands.add("fillSupportTypeStep", (supportType) => {
-	cy.contains("Que tipo de acolhimento você precisa?").should("exist");
-	if (supportType.psychological)
-		cy.findByLabelText(supportType.psychological).click({ force: true });
-	if (supportType.legal)
-		cy.findByLabelText(supportType.legal).click({ force: true });
-});
+Cypress.Commands.add(
+	"fillSupportTypeStep",
+	(supportType: Record<string, string>) => {
+		cy.contains("Que tipo de acolhimento você precisa?").should("exist");
+		if (supportType.psychological)
+			cy.findByLabelText(supportType.psychological).click({ force: true });
+		if (supportType.legal)
+			cy.findByLabelText(supportType.legal).click({ force: true });
+	}
+);
 
 Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
 	cy.contains("Você sofreu ou está sofrendo violência de gênero?").should(
@@ -134,7 +137,17 @@ Cypress.Commands.add("checkForaCriteriosPage", () => {
 	).should("exist");
 });
 
-Cypress.Commands.add("fillAllSteps", (supportTypes: any) => {
+Cypress.Commands.add("goThroughBeginRegistrationStep", () => {
+	cy.findByRole("heading", { name: "Você não está sozinha", level: 1 }).should(
+		"exist"
+	);
+	cy.findByText(
+		"Com base nas suas respostas identificamos que você pode ser atendida pelo projeto. Agora precisamos de mais algumas informações para concluir o seu cadastro e te direcionar para o atendimento adequado. Vamos lá?"
+	).should("exist");
+	cy.findByRole("button", { name: "Iniciar cadastro" }).should("exist");
+});
+
+Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -152,6 +165,9 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: any) => {
 
 	cy.fillFinancialNeedStep(financialNeed);
 	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.goThroughBeginRegistrationStep();
+	cy.findByRole("button", { name: "Iniciar cadastro" }).click();
 
 	cy.fillSupportTypeStep(supportTypes);
 	cy.findByRole("button", { name: "Continuar" }).click();

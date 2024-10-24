@@ -36,7 +36,11 @@ export default function Illustration({
 					<Image
 						src={img.src}
 						alt={img.alt}
-						style={{ height: "auto" }}
+						style={{
+							height: "auto",
+							position: "relative",
+							bottom: bottom ?? "0",
+						}}
 						width={600}
 						height={300}
 					/>

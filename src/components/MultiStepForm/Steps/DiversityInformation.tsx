@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Box } from "@radix-ui/themes";
+import { Box, Link, Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
 import CheckboxInput from "../../CheckboxInput";
@@ -46,12 +46,15 @@ export default function DiversityInformation() {
 					Ao inserir seus dados, você concorda em ter seus dados compartilhados
 					com os organizadores dessa página e aceita receber emails de
 					atualização, conforme descrito na{" "}
-					<a
-						href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
-						target="_blank"
-					>
-						política de privacidade
-					</a>
+					<Strong>
+						<Link
+							href="https://docs.google.com/document/d/e/2PACX-1vTI5h8RBjeC7MkZ4bAponamp02YdYhjhPCJC0dQ2kp7inzA1LPoiE_JFgOwmbwv1PPJvU4pMqfEEQn9/pub"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							política de privacidade
+						</Link>
+					</Strong>
 					. Você pode cancelar o recebimento desses e-mails a qualquer momento.
 				</CheckboxInput>
 			</Box>

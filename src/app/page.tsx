@@ -39,8 +39,9 @@ export default function Homepage() {
 					Ao responder as perguntas você está de acordo com a nossa{" "}
 					<Strong>
 						<ExternalLink
-							href="https://queroseracolhida.mapadoacolhimento.org/static/politica-de-privacidade.pdf"
+							href="https://docs.google.com/document/d/e/2PACX-1vTI5h8RBjeC7MkZ4bAponamp02YdYhjhPCJC0dQ2kp7inzA1LPoiE_JFgOwmbwv1PPJvU4pMqfEEQn9/pub"
 							target="_blank"
+							rel="noopener noreferrer"
 						>
 							política de privacidade
 						</ExternalLink>

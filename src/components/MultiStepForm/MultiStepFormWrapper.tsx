@@ -157,7 +157,11 @@ export default function MultiStepFormWrapper({
 					</Form>
 				)}
 			</Formik>
-			<Illustration img={step.props.img} />
+			<Illustration
+				img={step.props.img}
+				align={step.props.img.align}
+				bottom={step.props.img.bottom}
+			/>
 		</>
 	) : null;
 }

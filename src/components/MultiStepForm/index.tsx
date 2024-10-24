@@ -11,6 +11,7 @@ import {
 	Geolocation,
 	DiversityInformation,
 	DateOfBirth,
+	BeginRegistration,
 } from "./Steps";
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
@@ -69,6 +70,7 @@ export default function MultiStepForm() {
 			{ViolenceLocation()}
 			{ExternalSupport()}
 			{FinancialNeed()}
+			{BeginRegistration()}
 			{SupportType()}
 			{BasicRegisterInformation()}
 			{Geolocation()}

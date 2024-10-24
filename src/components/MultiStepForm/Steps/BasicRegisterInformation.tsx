@@ -38,15 +38,18 @@ function BasicRegisterInformationFields() {
 					method: "GET",
 				}
 			);
-			if (response.ok) {
-				const data = await response.json();
-				if (data.values) {
-					const newValues = getFinalFormValues(values, data.values);
-					setValues(newValues);
-				}
+
+			if (!response.ok) {
+				throw new Error(response.statusText);
+			}
+
+			const data = await response.json();
+			if (data.values) {
+				const newValues = getFinalFormValues(values, data.values);
+				setValues(newValues);
 			}
 		} catch (error: any) {
-			logger.error(error);
+			logger.error(error.message);
 		}
 	}
 

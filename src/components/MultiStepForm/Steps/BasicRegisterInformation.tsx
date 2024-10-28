@@ -1,8 +1,12 @@
-import * as Yup from "yup";
 import { Box } from "@radix-ui/themes";
+import * as Yup from "yup";
 
-import Step from "../Step";
+import { useFormikContext } from "formik";
 import { TextInput } from "../..";
+import Step from "../Step";
+import { getFinalFormValues } from "@/utils";
+import { Values } from "@/types";
+import { logger } from "@/lib";
 
 const basicRegisterInformationSchema = Yup.object({
 	firstName: Yup.string()
@@ -23,16 +27,34 @@ const basicRegisterInformationSchema = Yup.object({
 		.required("Insira seu número de telefone celular."),
 });
 
-export default function BasicRegisterInformation() {
+function BasicRegisterInformationFields() {
+	const { values, setValues } = useFormikContext<Values>();
+
+	async function loadMsrRegisterData(email: string) {
+		try {
+			const response = await fetch(
+				`/db/load-msr-register-data/?email=${email}`,
+				{
+					method: "GET",
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error(response.statusText);
+			}
+
+			const data = await response.json();
+			if (data.values) {
+				const newValues = getFinalFormValues(values, data.values);
+				setValues(newValues);
+			}
+		} catch (error: any) {
+			logger.error(error.message);
+		}
+	}
+
 	return (
-		<Step
-			validationSchema={basicRegisterInformationSchema}
-			title={"Seus dados"}
-			img={{
-				src: "/illustrations/woman-floating.webp",
-				alt: "Ilustração com uma mulher flutuando.",
-			}}
-		>
+		<>
 			<Box pt={"3"}>
 				<TextInput
 					name="firstName"
@@ -51,6 +73,7 @@ export default function BasicRegisterInformation() {
 				type="email"
 				label="Confirme seu e-mail"
 				placeholder="Confirme seu e-mail"
+				onBlur={loadMsrRegisterData}
 			/>
 			<TextInput
 				name="phone"
@@ -59,6 +82,21 @@ export default function BasicRegisterInformation() {
 				placeholder="Qual o seu whatsapp (com DDD)?"
 				mask="(99) 99999-9999"
 			/>
+		</>
+	);
+}
+
+export default function BasicRegisterInformation() {
+	return (
+		<Step
+			validationSchema={basicRegisterInformationSchema}
+			title={"Seus dados"}
+			img={{
+				src: "/illustrations/woman-floating.webp",
+				alt: "Ilustração com uma mulher flutuando.",
+			}}
+		>
+			<BasicRegisterInformationFields />
 		</Step>
 	);
 }

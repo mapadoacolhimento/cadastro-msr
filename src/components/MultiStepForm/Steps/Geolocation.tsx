@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Box, Text } from "@radix-ui/themes";
 import { type FormikHelpers, useFormikContext } from "formik";
@@ -40,11 +40,11 @@ const defaultCityOptions: CityOption[] = [
 ];
 
 function GeolocationFields() {
+	const { values, setFieldValue } = useFormikContext<Values>();
 	const [cityOptions, setCityOptions] =
 		useState<CityOption[]>(defaultCityOptions);
 	const [status, setStatus] = useState<Status | null>(Status.idle);
 	const [error, setError] = useState<string | null>(null);
-	const { setFieldValue } = useFormikContext();
 
 	async function handleStateChange(state: string) {
 		try {
@@ -73,6 +73,18 @@ function GeolocationFields() {
 			setStatus(Status.error);
 		}
 	}
+
+	useEffect(() => {
+		if (values.city) {
+			setCityOptions([
+				...defaultCityOptions,
+				{
+					value: values.city,
+					label: values.city.toString(),
+				},
+			]);
+		}
+	}, []);
 
 	async function autofillGeolocation(zipcode: string) {
 		setStatus(Status.loading);

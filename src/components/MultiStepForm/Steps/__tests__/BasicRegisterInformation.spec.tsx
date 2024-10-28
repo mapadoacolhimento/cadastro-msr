@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import createFetchResponse from "@/tests/unit/fetch";
 import BasicRegisterInformation from "../BasicRegisterInformation";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import { sleep } from "@/utils";
@@ -28,6 +29,8 @@ const setup = () => {
 
 describe("<BasicRegisterInformation />", () => {
 	it("should render fields", () => {
+		fetch.mockResolvedValueOnce(createFetchResponse({ values: null }));
+
 		setup();
 
 		const nameInput = screen.getByRole("textbox", { name: "Primeiro nome" });
@@ -44,6 +47,8 @@ describe("<BasicRegisterInformation />", () => {
 	});
 
 	it("should render empty field error if no info provided", async () => {
+		fetch.mockResolvedValueOnce(createFetchResponse({ values: null }));
+
 		setup();
 
 		const btn = screen.getByRole("button", { name: /enviar/i });

@@ -11,3 +11,4 @@ export { default as DateOfBirth } from "./DateOfBirth";
 export { default as Geolocation } from "./Geolocation";
 export { default as TransitoryStep } from "./TransitoryStep";
 export { default as BeginRegistration } from "./BeginRegistration";
+export { default as MonthlyIncome } from "./MonthlyIncome";

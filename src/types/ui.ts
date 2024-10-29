@@ -46,4 +46,5 @@ export interface Values {
 	state: string;
 	lat: number | null;
 	lng: number | null;
+	monthlyIncome: string;
 }

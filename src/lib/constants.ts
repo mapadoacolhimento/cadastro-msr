@@ -163,3 +163,15 @@ export const ZENDESK_DUPLICATED_TICKET_STATUS = "solicitação_repetida";
 
 export const TRIAGE_ECONOMIC_QUESTIONS_FEATURE_FLAG =
 	"TRIAGE_ECONOMIC_QUESTIONS";
+
+export const monthlyIncomeOptions = [
+	{ value: "yes", name: "Sim" },
+	{
+		value: "no",
+		name: "Não",
+	},
+	{
+		value: "noAccess",
+		name: "Estou sem acesso a minha renda",
+	},
+];

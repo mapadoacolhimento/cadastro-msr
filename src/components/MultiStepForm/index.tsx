@@ -14,6 +14,7 @@ import {
 	DiversityInformation,
 	DateOfBirth,
 	BeginRegistration,
+	MonthlyIncome,
 } from "./Steps";
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
@@ -80,6 +81,7 @@ export default function MultiStepForm() {
 				violenceLocation: "",
 				externalSupport: [],
 				financialNeed: "",
+				monthlyIncome: "",
 				terms: false,
 				city: "",
 				state: "",
@@ -95,7 +97,7 @@ export default function MultiStepForm() {
 			{GenderViolence()}
 			{ViolenceLocation()}
 			{ExternalSupport()}
-			{isTriageEconomicQuestionsEnabled ? <>ola!</> : FinancialNeed()}
+			{isTriageEconomicQuestionsEnabled ? MonthlyIncome() : FinancialNeed()}
 			{BeginRegistration()}
 			{SupportType()}
 			{BasicRegisterInformation()}

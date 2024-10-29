@@ -14,8 +14,18 @@ async function main() {
 		},
 	});
 
+	const featureFlags = await prisma.featureFlag.createMany({
+		data: [
+			{
+				featureName: "TRIAGE_ECONOMIC_QUESTIONS",
+				featureEnabled: true,
+			},
+		],
+	});
+
 	console.log({
 		city,
+		featureFlags,
 	});
 }
 

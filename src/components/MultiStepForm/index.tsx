@@ -1,4 +1,6 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
@@ -15,8 +17,32 @@ import {
 } from "./Steps";
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
+import { TRIAGE_ECONOMIC_QUESTIONS_FEATURE_FLAG } from "@/lib";
 
 export default function MultiStepForm() {
+	const [
+		isTriageEconomicQuestionsEnabled,
+		setIsTriageEconomicQuestionsEnabled,
+	] = useState(false);
+
+	useEffect(() => {
+		async function fetchFeatureFlag() {
+			const response = await fetch(
+				`/api/feature-flag?flag=${TRIAGE_ECONOMIC_QUESTIONS_FEATURE_FLAG}`
+			);
+
+			if (!response.ok) {
+				setIsTriageEconomicQuestionsEnabled(false);
+			}
+
+			const data = await response.json();
+
+			setIsTriageEconomicQuestionsEnabled(data.isFeatureFlagEnabled);
+		}
+
+		fetchFeatureFlag();
+	}, []);
+
 	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
 		const formattedValues = formatRegisterFormValues(values);
 
@@ -69,7 +95,7 @@ export default function MultiStepForm() {
 			{GenderViolence()}
 			{ViolenceLocation()}
 			{ExternalSupport()}
-			{FinancialNeed()}
+			{isTriageEconomicQuestionsEnabled ? <>ola!</> : FinancialNeed()}
 			{BeginRegistration()}
 			{SupportType()}
 			{BasicRegisterInformation()}

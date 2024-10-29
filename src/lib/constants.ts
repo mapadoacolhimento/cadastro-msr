@@ -160,3 +160,6 @@ export const GOOGLE_ANALYTICS_ID = "G-H4HVJY8T0V";
 export const ZENDESK_NEW_USER_STATUS = "inscrita";
 export const ZENDESK_NEW_TICKET_STATUS = "solicitação_recebida";
 export const ZENDESK_DUPLICATED_TICKET_STATUS = "solicitação_repetida";
+
+export const TRIAGE_ECONOMIC_QUESTIONS_FEATURE_FLAG =
+	"TRIAGE_ECONOMIC_QUESTIONS";

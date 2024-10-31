@@ -6,6 +6,7 @@ import FinancialNeed from "./FinancialNeed";
 import MonthlyIncomeRange from "./MonthlyIncomeRange";
 import EmploymentStatus from "./EmploymentStatus";
 import Dependants from "./Dependants";
+import FamilyProvider from "./FamilyProvider";
 
 export default function FinancialBlock() {
 	const [
@@ -32,6 +33,12 @@ export default function FinancialBlock() {
 	}, []);
 
 	return isTriageEconomicQuestionsEnabled
-		? [MonthlyIncome(), MonthlyIncomeRange(), EmploymentStatus(), Dependants()]
+		? [
+				MonthlyIncome(),
+				MonthlyIncomeRange(),
+				EmploymentStatus(),
+				Dependants(),
+				FamilyProvider(),
+			]
 		: FinancialNeed();
 }

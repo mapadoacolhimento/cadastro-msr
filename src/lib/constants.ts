@@ -207,3 +207,15 @@ export const dependantsOptions = [
 		name: "Não",
 	},
 ];
+
+export const familyProviderOptions = [
+	{ value: "yes", name: "Sim" },
+	{
+		value: "no",
+		name: "Não",
+	},
+	{
+		value: "shared",
+		name: "Divido a responsabilidade financeira da casa",
+	},
+];

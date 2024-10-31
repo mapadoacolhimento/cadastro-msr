@@ -59,6 +59,7 @@ export default function MultiStepForm() {
 				monthlyIncomeRange: 0,
 				employmentStatus: "",
 				dependants: "",
+				familyProvider: "",
 				terms: false,
 				city: "",
 				state: "",

@@ -50,4 +50,5 @@ export interface Values {
 	monthlyIncomeRange: number;
 	employmentStatus: string;
 	dependants: string;
+	familyProvider: string;
 }

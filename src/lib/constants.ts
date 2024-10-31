@@ -175,3 +175,27 @@ export const monthlyIncomeOptions = [
 		name: "Estou sem acesso a minha renda",
 	},
 ];
+
+export const monthlyIncomeRangeOptions = [
+	{ value: 0.5, name: "Até meio salário mínimo (R$660,00)" },
+	{ value: 1, name: "Até um salário mínimo (R$1.320,00)" },
+	{ value: 2, name: "Até dois salários mínimos (R$2.640,00)" },
+	{ value: 3, name: "Até três salários mínimos (R$3.960,00)" },
+	{ value: 4, name: "Até quatro salários mínimos (R$5.280,00)" },
+	{ value: 5, name: "Cinco salários mínimos ou mais (R$6.600,00 ou mais) " },
+];
+
+export const employmentStatusOptions = [
+	{
+		value: "employedClt",
+		name: "Trabalhadora com carteira de trabalho assinada",
+	},
+	{
+		value: "employedPj",
+		name: "Trabalhadora sem carteira de trabalho assinada",
+	},
+	{ value: "student", name: "Estudante e dependente da minha família" },
+	{ value: "studentWithIncome", name: "Estudante e com renda independente" },
+	{ value: "retired", name: "Aposentada" },
+	{ value: "unemployed", name: "Desempregada" },
+];

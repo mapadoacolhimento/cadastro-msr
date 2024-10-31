@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
 
-import FinancialNeed from "../FinancialNeed";
+import FinancialNeed from "../FinancialBlock/FinancialNeed";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import { sleep } from "@/utils";
 import { type Values } from "@/types";

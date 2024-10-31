@@ -51,4 +51,5 @@ export interface Values {
 	employmentStatus: string;
 	dependants: string;
 	familyProvider: string;
+	propertyOwnership: string;
 }

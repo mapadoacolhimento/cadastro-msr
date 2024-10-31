@@ -60,6 +60,7 @@ export default function MultiStepForm() {
 				employmentStatus: "",
 				dependants: "",
 				familyProvider: "",
+				propertyOwnership: "",
 				terms: false,
 				city: "",
 				state: "",

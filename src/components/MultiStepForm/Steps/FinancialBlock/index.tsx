@@ -7,6 +7,7 @@ import MonthlyIncomeRange from "./MonthlyIncomeRange";
 import EmploymentStatus from "./EmploymentStatus";
 import Dependants from "./Dependants";
 import FamilyProvider from "./FamilyProvider";
+import PropertyOwnership from "./PropertyOwnership";
 
 export default function FinancialBlock() {
 	const [
@@ -39,6 +40,7 @@ export default function FinancialBlock() {
 				EmploymentStatus(),
 				Dependants(),
 				FamilyProvider(),
+				PropertyOwnership(),
 			]
 		: FinancialNeed();
 }

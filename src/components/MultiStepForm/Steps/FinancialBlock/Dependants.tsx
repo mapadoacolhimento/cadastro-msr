@@ -18,7 +18,7 @@ export default function Dependants() {
 			title={"Sobre sua renda"}
 			img={{
 				src: "/illustrations/mother-daughter-embrace.webp",
-				alt: "Ilustração de um caderno, um lápis amarelo e alguns clips",
+				alt: "Ilustração colorida de uma mãe abraçando a filha",
 				align: "end",
 				bottom: "50px",
 			}}

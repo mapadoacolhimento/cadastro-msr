@@ -219,3 +219,11 @@ export const familyProviderOptions = [
 		name: "Divido a responsabilidade financeira da casa",
 	},
 ];
+
+export const propertyOwnershipOptions = [
+	{ value: "yes", name: "Sim" },
+	{
+		value: "no",
+		name: "Não",
+	},
+];

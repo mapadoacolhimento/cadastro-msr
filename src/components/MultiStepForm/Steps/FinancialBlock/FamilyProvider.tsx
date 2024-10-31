@@ -17,8 +17,10 @@ export default function FamilyProvider() {
 			validationSchema={familyProviderSchema}
 			title={"Sobre sua renda"}
 			img={{
-				src: "/illustrations/notebook.webp",
-				alt: "Ilustração de um caderno, um lápis amarelo e alguns clips",
+				src: "/illustrations/mother-daughter-embrace.webp",
+				alt: "Ilustração colorida de uma mãe abraçando a filha",
+				align: "end",
+				bottom: "50px",
 			}}
 		>
 			<RadioInput

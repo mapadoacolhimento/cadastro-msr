@@ -5,14 +5,17 @@ import Step from "../../Step";
 import RadioInput from "../../../RadioInput";
 import { monthlyIncomeRangeOptions } from "@/constants";
 
-const monthlyIncomeSchema = Yup.object({
-	monthlyIncomeRange: Yup.number().required("Esse campo é obrigatório."),
+const monthlyIncomeRangeSchema = Yup.object({
+	monthlyIncomeRange: Yup.number()
+		.min(0.5, "Esse campo é obrigatório.")
+		.max(5, "Valor inválido")
+		.required("Esse campo é obrigatório."),
 });
 
 export default function MonthlyIncomeRange() {
 	return (
 		<Step
-			validationSchema={monthlyIncomeSchema}
+			validationSchema={monthlyIncomeRangeSchema}
 			title={"Sobre sua renda"}
 			img={{
 				src: "/illustrations/notebook.webp",
@@ -20,7 +23,7 @@ export default function MonthlyIncomeRange() {
 			}}
 		>
 			<RadioInput
-				name="monthlyIncome"
+				name="monthlyIncomeRange"
 				options={monthlyIncomeRangeOptions}
 				question={
 					<>

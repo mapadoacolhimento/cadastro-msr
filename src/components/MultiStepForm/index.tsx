@@ -1,5 +1,7 @@
 "use client";
 
+import { PropsWithChildren } from "react";
+import { FeatureFlag } from "@prisma/client";
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
@@ -16,8 +18,11 @@ import {
 } from "./Steps";
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
+import { NEW_FINANCIAL_TRIAGE_FEATURE_FLAG } from "@/lib";
 
-export default function MultiStepForm() {
+export default function MultiStepForm({
+	featureFlags,
+}: PropsWithChildren<{ featureFlags: FeatureFlag[] }>) {
 	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
 		const formattedValues = formatRegisterFormValues(values);
 
@@ -37,6 +42,11 @@ export default function MultiStepForm() {
 
 		return data;
 	}
+
+	const isNewFinancialTriageEnabled = featureFlags.some(
+		(f) =>
+			f.featureName === NEW_FINANCIAL_TRIAGE_FEATURE_FLAG && f.featureEnabled
+	);
 
 	return (
 		<MultiStepFormWrapper
@@ -76,7 +86,7 @@ export default function MultiStepForm() {
 			{GenderViolence()}
 			{ViolenceLocation()}
 			{ExternalSupport()}
-			{FinancialBlock()}
+			{FinancialBlock({ isNewFinancialTriageEnabled })}
 			{BeginRegistration()}
 			{SupportType()}
 			{BasicRegisterInformation()}

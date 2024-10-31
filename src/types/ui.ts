@@ -49,4 +49,5 @@ export interface Values {
 	monthlyIncome: string;
 	monthlyIncomeRange: number;
 	employmentStatus: string;
+	dependants: string;
 }

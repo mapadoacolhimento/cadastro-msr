@@ -199,3 +199,11 @@ export const employmentStatusOptions = [
 	{ value: "retired", name: "Aposentada" },
 	{ value: "unemployed", name: "Desempregada" },
 ];
+
+export const dependantsOptions = [
+	{ value: "yes", name: "Sim" },
+	{
+		value: "no",
+		name: "Não",
+	},
+];

@@ -17,8 +17,8 @@ async function main() {
 	const featureFlags = await prisma.featureFlag.createMany({
 		data: [
 			{
-				featureName: "TRIAGE_ECONOMIC_QUESTIONS",
-				featureEnabled: true,
+				featureName: "NEW_FINANCIAL_TRIAGE",
+				featureEnabled: false,
 			},
 		],
 	});

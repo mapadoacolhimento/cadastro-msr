@@ -394,6 +394,96 @@ describe("Accessbility", () => {
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
 					});
+
+					describe.skip("Financial Block", () => {
+						beforeEach(() => {
+							cy.visit("/cadastro");
+
+							cy.fillGenderIdentityStep(gender);
+							cy.findByRole("button", { name: "Continuar" }).click();
+
+							cy.fillDateOfBirthStep(dateOfBirth);
+							cy.findByRole("button", { name: "Continuar" }).click();
+
+							cy.fillGenderViolenceStep(genderViolence);
+							cy.findByRole("button", { name: "Continuar" }).click();
+
+							cy.fillViolenceLocationStep(violenceLocation);
+							cy.findByRole("button", { name: "Continuar" }).click();
+
+							cy.fillExternalSupportStep(externalSupport);
+							cy.findByRole("button", { name: "Continuar" }).click();
+						});
+
+						it("should pass the accessibility test on MonthlyIncome step", () => {
+							cy.contains("Você tem renda mensal?").should("exist");
+
+							cy.injectAxe();
+							cy.checkA11y(null, null, terminalLog);
+						});
+
+						it("should pass the accessibility test on MonthlyIncomeRange step", () => {
+							cy.fillMonthlyIncomeStep();
+							cy.contains(
+								"Assinale a opção que corresponde a sua renda individual (per capita):"
+							).should("exist");
+
+							cy.injectAxe();
+							cy.checkA11y(null, null, terminalLog);
+						});
+
+						it("should pass the accessibility test on EmploymentStatus step", () => {
+							cy.fillMonthlyIncomeStep();
+							cy.fillMonthlyIncomeRangeStep();
+
+							cy.contains("Qual a sua situação de trabalho?").should("exist");
+
+							cy.injectAxe();
+							cy.checkA11y(null, null, terminalLog);
+						});
+
+						it("should pass the accessibility test on Dependants step", () => {
+							cy.fillMonthlyIncomeStep();
+							cy.fillMonthlyIncomeRangeStep();
+							cy.fillEmploymentStatusStep();
+
+							cy.contains(
+								"Você tem pessoas que são dependentes financeiramente da sua renda?"
+							).should("exist");
+
+							cy.injectAxe();
+							cy.checkA11y(null, null, terminalLog);
+						});
+
+						it("should pass the accessibility test on FamilyProvider step", () => {
+							cy.fillMonthlyIncomeStep();
+							cy.fillMonthlyIncomeRangeStep();
+							cy.fillEmploymentStatusStep();
+							cy.fillDependantsStep();
+
+							cy.contains(
+								"Você é responsável financeiramente pela renda familiar"
+							).should("exist");
+
+							cy.injectAxe();
+							cy.checkA11y(null, null, terminalLog);
+						});
+
+						it("should pass the accessibility test on PropertyOwnership step", () => {
+							cy.fillMonthlyIncomeStep();
+							cy.fillMonthlyIncomeRangeStep();
+							cy.fillEmploymentStatusStep();
+							cy.fillDependantsStep();
+							cy.fillFamilyProviderStep();
+
+							cy.contains(
+								"Você possui bens imóveis (casa, apartamento) em seu nome?"
+							).should("exist");
+
+							cy.injectAxe();
+							cy.checkA11y(null, null, terminalLog);
+						});
+					});
 				}
 			);
 		});

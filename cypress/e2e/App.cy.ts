@@ -279,3 +279,34 @@ describe("Submit the form", () => {
 		cy.url().should("include", "/acolhimento-andamento");
 	});
 });
+
+describe.skip("New features", () => {
+	describe("When new financial triage is enabled", () => {
+		it("should go through the new financial block step", () => {
+			cy.visit("/cadastro");
+
+			cy.fillGenderIdentityStep(gender);
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillDateOfBirthStep(dateOfBirth);
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillGenderViolenceStep(genderViolence);
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillViolenceLocationStep(violenceLocation);
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillExternalSupportStep(externalSupport);
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillFinancialBlock();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.findByRole("heading", {
+				name: "Você não está sozinha",
+				level: 1,
+			}).should("exist");
+		});
+	});
+});

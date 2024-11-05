@@ -29,7 +29,7 @@ export default function FamilyProvider() {
 				question={
 					<>
 						Você é <Strong>responsável financeiramente</Strong> pela renda
-						familitar (é considerada a &quot;<Em>chefe de família</Em>&quot;)?
+						familiar (é considerada a &quot;<Em>chefe de família</Em>&quot;)?
 					</>
 				}
 			/>

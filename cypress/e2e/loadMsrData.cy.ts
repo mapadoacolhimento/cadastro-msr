@@ -64,6 +64,9 @@ it("should fill addres information in the fields in the following step after loa
 	cy.fillFinancialNeedStep(financialNeed);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
+	cy.goThroughBeginRegistrationStep();
+	cy.findByRole("button", { name: "Iniciar cadastro" }).click();
+
 	cy.fillSupportTypeStep(supportTypes);
 	cy.findByRole("button", { name: "Continuar" }).click();
 

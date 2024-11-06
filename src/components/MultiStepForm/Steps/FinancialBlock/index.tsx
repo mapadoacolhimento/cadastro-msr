@@ -11,14 +11,22 @@ import PropertyOwnership from "./PropertyOwnership";
 export default function FinancialBlock({
 	isNewFinancialTriageEnabled,
 }: PropsWithChildren<{ isNewFinancialTriageEnabled: boolean }>) {
+	function renderNewFinancialTriage() {
+		return [
+			MonthlyIncome(),
+			MonthlyIncomeRange(),
+			EmploymentStatus(),
+			Dependants(),
+			FamilyProvider(),
+			PropertyOwnership(),
+		];
+	}
+
+	function renderFinancialNeed() {
+		return FinancialNeed();
+	}
+
 	return isNewFinancialTriageEnabled
-		? [
-				MonthlyIncome(),
-				MonthlyIncomeRange(),
-				EmploymentStatus(),
-				Dependants(),
-				FamilyProvider(),
-				PropertyOwnership(),
-			]
-		: FinancialNeed();
+		? renderNewFinancialTriage()
+		: renderFinancialNeed();
 }

@@ -13,19 +13,8 @@ async function main() {
 			updated_at: new Date().toISOString(),
 		},
 	});
-
-	const featureFlags = await prisma.featureFlag.createMany({
-		data: [
-			{
-				featureName: "NEW_FINANCIAL_TRIAGE",
-				featureEnabled: false,
-			},
-		],
-	});
-
 	console.log({
 		city,
-		featureFlags,
 	});
 }
 

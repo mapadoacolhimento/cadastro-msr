@@ -161,8 +161,6 @@ export const ZENDESK_NEW_USER_STATUS = "inscrita";
 export const ZENDESK_NEW_TICKET_STATUS = "solicitação_recebida";
 export const ZENDESK_DUPLICATED_TICKET_STATUS = "solicitação_repetida";
 
-export const NEW_FINANCIAL_TRIAGE_FEATURE_FLAG = "NEW_FINANCIAL_TRIAGE";
-
 export const monthlyIncomeOptions = [
 	{ value: "yes", name: "Sim" },
 	{

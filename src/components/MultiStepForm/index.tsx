@@ -1,4 +1,5 @@
 "use client";
+
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
@@ -7,11 +8,11 @@ import {
 	GenderViolence,
 	ViolenceLocation,
 	ExternalSupport,
-	FinancialNeed,
 	Geolocation,
 	DiversityInformation,
 	DateOfBirth,
 	BeginRegistration,
+	FinancialBlock,
 } from "./Steps";
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
@@ -54,6 +55,12 @@ export default function MultiStepForm() {
 				violenceLocation: "",
 				externalSupport: [],
 				financialNeed: "",
+				monthlyIncome: "",
+				monthlyIncomeRange: 0,
+				employmentStatus: "",
+				dependants: "",
+				familyProvider: "",
+				propertyOwnership: "",
 				terms: false,
 				city: "",
 				state: "",
@@ -69,7 +76,7 @@ export default function MultiStepForm() {
 			{GenderViolence()}
 			{ViolenceLocation()}
 			{ExternalSupport()}
-			{FinancialNeed()}
+			{FinancialBlock()}
 			{BeginRegistration()}
 			{SupportType()}
 			{BasicRegisterInformation()}

@@ -11,3 +11,4 @@ export { default as formatRegisterFormValues } from "./formatRegisterFormValues"
 export { default as formatDate } from "./formatDate";
 export { default as getFinalFormValues } from "./getFinalFormValues";
 export { default as generateTestEmail } from "./generateTestEmail";
+export { default as getObjectWithoutFalsyValues } from "./getObjectWithoutFalsyValues";

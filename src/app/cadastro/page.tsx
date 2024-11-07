@@ -1,5 +1,5 @@
 import MultiStepForm from "@/components/MultiStepForm";
 
-export default function Page() {
+export default async function Page() {
 	return <MultiStepForm />;
 }

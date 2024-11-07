@@ -13,7 +13,6 @@ async function main() {
 			updated_at: new Date().toISOString(),
 		},
 	});
-
 	console.log({
 		city,
 	});

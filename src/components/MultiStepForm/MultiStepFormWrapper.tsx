@@ -19,6 +19,7 @@ import {
 	type Values,
 } from "@/types";
 import { logger } from "@/lib";
+import { getObjectWithoutFalsyValues } from "@/utils";
 
 interface MultiStepFormWrapperProps {
 	initialValues: Values;
@@ -57,12 +58,13 @@ export default function MultiStepFormWrapper({
 			setStatus(Status.idle);
 
 			if (values.email) {
+				const truthyValuesObj = getObjectWithoutFalsyValues(values);
 				await fetch("/db/upsert-msr-register-data", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify(values),
+					body: JSON.stringify(truthyValuesObj),
 				});
 			}
 

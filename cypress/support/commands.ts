@@ -148,6 +148,68 @@ Cypress.Commands.add("goThroughBeginRegistrationStep", () => {
 	cy.findByRole("button", { name: "Iniciar cadastro" }).should("exist");
 });
 
+Cypress.Commands.add("fillMonthlyIncomeStep", () => {
+	// MonthlyIncome
+	cy.contains("Você tem renda mensal?").should("exist");
+	cy.findByRole("radio", { name: "Sim" }).click();
+	cy.findByRole("button", { name: "Continuar" }).click();
+});
+
+Cypress.Commands.add("fillMonthlyIncomeRangeStep", () => {
+	// MonthlyIncomeRange
+	cy.contains(
+		"Assinale a opção que corresponde a sua renda individual (per capita):"
+	).should("exist");
+	cy.findByRole("radio", {
+		name: "Até quatro salários mínimos (R$5.280,00)",
+	}).click();
+	cy.findByRole("button", { name: "Continuar" }).click();
+});
+
+Cypress.Commands.add("fillEmploymentStatusStep", () => {
+	// EmploymentStatus
+	cy.contains("Qual a sua situação de trabalho?").should("exist");
+	cy.findByRole("radio", {
+		name: "Trabalhadora sem carteira de trabalho assinada",
+	}).click();
+	cy.findByRole("button", { name: "Continuar" }).click();
+});
+
+Cypress.Commands.add("fillDependantsStep", () => {
+	// Dependants
+	cy.contains(
+		"Você tem pessoas que são dependentes financeiramente da sua renda?"
+	).should("exist");
+	cy.findByRole("radio", { name: "Sim" }).click();
+	cy.findByRole("button", { name: "Continuar" }).click();
+});
+
+Cypress.Commands.add("fillFamilyProviderStep", () => {
+	// FamilyProvider
+	cy.contains(
+		'Você é responsável financeiramente pela renda familiar (é considerada a "chefe de família")?'
+	).should("exist");
+	cy.findByRole("radio", { name: "Não" }).click();
+	cy.findByRole("button", { name: "Continuar" }).click();
+});
+
+Cypress.Commands.add("fillPropertyOwnershipStep", () => {
+	// PropertyOwnership
+	cy.contains(
+		"Você possui bens imóveis (casa, apartamento) em seu nome?"
+	).should("exist");
+	cy.findByRole("radio", { name: "Não" }).click();
+});
+
+Cypress.Commands.add("fillFinancialBlock", () => {
+	cy.fillMonthlyIncomeStep();
+	cy.fillMonthlyIncomeRangeStep();
+	cy.fillEmploymentStatusStep();
+	cy.fillDependantsStep();
+	cy.fillFamilyProviderStep();
+	cy.fillPropertyOwnershipStep();
+});
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();

@@ -6,7 +6,7 @@ import "./RadioInput.css";
 import Question from "../Question";
 
 type RadioOption = {
-	value: string;
+	value: string | number;
 	name: string;
 };
 
@@ -23,7 +23,7 @@ export default function RadioInput({
 }: Readonly<RadioInputProps>) {
 	const [field, _meta, helpers] = useField(name);
 
-	function handleClick(value: string) {
+	function handleClick(value: string | number) {
 		helpers.setValue(value);
 	}
 	return (

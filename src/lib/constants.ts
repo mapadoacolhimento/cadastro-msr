@@ -160,3 +160,67 @@ export const GOOGLE_ANALYTICS_ID = "G-H4HVJY8T0V";
 export const ZENDESK_NEW_USER_STATUS = "inscrita";
 export const ZENDESK_NEW_TICKET_STATUS = "solicitação_recebida";
 export const ZENDESK_DUPLICATED_TICKET_STATUS = "solicitação_repetida";
+
+export const monthlyIncomeOptions = [
+	{ value: "yes", name: "Sim" },
+	{
+		value: "no",
+		name: "Não",
+	},
+	{
+		value: "noAccess",
+		name: "Estou sem acesso a minha renda",
+	},
+];
+
+export const monthlyIncomeRangeOptions = [
+	{ value: 0.5, name: "Até meio salário mínimo (R$660,00)" },
+	{ value: 1, name: "Até um salário mínimo (R$1.320,00)" },
+	{ value: 2, name: "Até dois salários mínimos (R$2.640,00)" },
+	{ value: 3, name: "Até três salários mínimos (R$3.960,00)" },
+	{ value: 4, name: "Até quatro salários mínimos (R$5.280,00)" },
+	{ value: 5, name: "Cinco salários mínimos ou mais (R$6.600,00 ou mais)" },
+];
+
+export const employmentStatusOptions = [
+	{
+		value: "employedClt",
+		name: "Trabalhadora com carteira de trabalho assinada",
+	},
+	{
+		value: "employedPj",
+		name: "Trabalhadora sem carteira de trabalho assinada",
+	},
+	{ value: "student", name: "Estudante e dependente da minha família" },
+	{ value: "studentWithIncome", name: "Estudante e com renda independente" },
+	{ value: "retired", name: "Aposentada" },
+	{ value: "unemployed", name: "Desempregada" },
+];
+
+export const dependantsOptions = [
+	{ value: "yes", name: "Sim" },
+	{
+		value: "no",
+		name: "Não",
+	},
+];
+
+export const familyProviderOptions = [
+	{ value: "yes", name: "Sim" },
+	{
+		value: "no",
+		name: "Não",
+	},
+	{
+		value: "shared",
+		name: "Divido a responsabilidade financeira da casa",
+	},
+];
+
+export const propertyOwnershipOptions = [
+	{ value: "yes", name: "Sim" },
+	{
+		value: "no",
+		name: "Não",
+	},
+];

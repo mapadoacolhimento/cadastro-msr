@@ -46,4 +46,10 @@ export interface Values {
 	state: string;
 	lat: number | null;
 	lng: number | null;
+	monthlyIncome: string;
+	monthlyIncomeRange: number;
+	employmentStatus: string;
+	dependants: string;
+	familyProvider: string;
+	propertyOwnership: string;
 }

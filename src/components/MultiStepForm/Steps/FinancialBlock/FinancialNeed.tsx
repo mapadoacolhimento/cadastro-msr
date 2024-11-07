@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
 
-import Step from "../Step";
-import RadioInput from "../../RadioInput";
+import Step from "../../Step";
+import RadioInput from "../../../RadioInput";
 import { financialNeedOptions } from "@/constants";
 import type { Values } from "@/types";
 

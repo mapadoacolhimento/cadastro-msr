@@ -1,9 +1,10 @@
+import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
 
 import FinancialNeed from "../FinancialNeed";
-import MultiStepFormWrapper from "../../MultiStepFormWrapper";
+import MultiStepFormWrapper from "../../../MultiStepFormWrapper";
 import { sleep } from "@/utils";
 import { type Values } from "@/types";
 import { financialNeedOptions } from "@/constants";
@@ -12,7 +13,7 @@ const setup = () => {
 	return render(
 		<MultiStepFormWrapper
 			onSubmit={async (values) =>
-				await sleep(300).then(() => console.log(values))
+				(await sleep(300).then(() => console.log(values))) as any
 			}
 			initialValues={
 				{
@@ -25,7 +26,16 @@ const setup = () => {
 	);
 };
 
-describe("<FinancialNeed />", () => {
+describe("FinancialBlock > <FinancialNeed />", () => {
+	it("should render the title", () => {
+		setup();
+		const title = screen.getByRole("heading", {
+			name: /sobre sua renda/i,
+			level: 1,
+		});
+		expect(title).toBeInTheDocument();
+	});
+
 	it("should render fields", () => {
 		setup();
 

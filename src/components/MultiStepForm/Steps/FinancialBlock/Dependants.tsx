@@ -4,6 +4,7 @@ import { Strong } from "@radix-ui/themes";
 import Step from "../../Step";
 import RadioInput from "../../../RadioInput";
 import { dependantsOptions } from "@/constants";
+import { Values } from "@/types";
 
 const dependantsSchema = Yup.object({
 	dependants: Yup.string()
@@ -12,6 +13,17 @@ const dependantsSchema = Yup.object({
 });
 
 export default function Dependants() {
+	async function handleSubmit(values: Values) {
+		const isPaidMoreThanThreeMinWages = values.monthlyIncomeRange > 3;
+		const hasNoDependants = values.dependants === "no";
+
+		if (isPaidMoreThanThreeMinWages && hasNoDependants) {
+			return {
+				redirectTo: "/fora-criterios",
+			};
+		}
+	}
+
 	return (
 		<Step
 			validationSchema={dependantsSchema}
@@ -22,6 +34,7 @@ export default function Dependants() {
 				align: "end",
 				bottom: "50px",
 			}}
+			onSubmit={handleSubmit}
 		>
 			<RadioInput
 				name="dependants"

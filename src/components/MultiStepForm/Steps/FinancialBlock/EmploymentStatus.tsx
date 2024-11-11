@@ -4,6 +4,7 @@ import { Strong } from "@radix-ui/themes";
 import Step from "../../Step";
 import RadioInput from "../../../RadioInput";
 import { employmentStatusOptions } from "@/constants";
+import { Values } from "@/types";
 
 const employmentStatusSchema = Yup.object({
 	employmentStatus: Yup.string()
@@ -12,6 +13,19 @@ const employmentStatusSchema = Yup.object({
 });
 
 export default function EmploymentStatus() {
+	async function handleSubmit(values: Values) {
+		const isPaidMoreThanThreeMinWages = values.monthlyIncomeRange > 3;
+		const isStudent =
+			values.employmentStatus === "student" ||
+			values.employmentStatus === "studentWithIncome";
+
+		if (isPaidMoreThanThreeMinWages && isStudent) {
+			return {
+				redirectTo: "/fora-criterios",
+			};
+		}
+	}
+
 	return (
 		<Step
 			validationSchema={employmentStatusSchema}
@@ -20,6 +34,7 @@ export default function EmploymentStatus() {
 				src: "/illustrations/notebook.webp",
 				alt: "Ilustração de um caderno, um lápis amarelo e alguns clips",
 			}}
+			onSubmit={handleSubmit}
 		>
 			<RadioInput
 				name="employmentStatus"

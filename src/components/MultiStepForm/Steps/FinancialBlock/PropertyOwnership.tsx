@@ -4,6 +4,7 @@ import { Strong } from "@radix-ui/themes";
 import Step from "../../Step";
 import RadioInput from "../../../RadioInput";
 import { propertyOwnershipOptions } from "@/constants";
+import { Values } from "@/types";
 
 const propertyOwnershipSchema = Yup.object({
 	propertyOwnership: Yup.string()
@@ -12,6 +13,17 @@ const propertyOwnershipSchema = Yup.object({
 });
 
 export default function PropertyOwnership() {
+	async function handleSubmit(values: Values) {
+		const isPaidMoreThanFourMinWages = values.monthlyIncomeRange > 4;
+		const hasProperty = values.propertyOwnership === "yes";
+
+		if (isPaidMoreThanFourMinWages && hasProperty) {
+			return {
+				redirectTo: "/fora-criterios",
+			};
+		}
+	}
+
 	return (
 		<Step
 			validationSchema={propertyOwnershipSchema}
@@ -20,6 +32,7 @@ export default function PropertyOwnership() {
 				src: "/illustrations/notebook.webp",
 				alt: "Ilustração de um caderno, um lápis amarelo e alguns clips",
 			}}
+			onSubmit={handleSubmit}
 		>
 			<RadioInput
 				name="propertyOwnership"

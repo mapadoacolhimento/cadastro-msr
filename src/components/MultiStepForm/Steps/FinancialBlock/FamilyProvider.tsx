@@ -4,6 +4,7 @@ import { Em, Strong } from "@radix-ui/themes";
 import Step from "../../Step";
 import RadioInput from "../../../RadioInput";
 import { familyProviderOptions } from "@/constants";
+import { Values } from "@/types";
 
 const familyProviderSchema = Yup.object({
 	familyProvider: Yup.string()
@@ -12,6 +13,17 @@ const familyProviderSchema = Yup.object({
 });
 
 export default function FamilyProvider() {
+	async function handleSubmit(values: Values) {
+		const isPaidMoreThanFourMinWages = values.monthlyIncomeRange > 4;
+		const isNotHeadOfTheFamily = values.familyProvider === "no";
+
+		if (isPaidMoreThanFourMinWages && isNotHeadOfTheFamily) {
+			return {
+				redirectTo: "/fora-criterios",
+			};
+		}
+	}
+
 	return (
 		<Step
 			validationSchema={familyProviderSchema}
@@ -22,6 +34,7 @@ export default function FamilyProvider() {
 				align: "end",
 				bottom: "50px",
 			}}
+			onSubmit={handleSubmit}
 		>
 			<RadioInput
 				name="familyProvider"

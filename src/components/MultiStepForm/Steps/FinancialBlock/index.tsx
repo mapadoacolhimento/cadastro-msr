@@ -9,7 +9,7 @@ import FamilyProvider from "./FamilyProvider";
 import PropertyOwnership from "./PropertyOwnership";
 
 export default function FinancialBlock() {
-	const isNewFinancialTriageEnabled = false;
+	const isNewFinancialTriageEnabled = true;
 
 	function renderNewFinancialTriage() {
 		return [

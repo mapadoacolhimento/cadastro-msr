@@ -72,10 +72,10 @@ describe("FinancialBlock > <Dependants />", () => {
 
 		setup();
 
-		const dependantStudent = screen.getByRole("radio", {
+		const noDependantsOption = screen.getByRole("radio", {
 			name: /Não/i,
 		});
-		await userEvent.click(dependantStudent);
+		await userEvent.click(noDependantsOption);
 
 		const btn = screen.getByRole("button", { name: /enviar/i });
 		await userEvent.click(btn);

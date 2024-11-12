@@ -14,10 +14,15 @@ const familyProviderSchema = Yup.object({
 
 export default function FamilyProvider() {
 	async function handleSubmit(values: Values) {
-		const isPaidMoreThanFourMinWages = values.monthlyIncomeRange > 4;
+		const isPaidMoreThanThreeMinWages = values.monthlyIncomeRange > 3;
 		const isNotHeadOfTheFamily = values.familyProvider === "no";
+		const hasAccessToIncome = values.monthlyIncome === "yes";
 
-		if (isPaidMoreThanFourMinWages && isNotHeadOfTheFamily) {
+		if (
+			isPaidMoreThanThreeMinWages &&
+			hasAccessToIncome &&
+			isNotHeadOfTheFamily
+		) {
 			return {
 				redirectTo: "/fora-criterios",
 			};

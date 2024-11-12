@@ -14,12 +14,13 @@ const employmentStatusSchema = Yup.object({
 
 export default function EmploymentStatus() {
 	async function handleSubmit(values: Values) {
+		const hasAccessToIncome = values.monthlyIncome === "yes";
 		const isPaidMoreThanThreeMinWages = values.monthlyIncomeRange > 3;
 		const isStudent =
 			values.employmentStatus === "student" ||
 			values.employmentStatus === "studentWithIncome";
 
-		if (isPaidMoreThanThreeMinWages && isStudent) {
+		if (isPaidMoreThanThreeMinWages && isStudent && hasAccessToIncome) {
 			return {
 				redirectTo: "/fora-criterios",
 			};

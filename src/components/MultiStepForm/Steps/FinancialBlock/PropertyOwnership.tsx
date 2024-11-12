@@ -16,8 +16,9 @@ export default function PropertyOwnership() {
 	async function handleSubmit(values: Values) {
 		const isPaidMoreThanFourMinWages = values.monthlyIncomeRange > 4;
 		const hasProperty = values.propertyOwnership === "yes";
+		const hasAccessToIncome = values.monthlyIncome === "yes";
 
-		if (isPaidMoreThanFourMinWages && hasProperty) {
+		if (isPaidMoreThanFourMinWages && hasAccessToIncome && hasProperty) {
 			return {
 				redirectTo: "/fora-criterios",
 			};

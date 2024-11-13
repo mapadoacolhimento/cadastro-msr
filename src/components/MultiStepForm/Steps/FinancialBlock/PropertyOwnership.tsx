@@ -14,11 +14,11 @@ const propertyOwnershipSchema = Yup.object({
 
 export default function PropertyOwnership() {
 	async function handleSubmit(values: Values) {
-		const isPaidMoreThanFourMinWages = values.monthlyIncomeRange > 4;
+		const isPaidMoreThanThreeMinWages = values.monthlyIncomeRange > 3;
 		const hasProperty = values.propertyOwnership === "yes";
 		const hasAccessToIncome = values.monthlyIncome === "yes";
 
-		if (isPaidMoreThanFourMinWages && hasAccessToIncome && hasProperty) {
+		if (isPaidMoreThanThreeMinWages && hasAccessToIncome && hasProperty) {
 			return {
 				redirectTo: "/fora-criterios",
 			};

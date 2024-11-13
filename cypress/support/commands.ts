@@ -189,7 +189,7 @@ Cypress.Commands.add("fillFamilyProviderStep", () => {
 	cy.contains(
 		'Você é responsável financeiramente pela renda familiar (é considerada a "chefe de família")?'
 	).should("exist");
-	cy.findByRole("radio", { name: "Não" }).click();
+	cy.findByRole("radio", { name: "Sim" }).click();
 	cy.findByRole("button", { name: "Continuar" }).click();
 });
 
@@ -226,7 +226,7 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillExternalSupportStep(externalSupport);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillFinancialNeedStep(financialNeed);
+	cy.fillFinancialBlock();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.goThroughBeginRegistrationStep();
@@ -240,6 +240,12 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 
 	cy.fillGeolocationStep();
 	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.intercept(
+		"GET",
+		"/geolocation?state=SP&city=SAO%20PAULO&neighborhood=Centro*"
+	).as("getGeolocation");
+	cy.wait("@getGeolocation");
 
 	cy.fillDiversityInformationStep();
 	cy.findByRole("button", { name: "Enviar" }).click();

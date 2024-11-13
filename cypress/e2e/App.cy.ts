@@ -214,7 +214,7 @@ describe("When MSR does not meet the criteria", () => {
 				cy.url().should("include", "/fora-criterios");
 				cy.checkForaCriteriosPage();
 			});
-			it.only("should redirect to `fora-criterios` page if they have property", () => {
+			it("should redirect to `fora-criterios` page if they have property", () => {
 				cy.fillEmploymentStatusStep();
 				cy.fillDependantsStep();
 				cy.fillFamilyProviderStep();

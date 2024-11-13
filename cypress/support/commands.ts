@@ -54,6 +54,17 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 Cypress.Commands.add("fillGeolocationStep", () => {
 	cy.findByRole("heading", { name: "Seu endereço" }).should("exist");
 
+	cy.intercept("GET", "/geolocation?zipcode=12345678*", {
+		statusCode: 200,
+		body: {
+			lat: -23.5613496,
+			lng: -46.6590692,
+			state: "SP",
+			city: "SÃO PAULO",
+			neighborhood: "BELA VISTA",
+		},
+	}).as("getGeolocation");
+
 	// zipcode
 	cy.findByLabelText("CEP").type(zipcode).blur();
 
@@ -243,13 +254,8 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillGeolocationStep();
-	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.intercept(
-		"GET",
-		"/geolocation?state=SP&city=SAO%20PAULO&neighborhood=Centro*"
-	).as("getGeolocation");
-	cy.wait("@getGeolocation");
+	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();
 	cy.findByRole("button", { name: "Enviar" }).click();

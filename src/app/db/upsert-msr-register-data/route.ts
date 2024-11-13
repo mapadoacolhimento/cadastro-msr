@@ -2,7 +2,12 @@ import { NextRequest } from "next/server";
 import { Gender, SupportType, Race } from "@prisma/client";
 import * as Yup from "yup";
 
-import { externalSupportOptions, logger, mongodb } from "@/lib";
+import {
+	externalSupportOptions,
+	logger,
+	mongodb,
+	violenceTypeOptions,
+} from "@/lib";
 import { getErrorMessage } from "@/utils";
 
 const payloadSchema = Yup.object({
@@ -30,6 +35,11 @@ const payloadSchema = Yup.object({
 	term: Yup.boolean(),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
+	),
+	violenceType: Yup.array(
+		Yup.string()
+			.oneOf(violenceTypeOptions.map((v) => v.value))
+			.required()
 	),
 }).required();
 

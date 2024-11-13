@@ -52,4 +52,5 @@ export interface Values {
 	dependants: string;
 	familyProvider: string;
 	propertyOwnership: string;
+	violenceType: string[];
 }

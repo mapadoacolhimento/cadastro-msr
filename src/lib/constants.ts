@@ -224,3 +224,38 @@ export const propertyOwnershipOptions = [
 		name: "Não",
 	},
 ];
+
+export const violenceTypeOptions = [
+	{
+		value: "physicalViolence",
+		name: "Violência física",
+	},
+	{
+		value: "psychologicalViolence",
+		name: "Violência psicológica",
+	},
+	{
+		value: "sexualViolence",
+		name: "Violência sexual",
+	},
+	{
+		value: "digitalViolence",
+		name: "Violência digital",
+	},
+	{
+		value: "patrimonialViolence",
+		name: "Violência patrimonial",
+	},
+	{
+		value: "obstetricViolence",
+		name: "Violência obstétrica",
+	},
+	{
+		value: "threat",
+		name: "Ameaça",
+	},
+	{
+		value: "politicalViolence",
+		name: "Violência política contra a mulher",
+	},
+];

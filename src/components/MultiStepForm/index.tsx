@@ -68,6 +68,7 @@ export default function MultiStepForm() {
 				lat: null,
 				lng: null,
 				zipcode: "",
+				violenceType: [],
 			}}
 			onSubmit={onSubmit}
 		>

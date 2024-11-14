@@ -5,7 +5,6 @@ import {
 	BasicRegisterInformation,
 	SupportType,
 	GenderIdentity,
-	GenderViolence,
 	ViolenceLocation,
 	ExternalSupport,
 	Geolocation,
@@ -13,6 +12,7 @@ import {
 	DateOfBirth,
 	BeginRegistration,
 	FinancialBlock,
+	ViolenceType,
 } from "./Steps";
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
@@ -74,7 +74,7 @@ export default function MultiStepForm() {
 		>
 			{GenderIdentity()}
 			{DateOfBirth()}
-			{GenderViolence()}
+			{ViolenceType()}
 			{ViolenceLocation()}
 			{ExternalSupport()}
 			{FinancialBlock()}

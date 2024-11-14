@@ -30,8 +30,8 @@ const mockValues = {
 	neighborhood: "Centro",
 	city: "SÃO PAULO",
 	state: "SP",
-	lat: "-12.971",
-	lng: "-38.511",
+	lat: -12.971,
+	lng: -38.511,
 };
 
 describe("Load data from bd", () => {});
@@ -52,7 +52,7 @@ it("should fill addres information in the fields in the following step after loa
 	cy.fillDateOfBirthStep(dateOfBirth);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillGenderViolenceStep(genderViolence);
+	cy.fillViolenceTypeStep();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillViolenceLocationStep(violenceLocation);

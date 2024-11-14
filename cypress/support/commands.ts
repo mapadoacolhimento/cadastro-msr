@@ -225,13 +225,13 @@ Cypress.Commands.add("fillViolenceTypeStep", () => {
 	cy.contains("Quais tipos de violência você sofreu ou está sofrendo?").should(
 		"be.visible"
 	);
-	cy.findByRole("checkbox", { name: "Violência psicológica" }).click({
+	cy.findByRole("checkbox", { name: /Violência psicológica/i }).click({
 		force: true,
 	});
-	cy.findByRole("checkbox", { name: "Violência física" }).click({
+	cy.findByRole("checkbox", { name: /Violência física/i }).click({
 		force: true,
 	});
-	cy.findByRole("checkbox", { name: "Violência sexual" }).click({
+	cy.findByRole("checkbox", { name: /Violência sexual/i }).click({
 		force: true,
 	});
 });

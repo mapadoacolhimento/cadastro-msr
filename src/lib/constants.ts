@@ -229,33 +229,41 @@ export const violenceTypeOptions = [
 	{
 		value: "physicalViolence",
 		name: "Violência física",
+		description: "Ex: tapas, empurrões, socos",
 	},
 	{
 		value: "psychologicalViolence",
 		name: "Violência psicológica",
+		description: "Ex: manipulação, controle emocional",
 	},
 	{
 		value: "sexualViolence",
 		name: "Violência sexual",
+		description: "Ex: abuso sexual, coerção, assédio",
 	},
 	{
 		value: "digitalViolence",
 		name: "Violência digital",
+		description: "Ex: cyberbullying, invasão de privacidade",
 	},
 	{
 		value: "patrimonialViolence",
 		name: "Violência patrimonial",
+		description: "Ex: destruição de bens, controle financeiro",
 	},
 	{
 		value: "obstetricViolence",
 		name: "Violência obstétrica",
+		description: "Ex: tratamento desrespeitoso no parto",
 	},
 	{
 		value: "threat",
 		name: "Ameaça",
+		description: "Ex: intimidações, promessas de agressão",
 	},
 	{
 		value: "politicalViolence",
 		name: "Violência política contra a mulher",
+		description: "Ex: restrição de direitos políticos",
 	},
 ];

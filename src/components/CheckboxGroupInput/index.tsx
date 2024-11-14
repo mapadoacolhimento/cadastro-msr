@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useField } from "formik";
-import { Box, CheckboxCards, Text } from "@radix-ui/themes";
+import { Box, CheckboxCards, Text, Flex, ScrollArea } from "@radix-ui/themes";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 import ErrorMessage from "../ErrorMessage";
@@ -10,6 +10,7 @@ import "./CheckboxGroupInput.css";
 type CheckboxOption = {
 	value: string;
 	name: string;
+	description?: string;
 };
 
 type CheckboxGroupInputProps = {
@@ -67,24 +68,51 @@ export default function CheckboxGroupInput({
 			style={{ width: "100%" }}
 		>
 			<Question id={"question"}>{question}</Question>
-			{options.map((option: CheckboxOption, i) => {
-				return (
-					<Box key={option.value}>
-						<CheckboxCards.Item
-							onClick={() => handleClick(field.value, option.value)}
-							value={option.value}
-							className={field.value.includes(option.value) ? "is-checked" : ""}
-						>
-							<Text>{option.name}</Text>
-						</CheckboxCards.Item>
-						<VisuallyHidden.Root
-							id={`checkbox-group-button-content-${option.value}`}
-						>
-							{option.name}
-						</VisuallyHidden.Root>
-					</Box>
-				);
-			})}
+			<ScrollArea
+				type={options.length > 4 ? "always" : undefined}
+				scrollbars="vertical"
+				style={{ height: 440 }}
+			>
+				<Box pr={options.length > 4 ? { initial: "6", sm: "8" } : "0"}>
+					{options.map((option: CheckboxOption, i) => {
+						return (
+							<Box key={option.value}>
+								<Flex
+									direction={"column"}
+									asChild
+									align={"start"}
+									justify={"center"}
+									mb={options.length - 1 === i ? "80px" : "4"}
+								>
+									<CheckboxCards.Item
+										onClick={() => handleClick(field.value, option.value)}
+										value={option.value}
+										className={
+											field.value.includes(option.value) ? "is-checked" : ""
+										}
+									>
+										<Text
+											highContrast={!!option.description}
+											color={option.description ? "purple" : undefined}
+											weight={option.description ? "medium" : undefined}
+										>
+											{option.name}
+										</Text>
+										{option.description ? (
+											<Text>{option.description}</Text>
+										) : null}
+									</CheckboxCards.Item>
+								</Flex>
+								<VisuallyHidden.Root
+									id={`checkbox-group-button-content-${option.value}`}
+								>
+									{option.name}
+								</VisuallyHidden.Root>
+							</Box>
+						);
+					})}
+				</Box>
+			</ScrollArea>
 			<ErrorMessage name={name} />
 		</CheckboxCards.Root>
 	);

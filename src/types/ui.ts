@@ -15,6 +15,7 @@ export interface StepChildrenProps {
 		alt: string;
 		align?: Responsive<"center" | "start" | "end" | "baseline" | "stretch">;
 		bottom?: string;
+		hideMobile?: boolean;
 	};
 }
 

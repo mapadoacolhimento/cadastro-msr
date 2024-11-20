@@ -211,10 +211,6 @@ export const familyProviderOptions = [
 		value: "no",
 		name: "Não",
 	},
-	{
-		value: "shared",
-		name: "Divido a responsabilidade financeira da casa",
-	},
 ];
 
 export const propertyOwnershipOptions = [

@@ -4,7 +4,6 @@ import {
 	genderViolence,
 	externalSupport,
 	violenceLocation,
-	financialNeed,
 	supportTypes,
 	dateOfBirth,
 	neighborhood,
@@ -30,8 +29,8 @@ const mockValues = {
 	neighborhood: "Centro",
 	city: "SÃO PAULO",
 	state: "SP",
-	lat: "-12.971",
-	lng: "-38.511",
+	lat: -12.971,
+	lng: -38.511,
 };
 
 describe("Load data from bd", () => {});
@@ -61,7 +60,7 @@ it("should fill addres information in the fields in the following step after loa
 	cy.fillExternalSupportStep(externalSupport);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillFinancialNeedStep(financialNeed);
+	cy.fillFinancialBlock();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.goThroughBeginRegistrationStep();

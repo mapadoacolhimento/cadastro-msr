@@ -3,9 +3,15 @@ import { Gender, SupportType, Race } from "@prisma/client";
 import * as Yup from "yup";
 
 import {
+	dependantsOptions,
+	employmentStatusOptions,
 	externalSupportOptions,
+	familyProviderOptions,
 	logger,
 	mongodb,
+	monthlyIncomeOptions,
+	monthlyIncomeRangeOptions,
+	propertyOwnershipOptions,
 	violenceTypeOptions,
 } from "@/lib";
 import { getErrorMessage } from "@/utils";
@@ -31,10 +37,21 @@ const payloadSchema = Yup.object({
 	externalSupport: Yup.array().of(
 		Yup.string().oneOf(externalSupportOptions.map((o) => o.value))
 	),
-	financialNeed: Yup.string(),
 	term: Yup.boolean(),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
+	),
+	monthlyIncome: Yup.string().oneOf(monthlyIncomeOptions.map((o) => o.value)),
+	monthlyIncomeRange: Yup.number().oneOf(
+		monthlyIncomeRangeOptions.map((o) => o.value)
+	),
+	employmentStatus: Yup.string().oneOf(
+		employmentStatusOptions.map((o) => o.value)
+	),
+	dependants: Yup.string().oneOf(dependantsOptions.map((o) => o.value)),
+	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
+	propertyOwnership: Yup.string().oneOf(
+		propertyOwnershipOptions.map((o) => o.value)
 	),
 	violenceType: Yup.array(
 		Yup.string()

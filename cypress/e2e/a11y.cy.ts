@@ -205,32 +205,6 @@ describe("Accessbility", () => {
 						cy.checkA11y(null, null, terminalLog);
 					});
 
-					it("should pass the accessibility test on Financial Need step", () => {
-						cy.visit("/cadastro");
-
-						cy.fillGenderIdentityStep(gender);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillDateOfBirthStep(dateOfBirth);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillViolenceTypeStep();
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillViolenceLocationStep(violenceLocation);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillExternalSupportStep(externalSupport);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.contains(
-							"Você declara que não pode pagar por atendimento jurídico/psicológico?"
-						).should("exist");
-
-						cy.injectAxe();
-						cy.checkA11y(null, null, terminalLog);
-					});
-
 					it("should pass the accessibility test on begin registration step", () => {
 						cy.visit("/cadastro");
 
@@ -249,7 +223,7 @@ describe("Accessbility", () => {
 						cy.fillExternalSupportStep(externalSupport);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillFinancialNeedStep(financialNeed);
+						cy.fillFinancialBlock();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.contains("Você não está sozinha").should("exist");
@@ -276,7 +250,7 @@ describe("Accessbility", () => {
 						cy.fillExternalSupportStep(externalSupport);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillFinancialNeedStep(financialNeed);
+						cy.fillFinancialBlock();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.findByRole("button", { name: "Iniciar cadastro" }).click();
@@ -307,7 +281,7 @@ describe("Accessbility", () => {
 						cy.fillExternalSupportStep(externalSupport);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillFinancialNeedStep(financialNeed);
+						cy.fillFinancialBlock();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.findByRole("button", { name: "Iniciar cadastro" }).click();
@@ -339,7 +313,7 @@ describe("Accessbility", () => {
 						cy.fillExternalSupportStep(externalSupport);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillFinancialNeedStep(financialNeed);
+						cy.fillFinancialBlock();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.findByRole("button", { name: "Iniciar cadastro" }).click();
@@ -374,7 +348,7 @@ describe("Accessbility", () => {
 						cy.fillExternalSupportStep(externalSupport);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillFinancialNeedStep(financialNeed);
+						cy.fillFinancialBlock();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.findByRole("button", { name: "Iniciar cadastro" }).click();
@@ -393,8 +367,7 @@ describe("Accessbility", () => {
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
 					});
-
-					describe.skip("Financial Block", () => {
+					describe("Financial block", () => {
 						beforeEach(() => {
 							cy.visit("/cadastro");
 
@@ -414,28 +387,30 @@ describe("Accessbility", () => {
 							cy.findByRole("button", { name: "Continuar" }).click();
 						});
 
-						it("should pass the accessibility test on MonthlyIncome step", () => {
-							cy.contains("Você tem renda mensal?").should("exist");
+						it("should pass the accessibility test on Monthly Income step", () => {
+							cy.contains("Você tem renda mensal?").should("be.visible");
 
 							cy.injectAxe();
 							cy.checkA11y(null, null, terminalLog);
 						});
 
-						it("should pass the accessibility test on MonthlyIncomeRange step", () => {
+						it("should pass the accessibility test on Monthly Income Range step", () => {
 							cy.fillMonthlyIncomeStep();
 							cy.contains(
 								"Assinale a opção que corresponde a sua renda individual (per capita):"
-							).should("exist");
+							).should("be.visible");
 
 							cy.injectAxe();
 							cy.checkA11y(null, null, terminalLog);
 						});
 
-						it("should pass the accessibility test on EmploymentStatus step", () => {
+						it("should pass the accessibility test on Employment Status step", () => {
 							cy.fillMonthlyIncomeStep();
 							cy.fillMonthlyIncomeRangeStep();
 
-							cy.contains("Qual a sua situação de trabalho?").should("exist");
+							cy.contains("Qual a sua situação de trabalho?").should(
+								"be.visible"
+							);
 
 							cy.injectAxe();
 							cy.checkA11y(null, null, terminalLog);
@@ -448,36 +423,32 @@ describe("Accessbility", () => {
 
 							cy.contains(
 								"Você tem pessoas que são dependentes financeiramente da sua renda?"
-							).should("exist");
+							).should("be.visible");
 
 							cy.injectAxe();
 							cy.checkA11y(null, null, terminalLog);
 						});
 
-						it("should pass the accessibility test on FamilyProvider step", () => {
+						it("should pass the accessibility test on Family Provider step", () => {
 							cy.fillMonthlyIncomeStep();
 							cy.fillMonthlyIncomeRangeStep();
 							cy.fillEmploymentStatusStep();
 							cy.fillDependantsStep();
 
 							cy.contains(
-								"Você é responsável financeiramente pela renda familiar"
-							).should("exist");
+								'Você é responsável financeiramente pela renda familiar (é considerada a "chefe de família")?'
+							).should("be.visible");
 
 							cy.injectAxe();
 							cy.checkA11y(null, null, terminalLog);
 						});
 
-						it("should pass the accessibility test on PropertyOwnership step", () => {
-							cy.fillMonthlyIncomeStep();
-							cy.fillMonthlyIncomeRangeStep();
-							cy.fillEmploymentStatusStep();
-							cy.fillDependantsStep();
-							cy.fillFamilyProviderStep();
+						it("should pass the accessibility test on Property Ownership step", () => {
+							cy.fillFinancialBlock();
 
 							cy.contains(
 								"Você possui bens imóveis (casa, apartamento) em seu nome?"
-							).should("exist");
+							).should("be.visible");
 
 							cy.injectAxe();
 							cy.checkA11y(null, null, terminalLog);

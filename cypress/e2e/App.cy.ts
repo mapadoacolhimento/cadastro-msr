@@ -153,29 +153,65 @@ describe("When MSR does not meet the criteria", () => {
 		cy.checkForaCriteriosPage();
 	});
 
-	it("should redirect to `fora-criterios` page if MSR signals they dont struggle financially", () => {
-		cy.visit("/cadastro");
+	describe("Financial block", () => {
+		beforeEach(() => {
+			cy.visit("/cadastro");
+			cy.fillGenderIdentityStep(gender);
+			cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
+			cy.fillDateOfBirthStep(dateOfBirth);
+			cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillDateOfBirthStep(dateOfBirth);
-		cy.findByRole("button", { name: "Continuar" }).click();
+			cy.fillGenderViolenceStep(genderViolence);
+			cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
+			cy.fillViolenceTypeStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceLocationStep(violenceLocation);
-		cy.findByRole("button", { name: "Continuar" }).click();
+			cy.fillViolenceLocationStep(violenceLocation);
+			cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillExternalSupportStep(externalSupport);
-		cy.findByRole("button", { name: "Continuar" }).click();
+			cy.fillExternalSupportStep(externalSupport);
+			cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillFinancialNeedStep("Não");
-		cy.findByRole("button", { name: "Continuar" }).click();
+			cy.fillMonthlyIncomeStep();
+			cy.fillMonthlyIncomeRangeStep();
+		});
+		describe("If MSR signals they have a monthly income and its greater than 3 min wages", () => {
+			it("should redirect to `fora-criterios` page if they are a student with income", () => {
+				cy.fillEmploymentStatusStep("Estudante e com renda independente");
+				cy.url().should("include", "/fora-criterios");
+				cy.checkForaCriteriosPage();
+			});
+			it("should redirect to `fora-criterios` page if they are a student dependant on their family", () => {
+				cy.fillEmploymentStatusStep("Estudante e dependente da minha família");
+				cy.url().should("include", "/fora-criterios");
+				cy.checkForaCriteriosPage();
+			});
+			it("should redirect to `fora-criterios` page if they don't have dependants", () => {
+				cy.fillEmploymentStatusStep();
+				cy.fillDependantsStep(false);
+				cy.url().should("include", "/fora-criterios");
+				cy.checkForaCriteriosPage();
+			});
+			it("should redirect to `fora-criterios` page if they are not the family provider", () => {
+				cy.fillEmploymentStatusStep();
+				cy.fillDependantsStep();
+				cy.fillFamilyProviderStep(false);
+				cy.url().should("include", "/fora-criterios");
+				cy.checkForaCriteriosPage();
+			});
+			it("should redirect to `fora-criterios` page if they have property", () => {
+				cy.fillEmploymentStatusStep();
+				cy.fillDependantsStep();
+				cy.fillFamilyProviderStep();
+				cy.fillPropertyOwnershipStep(true);
+				cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.url().should("include", "/fora-criterios");
-		cy.checkForaCriteriosPage();
+				cy.url().should("include", "/fora-criterios");
+				cy.checkForaCriteriosPage();
+			});
+		});
 	});
 });
 
@@ -261,36 +297,5 @@ describe("Submit the form", () => {
 		cy.fillAllSteps(supportTypes);
 
 		cy.url().should("include", "/acolhimento-andamento");
-	});
-});
-
-describe.skip("New features", () => {
-	describe("When new financial triage is enabled", () => {
-		it("should go through the new financial block step", () => {
-			cy.visit("/cadastro");
-
-			cy.fillGenderIdentityStep(gender);
-			cy.findByRole("button", { name: "Continuar" }).click();
-
-			cy.fillDateOfBirthStep(dateOfBirth);
-			cy.findByRole("button", { name: "Continuar" }).click();
-
-			cy.fillViolenceTypeStep();
-			cy.findByRole("button", { name: "Continuar" }).click();
-
-			cy.fillViolenceLocationStep(violenceLocation);
-			cy.findByRole("button", { name: "Continuar" }).click();
-
-			cy.fillExternalSupportStep(externalSupport);
-			cy.findByRole("button", { name: "Continuar" }).click();
-
-			cy.fillFinancialBlock();
-			cy.findByRole("button", { name: "Continuar" }).click();
-
-			cy.findByRole("heading", {
-				name: "Você não está sozinha",
-				level: 1,
-			}).should("exist");
-		});
 	});
 });

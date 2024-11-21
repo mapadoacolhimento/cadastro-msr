@@ -26,10 +26,12 @@ declare namespace Cypress {
 		fillFinancialBlock(): Chainable<any>;
 		fillMonthlyIncomeStep(): Chainable<any>;
 		fillMonthlyIncomeRangeStep(): Chainable<any>;
-		fillEmploymentStatusStep(): Chainable<any>;
-		fillDependantsStep(): Chainable<any>;
-		fillFamilyProviderStep(): Chainable<any>;
-		fillPropertyOwnershipStep(): Chainable<any>;
+		fillEmploymentStatusStep(
+			employmentStatusOptionText?: string
+		): Chainable<any>;
+		fillDependantsStep(hasDependant?: boolean): Chainable<any>;
+		fillFamilyProviderStep(isProvider?: boolean): Chainable<any>;
+		fillPropertyOwnershipStep(hasProperty?: boolean): Chainable<any>;
 		fillViolenceTypeStep(): Chainable<any>;
 	}
 }

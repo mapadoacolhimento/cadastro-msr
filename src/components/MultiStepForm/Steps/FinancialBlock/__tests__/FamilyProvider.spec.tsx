@@ -1,4 +1,5 @@
 import { expect } from "vitest";
+import { useRouter } from "next/navigation";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -17,6 +18,10 @@ const setup = () => {
 			initialValues={
 				{
 					familyProvider: "",
+					employmentStatus: "employedClt",
+					monthlyIncome: "yes",
+					monthlyIncomeRange: 5,
+					dependants: "yes",
 				} as Values
 			}
 		>
@@ -57,5 +62,25 @@ describe("FinancialBlock > <FamilyProvider />", () => {
 		expect(screen.getByRole("alert")).toHaveTextContent(
 			"Esse campo é obrigatório."
 		);
+	});
+
+	it("should redirect to `fora-criterios` if MSR has access to income, receives more than 3 min wages and is not family provider", async () => {
+		const pushMock = vi.fn();
+
+		useRouter.mockReturnValue({
+			push: pushMock,
+		});
+
+		setup();
+
+		const notFamilyProviderOption = screen.getByRole("radio", {
+			name: /Não/i,
+		});
+		await userEvent.click(notFamilyProviderOption);
+
+		const btn = screen.getByRole("button", { name: /enviar/i });
+		await userEvent.click(btn);
+
+		expect(pushMock).toHaveBeenCalledWith("/fora-criterios");
 	});
 });

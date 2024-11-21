@@ -1,4 +1,5 @@
 import { expect } from "vitest";
+import { useRouter } from "next/navigation";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -17,6 +18,8 @@ const setup = () => {
 			initialValues={
 				{
 					employmentStatus: "",
+					monthlyIncome: "yes",
+					monthlyIncomeRange: 4,
 				} as Values
 			}
 		>
@@ -57,5 +60,25 @@ describe("FinancialBlock > <EmploymentStatus />", () => {
 		expect(screen.getByRole("alert")).toHaveTextContent(
 			"Esse campo é obrigatório."
 		);
+	});
+
+	it("should redirect to `fora-criterios` if MSR has access to income, receives more than 3 min wages and is student", async () => {
+		const pushMock = vi.fn();
+		// @ts-expect-error
+		useRouter.mockReturnValue({
+			push: pushMock,
+		});
+
+		setup();
+
+		const dependantStudent = screen.getByRole("radio", {
+			name: /Estudante e dependente da minha família/i,
+		});
+		await userEvent.click(dependantStudent);
+
+		const btn = screen.getByRole("button", { name: /enviar/i });
+		await userEvent.click(btn);
+
+		expect(pushMock).toHaveBeenCalledWith("/fora-criterios");
 	});
 });

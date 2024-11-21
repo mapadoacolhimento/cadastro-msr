@@ -1,4 +1,5 @@
 import { expect } from "vitest";
+import { useRouter } from "next/navigation";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -16,6 +17,11 @@ const setup = () => {
 			}
 			initialValues={
 				{
+					familyProvider: "yes",
+					employmentStatus: "employedClt",
+					monthlyIncome: "yes",
+					monthlyIncomeRange: 5,
+					dependants: "yes",
 					propertyOwnership: "",
 				} as Values
 			}
@@ -57,5 +63,25 @@ describe("FinancialBlock > <PropertyOwnership />", () => {
 		expect(screen.getByRole("alert")).toHaveTextContent(
 			"Esse campo é obrigatório."
 		);
+	});
+
+	it("should redirect to `fora-criterios` if MSR has access to income, receives more than 3 min wages and has property", async () => {
+		const pushMock = vi.fn();
+
+		useRouter.mockReturnValue({
+			push: pushMock,
+		});
+
+		setup();
+
+		const hasPropertyOption = screen.getByRole("radio", {
+			name: /Sim/i,
+		});
+		await userEvent.click(hasPropertyOption);
+
+		const btn = screen.getByRole("button", { name: /enviar/i });
+		await userEvent.click(btn);
+
+		expect(pushMock).toHaveBeenCalledWith("/fora-criterios");
 	});
 });

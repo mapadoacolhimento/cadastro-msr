@@ -12,7 +12,6 @@ import {
 	genderViolence,
 	externalSupport,
 	violenceLocation,
-	financialNeed,
 	dateOfBirth,
 	zipcode,
 	neighborhood,
@@ -177,39 +176,44 @@ Cypress.Commands.add("fillMonthlyIncomeRangeStep", () => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 });
 
-Cypress.Commands.add("fillEmploymentStatusStep", () => {
-	// EmploymentStatus
-	cy.contains("Qual a sua situação de trabalho?").should("exist");
-	cy.findByRole("radio", {
-		name: "Trabalhadora sem carteira de trabalho assinada",
-	}).click();
-	cy.findByRole("button", { name: "Continuar" }).click();
-});
+Cypress.Commands.add(
+	"fillEmploymentStatusStep",
+	(
+		employmentStatusOptionText = "Trabalhadora sem carteira de trabalho assinada"
+	) => {
+		// EmploymentStatus
+		cy.contains("Qual a sua situação de trabalho?").should("exist");
+		cy.findByRole("radio", {
+			name: employmentStatusOptionText,
+		}).click();
+		cy.findByRole("button", { name: "Continuar" }).click();
+	}
+);
 
-Cypress.Commands.add("fillDependantsStep", () => {
+Cypress.Commands.add("fillDependantsStep", (hasDependant = true) => {
 	// Dependants
 	cy.contains(
 		"Você tem pessoas que são dependentes financeiramente da sua renda?"
 	).should("exist");
-	cy.findByRole("radio", { name: "Sim" }).click();
+	cy.findByRole("radio", { name: hasDependant ? "Sim" : "Não" }).click();
 	cy.findByRole("button", { name: "Continuar" }).click();
 });
 
-Cypress.Commands.add("fillFamilyProviderStep", () => {
+Cypress.Commands.add("fillFamilyProviderStep", (isProvider = true) => {
 	// FamilyProvider
 	cy.contains(
 		'Você é responsável financeiramente pela renda familiar (é considerada a "chefe de família")?'
 	).should("exist");
-	cy.findByRole("radio", { name: "Não" }).click();
+	cy.findByRole("radio", { name: isProvider ? "Sim" : "Não" }).click();
 	cy.findByRole("button", { name: "Continuar" }).click();
 });
 
-Cypress.Commands.add("fillPropertyOwnershipStep", () => {
+Cypress.Commands.add("fillPropertyOwnershipStep", (hasProperty = false) => {
 	// PropertyOwnership
 	cy.contains(
 		"Você possui bens imóveis (casa, apartamento) em seu nome?"
 	).should("exist");
-	cy.findByRole("radio", { name: "Não" }).click();
+	cy.findByRole("radio", { name: hasProperty ? "Sim" : "Não" }).click();
 });
 
 Cypress.Commands.add("fillFinancialBlock", () => {
@@ -252,7 +256,7 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillExternalSupportStep(externalSupport);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillFinancialNeedStep(financialNeed);
+	cy.fillFinancialBlock();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.goThroughBeginRegistrationStep();
@@ -265,6 +269,7 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillGeolocationStep();
+
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();

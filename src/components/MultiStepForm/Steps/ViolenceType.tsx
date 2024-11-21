@@ -11,8 +11,9 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 import Step from "../Step";
-import CheckboxGroupWithAction from "../../CheckboxGroupWithAction";
+import CheckboxGroupInput, { CheckboxOption } from "../../CheckboxGroupInput";
 import { violenceTypeOptions } from "@/constants";
+import { PropsWithChildren } from "react";
 
 const violenceTypeSchema = Yup.object({
 	violenceType: Yup.array()
@@ -24,10 +25,7 @@ const violenceTypeSchema = Yup.object({
 function renderDialogContent({
 	name,
 	fullDescription,
-}: {
-	name: string;
-	fullDescription: string;
-}) {
+}: PropsWithChildren<CheckboxOption>) {
 	return (
 		<AlertDialog.Content size="4" maxWidth="528px">
 			<AlertDialog.Title color={"purple"} highContrast size={"6"} mb={"4"}>
@@ -74,7 +72,7 @@ export default function ViolenceType() {
 				hideMobile: true,
 			}}
 		>
-			<CheckboxGroupWithAction
+			<CheckboxGroupInput
 				name={"violenceType"}
 				options={violenceTypeOptions}
 				question={

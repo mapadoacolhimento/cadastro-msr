@@ -32,7 +32,7 @@ describe("<ViolenceType />", () => {
 
 		violenceTypeOptions.forEach((option) => {
 			const roleOptionElement = screen.getByRole("checkbox", {
-				name: `${option.name} ${option.description}`,
+				name: `${option.name} ${option.description} Saiba mais sobre essa violência.`,
 			});
 			expect(roleOptionElement).toBeInTheDocument();
 		});

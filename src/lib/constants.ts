@@ -226,40 +226,56 @@ export const violenceTypeOptions = [
 		value: "physicalViolence",
 		name: "Violência física",
 		description: "Ex: tapas, empurrões, socos",
+		fullDescription:
+			"Soco, chute, tapa, empurrão, puxão de cabelo, queimadura, enforcamento, sufocamento, tiro, afogamento, facada, paulada, estrangulamento ou sufocamento, espancamento, atirar objetos, sacudir e apertar os braços, lesões com objetos cortantes ou perfurantes, ferimentos causados por queimaduras ou armas de fogo, tortura.",
 	},
 	{
 		value: "psychologicalViolence",
 		name: "Violência psicológica",
 		description: "Ex: manipulação, controle emocional",
+		fullDescription:
+			"Ameaças, constrangimento, humilhação, manipulação, isolamento (proibir de estudar, trabalhar, viajar, ir ao médico, falar com amigos e parentes, etc.), chantagem, limitação do direito de ir e vir, tirar a liberdade de crença, distorcer e omitir fatos para deixar você em dúvida sobre a sua memória e sanidade (gaslighting), controle, críticas, insultos, desrespeito com a sua identidade, proibir de usar certos tipos de roupa.",
 	},
 	{
 		value: "sexualViolence",
 		name: "Violência sexual",
 		description: "Ex: abuso sexual, coerção, assédio",
+		fullDescription:
+			"Impedir o uso de métodos contraceptivos ou forçar a abortar; impedir você de usar preservativo, se negar a usar preservativo durante a relação sexual com você; forçar ao matrimônio, gravidez ou prostituição por meio de coação, chantagem, suborno ou manipulação; limitar ou anular o exercício dos seus direitos sexuais e/ou reprodutivos; forçar à alguma prática sexual na intenção de corrigir sua orientação sexual; exigir práticas sexuais que você não gosta ou se sente desconfortável; em seu ambiente de trabalho, ser forçada à alguma conduta que gerou constrangimento e/ou violou sua liberdade sexual (essa opção vale para condutas de natureza sexual manifestadas fisicamente, ou por palavras, ou gestos ou outros meios no ambiente de trabalho).",
 	},
 	{
 		value: "digitalViolence",
 		name: "Violência digital",
 		description: "Ex: cyberbullying, invasão de privacidade",
+		fullDescription:
+			"Vazar/compartilhar na internet suas informações pessoais,dados ou imagens íntimas sem seu consentimento; Stalking online (perseguição ou observação obsessiva).",
 	},
 	{
 		value: "patrimonialViolence",
 		name: "Violência patrimonial",
 		description: "Ex: destruição de bens, controle financeiro",
+		fullDescription:
+			"Controlar seu dinheiro, destruir seus objetos, destruir seus documentos pessoais, ocultar bens e propriedades, impedir de ter acesso ao dinheiro, à conta bancária ou outros bens, extorsão,danos propositais a objetos que você gosta.",
 	},
 	{
 		value: "obstetricViolence",
 		name: "Violência obstétrica",
 		description: "Ex: tratamento desrespeitoso no parto",
+		fullDescription:
+			"Alterar o processo natural do parto sem seu consentimento voluntário, abusos e maus-tratos durante a gestação e/ou no momento do parto.",
 	},
 	{
 		value: "threat",
 		name: "Ameaça",
 		description: "Ex: intimidações, promessas de agressão",
+		fullDescription:
+			"Ameaçar, agredir, violentar sexualmente, matar, ou qualquer outro mal grave; perseguir pessoalmente pelos lugares por onde você vai.",
 	},
 	{
 		value: "politicalViolence",
 		name: "Violência política contra a mulher",
 		description: "Ex: restrição de direitos políticos",
+		fullDescription:
+			"Ação ou omissão com a finalidade de impedir, criar obstáculos ou restringir seus direitos políticos por ser mulher; sofrer distinção, exclusão ou restrição no reconhecimento, gozo ou exercício dos seus direitos e liberdades políticas fundamentais, em virtude do gênero.",
 	},
 ];

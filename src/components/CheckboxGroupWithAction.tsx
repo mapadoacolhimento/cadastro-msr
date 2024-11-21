@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { PropsWithChildren, ReactElement, useEffect } from "react";
 import { useField } from "formik";
 import {
 	Box,
@@ -7,8 +7,11 @@ import {
 	Flex,
 	ScrollArea,
 	Card,
+	Button,
+	AlertDialog,
 } from "@radix-ui/themes";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 import ErrorMessage from "./ErrorMessage";
 import Question from "./Question";
@@ -18,18 +21,52 @@ type CheckboxOption = {
 	value: string;
 	name: string;
 	description: string;
+	fullDescription: string;
 };
 
 type CheckboxGroupInputProps = {
 	name: string;
 	options: CheckboxOption[];
 	question: React.ReactNode;
+	actionButton?: ReactElement<PropsWithChildren>;
 };
+
+function renderDialogContent({
+	name,
+	fullDescription,
+}: {
+	name: string;
+	fullDescription: string;
+}) {
+	return (
+		<Flex direction={"column"}>
+			<AlertDialog.Title>{name}</AlertDialog.Title>
+			<AlertDialog.Description size="2">
+				<Flex gap={"2"}>
+					<InfoCircledIcon color={"purple"} />
+					<Text color={"purple"} highContrast>
+						Saiba mais sobre os aspectos dessa violência:
+					</Text>
+				</Flex>
+				<Text>{fullDescription}</Text>
+			</AlertDialog.Description>
+
+			<Flex gap="3" mt="4" justify="end">
+				<AlertDialog.Cancel>
+					<Button variant="soft" color="gray">
+						Fechar
+					</Button>
+				</AlertDialog.Cancel>
+			</Flex>
+		</Flex>
+	);
+}
 
 export default function CheckboxGroupInput({
 	options,
 	name,
 	question,
+	actionButton,
 }: Readonly<CheckboxGroupInputProps>) {
 	const [field, _meta, helpers] = useField({
 		name,
@@ -95,11 +132,27 @@ export default function CheckboxGroupInput({
 										field.value.includes(option.value) ? "is-checked" : ""
 									}
 								>
-									<Flex direction={"column"} align={"start"} justify={"center"}>
-										<Text highContrast color={"purple"} weight={"medium"}>
-											{option.name}
-										</Text>
-										<Text>{option.description}</Text>
+									<Flex justify={"between"} align="center">
+										<Flex
+											direction={"column"}
+											align={"start"}
+											justify={"center"}
+										>
+											<Text highContrast color={"purple"} weight={"medium"}>
+												{option.name}
+											</Text>
+											<Text>{option.description}</Text>
+										</Flex>
+										{actionButton ? (
+											<AlertDialog.Root>
+												<AlertDialog.Trigger>
+													{actionButton}
+												</AlertDialog.Trigger>
+												<AlertDialog.Content size="1" maxWidth="300px">
+													{renderDialogContent(option)}
+												</AlertDialog.Content>
+											</AlertDialog.Root>
+										) : null}
 									</Flex>
 								</CheckboxGroup.Item>
 								<VisuallyHidden.Root

@@ -1,5 +1,6 @@
 import * as Yup from "yup";
-import { Strong } from "@radix-ui/themes";
+import { IconButton, Strong } from "@radix-ui/themes";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 import Step from "../Step";
 import CheckboxGroupWithAction from "../../CheckboxGroupWithAction";
@@ -35,6 +36,11 @@ export default function ViolenceType() {
 						que deseja relatar. Escolha abaixo as opções que se aplicam ao seu
 						caso.
 					</>
+				}
+				actionButton={
+					<IconButton variant={"ghost"}>
+						<InfoCircledIcon width={"18"} height={"18"} />
+					</IconButton>
 				}
 			/>
 		</Step>

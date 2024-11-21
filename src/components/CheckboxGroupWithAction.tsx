@@ -1,17 +1,14 @@
 import { PropsWithChildren, ReactElement, useEffect } from "react";
 import { useField } from "formik";
 import {
-	Box,
 	CheckboxGroup,
 	Text,
 	Flex,
 	ScrollArea,
 	Card,
-	Button,
 	AlertDialog,
 } from "@radix-ui/themes";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 import ErrorMessage from "./ErrorMessage";
 import Question from "./Question";
@@ -29,55 +26,18 @@ type CheckboxGroupInputProps = {
 	options: CheckboxOption[];
 	question: React.ReactNode;
 	actionButton?: ReactElement<PropsWithChildren>;
+	renderDialogContent?: (props: {
+		name: string;
+		fullDescription: string;
+	}) => ReactElement<PropsWithChildren>;
 };
-
-function renderDialogContent({
-	name,
-	fullDescription,
-}: {
-	name: string;
-	fullDescription: string;
-}) {
-	return (
-		<AlertDialog.Content size="4" maxWidth="528px">
-			<AlertDialog.Title color={"purple"} highContrast size={"6"} mb={"4"}>
-				{name}
-			</AlertDialog.Title>
-			<AlertDialog.Description size="2">
-				<Flex gap={"2"} align={"center"} pb={"4"}>
-					<InfoCircledIcon color={"purple"} width={"21"} height={"21"} />
-					<Text color={"purple"} highContrast weight={"medium"} size={"3"}>
-						Saiba mais sobre os aspectos dessa violência:
-					</Text>
-				</Flex>
-				<Text>{fullDescription}</Text>
-			</AlertDialog.Description>
-
-			<Flex mt="7" justify="end">
-				<AlertDialog.Cancel>
-					<Button
-						size={"3"}
-						variant="outline"
-						color="gray"
-						style={{
-							fontFamily: "var(--font-nunito-sans)",
-							textTransform: "capitalize",
-							fontWeight: 600,
-						}}
-					>
-						Fechar
-					</Button>
-				</AlertDialog.Cancel>
-			</Flex>
-		</AlertDialog.Content>
-	);
-}
 
 export default function CheckboxGroupInput({
 	options,
 	name,
 	question,
 	actionButton,
+	renderDialogContent,
 }: Readonly<CheckboxGroupInputProps>) {
 	const [field, _meta, helpers] = useField({
 		name,
@@ -154,7 +114,7 @@ export default function CheckboxGroupInput({
 											</Text>
 											<Text>{option.description}</Text>
 										</Flex>
-										{actionButton ? (
+										{actionButton && renderDialogContent ? (
 											<AlertDialog.Root>
 												<AlertDialog.Trigger>
 													{actionButton}

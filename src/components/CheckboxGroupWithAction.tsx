@@ -39,26 +39,37 @@ function renderDialogContent({
 	fullDescription: string;
 }) {
 	return (
-		<Flex direction={"column"}>
-			<AlertDialog.Title>{name}</AlertDialog.Title>
+		<AlertDialog.Content size="4" maxWidth="528px">
+			<AlertDialog.Title color={"purple"} highContrast size={"6"} mb={"4"}>
+				{name}
+			</AlertDialog.Title>
 			<AlertDialog.Description size="2">
-				<Flex gap={"2"}>
-					<InfoCircledIcon color={"purple"} />
-					<Text color={"purple"} highContrast>
+				<Flex gap={"2"} align={"center"} pb={"4"}>
+					<InfoCircledIcon color={"purple"} width={"21"} height={"21"} />
+					<Text color={"purple"} highContrast weight={"medium"} size={"3"}>
 						Saiba mais sobre os aspectos dessa violência:
 					</Text>
 				</Flex>
 				<Text>{fullDescription}</Text>
 			</AlertDialog.Description>
 
-			<Flex gap="3" mt="4" justify="end">
+			<Flex mt="7" justify="end">
 				<AlertDialog.Cancel>
-					<Button variant="soft" color="gray">
+					<Button
+						size={"3"}
+						variant="outline"
+						color="gray"
+						style={{
+							fontFamily: "var(--font-nunito-sans)",
+							textTransform: "capitalize",
+							fontWeight: 600,
+						}}
+					>
 						Fechar
 					</Button>
 				</AlertDialog.Cancel>
 			</Flex>
-		</Flex>
+		</AlertDialog.Content>
 	);
 }
 
@@ -148,9 +159,7 @@ export default function CheckboxGroupInput({
 												<AlertDialog.Trigger>
 													{actionButton}
 												</AlertDialog.Trigger>
-												<AlertDialog.Content size="1" maxWidth="300px">
-													{renderDialogContent(option)}
-												</AlertDialog.Content>
+												{renderDialogContent(option)}
 											</AlertDialog.Root>
 										) : null}
 									</Flex>

@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
-import CheckboxGroupInput from "../../CheckboxGroupInput";
+import CheckboxGroupWithAction from "../../CheckboxGroupWithAction";
 import { violenceTypeOptions } from "@/constants";
 
 const violenceTypeSchema = Yup.object({
@@ -23,7 +23,7 @@ export default function ViolenceType() {
 				hideMobile: true,
 			}}
 		>
-			<CheckboxGroupInput
+			<CheckboxGroupWithAction
 				name={"violenceType"}
 				options={violenceTypeOptions}
 				question={

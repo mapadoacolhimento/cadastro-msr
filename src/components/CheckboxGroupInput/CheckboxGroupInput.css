@@ -10,9 +10,6 @@
 #checkbox-group-violenceType .rt-CheckboxGroupItem {
 	align-items: center;
 	gap: var(--space-4);
-}
-
-#checkbox-group-violenceType .rt-CheckboxGroupItem {
 	width: 100%;
 }
 

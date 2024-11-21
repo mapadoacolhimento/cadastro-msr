@@ -162,9 +162,6 @@ describe("When MSR does not meet the criteria", () => {
 			cy.fillDateOfBirthStep(dateOfBirth);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillGenderViolenceStep(genderViolence);
-			cy.findByRole("button", { name: "Continuar" }).click();
-
 			cy.fillViolenceTypeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 

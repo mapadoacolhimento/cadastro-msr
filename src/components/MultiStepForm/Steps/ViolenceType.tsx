@@ -7,6 +7,7 @@ import {
 	Strong,
 	Text,
 } from "@radix-ui/themes";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 import Step from "../Step";
@@ -89,6 +90,9 @@ export default function ViolenceType() {
 				actionButton={
 					<IconButton variant={"ghost"}>
 						<InfoCircledIcon width={"18"} height={"18"} />
+						<VisuallyHidden.Root>
+							Saiba mais sobre essa violência.
+						</VisuallyHidden.Root>
 					</IconButton>
 				}
 				renderDialogContent={renderDialogContent}

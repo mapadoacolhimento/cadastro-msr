@@ -11,3 +11,4 @@ export { default as Geolocation } from "./Geolocation";
 export { default as TransitoryStep } from "./TransitoryStep";
 export { default as BeginRegistration } from "./BeginRegistration";
 export { default as FinancialBlock } from "./FinancialBlock";
+export { default as ViolenceType } from "./ViolenceType";

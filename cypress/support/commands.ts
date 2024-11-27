@@ -31,7 +31,7 @@ Cypress.Commands.add("fillDateOfBirthStep", (dateOfBirth) => {
 });
 
 Cypress.Commands.add("fillBasicRegisterInformationStep", (msrEmail) => {
-	const email = msrEmail ? msrEmail : generateTestEmail();
+	const email = msrEmail ?? generateTestEmail();
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.get("#firstName").type(firstName);
 	cy.get("#email").type(email);
@@ -225,6 +225,21 @@ Cypress.Commands.add("fillFinancialBlock", () => {
 	cy.fillPropertyOwnershipStep();
 });
 
+Cypress.Commands.add("fillViolenceTypeStep", () => {
+	cy.contains("Quais tipos de violência você sofreu ou está sofrendo?").should(
+		"be.visible"
+	);
+	cy.findByRole("checkbox", { name: /Violência psicológica/i }).click({
+		force: true,
+	});
+	cy.findByRole("checkbox", { name: /Violência física/i }).click({
+		force: true,
+	});
+	cy.findByRole("checkbox", { name: /Violência sexual/i }).click({
+		force: true,
+	});
+});
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();
@@ -232,7 +247,7 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillDateOfBirthStep(dateOfBirth);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillGenderViolenceStep(genderViolence);
+	cy.fillViolenceTypeStep();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillViolenceLocationStep(violenceLocation);

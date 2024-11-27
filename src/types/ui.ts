@@ -15,6 +15,7 @@ export interface StepChildrenProps {
 		alt: string;
 		align?: Responsive<"center" | "start" | "end" | "baseline" | "stretch">;
 		bottom?: string;
+		hideMobile?: boolean;
 	};
 }
 
@@ -52,4 +53,5 @@ export interface Values {
 	dependants: string;
 	familyProvider: string;
 	propertyOwnership: string;
+	violenceType: string[];
 }

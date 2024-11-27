@@ -6,3 +6,13 @@
 .is-checked {
 	--checkbox-cards-item-background-color: var(--accent-a3);
 }
+
+#checkbox-group-violenceType .rt-CheckboxGroupItem {
+	align-items: center;
+	gap: var(--space-4);
+	width: 100%;
+}
+
+#checkbox-group-violenceType .rt-CheckboxGroupItemInner {
+	width: 100%;
+}

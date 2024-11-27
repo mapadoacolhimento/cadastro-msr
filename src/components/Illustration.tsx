@@ -8,12 +8,14 @@ export default function Illustration({
 	isForm = true,
 	backgroundColor,
 	bottom,
+	hideMobile = false,
 }: Readonly<{
 	img: { src: string; alt: string };
 	align?: Responsive<"center" | "start" | "end" | "baseline" | "stretch">;
 	isForm?: boolean;
 	backgroundColor?: string;
 	bottom?: string;
+	hideMobile?: boolean;
 }>) {
 	return (
 		<>
@@ -53,7 +55,7 @@ export default function Illustration({
 					bottom={
 						typeof bottom !== "undefined" ? bottom : isForm ? "75px" : "0"
 					}
-					display={{ initial: "block", md: "none" }}
+					display={{ initial: hideMobile ? "none" : "block", md: "none" }}
 				>
 					<Image
 						src={img.src}

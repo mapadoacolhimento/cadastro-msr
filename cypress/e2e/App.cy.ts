@@ -33,7 +33,7 @@ describe("Happy path", () => {
 				cy.fillDateOfBirthStep(dateOfBirth);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.fillGenderViolenceStep(genderViolence);
+				cy.fillViolenceTypeStep();
 				cy.findByRole("button", {
 					name: "Voltar para o passo anterior",
 				}).click();
@@ -67,7 +67,7 @@ describe("Happy path", () => {
 				cy.fillDateOfBirthStep(dateOfBirth);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.fillGenderViolenceStep(genderViolence);
+				cy.fillViolenceTypeStep();
 				cy.findByRole("button", {
 					name: "Voltar para o passo anterior",
 				}).click();
@@ -109,22 +109,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.checkForaCriteriosPage();
 	});
 
-	it("should redirect to `fora-criterios` page if gender violence is filled with option `Não`", () => {
-		cy.visit("/cadastro");
-
-		cy.fillGenderIdentityStep(gender);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillDateOfBirthStep(dateOfBirth);
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillGenderViolenceStep("Não, não sofro ou sofri violência");
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.url().should("include", "/fora-criterios");
-		cy.checkForaCriteriosPage();
-	});
-
 	it("should redirect to `fora-criterios` page if MSR selects that the violence location wasn't in Brazil", () => {
 		cy.visit("/cadastro");
 
@@ -134,7 +118,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillGenderViolenceStep(genderViolence);
+		cy.fillViolenceTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillViolenceLocationStep("Não, aconteceu em outro país");
@@ -153,7 +137,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillGenderViolenceStep(genderViolence);
+		cy.fillViolenceTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillViolenceLocationStep(violenceLocation);
@@ -178,7 +162,7 @@ describe("When MSR does not meet the criteria", () => {
 			cy.fillDateOfBirthStep(dateOfBirth);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillGenderViolenceStep(genderViolence);
+			cy.fillViolenceTypeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillViolenceLocationStep(violenceLocation);

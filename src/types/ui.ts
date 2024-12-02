@@ -1,3 +1,4 @@
+import { Volunteers } from "@prisma/client";
 import { Responsive } from "@radix-ui/themes/props";
 import { type FormikHelpers } from "formik";
 import { type AnyObjectSchema } from "yup";
@@ -55,3 +56,16 @@ export interface Values {
 	propertyOwnership: string;
 	violenceType: string[];
 }
+
+export type VolunteerMatch = Pick<
+	Volunteers,
+	| "firstName"
+	| "lastName"
+	| "occupation"
+	| "city"
+	| "state"
+	| "email"
+	| "phone"
+	| "registrationNumber"
+	| "id"
+>;

@@ -1,6 +1,7 @@
 "use client";
 
 import { Theme } from "@radix-ui/themes";
+import { ToastContainer } from "react-toastify";
 
 export default function Providers({
 	children,
@@ -8,6 +9,7 @@ export default function Providers({
 	return (
 		<Theme accentColor="purple" grayColor="gray" panelBackground="solid">
 			{children}
+			<ToastContainer />
 		</Theme>
 	);
 }

@@ -19,6 +19,29 @@ export default function VolunteerCard(props: VolunteerMatch) {
 	} = props;
 	const registrationType = occupation === "psychologist" ? "CRP" : "OAB";
 	const volunteerType = getVolunteerType(occupation);
+	const volunteerInfo = [
+		{
+			Icon: () => (
+				<EnvelopeClosedIcon color={"purple"} width={16} height={16} />
+			),
+			value: email,
+		},
+		{
+			Icon: () => (
+				<Image
+					src={"/icons/phone.svg"}
+					alt={"Ícone de telefone"}
+					width={16}
+					height={16}
+				/>
+			),
+			value: formatPhoneNumber(phone),
+		},
+		{
+			Icon: () => <PersonIcon color={"purple"} width={16} height={16} />,
+			value: `${registrationType}: ${registrationNumber}`,
+		},
+	];
 	return (
 		<Box width={{ initial: "100%", md: "450px" }} asChild>
 			<Card size={"3"}>
@@ -46,33 +69,19 @@ export default function VolunteerCard(props: VolunteerMatch) {
 					style={{ color: "#565656", fontSize: "0.813rem" }}
 					gap={"1"}
 				>
-					<Flex display={"inline-flex"} gap={"3"} align={"center"} asChild>
-						<Text as={"p"}>
-							<EnvelopeClosedIcon
-								color={"purple"}
-								width={"16px"}
-								height={"16px"}
-							/>{" "}
-							{email}
-						</Text>
-					</Flex>
-					<Flex display={"inline-flex"} gap={"3"} align={"center"} asChild>
-						<Text as={"p"}>
-							<Image
-								src={"/icons/phone.svg"}
-								alt={"Ícone de telefone"}
-								width={16}
-								height={16}
-							/>{" "}
-							{formatPhoneNumber(phone)}
-						</Text>
-					</Flex>
-					<Flex display={"inline-flex"} gap={"3"} align={"center"} asChild>
-						<Text as={"p"}>
-							<PersonIcon color={"purple"} width={"16px"} height={"16px"} />
-							{registrationType}: {registrationNumber}
-						</Text>
-					</Flex>
+					{volunteerInfo.map(({ Icon, value }) => (
+						<Flex
+							display={"inline-flex"}
+							gap={"3"}
+							align={"center"}
+							asChild
+							key={value}
+						>
+							<Text as={"p"}>
+								<Icon /> {value}
+							</Text>
+						</Flex>
+					))}
 				</Flex>
 				<Flex gap={"3"}>
 					<Button style={{ cursor: "pointer" }} size={"3"} asChild>

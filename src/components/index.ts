@@ -15,3 +15,4 @@ export { default as CheckboxInput } from "./CheckboxInput";
 export { default as Question } from "./Question";
 export { default as MainTitle } from "./MainTitle";
 export { default as CopyVolunteerInfoButton } from "./CopyVolunteerInfoButton";
+export { default as VolunteerCard } from "./VolunteerCard";

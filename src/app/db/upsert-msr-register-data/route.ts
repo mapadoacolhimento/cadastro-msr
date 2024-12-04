@@ -26,6 +26,7 @@ const payloadSchema = Yup.object({
 	city: Yup.string(),
 	state: Yup.string(),
 	neighborhood: Yup.string(),
+	street: Yup.string(),
 	lat: Yup.number().nullable(),
 	lng: Yup.number().nullable(),
 	zipcode: Yup.string(),

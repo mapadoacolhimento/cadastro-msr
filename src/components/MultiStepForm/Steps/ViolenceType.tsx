@@ -69,7 +69,6 @@ export default function ViolenceType() {
 			img={{
 				src: "/illustrations/woman-covering-ears.webp",
 				alt: "Ilustração de uma mulher de cabeça baixa tampando os ouvidos",
-				hideMobile: true,
 			}}
 		>
 			<CheckboxGroupInput

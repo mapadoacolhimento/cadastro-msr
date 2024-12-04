@@ -163,7 +163,6 @@ export default function MultiStepFormWrapper({
 				img={step.props.img}
 				align={step.props.img.align}
 				bottom={step.props.img.bottom}
-				hideMobile={step.props.img.hideMobile}
 			/>
 		</>
 	) : null;

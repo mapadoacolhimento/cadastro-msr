@@ -23,7 +23,6 @@ export default function TransitoryStep({
 			<Illustration
 				bottom={"0"}
 				backgroundColor={"var(--pink-3)"}
-				isForm={true}
 				align={"end"}
 				img={{
 					src: "/illustrations/woman.webp",

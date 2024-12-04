@@ -109,7 +109,6 @@ export default function Page() {
 						src: "/illustrations/woman-getting-support.webp",
 						alt: "Ilustração com duas mulheres sentadas conversando",
 					}}
-					isForm={false}
 				/>
 			</Box>
 		</>

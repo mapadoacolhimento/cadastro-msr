@@ -1,4 +1,4 @@
-const getVolunteerType = (volunteerType: string) =>
-	volunteerType === "psychologist" ? "psicóloga" : "advogada";
+const getVolunteerType = (supportType: string) =>
+	supportType === "psychological" ? "psicóloga" : "advogada";
 
 export default getVolunteerType;

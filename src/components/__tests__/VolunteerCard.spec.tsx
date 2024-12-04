@@ -5,10 +5,9 @@ import { ToastContainer } from "react-toastify";
 
 import VolunteerCard from "../VolunteerCard";
 import { VolunteerMatch } from "@/types";
-import { click } from "@testing-library/user-event/dist/cjs/convenience/click.js";
 
 const defaultProps = {
-	id: 1,
+	volunteerId: 1,
 	firstName: "Joana",
 	lastName: "Nascimento",
 	email: "joana.nascimento@gmail.com",
@@ -17,6 +16,7 @@ const defaultProps = {
 	occupation: "psychologist",
 	city: "ARACAJU",
 	state: "SE",
+	supportType: "psychological",
 };
 
 const setup = (props = defaultProps) => {
@@ -110,6 +110,7 @@ describe("<VolunteerCard />", () => {
 		it("should render OAB as registration type and registration number", () => {
 			setup({
 				...defaultProps,
+				supportType: "legal",
 				occupation: "lawyer",
 			});
 			expect(screen.getByText(/OAB/)).toBeInTheDocument();
@@ -118,6 +119,7 @@ describe("<VolunteerCard />", () => {
 		it("should render 'Advogada' as volunteer type", () => {
 			setup({
 				...defaultProps,
+				supportType: "legal",
 				occupation: "lawyer",
 			});
 			expect(screen.getByText(/Advogada/)).toBeInTheDocument();
@@ -125,6 +127,7 @@ describe("<VolunteerCard />", () => {
 		it("should copy correct information when clicking on copy btn", async () => {
 			setup({
 				...defaultProps,
+				supportType: "legal",
 				occupation: "lawyer",
 			});
 			const { click } = userEvent.setup();

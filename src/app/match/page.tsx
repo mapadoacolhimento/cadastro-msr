@@ -4,11 +4,14 @@ import { Box, Flex, Link, Text } from "@radix-ui/themes";
 import MainTitle from "@/components/MainTitle";
 import Illustration from "@/components/Illustration";
 import VolunteerCard from "@/components/VolunteerCard";
+import VolunteerNotFound from "@/components/VolunteerNotFound";
+import DuplicatedMatchRequest from "@/components/DuplicatedMatchRequest";
 import { getVolunteerType } from "@/utils";
+import { VolunteerMatch } from "@/types";
 
 export default function Page() {
-	const psychologistVolunteer = {
-		id: 1,
+	const psychologistVolunteer: VolunteerMatch = {
+		volunteerId: 1,
 		firstName: "Joana",
 		lastName: "Nascimento",
 		email: "joana.nascimento@gmail.com",
@@ -17,10 +20,12 @@ export default function Page() {
 		occupation: "psychologist",
 		city: "ARACAJU",
 		state: "SE",
+		supportType: "psychological" as const,
 	};
 
-	const lawyerVolunteer = {
-		id: 2,
+	const lawyerVolunteer: VolunteerMatch = {
+		supportType: "legal" as const,
+		volunteerId: 2,
 		firstName: "Mariana",
 		lastName: "Arruda",
 		email: "mariana.arruda@gmail.com",
@@ -31,12 +36,23 @@ export default function Page() {
 		state: "PE",
 	};
 
-	const volunteers = [psychologistVolunteer];
+	const legalSupportRequest = {
+		supportType: "legal",
+		volunteerId: null,
+	} as VolunteerMatch;
+
+	const psychologicalSupportRequest = {
+		status: "duplicated",
+	} as VolunteerMatch;
+
+	const supportRequests = [psychologicalSupportRequest, lawyerVolunteer].sort(
+		(a, b) => (b.volunteerId ?? 0) - (a.volunteerId ?? 0)
+	);
 
 	const title =
-		volunteers.length > 1
+		supportRequests.filter((s) => !!s.volunteerId).length > 1
 			? "duas voluntárias"
-			: getVolunteerType(volunteers[0].occupation);
+			: "uma " + getVolunteerType(supportRequests[0].supportType);
 
 	return (
 		<>
@@ -47,9 +63,21 @@ export default function Page() {
 				</Text>
 			</Flex>
 
-			{volunteers.map((volunteer) => (
-				<VolunteerCard key={volunteer.id} {...volunteer} />
-			))}
+			{supportRequests.map((supportRequest) => {
+				if (supportRequest.status === "duplicated") {
+					return <DuplicatedMatchRequest key={supportRequest.status} />;
+				}
+				if (!supportRequest.volunteerId)
+					return (
+						<VolunteerNotFound
+							key={supportRequest.supportType}
+							supportType={supportRequest.supportType}
+						/>
+					);
+				return (
+					<VolunteerCard key={supportRequest.volunteerId} {...supportRequest} />
+				);
+			})}
 
 			<Flex gap={"3"} justify={"center"} align={"center"}>
 				<Image

@@ -16,9 +16,10 @@ export default function VolunteerCard(props: VolunteerMatch) {
 		email,
 		phone,
 		registrationNumber,
+		supportType,
 	} = props;
 	const registrationType = occupation === "psychologist" ? "CRP" : "OAB";
-	const volunteerType = getVolunteerType(occupation);
+	const volunteerType = getVolunteerType(supportType);
 	const volunteerInfo = [
 		{
 			Icon: () => (
@@ -84,8 +85,12 @@ export default function VolunteerCard(props: VolunteerMatch) {
 					))}
 				</Flex>
 				<Flex gap={"3"}>
-					<Button style={{ cursor: "pointer" }} size={"3"} asChild>
-						<Link href={`https://wa.me/55${phone}`} target={"_blank"}>
+					<Button size={"3"} asChild>
+						<Link
+							href={`https://wa.me/55${phone}`}
+							target={"_blank"}
+							style={{ cursor: "pointer", textDecoration: "none" }}
+						>
 							<Image
 								src={"/icons/whatsapp.svg"}
 								alt={"Ícone do aplicativo Whatsapp"}
@@ -95,13 +100,12 @@ export default function VolunteerCard(props: VolunteerMatch) {
 							Enviar Whatsapp
 						</Link>
 					</Button>
-					<Button
-						color={"yellow"}
-						style={{ cursor: "pointer" }}
-						size={"3"}
-						asChild
-					>
-						<Link href={`mailto:${email}`}>
+					<Button size={"3"} asChild>
+						<Link
+							href={`mailto:${email}`}
+							color={"yellow"}
+							style={{ cursor: "pointer", textDecoration: "none" }}
+						>
 							<EnvelopeClosedIcon
 								color={"white"}
 								width={"16px"}

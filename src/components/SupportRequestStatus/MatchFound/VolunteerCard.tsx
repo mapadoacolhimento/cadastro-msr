@@ -4,9 +4,13 @@ import { EnvelopeClosedIcon, PersonIcon } from "@radix-ui/react-icons";
 
 import CopyVolunteerInfoButton from "./CopyVolunteerInfoButton";
 import { capitalizeFirst, formatPhoneNumber, getVolunteerType } from "@/utils";
-import { VolunteerMatch } from "@/types";
+import { SupportRequestData } from "@/types";
 
-export default function VolunteerCard(props: VolunteerMatch) {
+export default function VolunteerCard(props: SupportRequestData) {
+	console.log({ props });
+	const { volunteer, supportType } = props;
+	if (!volunteer) return null;
+
 	const {
 		firstName,
 		lastName,
@@ -16,10 +20,11 @@ export default function VolunteerCard(props: VolunteerMatch) {
 		email,
 		phone,
 		registrationNumber,
-		supportType,
-	} = props;
+	} = volunteer;
+
 	const registrationType = occupation === "psychologist" ? "CRP" : "OAB";
 	const volunteerType = getVolunteerType(supportType);
+
 	const volunteerInfo = [
 		{
 			Icon: () => (
@@ -43,6 +48,7 @@ export default function VolunteerCard(props: VolunteerMatch) {
 			value: `${registrationType}: ${registrationNumber}`,
 		},
 	];
+
 	return (
 		<Box width={{ initial: "100%", md: "450px" }} asChild>
 			<Card size={"3"}>
@@ -59,7 +65,7 @@ export default function VolunteerCard(props: VolunteerMatch) {
 						</Text>
 					</Box>
 					<CopyVolunteerInfoButton
-						{...props}
+						{...volunteer}
 						volunteerType={volunteerType}
 						registrationType={registrationType}
 					/>

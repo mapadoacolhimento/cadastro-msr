@@ -1,13 +1,14 @@
 "use client";
 
-import { VolunteerMatch } from "@/types";
-import { capitalizeFirst } from "@/utils";
-import { Button } from "@radix-ui/themes";
 import Image from "next/image";
+import { Button } from "@radix-ui/themes";
 import { toast } from "react-toastify";
+import type { Volunteers } from "@prisma/client";
+
+import { capitalizeFirst } from "@/utils";
 
 type CopyVolunteerInfoButtonProps = Pick<
-	VolunteerMatch,
+	Volunteers,
 	"firstName" | "lastName" | "email" | "phone" | "registrationNumber"
 > & { registrationType: string; volunteerType: string };
 

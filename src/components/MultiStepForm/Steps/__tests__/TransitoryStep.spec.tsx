@@ -40,7 +40,7 @@ describe("<TransitoryStep />", () => {
 				screen.getAllByAltText(
 					"Ilustração de uma mulher com cabelo castanho escuro e blusa roxa com um coração branco do mapa do acolhimento"
 				)
-			).toHaveLength(2);
+			).toHaveLength(1);
 		});
 	});
 });

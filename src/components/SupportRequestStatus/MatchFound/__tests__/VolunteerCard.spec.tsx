@@ -4,25 +4,27 @@ import userEvent from "@testing-library/user-event";
 import { ToastContainer } from "react-toastify";
 
 import VolunteerCard from "../VolunteerCard";
-import { VolunteerMatch } from "@/types";
+import type { SupportRequestData } from "@/types";
 
 const defaultProps = {
-	volunteerId: 1,
-	firstName: "Joana",
-	lastName: "Nascimento",
-	email: "joana.nascimento@gmail.com",
-	phone: "92988426606",
-	registrationNumber: "11.1111/11",
-	occupation: "psychologist",
-	city: "ARACAJU",
-	state: "SE",
+	volunteer: {
+		id: 1,
+		firstName: "Joana",
+		lastName: "Nascimento",
+		email: "joana.nascimento@gmail.com",
+		phone: "92988426606",
+		registrationNumber: "11.1111/11",
+		occupation: "psychologist",
+		city: "ARACAJU",
+		state: "SE",
+	},
 	supportType: "psychological",
-};
+} as SupportRequestData;
 
 const setup = (props = defaultProps) => {
 	return render(
 		<>
-			<VolunteerCard {...(props as VolunteerMatch)} />
+			<VolunteerCard {...props} />
 			<ToastContainer />
 		</>
 	);
@@ -111,8 +113,11 @@ describe("<VolunteerCard />", () => {
 			setup({
 				...defaultProps,
 				supportType: "legal",
-				occupation: "lawyer",
-			});
+				volunteer: {
+					...defaultProps.volunteer,
+					occupation: "lawyer",
+				},
+			} as SupportRequestData);
 			expect(screen.getByText(/OAB/)).toBeInTheDocument();
 			expect(screen.getByText(/11.1111\/11/)).toBeInTheDocument();
 		});
@@ -120,16 +125,22 @@ describe("<VolunteerCard />", () => {
 			setup({
 				...defaultProps,
 				supportType: "legal",
-				occupation: "lawyer",
-			});
+				volunteer: {
+					...defaultProps.volunteer,
+					occupation: "lawyer",
+				},
+			} as SupportRequestData);
 			expect(screen.getByText(/Advogada/)).toBeInTheDocument();
 		});
 		it("should copy correct information when clicking on copy btn", async () => {
 			setup({
 				...defaultProps,
 				supportType: "legal",
-				occupation: "lawyer",
-			});
+				volunteer: {
+					...defaultProps.volunteer,
+					occupation: "lawyer",
+				},
+			} as SupportRequestData);
 			const { click } = userEvent.setup();
 
 			const copyBtn = screen.getByRole("button", { name: /copiar dados/i });

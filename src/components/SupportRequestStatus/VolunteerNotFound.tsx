@@ -5,9 +5,9 @@ import Image from "next/image";
 
 export default function VolunteerNotFound({
 	supportType,
-}: {
+}: Readonly<{
 	supportType: SupportRequests["supportType"];
-}) {
+}>) {
 	const volunteerType = getVolunteerType(supportType);
 	return (
 		<Box width={{ initial: "100%", md: "450px" }} asChild>

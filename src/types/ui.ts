@@ -1,4 +1,4 @@
-import type { SupportRequests, Volunteers } from "@prisma/client";
+import { getSupportRequestData } from "@/lib";
 import { Responsive } from "@radix-ui/themes/props";
 import { type FormikHelpers } from "formik";
 import { type AnyObjectSchema } from "yup";
@@ -56,18 +56,6 @@ export interface Values {
 	violenceType: string[];
 }
 
-export type VolunteerMatch = Pick<
-	Volunteers,
-	| "firstName"
-	| "lastName"
-	| "occupation"
-	| "city"
-	| "state"
-	| "email"
-	| "phone"
-	| "registrationNumber"
-> & {
-	volunteerId: number | null;
-	supportType: SupportRequests["supportType"];
-	status?: SupportRequests["status"];
-};
+export type SupportRequestData = Awaited<
+	ReturnType<typeof getSupportRequestData>
+>;

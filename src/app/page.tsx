@@ -51,7 +51,6 @@ export default function Homepage() {
 			</Flex>
 			<Box display={{ initial: "none", md: "block" }}>
 				<Illustration
-					isForm={false}
 					align={"end"}
 					img={{
 						src: "/illustrations/therapy-session.webp",

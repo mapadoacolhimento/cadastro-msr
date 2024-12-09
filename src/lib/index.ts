@@ -10,3 +10,4 @@ export { default as checkMatchEligibility } from "./checkMatchEligibility";
 export { default as createMatch } from "./createMatch";
 export { default as logger } from "./logger";
 export * from "./constants";
+export { default as getSupportRequestData } from "./getSupportRequestData";

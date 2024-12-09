@@ -1,20 +1,23 @@
 import Image from "next/image";
 import { Box, Flex, Link, Text } from "@radix-ui/themes";
 
+import MainTitle from "../../MainTitle";
+import Illustration from "../../Illustration";
 import VolunteerCard from "./VolunteerCard";
 import VolunteerNotFound from "../VolunteerNotFound";
 import DuplicatedMatchRequest from "../DuplicatedMatchRequest";
-import MainTitle from "../../MainTitle";
-import Illustration from "../../Illustration";
 
 import { SupportRequestData } from "@/types";
 import { getVolunteerType } from "@/utils";
+import { PropsWithChildren } from "react";
 
 export default function MatchFound({
 	supportRequests,
-}: {
+}: PropsWithChildren<{
 	supportRequests: SupportRequestData[];
-}) {
+}>) {
+	const volunteerType = getVolunteerType(supportRequests[0].supportType);
+
 	function renderSupportRequestStatusCard(props: SupportRequestData) {
 		const { status, supportRequestId, supportType } = props;
 
@@ -30,15 +33,15 @@ export default function MatchFound({
 		}
 	}
 
-	const title =
-		supportRequests.filter((s) => s.status === "matched").length > 1
-			? "duas voluntárias"
-			: "uma " + getVolunteerType(supportRequests[0].supportType);
+	const volunteerName =
+		supportRequests.length > 1 ? "duas voluntárias" : "uma " + volunteerType;
 
 	return (
 		<>
 			<Flex align={"center"} direction={"column"}>
-				<MainTitle size={"6"}>Encontramos {title} para acolher você!</MainTitle>
+				<MainTitle size={"6"}>
+					Encontramos {volunteerName} para acolher você!
+				</MainTitle>
 				<Text style={{ paddingTop: "8px" }}>
 					Entre em contato para agendar o seu atendimento:
 				</Text>
@@ -76,6 +79,7 @@ export default function MatchFound({
 						src: "/illustrations/woman-getting-support.webp",
 						alt: "Ilustração com duas mulheres sentadas conversando",
 					}}
+					backgroundColor={"var(--pink-3)"}
 				/>
 			</Box>
 		</>

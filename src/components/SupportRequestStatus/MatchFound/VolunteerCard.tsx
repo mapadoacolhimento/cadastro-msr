@@ -6,9 +6,10 @@ import CopyVolunteerInfoButton from "./CopyVolunteerInfoButton";
 import { capitalizeFirst, formatPhoneNumber, getVolunteerType } from "@/utils";
 import { SupportRequestData } from "@/types";
 
-export default function VolunteerCard(props: SupportRequestData) {
-	console.log({ props });
-	const { volunteer, supportType } = props;
+export default function VolunteerCard({
+	volunteer,
+	supportType,
+}: SupportRequestData) {
 	if (!volunteer) return null;
 
 	const {

@@ -1,7 +1,7 @@
 "use server";
 
 import { getSupportRequestData } from "@/lib";
-import { NoMatchFound, MatchFound } from "@/components/SupportRequestStatus";
+import { MatchNotFound, MatchFound } from "@/components/SupportRequestStatus";
 
 export default async function Page({
 	searchParams,
@@ -34,7 +34,7 @@ export default async function Page({
 	return (
 		<>
 			{!hasVolunteer ? (
-				<NoMatchFound supportRequests={validSupportRequests} />
+				<MatchNotFound supportRequests={validSupportRequests} />
 			) : (
 				<MatchFound supportRequests={validSupportRequests} />
 			)}

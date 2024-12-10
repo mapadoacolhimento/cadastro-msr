@@ -37,6 +37,7 @@ model MsrRegisterData {
   neighborhood         String?
   city                 String?
   state                String?
+  street               String?
   lat                  Float?
   lng                  Float?
   createdAt            DateTime      @default(now())

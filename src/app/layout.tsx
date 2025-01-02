@@ -47,6 +47,7 @@ export default async function RootLayout({
 			<Script
 				id="nr-browser-agent"
 				dangerouslySetInnerHTML={{ __html: browserTimingHeader }}
+				strategy="lazyOnload"
 			/>
 			<body>
 				<Providers>

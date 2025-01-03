@@ -7,10 +7,12 @@ import StatusCard from "./StatusCard";
 
 export default async function DuplicatedMatchRequest({
 	isManyVolunteers = false,
+	volunteerType,
 }: PropsWithChildren<{
 	isManyVolunteers?: boolean;
+	volunteerType: string;
 }>) {
-	const volunteer = isManyVolunteers ? "voluntárias" : "voluntária";
+	const volunteer = isManyVolunteers ? "voluntárias" : volunteerType;
 	const shouldAddPlural = isManyVolunteers ? "s" : "";
 
 	return (
@@ -20,6 +22,7 @@ export default async function DuplicatedMatchRequest({
 					width={21}
 					height={21}
 					style={{ paddingRight: "8px" }}
+					color={"#DAA92F"}
 				/>
 			}
 			title={"Verifique seu e-mail"}

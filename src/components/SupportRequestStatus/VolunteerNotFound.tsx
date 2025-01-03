@@ -37,7 +37,7 @@ export default async function VolunteerNotFound({
 				</>
 			) : (
 				<>
-					Ainda não encontramos uma voluntária próxima a você, mas seguimos
+					Ainda não encontramos uma {volunteerType} próxima a você, mas seguimos
 					buscando diariamente. Avisaremos{" "}
 					<Strong style={{ color: "#565656" }}>
 						por e-mail assim que localizarmos

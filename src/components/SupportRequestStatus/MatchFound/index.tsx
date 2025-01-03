@@ -1,3 +1,5 @@
+"use server";
+
 import Image from "next/image";
 import { Box, Flex, Link, Text } from "@radix-ui/themes";
 
@@ -11,7 +13,7 @@ import { SupportRequestData } from "@/types";
 import { getVolunteerType } from "@/utils";
 import { PropsWithChildren } from "react";
 
-export default function MatchFound({
+export default async function MatchFound({
 	supportRequests,
 }: PropsWithChildren<{
 	supportRequests: SupportRequestData[];
@@ -26,7 +28,10 @@ export default function MatchFound({
 				return <DuplicatedMatchRequest key={supportRequestId} />;
 			case "waiting_for_match":
 				return (
-					<VolunteerNotFound key={supportRequestId} supportType={supportType} />
+					<VolunteerNotFound
+						key={supportRequestId}
+						volunteerType={getVolunteerType(supportType)}
+					/>
 				);
 			default:
 				return <VolunteerCard key={supportRequestId} {...props} />;

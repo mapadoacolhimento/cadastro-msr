@@ -1,16 +1,21 @@
+"use server";
+
 import Image from "next/image";
-import { SupportRequests } from "@prisma/client";
 import { Strong } from "@radix-ui/themes";
 
 import StatusCard from "./StatusCard";
-import { getVolunteerType } from "@/utils";
 
-export default function VolunteerNotFound({
-	supportType,
+export default async function VolunteerNotFound({
+	volunteerType,
+	isManyVolunteers = false,
 }: Readonly<{
-	supportType: SupportRequests["supportType"];
+	volunteerType: string;
+	isManyVolunteers?: boolean;
 }>) {
-	const volunteerType = getVolunteerType(supportType);
+	const title = isManyVolunteers
+		? "Acompanhe seu e-mail"
+		: `Em busca de uma ${volunteerType} para você`;
+
 	return (
 		<StatusCard
 			icon={
@@ -22,15 +27,24 @@ export default function VolunteerNotFound({
 					style={{ paddingRight: "8px" }}
 				/>
 			}
-			title={`Em busca de uma voluntária para você`}
+			title={title}
 		>
-			Você está na fila de espera, e nossa equipe está buscando diariamente
-			voluntárias disponíveis para atendê-la. Assim que localizarmos uma
-			voluntária,{" "}
-			<Strong style={{ color: "#565656" }}>
-				entraremos em contato por e-mail
-			</Strong>
-			.
+			{isManyVolunteers ? (
+				<>
+					Você está na fila de espera, e nossa equipe está buscando diariamente
+					voluntárias disponíveis. Assim que localizarmos as voluntárias,
+					entraremos em contato por e-mail.
+				</>
+			) : (
+				<>
+					Ainda não encontramos uma voluntária próxima a você, mas seguimos
+					buscando diariamente. Avisaremos{" "}
+					<Strong style={{ color: "#565656" }}>
+						por e-mail assim que localizarmos
+					</Strong>{" "}
+					uma {volunteerType} para atendê-la.
+				</>
+			)}
 		</StatusCard>
 	);
 }

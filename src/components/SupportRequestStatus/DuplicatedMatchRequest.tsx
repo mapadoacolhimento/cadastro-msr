@@ -1,9 +1,18 @@
+"use server";
+
 import { PropsWithChildren } from "react";
 import { Strong } from "@radix-ui/themes";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import StatusCard from "./StatusCard";
 
-export default function DuplicatedMatchRequest() {
+export default async function DuplicatedMatchRequest({
+	isManyVolunteers = false,
+}: PropsWithChildren<{
+	isManyVolunteers?: boolean;
+}>) {
+	const volunteer = isManyVolunteers ? "voluntárias" : "voluntária";
+	const shouldAddPlural = isManyVolunteers ? "s" : "";
+
 	return (
 		<StatusCard
 			icon={
@@ -17,10 +26,10 @@ export default function DuplicatedMatchRequest() {
 		>
 			Identificamos que você já solicitou ajuda anteriormente.{" "}
 			<Strong style={{ color: "#565656" }}>
-				O contato da(s) voluntária(s) foi enviado para o seu e-mail.
+				O contato da{shouldAddPlural} {volunteer} foi enviado para o seu e-mail.
 			</Strong>{" "}
 			Em até 3 dias úteis, entraremos em contato com você para entender o que
-			houve e, se necessário, te indicar outra(s) voluntária(s).
+			houve e, se necessário, te indicar outra{shouldAddPlural} {volunteer}.
 		</StatusCard>
 	);
 }

@@ -1,3 +1,5 @@
+"use server";
+
 import Image from "next/image";
 import { Box, Button, Card, Flex, Heading, Link, Text } from "@radix-ui/themes";
 import { EnvelopeClosedIcon, PersonIcon } from "@radix-ui/react-icons";
@@ -6,7 +8,7 @@ import CopyVolunteerInfoButton from "./CopyVolunteerInfoButton";
 import { capitalizeFirst, formatPhoneNumber, getVolunteerType } from "@/utils";
 import { SupportRequestData } from "@/types";
 
-export default function VolunteerCard({
+export default async function VolunteerCard({
 	volunteer,
 	supportType,
 }: SupportRequestData) {
@@ -28,13 +30,11 @@ export default function VolunteerCard({
 
 	const volunteerInfo = [
 		{
-			Icon: () => (
-				<EnvelopeClosedIcon color={"purple"} width={16} height={16} />
-			),
+			Icon: <EnvelopeClosedIcon color={"purple"} width={16} height={16} />,
 			value: email,
 		},
 		{
-			Icon: () => (
+			Icon: (
 				<Image
 					src={"/icons/phone.svg"}
 					alt={"Ícone de telefone"}
@@ -45,7 +45,7 @@ export default function VolunteerCard({
 			value: formatPhoneNumber(phone),
 		},
 		{
-			Icon: () => <PersonIcon color={"purple"} width={16} height={16} />,
+			Icon: <PersonIcon color={"purple"} width={16} height={16} />,
 			value: `${registrationType}: ${registrationNumber}`,
 		},
 	];
@@ -86,7 +86,7 @@ export default function VolunteerCard({
 							key={value}
 						>
 							<Text as={"p"}>
-								<Icon /> {value}
+								{Icon} {value}
 							</Text>
 						</Flex>
 					))}

@@ -5,9 +5,9 @@ import { MatchNotFound, MatchFound } from "@/components/SupportRequestStatus";
 
 export default async function Page({
 	searchParams,
-}: {
+}: Readonly<{
 	searchParams: Promise<{ [key: string]: string | undefined }>;
-}) {
+}>) {
 	const { psychologicalSupportRequestId, legalSupportRequestId } =
 		await searchParams;
 
@@ -15,7 +15,11 @@ export default async function Page({
 		[psychologicalSupportRequestId, legalSupportRequestId].map(
 			async (supportRequestId) => {
 				if (!supportRequestId) return null;
-				return await getSupportRequestData(Number(supportRequestId));
+				try {
+					return await getSupportRequestData(Number(supportRequestId));
+				} catch {
+					return null;
+				}
 			}
 		)
 	);
@@ -33,10 +37,10 @@ export default async function Page({
 
 	return (
 		<>
-			{!hasVolunteer ? (
-				<MatchNotFound supportRequests={validSupportRequests} />
-			) : (
+			{hasVolunteer ? (
 				<MatchFound supportRequests={validSupportRequests} />
+			) : (
+				<MatchNotFound supportRequests={validSupportRequests} />
 			)}
 		</>
 	);

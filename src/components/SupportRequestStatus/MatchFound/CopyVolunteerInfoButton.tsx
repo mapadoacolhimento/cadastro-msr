@@ -24,7 +24,7 @@ export default function CopyVolunteerInfoButton({
 	async function copyVolunteerInformation() {
 		const text = `${capitalizeFirst(volunteerType)}\nNome: ${firstName} ${lastName}\nE-mail: ${email}\nWhatsApp: https://wa.me/55${phone}\n${registrationType}: ${registrationNumber}`;
 		await navigator.clipboard.writeText(text);
-		toast("Informações copiada com sucesso", {
+		toast("Informações copiadas com sucesso", {
 			position: "top-right",
 			autoClose: 5000,
 			hideProgressBar: true,

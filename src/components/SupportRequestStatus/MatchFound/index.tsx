@@ -11,7 +11,7 @@ import DuplicatedMatchRequest from "../DuplicatedMatchRequest";
 import { SupportRequestData } from "@/types";
 import { getVolunteerType } from "@/utils";
 
-export default async function MatchFound({
+export default function MatchFound({
 	supportRequests,
 }: PropsWithChildren<{
 	supportRequests: SupportRequestData[];

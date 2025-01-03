@@ -24,7 +24,7 @@ const getRepeatingStatus = (supportRequests: SupportRequestData[]) => {
 	return null;
 };
 
-export default async function MatchNotFound({
+export default function MatchNotFound({
 	supportRequests,
 }: PropsWithChildren<{
 	supportRequests: SupportRequestData[];

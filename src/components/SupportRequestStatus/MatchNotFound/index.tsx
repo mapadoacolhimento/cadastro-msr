@@ -1,5 +1,4 @@
-"use server";
-
+import { PropsWithChildren } from "react";
 import Image from "next/image";
 import { Box, Flex, Link, Text } from "@radix-ui/themes";
 
@@ -10,7 +9,6 @@ import DuplicatedMatchRequest from "../DuplicatedMatchRequest";
 
 import { SupportRequestData } from "@/types";
 import { getVolunteerType } from "@/utils";
-import { PropsWithChildren } from "react";
 
 const getRepeatingStatus = (supportRequests: SupportRequestData[]) => {
 	const hasOnlyDuplicatedRequests = supportRequests.every(

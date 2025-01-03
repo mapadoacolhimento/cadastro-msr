@@ -1,11 +1,9 @@
-"use server";
-
 import Image from "next/image";
 import { Strong } from "@radix-ui/themes";
 
 import StatusCard from "./StatusCard";
 
-export default async function VolunteerNotFound({
+export default function VolunteerNotFound({
 	volunteerType,
 	isManyVolunteers = false,
 }: Readonly<{

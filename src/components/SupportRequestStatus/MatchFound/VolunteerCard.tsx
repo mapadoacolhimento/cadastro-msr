@@ -1,5 +1,3 @@
-"use server";
-
 import Image from "next/image";
 import { Box, Button, Card, Flex, Heading, Link, Text } from "@radix-ui/themes";
 import { EnvelopeClosedIcon, PersonIcon } from "@radix-ui/react-icons";
@@ -8,7 +6,7 @@ import CopyVolunteerInfoButton from "./CopyVolunteerInfoButton";
 import { capitalizeFirst, formatPhoneNumber, getVolunteerType } from "@/utils";
 import { SupportRequestData } from "@/types";
 
-export default async function VolunteerCard({
+export default function VolunteerCard({
 	volunteer,
 	supportType,
 }: SupportRequestData) {

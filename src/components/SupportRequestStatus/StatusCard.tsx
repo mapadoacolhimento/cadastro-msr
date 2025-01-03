@@ -1,9 +1,7 @@
-"use server";
-
 import { Box, Card, Flex, Text } from "@radix-ui/themes";
 import { PropsWithChildren } from "react";
 
-export default async function StatusCard({
+export default function StatusCard({
 	icon,
 	title,
 	children,

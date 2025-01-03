@@ -80,7 +80,7 @@ describe("<VolunteerCard />", () => {
 		await click(copyBtn);
 
 		expect(await screen.findByRole("alert")).toHaveTextContent(
-			"Informações copiada com sucesso"
+			"Informações copiadas com sucesso"
 		);
 	});
 

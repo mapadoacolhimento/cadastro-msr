@@ -1,11 +1,9 @@
-"use server";
-
 import { PropsWithChildren } from "react";
 import { Strong } from "@radix-ui/themes";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import StatusCard from "./StatusCard";
 
-export default async function DuplicatedMatchRequest({
+export default function DuplicatedMatchRequest({
 	isManyVolunteers = false,
 	volunteerType,
 }: PropsWithChildren<{

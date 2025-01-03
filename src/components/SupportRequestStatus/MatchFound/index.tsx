@@ -22,15 +22,20 @@ export default async function MatchFound({
 
 	function renderSupportRequestStatusCard(props: SupportRequestData) {
 		const { status, supportRequestId, supportType } = props;
-
+		const volunteerType = getVolunteerType(supportType);
 		switch (status) {
 			case "duplicated":
-				return <DuplicatedMatchRequest key={supportRequestId} />;
+				return (
+					<DuplicatedMatchRequest
+						key={supportRequestId}
+						volunteerType={volunteerType}
+					/>
+				);
 			case "waiting_for_match":
 				return (
 					<VolunteerNotFound
 						key={supportRequestId}
-						volunteerType={getVolunteerType(supportType)}
+						volunteerType={volunteerType}
 					/>
 				);
 			default:

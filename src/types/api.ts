@@ -1,4 +1,6 @@
+import { SupportRequests } from "@prisma/client";
+
 export type HandleRequestResponse = {
-	psychological?: Record<string, unknown> | null;
-	legal?: Record<string, unknown> | null;
+	psychological?: Pick<SupportRequests, "supportRequestId">;
+	legal?: Pick<SupportRequests, "supportRequestId">;
 };

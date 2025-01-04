@@ -9,7 +9,7 @@ import { SupportRequestData } from "@/types";
 export default function VolunteerCard({
 	volunteer,
 	supportType,
-}: SupportRequestData) {
+}: Readonly<SupportRequestData>) {
 	if (!volunteer) return null;
 
 	const {

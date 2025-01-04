@@ -80,14 +80,14 @@ export default function MultiStepFormWrapper({
 
 				const data = await onSubmit(values);
 
-				const shouldRedirectToSuccessPage = Object.values(data).find(
-					(support) => support?.status !== "duplicated"
-				);
-				if (!shouldRedirectToSuccessPage) {
-					return router.push("/acolhimento-andamento");
-				}
+				const params = Object.entries(data)
+					.map(
+						([supportType, { supportRequestId }]) =>
+							`${supportType}SupportRequestId=${supportRequestId}`
+					)
+					.join("&");
 
-				return router.push("/cadastro-finalizado");
+				return router.push("/pedido-acolhimento?" + params);
 			}
 
 			await bag.setTouched({});

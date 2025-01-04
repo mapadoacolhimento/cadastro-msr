@@ -42,7 +42,9 @@ export default function MatchFound({
 	}
 
 	const volunteerName =
-		supportRequests.length > 1 ? "duas voluntárias" : "uma " + volunteerType;
+		supportRequests.filter((s) => s.status === "matched").length > 1
+			? "duas voluntárias"
+			: "uma " + volunteerType;
 
 	return (
 		<>

@@ -11,22 +11,6 @@ import { msrPayload } from "@/tests/unit/payloads";
 import { db } from "@/lib";
 import resetDb from "../helpers/reset-db";
 
-const mockMatchLegalOld = {
-	matchId: 3456,
-	supportRequestId: 1,
-	msrZendeskTicketId: LEGAL_ZENDESK_TICKET_ID,
-	supportType: "legal",
-	status: "waiting_contact",
-};
-
-const mockMatchPsychologicalOld = {
-	matchId: 3456,
-	supportRequestId: 1,
-	msrZendeskTicketId: PSYCHOLOGICAL_ZENDESK_TICKET_ID,
-	supportType: "psychological",
-	status: "waiting_contact",
-};
-
 const mockMatchLegalNew = {
 	matchId: 3456,
 	supportRequestId: 1,

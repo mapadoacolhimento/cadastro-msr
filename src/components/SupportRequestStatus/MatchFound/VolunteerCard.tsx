@@ -89,7 +89,7 @@ export default function VolunteerCard({
 						</Flex>
 					))}
 				</Flex>
-				<Flex gap={"3"}>
+				<Flex gap={"3"} direction={{ initial: "column", md: "row" }}>
 					<Button size={"3"} asChild>
 						<Link
 							href={`https://wa.me/55${phone}`}

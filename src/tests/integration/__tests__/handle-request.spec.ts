@@ -74,7 +74,7 @@ describe("/handle-request", async () => {
 			const response = await POST(request);
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: [mockMatchLegalNew],
+				legal: { supportRequestId: mockMatchLegalNew.supportRequestId },
 			});
 		});
 	});
@@ -106,7 +106,9 @@ describe("/handle-request", async () => {
 			const response = await POST(request);
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				psychological: [mockMatchPsychologicalNew],
+				psychological: {
+					supportRequestId: mockMatchPsychologicalNew.supportRequestId,
+				},
 			});
 		});
 	});
@@ -120,7 +122,9 @@ describe("/handle-request", async () => {
 				status: "public_service" as const,
 				zendeskTicketId: PSYCHOLOGICAL_ZENDESK_TICKET_ID as unknown as bigint,
 			};
-			insertSupportRequests([supportRequest]);
+			const newPsySupportRequest = await insertSupportRequests([
+				supportRequest,
+			]);
 
 			const mockPayload = msrPayload({
 				supportType: ["psychological", "legal"],
@@ -138,8 +142,10 @@ describe("/handle-request", async () => {
 
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: [mockMatchLegalNew],
-				psychological: mockMatchPsychologicalOld,
+				legal: { supportRequestId: mockMatchLegalNew.supportRequestId },
+				psychological: {
+					supportRequestId: newPsySupportRequest[0].supportRequestId,
+				},
 			});
 		});
 	});
@@ -154,7 +160,9 @@ describe("/handle-request", async () => {
 				zendeskTicketId: PSYCHOLOGICAL_ZENDESK_TICKET_ID as unknown as bigint,
 				matchStatus: "waiting_contact" as const,
 			};
-			insertSupportRequests([supportRequest]);
+			const newPsySupportRequest = await insertSupportRequests([
+				supportRequest,
+			]);
 
 			const mockPayload = msrPayload({
 				supportType: ["psychological", "legal"],
@@ -175,8 +183,10 @@ describe("/handle-request", async () => {
 
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: [mockMatchLegalNew],
-				psychological: { status: "duplicated" },
+				legal: { supportRequestId: mockMatchLegalNew.supportRequestId },
+				psychological: {
+					supportRequestId: newPsySupportRequest[0].supportRequestId,
+				},
 			});
 			expect(supportRequestUpdated?.status).toStrictEqual("duplicated");
 		});
@@ -192,7 +202,9 @@ describe("/handle-request", async () => {
 				zendeskTicketId: LEGAL_ZENDESK_TICKET_ID as unknown as bigint,
 				matchStatus: "expired" as const,
 			};
-			insertSupportRequests([supportRequest]);
+			const newLegalSupportRequest = await insertSupportRequests([
+				supportRequest,
+			]);
 
 			const mockPayload = msrPayload({
 				supportType: ["psychological", "legal"],
@@ -210,8 +222,10 @@ describe("/handle-request", async () => {
 
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: mockMatchLegalOld,
-				psychological: [mockMatchPsychologicalNew],
+				legal: { supportRequestId: newLegalSupportRequest[0].supportRequestId },
+				psychological: {
+					supportRequestId: mockMatchPsychologicalNew.supportRequestId,
+				},
 			});
 		});
 	});
@@ -247,8 +261,10 @@ describe("/handle-request", async () => {
 
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
-				legal: { status: "duplicated" },
-				psychological: [mockMatchPsychologicalNew],
+				legal: { supportRequestId: supportRequestUpdated?.supportRequestId },
+				psychological: {
+					supportRequestId: mockMatchPsychologicalNew.supportRequestId,
+				},
 			});
 			expect(supportRequestUpdated?.status).toStrictEqual("duplicated");
 		});

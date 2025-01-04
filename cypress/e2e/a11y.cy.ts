@@ -79,7 +79,7 @@ describe("Accessbility", () => {
 		});
 	});
 
-	describe("Acolhimento andamento", () => {
+	describe("Pedido acolhimento", () => {
 		sizes.forEach((size) => {
 			describe(
 				size.name,
@@ -88,27 +88,15 @@ describe("Accessbility", () => {
 					viewportWidth: size.viewportWidth,
 				},
 				() => {
-					it("should pass the accessibility test", () => {
-						cy.visit("/acolhimento-andamento");
+					it("MatchFound -> should pass the accessibility test", () => {
+						cy.visit(
+							"/pedido-acolhimento?psychologicalSupportRequestId=1&legalSupportRequestId=2"
+						);
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
 					});
-				}
-			);
-		});
-	});
-
-	describe("Cadastro finalizado", () => {
-		sizes.forEach((size) => {
-			describe(
-				size.name,
-				{
-					viewportHeight: size.viewportHeight,
-					viewportWidth: size.viewportWidth,
-				},
-				() => {
-					it("should pass the accessibility test", () => {
-						cy.visit("/cadastro-finalizado");
+					it("MatchNotFound -> should pass the accessibility test", () => {
+						cy.visit("/pedido-acolhimento?legalSupportRequestId=2");
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
 					});

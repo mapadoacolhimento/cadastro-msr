@@ -25,28 +25,31 @@ export default async function insertSupportRequests(
 	supportRequests: SupportRequestsInfo[]
 ) {
 	try {
-		const createsSupportRequests = supportRequests.map(
-			async ({ zendeskTicketId, supportType, status, matchStatus }) => {
-				const supportRequest = await db.supportRequests.create({
-					data: {
-						msrId: MSR_ZENDESK_USER_ID,
-						zendeskTicketId: zendeskTicketId,
-						supportType: supportType,
-						priority: null,
-						supportExpertise: null,
-						hasDisability: null,
-						requiresLibras: null,
-						acceptsOnlineSupport: true,
-						lat: -23.55242,
-						lng: -46.65735,
-						city: "SAO PAULO",
-						state: "SP",
-						status: status,
-					},
-				});
+		const res = [];
+		for (let i = 0; supportRequests.length > i; i++) {
+			const { zendeskTicketId, supportType, status, matchStatus } =
+				supportRequests[i];
+			const supportRequest = await db.supportRequests.create({
+				data: {
+					msrId: MSR_ZENDESK_USER_ID,
+					zendeskTicketId: zendeskTicketId,
+					supportType: supportType,
+					priority: null,
+					supportExpertise: null,
+					hasDisability: null,
+					requiresLibras: null,
+					acceptsOnlineSupport: true,
+					lat: -23.55242,
+					lng: -46.65735,
+					city: "SAO PAULO",
+					state: "SP",
+					status: status,
+				},
+			});
 
-				if (!matchStatus) return supportRequest;
+			res.push(supportRequest);
 
+			if (matchStatus) {
 				const volunteer = await db.volunteers.findFirst({
 					where: {
 						zendeskUserId:
@@ -55,7 +58,6 @@ export default async function insertSupportRequests(
 								: THERAPIST_ZENDESK_USER_ID,
 					},
 				});
-
 				await db.matches.create({
 					data: {
 						msrId: MSR_ZENDESK_USER_ID,
@@ -72,16 +74,14 @@ export default async function insertSupportRequests(
 						supportRequestId: supportRequest.supportRequestId,
 					},
 				});
-
-				return supportRequest;
 			}
-		);
-		return Promise.all(createsSupportRequests);
+		}
+
+		return res;
 	} catch (error) {
 		logger.error(
 			`[integration-tests]: Error while creating support requests or matches: ${getErrorMessage(error)}`
 		);
-
 		return [];
 	}
 }

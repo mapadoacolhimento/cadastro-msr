@@ -1,3 +1,4 @@
+import { getSupportRequestData } from "@/lib";
 import { Responsive } from "@radix-ui/themes/props";
 import { type FormikHelpers } from "formik";
 import { type AnyObjectSchema } from "yup";
@@ -15,7 +16,6 @@ export interface StepChildrenProps {
 		alt: string;
 		align?: Responsive<"center" | "start" | "end" | "baseline" | "stretch">;
 		bottom?: string;
-		hideMobile?: boolean;
 	};
 }
 
@@ -55,3 +55,7 @@ export interface Values {
 	propertyOwnership: string;
 	violenceType: string[];
 }
+
+export type SupportRequestData = Awaited<
+	ReturnType<typeof getSupportRequestData>
+>;

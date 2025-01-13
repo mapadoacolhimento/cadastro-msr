@@ -35,3 +35,8 @@ fieldset {
 	color: white;
 	text-decoration: none;
 }
+
+.volunteer-not-found__card.rt-Card:where(.rt-variant-surface) {
+	--card-background-color: var(--yellow-2);
+	--card-border-width: 0;
+}

@@ -4,6 +4,7 @@ import "@/theme/colors/yellow.css";
 import "@/theme/colors/pink.css";
 import "@/theme/colors/gray.css";
 import "@/theme/index.css";
+import "react-toastify/dist/ReactToastify.min.css";
 
 import type { PropsWithChildren } from "react";
 import type { Metadata } from "next";

@@ -25,6 +25,7 @@ export default async function insertSupportRequests(
 	supportRequests: SupportRequestsInfo[]
 ) {
 	try {
+		const res = [];
 		for (let i = 0; supportRequests.length > i; i++) {
 			const { zendeskTicketId, supportType, status, matchStatus } =
 				supportRequests[i];
@@ -45,6 +46,8 @@ export default async function insertSupportRequests(
 					status: status,
 				},
 			});
+
+			res.push(supportRequest);
 
 			if (matchStatus) {
 				const volunteer = await db.volunteers.findFirst({
@@ -73,9 +76,12 @@ export default async function insertSupportRequests(
 				});
 			}
 		}
+
+		return res;
 	} catch (error) {
 		logger.error(
 			`[integration-tests]: Error while creating support requests or matches: ${getErrorMessage(error)}`
 		);
+		return [];
 	}
 }

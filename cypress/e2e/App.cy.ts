@@ -213,12 +213,12 @@ describe("When MSR does not meet the criteria", () => {
 });
 
 describe("Submit the form", () => {
-	it("should redirect to `cadastro-finalizado` when handle-request return both support requests with match status", () => {
+	it("should redirect to `pedido-acolhimeto` with correct url after successfull submit", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {
-				psychological: { status: "waiting_contact" },
-				legal: { status: "waiting_contact" },
+				psychological: { supportRequestId: 1 },
+				legal: { supportRequestId: 2 },
 			},
 		});
 
@@ -227,72 +227,9 @@ describe("Submit the form", () => {
 
 		cy.fillAllSteps(supportTypes);
 
-		cy.url().should("include", "/cadastro-finalizado");
-	});
-
-	it("should redirect to `acolhimento-andamento` when handle-request return the support request with status `duplicated`", () => {
-		cy.intercept("POST", "/handle-request", {
-			statusCode: 200,
-			body: {
-				psychological: { status: "duplicated" },
-			},
-		});
-
-		cy.visit("/");
-		cy.goThroughHomePage();
-
-		cy.fillAllSteps({ psychological: "Acolhimento psicológico" });
-
-		cy.url().should("include", "/acolhimento-andamento");
-	});
-
-	it("should redirect to `cadastro-finalizado` when handle-request return the support request with match status", () => {
-		cy.intercept("POST", "/handle-request", {
-			statusCode: 200,
-			body: {
-				legal: { status: "waiting_contact" },
-			},
-		});
-
-		cy.visit("/");
-		cy.goThroughHomePage();
-
-		cy.fillAllSteps({ legal: "Acolhimento jurídico" });
-
-		cy.url().should("include", "/cadastro-finalizado");
-	});
-
-	it("should redirect to `cadastro-finalizado` when handle-request return at least one support request with match status", () => {
-		cy.intercept("POST", "/handle-request", {
-			statusCode: 200,
-			body: {
-				psychological: { status: "duplicated" },
-				legal: [{ status: "waiting_contact" }],
-			},
-		});
-
-		cy.visit("/");
-		cy.goThroughHomePage();
-
-		cy.fillAllSteps(supportTypes);
-
-		cy.url().should("include", "/cadastro-finalizado");
-	});
-
-	it("should redirect to `acolhimento-andamento` when handle-request return both  support requests with status `duplicated`", () => {
-		cy.intercept("POST", "/handle-request", {
-			statusCode: 200,
-			body: {
-				psychological: { status: "duplicated" },
-				legal: { status: "duplicated" },
-			},
-		});
-
-		cy.visit("/");
-		cy.goThroughHomePage();
-
-		cy.fillAllSteps(supportTypes);
-
-		cy.url().should("include", "/acolhimento-andamento");
+		cy.url().should(
+			"include",
+			"/pedido-acolhimento?psychologicalSupportRequestId=1&legalSupportRequestId=2"
+		);
 	});
 });

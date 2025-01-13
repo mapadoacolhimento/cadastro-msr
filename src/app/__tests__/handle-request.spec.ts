@@ -165,7 +165,9 @@ describe("POST handle-request", () => {
 			const response = await POST(request);
 
 			expect(response.status).toStrictEqual(200);
-			expect(await response.json()).toStrictEqual({ legal: [mockMatchLegal] });
+			expect(await response.json()).toStrictEqual({
+				legal: { supportRequestId: mockMatchLegal.supportRequestId },
+			});
 		});
 
 		it("should call checkMatchEligibility with correct params ", () => {
@@ -298,7 +300,7 @@ describe("POST handle-request", () => {
 					status: "duplicated",
 				},
 				select: {
-					status: true,
+					supportRequestId: true,
 				},
 			});
 		});
@@ -363,8 +365,10 @@ describe("POST handle-request", () => {
 
 			expect(response.status).toEqual(200);
 			expect(await response.json()).toEqual({
-				psychological: [mockMatchPsychological],
-				legal: [mockMatchLegal],
+				psychological: {
+					supportRequestId: mockMatchPsychological.supportRequestId,
+				},
+				legal: { supportRequestId: mockMatchLegal.supportRequestId },
 			});
 		});
 
@@ -500,7 +504,7 @@ describe("POST handle-request", () => {
 			expect(response.status).toEqual(200);
 			expect(await response.json()).toEqual({
 				psychological: { status: "duplicated" },
-				legal: mockMatchLegal,
+				legal: { supportRequestId: mockMatchLegal.supportRequestId },
 			});
 		});
 
@@ -590,7 +594,7 @@ describe("POST handle-request", () => {
 					status: "duplicated",
 				},
 				select: {
-					status: true,
+					supportRequestId: true,
 				},
 			});
 		});

@@ -19,7 +19,6 @@ export default function Page() {
 				<ExtraSupport />
 			</Box>
 			<Illustration
-				isForm={false}
 				align={"end"}
 				img={{
 					src: "/illustrations/woman-self-hug.webp",

@@ -94,5 +94,15 @@ export default function initDB() {
 				dateOfBirth: null,
 			},
 		}),
+		db.cities.create({
+			data: {
+				city_value: "SAO PAULO",
+				city_label: "SÃO PAULO",
+				state: "SP",
+				ibge_code: 123,
+				created_at: new Date().toISOString(),
+				updated_at: new Date().toISOString(),
+			},
+		}),
 	];
 }

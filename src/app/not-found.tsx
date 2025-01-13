@@ -32,7 +32,6 @@ export default function Custom404() {
 				</NextLink>
 			</Flex>
 			<Illustration
-				isForm={false}
 				img={{
 					src: "/illustrations/woman-sitting-down.webp",
 					alt: "Mulher de blusa amarela e calça roxa, sentada de pernas cruzadas com uma almofada de coração roxa",

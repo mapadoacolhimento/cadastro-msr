@@ -35,7 +35,7 @@ const handleDuplicatedSupportRequest = async (
 			status: "duplicated",
 		},
 		select: {
-			status: true,
+			supportRequestId: true,
 		},
 	});
 

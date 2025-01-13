@@ -167,7 +167,9 @@ export async function POST(request: Request) {
 					},
 				});
 
-				response[supportType] = match;
+				response[supportType] = {
+					supportRequestId: supportRequestId ?? match.supportRequestId,
+				};
 			} else {
 				const updatedSupportRequest = await handleDuplicatedSupportRequest(
 					{

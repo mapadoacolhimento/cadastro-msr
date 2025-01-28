@@ -135,6 +135,9 @@ export const statusSupportRequestisAlreadyInQueue = [
 	SupportRequestsStatus.waiting_for_match,
 	SupportRequestsStatus.waiting_for_match_with_priority,
 ];
+export const statusSupportRequestDuplicated = [
+	SupportRequestsStatus.duplicated
+];
 
 export const ZENDESK_SUBDOMAIN = process.env["ZENDESK_SUBDOMAIN"];
 export const ZENDESK_API_USER = `${process.env["ZENDESK_API_USER"]}/token`;

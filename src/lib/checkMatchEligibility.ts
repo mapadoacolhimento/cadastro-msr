@@ -5,6 +5,7 @@ import {
 	statusOnGoingMatch,
 	statusSupportRequestisAlreadyInQueue,
 	statusSupportRequestOngoingSocialWorker,
+	statusSupportRequestDuplicated
 } from "@/lib";
 
 const payloadSchema = Yup.object({
@@ -91,6 +92,7 @@ export default async function checkMatchEligibility(
 	const statusOngoingSupportRequest: string[] = [
 		...statusSupportRequestisAlreadyInQueue,
 		...statusSupportRequestOngoingSocialWorker,
+		...statusSupportRequestDuplicated
 	];
 	const hasOngoingSupport = statusOngoingSupportRequest.includes(
 		supportRequest.status

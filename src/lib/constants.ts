@@ -43,9 +43,40 @@ export const colorOptions = [
 	{ value: Race.white, label: "Branca" },
 ];
 
-export const DISABILITY_OPTIONS = [
+export const HAS_DISABILITY_OPTIONS = [
 	{ value: "yes", label: "Sim" },
 	{ value: "no", label: "Não" },
+];
+
+export const DISABILITY_OPTIONS = [
+	{
+		value: "physical_impairment",
+		label:
+			"Tenho deficiência Física: Limitações motoras que afetam a mobilidade.",
+	},
+	{
+		value: "hearing_impairment",
+		label: "Tenho deficiência Auditiva: Surdez ou perda auditiva.",
+	},
+	{
+		value: "visual_impairment",
+		label: "Tenho deficiência Visual: Cegueira ou baixa visão.",
+	},
+	{
+		value: "intellectual_disability",
+		label:
+			"Tenho deficiência Intelectual: Dificuldades cognitivas que afetam a aprendizagem e o raciocínio.",
+	},
+	{
+		value: "pychosocial_Disability",
+		label:
+			"Tenho deficiência Psíquica: Transtornos mentais que afetam o comportamento e o funcionamento cotidiano.",
+	},
+	{
+		value: "multiple_disability",
+		label:
+			"Tenho deficiência Múltipla: Combinação de duas ou mais deficiências.",
+	},
 ];
 
 export const acceptsOnlineSupportOptions = [

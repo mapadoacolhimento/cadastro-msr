@@ -16,10 +16,10 @@ const diversityInformationSchema = Yup.object({
 	hasDisability: Yup.string()
 		.oneOf(HAS_DISABILITY_OPTIONS.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
-	disability: Yup.string().when("hasDisability", (value, schema) => {
-		return value[0] === "yes"
-			? schema.required("Este campo é obrigatório.")
-			: schema.notRequired();
+	disability: Yup.string().when("hasDisability", {
+		is: "yes",
+		then: (schema) => schema.required("Selecione qual deficiência você tem."),
+		otherwise: (schema) => schema.notRequired(),
 	}),
 	terms: Yup.boolean().oneOf(
 		[true],
@@ -27,22 +27,15 @@ const diversityInformationSchema = Yup.object({
 	),
 });
 
-export default function DiversityInformation() {
+function DiversityInformationFields() {
 	const [selectedhasDisabilityOption, setSelectedhasDisabilityOption] =
-		useState("");
+		useState<string>("");
 	function handlehasDisabilityChange(option: string) {
 		setSelectedhasDisabilityOption(option);
 	}
 
 	return (
-		<Step
-			validationSchema={diversityInformationSchema}
-			title={"Seus dados"}
-			img={{
-				src: "/illustrations/woman-floating.webp",
-				alt: "Ilustração com uma mulher flutuando.",
-			}}
-		>
+		<>
 			<Box pt={"3"}>
 				<SelectInput
 					name="color"
@@ -83,6 +76,21 @@ export default function DiversityInformation() {
 					. Você pode cancelar o recebimento desses e-mails a qualquer momento.
 				</CheckboxInput>
 			</Box>
+		</>
+	);
+}
+
+export default function DiversityInformation() {
+	return (
+		<Step
+			validationSchema={diversityInformationSchema}
+			title={"Seus dados"}
+			img={{
+				src: "/illustrations/woman-floating.webp",
+				alt: "Ilustração com uma mulher flutuando.",
+			}}
+		>
+			<DiversityInformationFields />
 		</Step>
 	);
 }

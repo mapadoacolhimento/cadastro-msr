@@ -118,4 +118,27 @@ describe("<DiversityInformation />", () => {
 		});
 		expect(disabilityInput).not.toBeInTheDocument();
 	});
+
+	it("should render error if disability is empty", async () => {
+		setup();
+		const hasDisabilityInput = screen.getByRole("combobox", {
+			name: "Você é PcD (Pessoa com deficiência)?",
+		});
+
+		await userEvent.click(hasDisabilityInput);
+		await userEvent.click(await screen.findByRole("option", { name: "Sim" }));
+
+		const disabilityInput = screen.getByRole("combobox", {
+			name: "Qual deficiência você tem?",
+		});
+		expect(disabilityInput).toBeInTheDocument();
+
+		const btn = screen.getByRole("button", { name: /enviar/i });
+		await userEvent.click(btn);
+
+		const errors = await screen.findAllByRole("alert");
+		expect(
+			errors.find((error) => error.textContent === "Esse campo é obrigatório.")
+		).toBeDefined();
+	});
 });

@@ -5,7 +5,8 @@
 	"phone": "81999999999",
 	"dateOfBirth": "18111996",
 	"colorOption": "Indígena",
-	"hasDisability": "Sim",
+	"hasDisability": "Não",
+	"disability": "visual_impairment",
 	"gender": "Eu sou uma mulher cis",
 	"acceptOnlineSupport": {
 		"yes": "Sim, aceito ser atendida online",

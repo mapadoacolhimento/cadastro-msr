@@ -16,11 +16,13 @@ const diversityInformationSchema = Yup.object({
 	hasDisability: Yup.string()
 		.oneOf(HAS_DISABILITY_OPTIONS.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
-	disability: Yup.string().when("hasDisability", {
-		is: "yes",
-		then: (schema) => schema.required("Selecione qual deficiência você tem."),
-		otherwise: (schema) => schema.notRequired(),
-	}),
+	disability: Yup.string()
+		.nullable()
+		.when("hasDisability", {
+			is: "yes",
+			then: (schema) => schema.required("Selecione qual deficiência você tem."),
+			otherwise: (schema) => schema.notRequired(),
+		}),
 	terms: Yup.boolean().oneOf(
 		[true],
 		"Você precisar aceitar os termos para receber atendimento."

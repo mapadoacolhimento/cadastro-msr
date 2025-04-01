@@ -7,7 +7,7 @@ import { SelectInput } from "../..";
 import {
 	colorOptions,
 	HAS_DISABILITY_OPTIONS,
-	DISABILITY_OPTIONS,
+	disabilityOptions,
 } from "@/constants";
 import { useState } from "react";
 
@@ -17,6 +17,7 @@ const diversityInformationSchema = Yup.object({
 		.oneOf(HAS_DISABILITY_OPTIONS.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
 	disability: Yup.string()
+		.oneOf(disabilityOptions.map((v) => v.value))
 		.nullable()
 		.when("hasDisability", {
 			is: "yes",
@@ -56,7 +57,7 @@ function DiversityInformationFields() {
 			{selectedhasDisabilityOption === "yes" && (
 				<SelectInput
 					name="disability"
-					options={DISABILITY_OPTIONS}
+					options={disabilityOptions}
 					label={"Qual deficiência você tem?"}
 					placeholder="Qual deficiência você tem?"
 				/>

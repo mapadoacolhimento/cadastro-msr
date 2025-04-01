@@ -48,7 +48,7 @@ export const HAS_DISABILITY_OPTIONS = [
 	{ value: "no", label: "Não" },
 ];
 
-export const DISABILITY_OPTIONS = [
+export const disabilityOptions = [
 	{
 		value: "physical_impairment",
 		label:
@@ -68,7 +68,7 @@ export const DISABILITY_OPTIONS = [
 			"Tenho deficiência Intelectual: Dificuldades cognitivas que afetam a aprendizagem e o raciocínio.",
 	},
 	{
-		value: "pychosocial_Disability",
+		value: "pychosocial_disability",
 		label:
 			"Tenho deficiência Psíquica: Transtornos mentais que afetam o comportamento e o funcionamento cotidiano.",
 	},

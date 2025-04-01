@@ -49,4 +49,5 @@ model MsrRegisterData {
 	familyProvider       String?
 	propertyOwnership    String?
   violenceType         String[]
+  disability           String?
 }

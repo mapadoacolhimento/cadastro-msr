@@ -26,7 +26,8 @@ const mockIncompleteMSRRegisterData = {
 const mockMsrData = {
 	...mockMsrIncompleteData,
 	color: "white",
-	hasDisability: "no",
+	hasDisability: "yes",
+	disability: "hearing_impairment",
 	acceptsOnlineSupport: "yes",
 	terms: "yes",
 	zipcode: "41950-150",
@@ -65,7 +66,7 @@ describe("POST /upsert-msr-register-data", () => {
 		});
 	});
 
-	it("should update  new msrRegisterFormData", async () => {
+	it("should update msrRegisterFormData", async () => {
 		mockedMongodb.msrRegisterData.upsert.mockResolvedValueOnce(
 			mockMSRRegisterData
 		);

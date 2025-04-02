@@ -2,11 +2,11 @@ import userData from "../fixtures/userData.json";
 
 const {
 	gender,
-	genderViolence,
 	externalSupport,
 	violenceLocation,
 	supportTypes,
 	dateOfBirth,
+	disability,
 } = userData;
 
 describe("Happy path", () => {
@@ -226,6 +226,26 @@ describe("Submit the form", () => {
 		cy.goThroughHomePage();
 
 		cy.fillAllSteps(supportTypes);
+
+		cy.url().should(
+			"include",
+			"/pedido-acolhimento?psychologicalSupportRequestId=1&legalSupportRequestId=2"
+		);
+	});
+
+	it("should fill disability option and redirect to `pedido-acolhimeto` with correct url after successfull submit", () => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: { supportRequestId: 1 },
+				legal: { supportRequestId: 2 },
+			},
+		});
+
+		cy.visit("/");
+		cy.goThroughHomePage();
+
+		cy.fillAllSteps(supportTypes, disability);
 
 		cy.url().should(
 			"include",

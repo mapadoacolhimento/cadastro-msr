@@ -10,6 +10,8 @@ import {
 	disabilityOptions,
 } from "@/constants";
 import { useState } from "react";
+import { useFormikContext } from "formik";
+import { Values } from "@/types";
 
 const diversityInformationSchema = Yup.object({
 	color: Yup.string().required("Selecione sua cor."),
@@ -31,8 +33,9 @@ const diversityInformationSchema = Yup.object({
 });
 
 function DiversityInformationFields() {
+	const { values } = useFormikContext<Values>();
 	const [selectedhasDisabilityOption, setSelectedhasDisabilityOption] =
-		useState<string>("");
+		useState<string>(values.hasDisability);
 	function handlehasDisabilityChange(option: string) {
 		setSelectedhasDisabilityOption(option);
 	}

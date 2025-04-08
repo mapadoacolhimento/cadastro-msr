@@ -99,7 +99,7 @@ function CriteriaBox() {
 			<ul style={{ margin: 0, padding: 0 }}>
 				{criteria.map(({ icon: { alt, src }, text }, i) => (
 					<Flex
-						key={`criteria-${i}`}
+						key={`criteria-${i + 1}-${src}`}
 						align={"center"}
 						gap={"4"}
 						py={"4"}

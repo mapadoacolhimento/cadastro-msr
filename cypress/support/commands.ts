@@ -5,11 +5,9 @@ import "@testing-library/cypress/add-commands";
 import {
 	firstName,
 	phone,
-	hasDisability,
 	acceptOnlineSupport,
 	colorOption,
 	gender,
-	genderViolence,
 	externalSupport,
 	violenceLocation,
 	dateOfBirth,
@@ -39,16 +37,28 @@ Cypress.Commands.add("fillBasicRegisterInformationStep", (msrEmail) => {
 	cy.get("#phone").type(phone);
 });
 
-Cypress.Commands.add("fillDiversityInformationStep", () => {
+Cypress.Commands.add("fillDiversityInformationStep", (disability) => {
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.findByRole("combobox", {
 		name: "Cor",
 	}).click();
 	cy.contains(colorOption).should("be.visible").click();
-	cy.findByRole("combobox", {
-		name: "Você é PcD (Pessoa com deficiência)?",
-	}).type(`${hasDisability}{enter}`);
-	cy.findByRole("checkbox").click();
+
+	if (disability) {
+		cy.findByRole("combobox", {
+			name: "Você é PcD (Pessoa com deficiência)?",
+		}).type(`Sim{enter}`);
+
+		cy.findByRole("combobox", {
+			name: "Qual deficiência você tem?",
+		}).type(`${disability}{enter}`);
+		cy.findByRole("checkbox").click();
+	} else {
+		cy.findByRole("combobox", {
+			name: "Você é PcD (Pessoa com deficiência)?",
+		}).type(`Não{enter}`);
+		cy.findByRole("checkbox").click();
+	}
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {
@@ -240,40 +250,43 @@ Cypress.Commands.add("fillViolenceTypeStep", () => {
 	});
 });
 
-Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
-	cy.fillGenderIdentityStep(gender);
-	cy.findByRole("button", { name: "Continuar" }).click();
+Cypress.Commands.add(
+	"fillAllSteps",
+	(supportTypes: Record<string, string>, disability?: string) => {
+		cy.fillGenderIdentityStep(gender);
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillDateOfBirthStep(dateOfBirth);
-	cy.findByRole("button", { name: "Continuar" }).click();
+		cy.fillDateOfBirthStep(dateOfBirth);
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceTypeStep();
-	cy.findByRole("button", { name: "Continuar" }).click();
+		cy.fillViolenceTypeStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceLocationStep(violenceLocation);
-	cy.findByRole("button", { name: "Continuar" }).click();
+		cy.fillViolenceLocationStep(violenceLocation);
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillExternalSupportStep(externalSupport);
-	cy.findByRole("button", { name: "Continuar" }).click();
+		cy.fillExternalSupportStep(externalSupport);
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillFinancialBlock();
-	cy.findByRole("button", { name: "Continuar" }).click();
+		cy.fillFinancialBlock();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.goThroughBeginRegistrationStep();
-	cy.findByRole("button", { name: "Iniciar cadastro" }).click();
+		cy.goThroughBeginRegistrationStep();
+		cy.findByRole("button", { name: "Iniciar cadastro" }).click();
 
-	cy.fillSupportTypeStep(supportTypes);
-	cy.findByRole("button", { name: "Continuar" }).click();
+		cy.fillSupportTypeStep(supportTypes);
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillBasicRegisterInformationStep();
-	cy.findByRole("button", { name: "Continuar" }).click();
+		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillGeolocationStep();
+		cy.fillGeolocationStep();
 
-	cy.findByRole("button", { name: "Continuar" }).click();
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillDiversityInformationStep();
-	cy.findByRole("button", { name: "Enviar" }).click();
-});
+		cy.fillDiversityInformationStep(disability);
+		cy.findByRole("button", { name: "Enviar" }).click();
+	}
+);
 
 export {};

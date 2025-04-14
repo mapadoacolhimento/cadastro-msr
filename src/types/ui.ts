@@ -33,6 +33,7 @@ export interface Values {
 	dateOfBirth: string;
 	color: string;
 	hasDisability: string;
+	disability: string | null;
 	acceptsOnlineSupport: string;
 	supportType: string[];
 	gender: string;

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, renderHook } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import DiversityInformation from "../DiversityInformation";
@@ -6,7 +6,7 @@ import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import { sleep } from "@/utils";
 import { type Values } from "@/types";
 
-const setup = () => {
+const setup = (props?: any) => {
 	return render(
 		<MultiStepFormWrapper
 			onSubmit={async (values) =>
@@ -19,6 +19,7 @@ const setup = () => {
 					terms: false,
 				} as Values
 			}
+			{...props}
 		>
 			{DiversityInformation()}
 		</MultiStepFormWrapper>
@@ -62,7 +63,7 @@ describe("<DiversityInformation />", () => {
 		).toBeDefined();
 	});
 
-	it("should render error if disability is empty", async () => {
+	it("should render error if hasdisability is empty", async () => {
 		setup();
 		const btn = screen.getByRole("button", { name: /enviar/i });
 		await userEvent.click(btn);
@@ -86,5 +87,35 @@ describe("<DiversityInformation />", () => {
 					"Você precisar aceitar os termos para receber atendimento."
 			)
 		).toBeDefined();
+	});
+
+	it("should render disability field when hasDisability field is select 'Sim'", async () => {
+		setup();
+		const hasDisabilityInput = screen.getByRole("combobox", {
+			name: "Você é PcD (Pessoa com deficiência)?",
+		});
+
+		await userEvent.click(hasDisabilityInput);
+		await userEvent.click(await screen.findByRole("option", { name: "Sim" }));
+
+		const disabilityInput = screen.getByRole("combobox", {
+			name: "Qual deficiência você tem?",
+		});
+		expect(disabilityInput).toBeInTheDocument();
+	});
+
+	it("should  NOT render disability field when hasDisability field is select 'Não'", async () => {
+		setup();
+		const hasDisabilityInput = screen.getByRole("combobox", {
+			name: "Você é PcD (Pessoa com deficiência)?",
+		});
+
+		await userEvent.click(hasDisabilityInput);
+		await userEvent.click(await screen.findByRole("option", { name: "Não" }));
+
+		const disabilityInput = screen.queryByRole("combobox", {
+			name: "Qual deficiência você tem?",
+		});
+		expect(disabilityInput).not.toBeInTheDocument();
 	});
 });

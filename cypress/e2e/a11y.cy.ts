@@ -352,6 +352,12 @@ describe("Accessbility", () => {
 
 						cy.contains("Você é PcD (Pessoa com deficiência)?").should("exist");
 
+						cy.findByRole("combobox", {
+							name: "Você é PcD (Pessoa com deficiência)?",
+						}).type(`Sim{enter}`);
+
+						cy.contains("Qual deficiência você tem?").should("exist");
+
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
 					});

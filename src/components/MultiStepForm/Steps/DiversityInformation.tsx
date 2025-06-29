@@ -4,29 +4,44 @@ import { Box, Link, Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import CheckboxInput from "../../CheckboxInput";
 import { SelectInput } from "../..";
-import { colorOptions, DISABILITY_OPTIONS } from "@/constants";
+import {
+	colorOptions,
+	HAS_DISABILITY_OPTIONS,
+	disabilityOptions,
+} from "@/constants";
+import { useState } from "react";
+import { useFormikContext } from "formik";
+import { Values } from "@/types";
 
 const diversityInformationSchema = Yup.object({
 	color: Yup.string().required("Selecione sua cor."),
 	hasDisability: Yup.string()
-		.oneOf(DISABILITY_OPTIONS.map((a) => a.value))
+		.oneOf(HAS_DISABILITY_OPTIONS.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
+	disability: Yup.string()
+		.oneOf(disabilityOptions.map((v) => v.value))
+		.nullable()
+		.when("hasDisability", {
+			is: "yes",
+			then: (schema) => schema.required("Selecione qual deficiência você tem."),
+			otherwise: (schema) => schema.notRequired(),
+		}),
 	terms: Yup.boolean().oneOf(
 		[true],
 		"Você precisar aceitar os termos para receber atendimento."
 	),
 });
 
-export default function DiversityInformation() {
+function DiversityInformationFields() {
+	const { values } = useFormikContext<Values>();
+	const [selectedhasDisabilityOption, setSelectedhasDisabilityOption] =
+		useState<string>(values.hasDisability);
+	function handlehasDisabilityChange(option: string) {
+		setSelectedhasDisabilityOption(option);
+	}
+
 	return (
-		<Step
-			validationSchema={diversityInformationSchema}
-			title={"Seus dados"}
-			img={{
-				src: "/illustrations/woman-floating.webp",
-				alt: "Ilustração com uma mulher flutuando.",
-			}}
-		>
+		<>
 			<Box pt={"3"}>
 				<SelectInput
 					name="color"
@@ -37,10 +52,19 @@ export default function DiversityInformation() {
 			</Box>
 			<SelectInput
 				name="hasDisability"
-				options={DISABILITY_OPTIONS}
+				options={HAS_DISABILITY_OPTIONS}
 				label={"Você é PcD (Pessoa com deficiência)?"}
 				placeholder="Você é PcD (Pessoa com deficiência)?"
+				onChange={handlehasDisabilityChange}
 			/>
+			{selectedhasDisabilityOption === "yes" && (
+				<SelectInput
+					name="disability"
+					options={disabilityOptions}
+					label={"Qual deficiência você tem?"}
+					placeholder="Qual deficiência você tem?"
+				/>
+			)}
 			<Box pt={"6"}>
 				<CheckboxInput name="terms">
 					Ao inserir seus dados, você concorda em ter seus dados compartilhados
@@ -58,6 +82,21 @@ export default function DiversityInformation() {
 					. Você pode cancelar o recebimento desses e-mails a qualquer momento.
 				</CheckboxInput>
 			</Box>
+		</>
+	);
+}
+
+export default function DiversityInformation() {
+	return (
+		<Step
+			validationSchema={diversityInformationSchema}
+			title={"Seus dados"}
+			img={{
+				src: "/illustrations/woman-floating.webp",
+				alt: "Ilustração com uma mulher flutuando.",
+			}}
+		>
+			<DiversityInformationFields />
 		</Step>
 	);
 }

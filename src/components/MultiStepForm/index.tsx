@@ -48,6 +48,7 @@ export default function MultiStepForm() {
 				dateOfBirth: "",
 				color: "",
 				hasDisability: "",
+				disability: "",
 				acceptsOnlineSupport: "yes",
 				supportType: [],
 				gender: "",

@@ -13,6 +13,7 @@ import {
 	monthlyIncomeRangeOptions,
 	propertyOwnershipOptions,
 	violenceTypeOptions,
+	disabilityOptions,
 } from "@/lib";
 import { getErrorMessage } from "@/utils";
 
@@ -59,6 +60,7 @@ const payloadSchema = Yup.object({
 			.oneOf(violenceTypeOptions.map((v) => v.value))
 			.required()
 	),
+	disability: Yup.string().oneOf(disabilityOptions.map((v) => v.value)),
 }).required();
 
 export async function POST(request: NextRequest) {

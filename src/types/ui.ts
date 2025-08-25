@@ -48,7 +48,7 @@ export interface Values {
 	lat: number | null;
 	lng: number | null;
 	monthlyIncome: string;
-	monthlyIncomeRange: number;
+	monthlyIncomeRange: number | null;
 	employmentStatus: string;
 	dependants: string;
 	familyProvider: string;

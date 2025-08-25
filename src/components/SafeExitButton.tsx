@@ -10,8 +10,12 @@ const SafeExitButton = () => (
 	<Flex
 		display={{ initial: "none", md: "flex" }}
 		justify={"end"}
-		mt={"7"}
-		mr={"6"}
+		style={{
+			position: "fixed",
+			top: "80px",
+			right: "24px",
+			zIndex: 1000,
+		}}
 	>
 		<Flex asChild justify={"center"}>
 			<Button

@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
 import mockedMongodb from "@/tests/unit/mongodb";
 import { POST } from "../db/upsert-msr-register-data/route";
+import { monthlyIncomeRangeOptions } from "@/lib";
 
 const mockMsrIncompleteData = {
 	gender: "cis_woman",
@@ -11,6 +12,7 @@ const mockMsrIncompleteData = {
 	violenceLocation: "yes",
 	externalSupport: ["no"],
 	financialNeed: "yes",
+	monthlyIncomeRange: null,
 	SupportType: ["legal"],
 	email: "msr@email.br",
 	confirmEmail: "msr@email.br",
@@ -65,7 +67,7 @@ describe("POST /upsert-msr-register-data", () => {
 		});
 	});
 
-	it("should update  new msrRegisterFormData", async () => {
+	it("should update new msrRegisterFormData", async () => {
 		mockedMongodb.msrRegisterData.upsert.mockResolvedValueOnce(
 			mockMSRRegisterData
 		);

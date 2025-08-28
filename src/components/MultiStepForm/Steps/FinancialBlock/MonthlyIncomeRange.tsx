@@ -7,7 +7,7 @@ import { monthlyIncomeRangeOptions } from "@/constants";
 
 const monthlyIncomeRangeSchema = Yup.object({
 	monthlyIncomeRange: Yup.number()
-		.min(0.5, "Esse campo é obrigatório.")
+		.min(0, "Esse campo é obrigatório.")
 		.max(5, "Valor inválido")
 		.required("Esse campo é obrigatório."),
 });

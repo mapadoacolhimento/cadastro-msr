@@ -14,7 +14,8 @@ const propertyOwnershipSchema = Yup.object({
 
 export default function PropertyOwnership() {
 	async function handleSubmit(values: Values) {
-		const isPaidMoreThanThreeMinWages = values.monthlyIncomeRange > 3;
+		const isPaidMoreThanThreeMinWages =
+			values.monthlyIncomeRange !== null && values.monthlyIncomeRange > 3;
 		const hasProperty = values.propertyOwnership === "yes";
 		const hasAccessToIncome = values.monthlyIncome === "yes";
 

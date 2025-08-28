@@ -43,9 +43,9 @@ const payloadSchema = Yup.object({
 		Yup.string().oneOf(Object.values(SupportType)).required()
 	),
 	monthlyIncome: Yup.string().oneOf(monthlyIncomeOptions.map((o) => o.value)),
-	monthlyIncomeRange: Yup.number().oneOf(
-		monthlyIncomeRangeOptions.map((o) => o.value)
-	),
+	monthlyIncomeRange: Yup.number()
+		.oneOf(monthlyIncomeRangeOptions.map((o) => o.value))
+		.nullable(),
 	employmentStatus: Yup.string().oneOf(
 		employmentStatusOptions.map((o) => o.value)
 	),

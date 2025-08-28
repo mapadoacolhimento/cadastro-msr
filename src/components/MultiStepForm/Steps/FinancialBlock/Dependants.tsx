@@ -14,7 +14,8 @@ const dependantsSchema = Yup.object({
 
 export default function Dependants() {
 	async function handleSubmit(values: Values) {
-		const isPaidMoreThanThreeMinWages = values.monthlyIncomeRange > 3;
+		const isPaidMoreThanThreeMinWages =
+			values.monthlyIncomeRange !== null && values.monthlyIncomeRange > 3;
 		const hasAccessToIncome = values.monthlyIncome === "yes";
 		const hasNoDependants = values.dependants === "no";
 

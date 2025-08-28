@@ -43,11 +43,11 @@ model MsrRegisterData {
   createdAt            DateTime      @default(now())
   updatedAt            DateTime      @default(now())
   monthlyIncome        String?
-	monthlyIncomeRange   Int?
-	employmentStatus     String?
-	dependants           String?
-	familyProvider       String?
-	propertyOwnership    String?
+  monthlyIncomeRange   Float?
+  employmentStatus     String?
+  dependants           String?
+  familyProvider       String?
+  propertyOwnership    String?
   violenceType         String[]
   disability           String?
 }

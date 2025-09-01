@@ -14,7 +14,8 @@ const familyProviderSchema = Yup.object({
 
 export default function FamilyProvider() {
 	async function handleSubmit(values: Values) {
-		const isPaidMoreThanThreeMinWages = values.monthlyIncomeRange > 3;
+		const isPaidMoreThanThreeMinWages =
+			values.monthlyIncomeRange !== null && values.monthlyIncomeRange > 3;
 		const isNotHeadOfTheFamily = values.familyProvider === "no";
 		const hasAccessToIncome = values.monthlyIncome === "yes";
 

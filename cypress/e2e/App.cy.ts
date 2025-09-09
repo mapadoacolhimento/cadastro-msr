@@ -33,6 +33,9 @@ describe("Happy path", () => {
 				cy.fillDateOfBirthStep(dateOfBirth);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
+				cy.fillViolenceLocationStep(violenceLocation);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
 				cy.fillViolenceTypeStep();
 				cy.findByRole("button", {
 					name: "Voltar para o passo anterior",
@@ -65,6 +68,9 @@ describe("Happy path", () => {
 				cy.findByRole("button", { name: "Continuar" }).click();
 
 				cy.fillDateOfBirthStep(dateOfBirth);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceLocationStep(violenceLocation);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
 				cy.fillViolenceTypeStep();
@@ -118,11 +124,11 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
 		cy.fillViolenceLocationStep("Não, aconteceu em outro país");
 		cy.findByRole("button", { name: "Continuar" }).click();
+
+		//cy.fillViolenceTypeStep();
+		//cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
 		cy.checkForaCriteriosPage();
@@ -137,10 +143,10 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceTypeStep();
+		cy.fillViolenceLocationStep(violenceLocation);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceLocationStep(violenceLocation);
+		cy.fillViolenceTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep([
@@ -162,10 +168,10 @@ describe("When MSR does not meet the criteria", () => {
 			cy.fillDateOfBirthStep(dateOfBirth);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillViolenceTypeStep();
+			cy.fillViolenceLocationStep(violenceLocation);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillViolenceLocationStep(violenceLocation);
+			cy.fillViolenceTypeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillExternalSupportStep(externalSupport);

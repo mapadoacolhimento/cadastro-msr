@@ -135,36 +135,39 @@ describe("Accessbility", () => {
 						cy.checkA11y(null, null, terminalLog);
 					});
 
-					it("should pass the accessibility test on Violence Type step", () => {
-						cy.visit("/cadastro");
-
-						cy.fillGenderIdentityStep(gender);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillDateOfBirthStep(dateOfBirth);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.contains(
-							"Quais tipos de violência você sofreu ou está sofrendo?"
-						).should("exist");
-
-						cy.injectAxe();
-						cy.checkA11y(null, null, terminalLog);
-					});
-
 					it("should pass the accessibility test on Violence Location step", () => {
 						cy.visit("/cadastro");
 
+						it("should pass the accessibility test on Violence Type step", () => {
+							cy.visit("/cadastro");
+
+							cy.fillGenderIdentityStep(gender);
+							cy.findByRole("button", { name: "Continuar" }).click();
+
+							cy.fillDateOfBirthStep(dateOfBirth);
+							cy.findByRole("button", { name: "Continuar" }).click();
+
+							cy.findByRole("heading", { name: "Sobre a violência" }).should(
+								"exist"
+							);
+							cy.contains("A violência ocorreu no Brasil?").should(
+								"be.visible"
+							);
+
+							cy.injectAxe();
+							cy.checkA11y(null, null, terminalLog);
+						});
+
 						cy.fillGenderIdentityStep(gender);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillDateOfBirthStep(dateOfBirth);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceTypeStep();
-						cy.findByRole("button", { name: "Continuar" }).click();
-
 						cy.contains("A violência ocorreu no Brasil?").should("exist");
+
+						//cy.fillViolenceTypeStep();
+						//cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
@@ -179,10 +182,10 @@ describe("Accessbility", () => {
 						cy.fillDateOfBirthStep(dateOfBirth);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceTypeStep();
+						cy.fillViolenceLocationStep(violenceLocation);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceLocationStep(violenceLocation);
+						cy.fillViolenceTypeStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.contains(
@@ -202,10 +205,10 @@ describe("Accessbility", () => {
 						cy.fillDateOfBirthStep(dateOfBirth);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceTypeStep();
+						cy.fillViolenceLocationStep(violenceLocation);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceLocationStep(violenceLocation);
+						cy.fillViolenceTypeStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillExternalSupportStep(externalSupport);
@@ -229,10 +232,10 @@ describe("Accessbility", () => {
 						cy.fillDateOfBirthStep(dateOfBirth);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceTypeStep();
+						cy.fillViolenceLocationStep(violenceLocation);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceLocationStep(violenceLocation);
+						cy.fillViolenceTypeStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillExternalSupportStep(externalSupport);
@@ -260,10 +263,10 @@ describe("Accessbility", () => {
 						cy.fillDateOfBirthStep(dateOfBirth);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceTypeStep();
+						cy.fillViolenceLocationStep(violenceLocation);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceLocationStep(violenceLocation);
+						cy.fillViolenceTypeStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillExternalSupportStep(externalSupport);
@@ -292,10 +295,10 @@ describe("Accessbility", () => {
 						cy.fillDateOfBirthStep(dateOfBirth);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceTypeStep();
+						cy.fillViolenceLocationStep(violenceLocation);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceLocationStep(violenceLocation);
+						cy.fillViolenceTypeStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillExternalSupportStep(externalSupport);
@@ -327,10 +330,10 @@ describe("Accessbility", () => {
 						cy.fillDateOfBirthStep(dateOfBirth);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceTypeStep();
+						cy.fillViolenceLocationStep(violenceLocation);
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.fillViolenceLocationStep(violenceLocation);
+						cy.fillViolenceTypeStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillExternalSupportStep(externalSupport);
@@ -365,10 +368,10 @@ describe("Accessbility", () => {
 							cy.fillDateOfBirthStep(dateOfBirth);
 							cy.findByRole("button", { name: "Continuar" }).click();
 
-							cy.fillViolenceTypeStep();
+							cy.fillViolenceLocationStep(violenceLocation);
 							cy.findByRole("button", { name: "Continuar" }).click();
 
-							cy.fillViolenceLocationStep(violenceLocation);
+							cy.fillViolenceTypeStep();
 							cy.findByRole("button", { name: "Continuar" }).click();
 
 							cy.fillExternalSupportStep(externalSupport);

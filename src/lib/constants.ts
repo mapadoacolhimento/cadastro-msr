@@ -222,6 +222,10 @@ export const propertyOwnershipOptions = [
 
 export const violenceTypeOptions = [
 	{
+		value: "noViolence",
+		name: "Não sofro ou sofri violência",
+	},
+	{
 		value: "physicalViolence",
 		name: "Violência física",
 		description: "Ex: tapas, empurrões, socos",

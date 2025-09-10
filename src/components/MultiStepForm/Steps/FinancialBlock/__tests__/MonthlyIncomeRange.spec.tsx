@@ -16,7 +16,7 @@ const setup = () => {
 			}
 			initialValues={
 				{
-					monthlyIncomeRange: 0,
+					monthlyIncomeRange: null,
 				} as Values
 			}
 		>

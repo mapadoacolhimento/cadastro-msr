@@ -56,7 +56,7 @@ export default function MultiStepForm() {
 				externalSupport: [],
 				financialNeed: "",
 				monthlyIncome: "",
-				monthlyIncomeRange: 0,
+				monthlyIncomeRange: null,
 				employmentStatus: "",
 				dependants: "",
 				familyProvider: "",

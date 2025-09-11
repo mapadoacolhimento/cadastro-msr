@@ -119,7 +119,9 @@ export default function CheckboxGroupInput({
 												<Text>{option.description}</Text>
 											) : null}
 										</Flex>
-										{actionButton && renderDialogContent ? (
+										{actionButton &&
+										renderDialogContent &&
+										option.value !== "noViolence" ? (
 											<AlertDialog.Root>
 												<AlertDialog.Trigger>
 													{actionButton}

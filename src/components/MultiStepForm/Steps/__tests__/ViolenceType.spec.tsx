@@ -32,7 +32,7 @@ describe("<ViolenceType />", () => {
 
 		violenceTypeOptions.forEach((option) => {
 			const roleOptionElement = screen.getByRole("checkbox", {
-				name: `${option.name} ${option.description} Saiba mais sobre essa violência.`,
+				name: new RegExp(option.name, "i"),
 			});
 			expect(roleOptionElement).toBeInTheDocument();
 		});
@@ -50,4 +50,16 @@ describe("<ViolenceType />", () => {
 			"Selecione um ou mais tipos de violência"
 		);
 	});
+});
+
+it("renders info buttons only for options with descriptions", () => {
+	setup();
+
+	const expectedButtons = violenceTypeOptions.filter(
+		(o) => o.value !== "noViolence"
+	).length;
+	const infoButtons = screen.getAllByRole("button", {
+		name: /saiba mais sobre essa violência/i,
+	});
+	expect(infoButtons).toHaveLength(expectedButtons);
 });

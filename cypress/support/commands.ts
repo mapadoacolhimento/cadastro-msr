@@ -223,6 +223,16 @@ Cypress.Commands.add("fillFinancialBlock", () => {
 	cy.fillPropertyOwnershipStep();
 });
 
+Cypress.Commands.add("fillNoViolenceStep", () => {
+	cy.contains("Quais tipos de violência você sofreu ou está sofrendo?").should(
+		"be.visible"
+	);
+
+	cy.findByRole("checkbox", { name: /não sofro ou sofri violência/i }).click({
+		force: true,
+	});
+});
+
 Cypress.Commands.add("fillViolenceTypeStep", () => {
 	cy.contains("Quais tipos de violência você sofreu ou está sofrendo?").should(
 		"be.visible"

@@ -33,5 +33,6 @@ declare namespace Cypress {
 		fillFamilyProviderStep(isProvider?: boolean): Chainable<any>;
 		fillPropertyOwnershipStep(hasProperty?: boolean): Chainable<any>;
 		fillViolenceTypeStep(): Chainable<any>;
+		fillNoViolenceStep(): Chainable<any>;
 	}
 }

@@ -35,12 +35,7 @@ export default function DiversityInformation() {
 					placeholder="Cor"
 				/>
 			</Box>
-			<SelectInput
-				name="hasDisability"
-				options={DISABILITY_OPTIONS}
-				label={"Você é PcD (Pessoa com deficiência)?"}
-				placeholder="Você é PcD (Pessoa com deficiência)?"
-			/>
+
 			<Box pt={"6"}>
 				<CheckboxInput name="terms">
 					Ao inserir seus dados, você concorda em ter seus dados compartilhados

@@ -223,7 +223,7 @@ Cypress.Commands.add("fillFinancialBlock", () => {
 	cy.fillPropertyOwnershipStep();
 });
 
-Cypress.Commands.add("fillNoViolenceStep", () => {
+Cypress.Commands.add("fillNoViolenceTypeStep", () => {
 	cy.contains("Quais tipos de violência você sofreu ou está sofrendo?").should(
 		"be.visible"
 	);

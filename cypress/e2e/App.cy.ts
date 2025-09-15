@@ -137,7 +137,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillnoViolenceTypeStep();
+		cy.fillNoViolenceTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");

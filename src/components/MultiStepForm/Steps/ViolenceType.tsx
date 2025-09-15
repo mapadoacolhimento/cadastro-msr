@@ -62,15 +62,16 @@ function renderDialogContent({
 	);
 }
 
-export default function ViolenceType() {
-	async function handleSubmit(values: Values) {
-		const noViolence = values.violenceType.includes("noViolence");
-		if (noViolence) {
-			return {
-				redirectTo: "/fora-criterios",
-			};
-		}
+export async function handleSubmit(values: Values) {
+	const noViolence = values.violenceType.includes("noViolence");
+	if (noViolence) {
+		return {
+			redirectTo: "/fora-criterios",
+		};
 	}
+}
+
+export default function ViolenceType() {
 	return (
 		<Step
 			validationSchema={violenceTypeSchema}

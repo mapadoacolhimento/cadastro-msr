@@ -1,9 +1,9 @@
 import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
 import ViolenceType from "../ViolenceType";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
+import { useRouter } from "next/navigation";
 
 import { sleep } from "@/utils";
 import { violenceTypeOptions } from "@/constants";
@@ -50,6 +50,25 @@ describe("<ViolenceType />", () => {
 			"Selecione um ou mais tipos de violência"
 		);
 	});
+});
+
+it("should redirect to `fora-criterios` if MSR is not suffering violence", async () => {
+	const pushMock = vi.fn();
+	useRouter.mockReturnValue({
+		push: pushMock,
+	});
+
+	setup();
+
+	const noViolenceOpt = screen.getByRole("checkbox", {
+		name: "Não sofro ou sofri violência",
+	});
+	await userEvent.click(noViolenceOpt);
+
+	const btn = screen.getByRole("button", { name: /enviar/i });
+	await userEvent.click(btn);
+
+	expect(pushMock).toHaveBeenCalledWith("/fora-criterios");
 });
 
 it("renders info buttons only for options with descriptions", () => {

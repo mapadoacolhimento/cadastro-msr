@@ -222,10 +222,6 @@ export const propertyOwnershipOptions = [
 
 export const violenceTypeOptions = [
 	{
-		value: "noViolence",
-		name: "Não sofro ou sofri violência",
-	},
-	{
 		value: "physicalViolence",
 		name: "Violência física",
 		description: "Ex: tapas, empurrões, socos",
@@ -242,7 +238,7 @@ export const violenceTypeOptions = [
 	{
 		value: "sexualViolence",
 		name: "Violência sexual",
-		description: "Ex: abuso sexual, coerção, assédio",
+		description: "Ex: abuso sexual, assédio, importunação",
 		fullDescription:
 			"Impedir o uso de métodos contraceptivos ou forçar a abortar; impedir você de usar preservativo, se negar a usar preservativo durante a relação sexual com você; forçar ao matrimônio, gravidez ou prostituição por meio de coação, chantagem, suborno ou manipulação; limitar ou anular o exercício dos seus direitos sexuais e/ou reprodutivos; forçar à alguma prática sexual na intenção de corrigir sua orientação sexual; exigir práticas sexuais que você não gosta ou se sente desconfortável; em seu ambiente de trabalho, ser forçada à alguma conduta que gerou constrangimento e/ou violou sua liberdade sexual (essa opção vale para condutas de natureza sexual manifestadas fisicamente, ou por palavras, ou gestos ou outros meios no ambiente de trabalho).",
 	},
@@ -280,5 +276,9 @@ export const violenceTypeOptions = [
 		description: "Ex: restrição de direitos políticos",
 		fullDescription:
 			"Ação ou omissão com a finalidade de impedir, criar obstáculos ou restringir seus direitos políticos por ser mulher; sofrer distinção, exclusão ou restrição no reconhecimento, gozo ou exercício dos seus direitos e liberdades políticas fundamentais, em virtude do gênero.",
+	},
+	{
+		value: "noViolence",
+		name: "Não estou sofrendo violência/Não sofri violência",
 	},
 ];

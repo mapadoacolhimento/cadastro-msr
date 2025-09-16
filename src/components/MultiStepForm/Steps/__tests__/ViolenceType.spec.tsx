@@ -61,7 +61,7 @@ it("should redirect to `fora-criterios` if MSR is not suffering violence", async
 	setup();
 
 	const noViolenceOpt = screen.getByRole("checkbox", {
-		name: "Não sofro ou sofri violência",
+		name: "Não estou sofrendo violência/Não sofri violência",
 	});
 	await userEvent.click(noViolenceOpt);
 

@@ -228,7 +228,9 @@ Cypress.Commands.add("fillNoViolenceTypeStep", () => {
 		"be.visible"
 	);
 
-	cy.findByRole("checkbox", { name: /não sofro ou sofri violência/i }).click({
+	cy.findByRole("checkbox", {
+		name: /Não estou sofrendo violência|Não sofri violência/i,
+	}).click({
 		force: true,
 	});
 });

@@ -108,10 +108,16 @@ export default function CheckboxGroupInput({
 											align={"start"}
 											justify={"center"}
 										>
-											<Text color="purple" highContrast weight="medium">
+											<Text
+												highContrast={!!option.description}
+												color={option.description ? "purple" : undefined}
+												weight={option.description ? "medium" : undefined}
+											>
 												{option.name}
 											</Text>
-											{option.description && <Text>{option.description}</Text>}
+											{option.description ? (
+												<Text>{option.description}</Text>
+											) : null}
 										</Flex>
 										{actionButton &&
 										renderDialogContent &&

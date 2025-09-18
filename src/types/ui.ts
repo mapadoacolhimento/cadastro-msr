@@ -32,7 +32,6 @@ export interface Values {
 	phone: string;
 	dateOfBirth: string;
 	color: string;
-	hasDisability: string;
 	acceptsOnlineSupport: string;
 	supportType: string[];
 	gender: string;

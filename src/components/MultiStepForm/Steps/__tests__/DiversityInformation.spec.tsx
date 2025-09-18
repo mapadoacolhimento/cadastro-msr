@@ -15,7 +15,6 @@ const setup = () => {
 			initialValues={
 				{
 					color: "",
-					hasDisability: "",
 					terms: false,
 				} as Values
 			}

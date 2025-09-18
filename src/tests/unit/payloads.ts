@@ -20,7 +20,6 @@ export function msrPayload(
 		status: "registered",
 		dateOfBirth: new Date("1994-09-31").toISOString(),
 		gender: "not_found",
-		hasDisability: false,
 		acceptsOnlineSupport: true,
 		lat: -12.995,
 		lng: -38.504,

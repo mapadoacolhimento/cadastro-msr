@@ -43,11 +43,6 @@ export const colorOptions = [
 	{ value: Race.white, label: "Branca" },
 ];
 
-export const DISABILITY_OPTIONS = [
-	{ value: "yes", label: "Sim" },
-	{ value: "no", label: "Não" },
-];
-
 export const acceptsOnlineSupportOptions = [
 	{ value: "yes", name: "Sim, aceito ser atendida online" },
 	{
@@ -136,7 +131,7 @@ export const statusSupportRequestisAlreadyInQueue = [
 	SupportRequestsStatus.waiting_for_match_with_priority,
 ];
 export const statusSupportRequestDuplicated = [
-	SupportRequestsStatus.duplicated
+	SupportRequestsStatus.duplicated,
 ];
 
 export const ZENDESK_SUBDOMAIN = process.env["ZENDESK_SUBDOMAIN"];
@@ -177,7 +172,7 @@ export const monthlyIncomeOptions = [
 ];
 
 export const monthlyIncomeRangeOptions = [
-	{ value: 0, name: "Não possuo renda"},
+	{ value: 0, name: "Não possuo renda" },
 	{ value: 0.5, name: "Até meio salário mínimo (R$660,00)" },
 	{ value: 1, name: "Até um salário mínimo (R$1.320,00)" },
 	{ value: 2, name: "Até dois salários mínimos (R$2.640,00)" },

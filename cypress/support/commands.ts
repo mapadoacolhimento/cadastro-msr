@@ -5,7 +5,6 @@ import "@testing-library/cypress/add-commands";
 import {
 	firstName,
 	phone,
-	hasDisability,
 	acceptOnlineSupport,
 	colorOption,
 	gender,

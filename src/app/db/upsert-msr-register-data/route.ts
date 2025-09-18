@@ -31,7 +31,6 @@ const payloadSchema = Yup.object({
 	lng: Yup.number().nullable(),
 	zipcode: Yup.string(),
 	dateOfBirth: Yup.string(),
-	hasDisability: Yup.string(),
 	acceptsOnlineSupport: Yup.string(),
 	genderViolence: Yup.string(),
 	violenceLocation: Yup.string(),

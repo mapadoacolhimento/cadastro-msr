@@ -280,5 +280,6 @@ export const violenceTypeOptions = [
 	{
 		value: "noViolence",
 		name: "Não estou sofrendo violência/Não sofri violência",
+		description: "    ",
 	},
 ];

@@ -136,7 +136,7 @@ export const statusSupportRequestisAlreadyInQueue = [
 	SupportRequestsStatus.waiting_for_match_with_priority,
 ];
 export const statusSupportRequestDuplicated = [
-	SupportRequestsStatus.duplicated
+	SupportRequestsStatus.duplicated,
 ];
 
 export const ZENDESK_SUBDOMAIN = process.env["ZENDESK_SUBDOMAIN"];
@@ -177,7 +177,7 @@ export const monthlyIncomeOptions = [
 ];
 
 export const monthlyIncomeRangeOptions = [
-	{ value: 0, name: "Não possuo renda"},
+	{ value: 0, name: "Não possuo renda" },
 	{ value: 0.5, name: "Até meio salário mínimo (R$660,00)" },
 	{ value: 1, name: "Até um salário mínimo (R$1.320,00)" },
 	{ value: 2, name: "Até dois salários mínimos (R$2.640,00)" },
@@ -243,7 +243,7 @@ export const violenceTypeOptions = [
 	{
 		value: "sexualViolence",
 		name: "Violência sexual",
-		description: "Ex: abuso sexual, coerção, assédio",
+		description: "Ex: abuso sexual, assédio, importunação",
 		fullDescription:
 			"Impedir o uso de métodos contraceptivos ou forçar a abortar; impedir você de usar preservativo, se negar a usar preservativo durante a relação sexual com você; forçar ao matrimônio, gravidez ou prostituição por meio de coação, chantagem, suborno ou manipulação; limitar ou anular o exercício dos seus direitos sexuais e/ou reprodutivos; forçar à alguma prática sexual na intenção de corrigir sua orientação sexual; exigir práticas sexuais que você não gosta ou se sente desconfortável; em seu ambiente de trabalho, ser forçada à alguma conduta que gerou constrangimento e/ou violou sua liberdade sexual (essa opção vale para condutas de natureza sexual manifestadas fisicamente, ou por palavras, ou gestos ou outros meios no ambiente de trabalho).",
 	},
@@ -281,5 +281,10 @@ export const violenceTypeOptions = [
 		description: "Ex: restrição de direitos políticos",
 		fullDescription:
 			"Ação ou omissão com a finalidade de impedir, criar obstáculos ou restringir seus direitos políticos por ser mulher; sofrer distinção, exclusão ou restrição no reconhecimento, gozo ou exercício dos seus direitos e liberdades políticas fundamentais, em virtude do gênero.",
+	},
+	{
+		value: "noViolence",
+		name: "Não estou sofrendo violência/Não sofri violência",
+		description: "    ",
 	},
 ];

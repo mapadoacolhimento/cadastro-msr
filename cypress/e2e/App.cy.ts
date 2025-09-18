@@ -128,6 +128,22 @@ describe("When MSR does not meet the criteria", () => {
 		cy.checkForaCriteriosPage();
 	});
 
+	it("should redirect to `fora-criterios` page if MSR selects that did not suffer violence", () => {
+		cy.visit("/cadastro");
+
+		cy.fillGenderIdentityStep(gender);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDateOfBirthStep(dateOfBirth);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillNoViolenceTypeStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.url().should("include", "/fora-criterios");
+		cy.checkForaCriteriosPage();
+	});
+
 	it("should redirect to `fora-criterios` page if MSR signals they have psychological and legal external help", () => {
 		cy.visit("/cadastro");
 

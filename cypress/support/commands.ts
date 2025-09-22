@@ -44,6 +44,8 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 		name: "Cor",
 	}).click();
 	cy.contains(colorOption).should("be.visible").click();
+	//don't remove the next line, it's the 'accept' checkbox
+	cy.findByRole("checkbox").click();
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {

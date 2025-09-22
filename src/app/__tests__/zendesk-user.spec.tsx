@@ -70,7 +70,7 @@ describe("POST /zendesk/user", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: has is a required field"
+			"Validation error: supportType is a required field"
 		);
 	});
 

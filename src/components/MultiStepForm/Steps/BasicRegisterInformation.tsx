@@ -25,6 +25,13 @@ const basicRegisterInformationSchema = Yup.object({
 			"Insira um número de telefone válido com DDD."
 		)
 		.required("Insira seu número de telefone celular."),
+	confirmPhone: Yup.string()
+		.matches(
+			/^\(\d{2}\)\s\d{4,5}-\d{4}$/,
+			"Insira um número de telefone válido com DDD."
+		)
+		.oneOf([Yup.ref("phone")], "Os números precisam ser iguais.")
+		.required("Esse campo é obrigatório."),
 });
 
 function BasicRegisterInformationFields() {
@@ -81,6 +88,12 @@ function BasicRegisterInformationFields() {
 				label="Whatsapp"
 				placeholder="Qual o seu whatsapp (com DDD)?"
 				mask="(99) 99999-9999"
+			/>
+			<TextInput
+				name="confirmPhone"
+				type="tel"
+				label="Confirme seu Whatsapp"
+				placeholder="Confirme seu Whatsapp com DDD"
 			/>
 		</>
 	);

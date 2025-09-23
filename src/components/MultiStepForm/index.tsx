@@ -45,6 +45,7 @@ export default function MultiStepForm() {
 				firstName: "",
 				confirmEmail: "",
 				phone: "",
+				confirmPhone: "",
 				dateOfBirth: "",
 				color: "",
 				hasDisability: null,

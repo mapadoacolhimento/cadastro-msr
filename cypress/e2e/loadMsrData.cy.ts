@@ -21,8 +21,8 @@ const mockValues = {
 	email: email,
 	confirmEmail: email,
 	firstName: "Msr",
-	phone: "81999999999",
-	confirmPhone: "81999999999",
+	phone: "(81) 99999-9999",
+	confirmPhone: "(81) 99999-9999",
 	color: "",
 	hasDisability: "",
 	acceptsOnlineSupport: "yes",
@@ -71,7 +71,12 @@ it("should fill addres information in the fields in the following step after loa
 	cy.fillSupportTypeStep(supportTypes);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillBasicRegisterInformationStep(email, phone);
+	cy.fillBasicRegisterInformationStep(email);
+	cy.findByLabelText("Whatsapp").should("have.value", "(81) 99999-9999");
+	cy.findByLabelText("Confirme seu Whatsapp").should(
+		"have.value",
+		"(81) 99999-9999"
+	);
 
 	cy.wait("@getMsrRegisterData");
 

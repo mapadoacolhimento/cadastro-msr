@@ -71,14 +71,16 @@ it("should fill addres information in the fields in the following step after loa
 	cy.fillSupportTypeStep(supportTypes);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillBasicRegisterInformationStep(email);
+	cy.fillBasicRegisterInformationStep(email, phone);
+
+	cy.wait("@getMsrRegisterData");
+
 	cy.findByLabelText("Whatsapp").should("have.value", "(81) 99999-9999");
+
 	cy.findByLabelText("Confirme seu Whatsapp").should(
 		"have.value",
 		"(81) 99999-9999"
 	);
-
-	cy.wait("@getMsrRegisterData");
 
 	cy.findByRole("button", { name: "Continuar" }).click();
 

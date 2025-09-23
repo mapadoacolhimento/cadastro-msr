@@ -30,15 +30,20 @@ Cypress.Commands.add("fillDateOfBirthStep", (dateOfBirth) => {
 	cy.findByRole("textbox").should("be.visible").type(dateOfBirth);
 });
 
-Cypress.Commands.add("fillBasicRegisterInformationStep", (msrEmail) => {
-	const email = msrEmail ?? generateTestEmail();
-	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
-	cy.get("#firstName").type(firstName);
-	cy.get("#email").type(email);
-	cy.get("#confirmEmail").type(email);
-	cy.get("#phone").type(phone);
-	cy.get("#confirmPhone").type(phone);
-});
+Cypress.Commands.add(
+	"fillBasicRegisterInformationStep",
+	(msrEmail, msrPhone) => {
+		const email = msrEmail ?? generateTestEmail();
+		const phone = msrPhone ?? generateTestPhone();
+
+		cy.findByRole("heading", { name: "Seus dados" }).should("exist");
+		cy.get("#firstName").type(firstName);
+		cy.get("#email").type(email);
+		cy.get("#confirmEmail").type(email);
+		cy.get("#phone").type(phone);
+		cy.get("#confirmPhone").type(phone);
+	}
+);
 
 Cypress.Commands.add("fillDiversityInformationStep", () => {
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");

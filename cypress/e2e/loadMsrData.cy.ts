@@ -21,6 +21,7 @@ const mockValues = {
 	confirmEmail: email,
 	firstName: "Msr",
 	phone: "81999999999",
+	confirmPhone: "81999999999",
 	color: "",
 	hasDisability: "",
 	acceptsOnlineSupport: "yes",

@@ -37,6 +37,7 @@ Cypress.Commands.add("fillBasicRegisterInformationStep", (msrEmail) => {
 	cy.get("#email").type(email);
 	cy.get("#confirmEmail").type(email);
 	cy.get("#phone").type(phone);
+	cy.get("#confirmPhone").type(phone);
 });
 
 Cypress.Commands.add("fillDiversityInformationStep", () => {

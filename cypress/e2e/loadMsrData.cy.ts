@@ -1,5 +1,6 @@
 import {
 	email,
+	phone,
 	gender,
 	genderViolence,
 	externalSupport,
@@ -70,7 +71,7 @@ it("should fill addres information in the fields in the following step after loa
 	cy.fillSupportTypeStep(supportTypes);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillBasicRegisterInformationStep(email);
+	cy.fillBasicRegisterInformationStep(email, phone);
 
 	cy.wait("@getMsrRegisterData");
 

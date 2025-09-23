@@ -94,6 +94,7 @@ function BasicRegisterInformationFields() {
 				type="tel"
 				label="Confirme seu Whatsapp"
 				placeholder="Confirme seu Whatsapp com DDD"
+				mask="(99) 99999-9999"
 			/>
 		</>
 	);

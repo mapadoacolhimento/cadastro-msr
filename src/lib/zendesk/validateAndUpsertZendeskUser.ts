@@ -20,7 +20,6 @@ const payloadSchema = Yup.object({
 	supportType: Yup.array()
 		.of(Yup.string().oneOf(Object.values(SupportType)).required())
 		.required(),
-	hasDisability: Yup.boolean().required(),
 }).required();
 
 function getColor(color: Race) {
@@ -64,7 +63,6 @@ export default async function validateAndUpsertZendeskUser(
 			whatsapp: `https://wa.me/55${payload.phone}`,
 			date_of_birth: payload.dateOfBirth.split("T")[0],
 			tipo_de_acolhimento: getZendeskSupportType(payload.supportType),
-			hasDisability: payload.hasDisability,
 		},
 	};
 

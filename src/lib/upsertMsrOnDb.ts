@@ -16,7 +16,6 @@ const payloadSchema = Yup.object({
 	status: Yup.string().oneOf(Object.values(MSRStatus)).required(),
 	dateOfBirth: Yup.string().datetime().required().nullable(),
 	gender: Yup.string().oneOf(Object.values(Gender)).required(),
-	hasDisability: Yup.boolean().required().nullable(),
 	acceptsOnlineSupport: Yup.boolean().required(),
 }).required();
 
@@ -28,8 +27,6 @@ export default async function upsertMsrOnDb(
 	const msr = {
 		gender: payload.gender,
 		raceColor: payload.color,
-		hasDisability:
-			typeof payload.hasDisability === "boolean" ? payload.hasDisability : null,
 		acceptsOnlineSupport: payload.acceptsOnlineSupport
 			? payload.acceptsOnlineSupport
 			: true,

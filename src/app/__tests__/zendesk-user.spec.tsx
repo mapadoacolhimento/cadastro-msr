@@ -20,7 +20,6 @@ const mockPayload = {
 	zipcode: "40210245",
 	dateOfBirth: new Date(mockedDateOfBirth).toISOString(),
 	supportType: ["legal", "psychological"],
-	hasDisability: true,
 };
 
 const mockPayloadUpdate = {
@@ -44,7 +43,6 @@ const mockUser = {
 		whatsapp: `https://wa.me/55${mockPayload.phone}`,
 		date_of_birth: mockedDateOfBirth,
 		tipo_de_acolhimento: "psicológico_e_jurídico",
-		hasDisability: true,
 	},
 };
 
@@ -72,7 +70,7 @@ describe("POST /zendesk/user", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: hasDisability is a required field"
+			"Validation error: supportType is a required field"
 		);
 	});
 

@@ -36,7 +36,6 @@ export default async function insertSupportRequests(
 					supportType: supportType,
 					priority: null,
 					supportExpertise: null,
-					hasDisability: null,
 					requiresLibras: null,
 					acceptsOnlineSupport: true,
 					lat: -23.55242,

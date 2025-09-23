@@ -5,7 +5,6 @@ import "@testing-library/cypress/add-commands";
 import {
 	firstName,
 	phone,
-	hasDisability,
 	acceptOnlineSupport,
 	colorOption,
 	gender,
@@ -45,9 +44,7 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 		name: "Cor",
 	}).click();
 	cy.contains(colorOption).should("be.visible").click();
-	cy.findByRole("combobox", {
-		name: "Você é PcD (Pessoa com deficiência)?",
-	}).type(`${hasDisability}{enter}`);
+	//don't remove the next line, it's the 'accept' checkbox
 	cy.findByRole("checkbox").click();
 });
 

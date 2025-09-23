@@ -19,7 +19,7 @@ import {
 	city,
 } from "../fixtures/userData.json";
 
-import { generateTestEmail } from "../../src/utils";
+import { generateTestEmail, generateTestPhone } from "../../src/utils";
 
 Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();

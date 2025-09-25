@@ -76,6 +76,7 @@ export default function initDB() {
 				msrId: MSR_ZENDESK_USER_ID,
 				gender: "cis_woman",
 				raceColor: "black",
+				hasDisability: null,
 				acceptsOnlineSupport: true,
 				neighborhood: "Barra funda",
 				city: "SAO PAULO",

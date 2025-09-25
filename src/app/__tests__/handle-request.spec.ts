@@ -107,6 +107,7 @@ const bodyComposeLegal = {
 	status: "open",
 	supportExpertise: null,
 	priority: null,
+	hasDisability: mockPayloadLegal.hasDisability,
 	requiresLibras: null,
 	acceptsOnlineSupport: mockPayloadLegal.acceptsOnlineSupport,
 	lat: mockPayloadLegal.lat,

@@ -34,6 +34,7 @@ const payloadSchema = Yup.object({
 	lng: Yup.number().required().nullable(),
 	zipcode: Yup.string().min(8).max(9).required(),
 	dateOfBirth: Yup.string().datetime().required(),
+	hasDisability: Yup.boolean().required(),
 	acceptsOnlineSupport: Yup.boolean().required(),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
@@ -64,7 +65,13 @@ type CreateMatch = {
 	msr: Pick<MSRPiiSec, "firstName"> &
 		Pick<
 			SupportRequests,
-			"lat" | "lng" | "msrId" | "city" | "state" | "acceptsOnlineSupport"
+			| "lat"
+			| "lng"
+			| "msrId"
+			| "city"
+			| "state"
+			| "hasDisability"
+			| "acceptsOnlineSupport"
 		>;
 	supportRequestId: SupportRequests["supportRequestId"] | null;
 	zendeskTicketId: SupportRequests["zendeskTicketId"] | null;
@@ -109,6 +116,7 @@ const handleCreateMatch = async ({
 		status: "open" as const,
 		supportExpertise: null,
 		priority: null,
+		hasDisability: msr.hasDisability,
 		requiresLibras: null,
 		acceptsOnlineSupport: msr.acceptsOnlineSupport,
 		lat: msr.lat,

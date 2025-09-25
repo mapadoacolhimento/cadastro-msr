@@ -24,6 +24,7 @@ model MsrRegisterData {
   phone                String?
   dateOfBirth          String?
   color                String?
+  hasDisability        String?
   acceptsOnlineSupport String?
   supportType          SupportType[]
   gender               String?
@@ -48,4 +49,5 @@ model MsrRegisterData {
   familyProvider       String?
   propertyOwnership    String?
   violenceType         String[]
+  disability           String?
 }

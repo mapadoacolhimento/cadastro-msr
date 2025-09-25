@@ -28,6 +28,7 @@ const mockIncompleteMSRRegisterData = {
 const mockMsrData = {
 	...mockMsrIncompleteData,
 	color: "white",
+	hasDisability: "no",
 	acceptsOnlineSupport: "yes",
 	terms: "yes",
 	zipcode: "41950-150",

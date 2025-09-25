@@ -10,6 +10,7 @@ const mockPayload = msrPayload();
 
 const mockPayload2 = msrPayload({
 	gender: "cis_woman",
+	hasDisability: false,
 });
 
 const mockIncompletePayload = {
@@ -24,6 +25,7 @@ const mockIncompletePayload = {
 	color: "black",
 	gender: "cis_woman",
 	status: "registered",
+	hasDisability: null,
 	acceptsOnlineSupport: false,
 };
 
@@ -37,6 +39,7 @@ const mockMsr = {
 	raceColor: mockPayload.color as Race,
 	gender: "cis_woman" as Gender,
 	status: mockPayload.status as MSRStatus,
+	hasDisability: false,
 	acceptsOnlineSupport: true,
 	createdAt: new Date(),
 	updatedAt: new Date(),
@@ -51,6 +54,7 @@ const mockMsr2 = {
 	raceColor: mockPayload2.color as Race,
 	gender: mockPayload2.gender as Gender,
 	status: mockPayload2.status as MSRStatus,
+	hasDisability: mockPayload2.hasDisability,
 	acceptsOnlineSupport: mockPayload2.acceptsOnlineSupport,
 	createdAt: new Date(),
 	updatedAt: new Date(),

@@ -15,6 +15,7 @@ const setup = () => {
 			initialValues={
 				{
 					color: "",
+					hasDisability: "",
 					terms: false,
 				} as Values
 			}
@@ -29,9 +30,13 @@ describe("<DiversityInformation />", () => {
 		setup();
 
 		const colorInput = screen.getByRole("combobox", { name: "Cor" });
+		const disabilityInput = screen.getByRole("combobox", {
+			name: "Você é PcD (Pessoa com deficiência)?",
+		});
 		const termsCheckbox = screen.getByRole("checkbox");
 
 		expect(colorInput).toBeInTheDocument();
+		expect(disabilityInput).toBeInTheDocument();
 		expect(termsCheckbox).toBeInTheDocument();
 	});
 
@@ -43,7 +48,7 @@ describe("<DiversityInformation />", () => {
 
 		await screen.findAllByRole("alert");
 
-		expect(screen.getAllByRole("alert")).toHaveLength(2);
+		expect(screen.getAllByRole("alert")).toHaveLength(3);
 	});
 
 	it("should render error if color is empty", async () => {
@@ -54,6 +59,17 @@ describe("<DiversityInformation />", () => {
 		const errors = await screen.findAllByRole("alert");
 		expect(
 			errors.find((error) => error.textContent === "Selecione sua cor.")
+		).toBeDefined();
+	});
+
+	it("should render error if disability is empty", async () => {
+		setup();
+		const btn = screen.getByRole("button", { name: /enviar/i });
+		await userEvent.click(btn);
+
+		const errors = await screen.findAllByRole("alert");
+		expect(
+			errors.find((error) => error.textContent === "Esse campo é obrigatório.")
 		).toBeDefined();
 	});
 

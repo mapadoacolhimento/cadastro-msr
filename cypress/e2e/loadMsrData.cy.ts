@@ -22,6 +22,7 @@ const mockValues = {
 	firstName: "Msr",
 	phone: "81999999999",
 	color: "",
+	hasDisability: "",
 	acceptsOnlineSupport: "yes",
 	terms: "yes",
 	zipcode: "12345678",

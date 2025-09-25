@@ -227,6 +227,7 @@ model MSRs {
   msrId                BigInt    @id @default(autoincrement()) @map("msr_id")
   gender               Gender
   raceColor            Race      @map("race_color")
+  hasDisability        Boolean?  @map("has_disability")
   acceptsOnlineSupport Boolean?  @map("accepts_online_support")
   zipcode              String    @db.VarChar(9)
   neighborhood         String    @db.VarChar(100)
@@ -280,6 +281,7 @@ model SupportRequests {
   supportType                 SupportType                   @map("support_type")
   supportExpertise            String?                       @map("support_expertise")
   priority                    Int?
+  hasDisability               Boolean?                      @map("has_disability")
   requiresLibras              Boolean?                      @map("requires_libras")
   acceptsOnlineSupport        Boolean                       @map("accepts_online_support")
   lat                         Decimal?                      @db.Decimal(10, 4)
@@ -504,6 +506,7 @@ model Mutipliers {
   race                                Race
   sexuality                           Sexuality
   religion                            Religion
+  hasDisability                       Boolean                              @map("has_disability")
   disabilityType                      String[]                             @default([]) @map("disability_type")
   hasInternetAccess                   Boolean                              @map("has_internet_access")
   isAvailable                         Boolean                              @map("is_available")

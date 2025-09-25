@@ -5,6 +5,7 @@ import { Values } from "@/types";
 describe("formatRegisterFormValues", () => {
 	it("should format register form values correctly", () => {
 		const values = {
+			hasDisability: "yes",
 			acceptsOnlineSupport: "no",
 			email: "JohnDoe@example.com",
 			firstName: "john",
@@ -16,6 +17,7 @@ describe("formatRegisterFormValues", () => {
 		} as Values;
 
 		const expected = {
+			hasDisability: true,
 			acceptsOnlineSupport: false,
 			email: "johndoe@example.com",
 			firstName: "John",

@@ -213,7 +213,7 @@ describe("When MSR does not meet the criteria", () => {
 });
 
 describe("Submit the form", () => {
-	it("should redirect to `pedido-acolhimento` with correct url after successfull submit", () => {
+	it("should redirect to `pedido-acolhimeto` with correct url after successfull submit", () => {
 		cy.intercept("POST", "/handle-request", {
 			statusCode: 200,
 			body: {

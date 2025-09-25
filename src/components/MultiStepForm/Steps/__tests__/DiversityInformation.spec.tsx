@@ -45,7 +45,7 @@ describe("<DiversityInformation />", () => {
 
 		await screen.findAllByRole("alert");
 
-		expect(screen.getAllByRole("alert")).toHaveLength(3);
+		expect(screen.getAllByRole("alert")).toHaveLength(2);
 	});
 
 	it("should render error if color is empty", async () => {

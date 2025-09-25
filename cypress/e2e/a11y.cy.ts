@@ -350,7 +350,7 @@ describe("Accessbility", () => {
 						cy.fillGeolocationStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.contains("Você é PcD (Pessoa com deficiência)?").should("exist");
+						cy.contains("Selecione sua cor.").should("exist");
 
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);

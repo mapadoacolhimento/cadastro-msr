@@ -73,8 +73,8 @@ export default function MultiStepForm() {
 		>
 			{GenderIdentity()}
 			{DateOfBirth()}
-			{ViolenceType()}
 			{ViolenceLocation()}
+			{ViolenceType()}
 			{ExternalSupport()}
 			{FinancialBlock()}
 			{BeginRegistration()}

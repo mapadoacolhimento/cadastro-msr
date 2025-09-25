@@ -4,7 +4,7 @@ import { Box, Link, Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import CheckboxInput from "../../CheckboxInput";
 import { SelectInput } from "../..";
-import { colorOptions, DISABILITY_OPTIONS } from "@/constants";
+import { colorOptions } from "@/constants";
 
 const diversityInformationSchema = Yup.object({
 	color: Yup.string().required("Selecione sua cor."),

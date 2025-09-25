@@ -32,7 +32,7 @@ export interface Values {
 	phone: string;
 	dateOfBirth: string;
 	color: string;
-	hasDisability: string;
+	hasDisability: string | null;
 	acceptsOnlineSupport: string;
 	supportType: string[];
 	gender: string;

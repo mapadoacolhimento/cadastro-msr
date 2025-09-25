@@ -20,7 +20,7 @@ const payloadSchema = Yup.object({
 	supportType: Yup.array()
 		.of(Yup.string().oneOf(Object.values(SupportType)).required())
 		.required(),
-	hasDisability: Yup.boolean().required(),
+	hasDisability: Yup.boolean().required().nullable(),
 }).required();
 
 function getColor(color: Race) {

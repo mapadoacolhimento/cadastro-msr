@@ -4,13 +4,10 @@ import { Box, Link, Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import CheckboxInput from "../../CheckboxInput";
 import { SelectInput } from "../..";
-import { colorOptions, DISABILITY_OPTIONS } from "@/constants";
+import { colorOptions } from "@/constants";
 
 const diversityInformationSchema = Yup.object({
 	color: Yup.string().required("Selecione sua cor."),
-	hasDisability: Yup.string()
-		.oneOf(DISABILITY_OPTIONS.map((a) => a.value))
-		.required("Esse campo é obrigatório."),
 	terms: Yup.boolean().oneOf(
 		[true],
 		"Você precisar aceitar os termos para receber atendimento."
@@ -35,12 +32,7 @@ export default function DiversityInformation() {
 					placeholder="Cor"
 				/>
 			</Box>
-			<SelectInput
-				name="hasDisability"
-				options={DISABILITY_OPTIONS}
-				label={"Você é PcD (Pessoa com deficiência)?"}
-				placeholder="Você é PcD (Pessoa com deficiência)?"
-			/>
+
 			<Box pt={"6"}>
 				<CheckboxInput name="terms">
 					Ao inserir seus dados, você concorda em ter seus dados compartilhados

@@ -45,9 +45,6 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 		name: "Cor",
 	}).click();
 	cy.contains(colorOption).should("be.visible").click();
-	cy.findByRole("combobox", {
-		name: "Você é PcD (Pessoa com deficiência)?",
-	}).type(`${hasDisability}{enter}`);
 	cy.findByRole("checkbox").click();
 });
 

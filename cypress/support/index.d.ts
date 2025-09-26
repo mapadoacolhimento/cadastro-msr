@@ -8,6 +8,7 @@ declare namespace Cypress {
 			email?: string,
 			confirmEmail?: string,
 			phone?: string,
+			confirmPhone?: string,
 			dateOfBirth?: string
 		): Chainable<any>;
 		fillGenderIdentityStep(gender: string): Chainable<any>;

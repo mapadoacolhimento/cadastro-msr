@@ -1,10 +1,10 @@
 import { expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
 import ViolenceType from "../ViolenceType";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-
+import { useRouter } from "next/navigation";
+import { handleSubmit } from "../ViolenceType";
 import { sleep } from "@/utils";
 import { violenceTypeOptions } from "@/constants";
 import { type Values } from "@/types";
@@ -32,7 +32,7 @@ describe("<ViolenceType />", () => {
 
 		violenceTypeOptions.forEach((option) => {
 			const roleOptionElement = screen.getByRole("checkbox", {
-				name: `${option.name} ${option.description} Saiba mais sobre essa violência.`,
+				name: new RegExp(option.name, "i"),
 			});
 			expect(roleOptionElement).toBeInTheDocument();
 		});
@@ -50,4 +50,45 @@ describe("<ViolenceType />", () => {
 			"Selecione um ou mais tipos de violência"
 		);
 	});
+});
+
+it("should redirect to `fora-criterios` if MSR is not suffering violence", async () => {
+	const pushMock = vi.fn();
+	useRouter.mockReturnValue({
+		push: pushMock,
+	});
+
+	setup();
+
+	const noViolenceOpt = screen.getByRole("checkbox", {
+		name: "Não estou sofrendo violência/Não sofri violência",
+	});
+	await userEvent.click(noViolenceOpt);
+
+	const btn = screen.getByRole("button", { name: /enviar/i });
+	await userEvent.click(btn);
+
+	expect(pushMock).toHaveBeenCalledWith("/fora-criterios");
+});
+
+it("should return redirect to /fora-criterios when 'noViolence' is selected", async () => {
+	const values = {
+		violenceType: ["noViolence"],
+	} as Values;
+
+	const result = await handleSubmit(values);
+
+	expect(result).toEqual({ redirectTo: "/fora-criterios" });
+});
+
+it("renders info buttons only for options with descriptions", () => {
+	setup();
+
+	const expectedButtons = violenceTypeOptions.filter(
+		(o) => o.value !== "noViolence"
+	).length;
+	const infoButtons = screen.getAllByRole("button", {
+		name: /saiba mais sobre essa violência/i,
+	});
+	expect(infoButtons).toHaveLength(expectedButtons);
 });

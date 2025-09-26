@@ -14,6 +14,7 @@ import Step from "../Step";
 import CheckboxGroupInput, { CheckboxOption } from "../../CheckboxGroupInput";
 import { violenceTypeOptions } from "@/constants";
 import { PropsWithChildren } from "react";
+import type { Values } from "@/types";
 
 const violenceTypeSchema = Yup.object({
 	violenceType: Yup.array()
@@ -61,6 +62,15 @@ function renderDialogContent({
 	);
 }
 
+export async function handleSubmit(values: Values) {
+	const noViolence = values.violenceType.includes("noViolence");
+	if (noViolence) {
+		return {
+			redirectTo: "/fora-criterios",
+		};
+	}
+}
+
 export default function ViolenceType() {
 	return (
 		<Step
@@ -70,6 +80,7 @@ export default function ViolenceType() {
 				src: "/illustrations/woman-covering-ears.webp",
 				alt: "Ilustração de uma mulher de cabeça baixa tampando os ouvidos",
 			}}
+			onSubmit={handleSubmit}
 		>
 			<CheckboxGroupInput
 				name={"violenceType"}

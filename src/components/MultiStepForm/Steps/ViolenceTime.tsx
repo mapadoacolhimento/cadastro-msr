@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
-import RadioInput from "../../RadioInput";
 import { violenceTimeOptions } from "@/constants";
+import CheckboxGroupInput from "@/components/CheckboxGroupInput";
 
 const violenceTimeSchema = Yup.object({
 	violenceTime: Yup.string()
@@ -20,7 +20,7 @@ export default function ViolenceTime() {
 				alt: "Ilustração de uma mulher de cabeça baixa tampando os ouvidos",
 			}}
 		>
-			<RadioInput
+			<CheckboxGroupInput
 				name="violenceTime"
 				options={violenceTimeOptions}
 				question={

@@ -298,10 +298,6 @@ export const violenceTimeOptions = [
 		name: "Há menos de 3 meses",
 	},
 	{
-		value: "moreThanThreeMonths",
-		name: "Entre 3 meses e 1 ano",
-	},
-	{
 		value: "moreThanOneYear",
 		name: "Entre 3 meses e 1 ano",
 	},

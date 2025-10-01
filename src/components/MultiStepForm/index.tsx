@@ -13,6 +13,7 @@ import {
 	BeginRegistration,
 	FinancialBlock,
 	ViolenceType,
+	ViolenceTime,
 } from "./Steps";
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
@@ -70,6 +71,7 @@ export default function MultiStepForm() {
 				lng: null,
 				zipcode: "",
 				violenceType: [],
+				violenceTime: [],
 			}}
 			onSubmit={onSubmit}
 		>
@@ -84,6 +86,7 @@ export default function MultiStepForm() {
 			{BasicRegisterInformation()}
 			{Geolocation()}
 			{DiversityInformation()}
+			{ViolenceTime()}
 		</MultiStepFormWrapper>
 	);
 }

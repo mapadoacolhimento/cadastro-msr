@@ -21,7 +21,7 @@ export default function ViolenceTime() {
 			}}
 		>
 			<RadioGroupInput
-				name="violenceTime"
+				name={"violenceTime"}
 				options={violenceTimeOptions}
 				question={
 					<>

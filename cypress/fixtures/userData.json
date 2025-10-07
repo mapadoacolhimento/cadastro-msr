@@ -25,6 +25,12 @@
 	"city": "SÃO PAULO",
 	"neighborhood": "Centro",
 	"violenceTime": {
-		"isolatedEpisode": "Sofri um episódio isolado"
+		"isolatedEpisode": "Sofri um episódio isolado",
+		"lastWeek": "Na última semana",
+		"threeMonths": "Há menos de 3 meses",
+		"moreThanOneYear": "Entre 3 meses e 1 ano",
+		"moreThanThreeYears": "Entre 3 e 6 anos",
+		"moreThanSixYears": "Entre 6 e 10 anos",
+		"moreThanTenYears": "Há mais de 10 anos"
 	}
 }

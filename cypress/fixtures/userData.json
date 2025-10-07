@@ -23,5 +23,8 @@
 	"zipcode": "12345678",
 	"state": "São Paulo",
 	"city": "SÃO PAULO",
-	"neighborhood": "Centro"
+	"neighborhood": "Centro",
+	"violenceTime": {
+		"isolatedEpisode": "Sofri um episódio isolado"
+	}
 }

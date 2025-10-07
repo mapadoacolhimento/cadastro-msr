@@ -350,11 +350,59 @@ describe("Accessbility", () => {
 						cy.fillGeolocationStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.contains("Cor").should("exist");
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.contains(
+							"Por quanto tempo você sofreu ou tem sofrido violência?"
+						).should("be.visible");
 
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
 					});
+
+					it("should pass the accessibility test on Violence Time step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillGenderIdentityStep(gender);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDateOfBirthStep(dateOfBirth);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillViolenceTypeStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillViolenceLocationStep(violenceLocation);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillExternalSupportStep(externalSupport);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillFinancialBlock();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.findByRole("button", { name: "Iniciar cadastro" }).click();
+
+						cy.fillSupportTypeStep(supportTypes);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillViolenceTimeStep();
+						cy.findByRole("button", { name: "Enviar" }).click();
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
 					describe("Financial block", () => {
 						beforeEach(() => {
 							cy.visit("/cadastro");

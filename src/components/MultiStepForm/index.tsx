@@ -71,7 +71,7 @@ export default function MultiStepForm() {
 				lng: null,
 				zipcode: "",
 				violenceType: [],
-				violenceTime: [],
+				violenceTime: "",
 			}}
 			onSubmit={onSubmit}
 		>

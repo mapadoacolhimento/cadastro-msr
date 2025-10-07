@@ -50,4 +50,5 @@ model MsrRegisterData {
   propertyOwnership    String?
   violenceType         String[]
   disability           String?
+  violenceTime         String?
 }

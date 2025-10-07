@@ -119,7 +119,9 @@ export default function CheckboxGroupInput({
 												<Text>{option.description}</Text>
 											) : null}
 										</Flex>
-										{actionButton && renderDialogContent ? (
+										{actionButton &&
+										renderDialogContent &&
+										option.fullDescription ? (
 											<AlertDialog.Root>
 												<AlertDialog.Trigger>
 													{actionButton}

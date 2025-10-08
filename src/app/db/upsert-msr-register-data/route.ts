@@ -20,6 +20,7 @@ const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
 	confirmEmail: Yup.string().email(),
 	phone: Yup.string().min(10),
+	confirmPhone: Yup.string().min(10),
 	firstName: Yup.string(),
 	gender: Yup.string().oneOf(Object.values(Gender)),
 	color: Yup.string().oneOf([...Object.values(Race), ""]),

@@ -22,6 +22,7 @@ model MsrRegisterData {
   firstName            String?
   confirmEmail         String?
   phone                String?
+  confirmPhone         String?
   dateOfBirth          String?
   color                String?
   hasDisability        String?

@@ -18,6 +18,9 @@ import {
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
 
+const ENABLE_NEW_STEPS = process.env.SHOW_NEW_STEPS === "true";
+console.log(ENABLE_NEW_STEPS);
+
 export default function MultiStepForm() {
 	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
 		const formattedValues = formatRegisterFormValues(values);
@@ -37,6 +40,24 @@ export default function MultiStepForm() {
 		const data = await response.json();
 
 		return data;
+	}
+
+	function Steps() {
+		return [
+			GenderIdentity(),
+			DateOfBirth(),
+			ViolenceType(),
+			ViolenceLocation(),
+			ExternalSupport(),
+			FinancialBlock(),
+			BeginRegistration(),
+			SupportType(),
+			BasicRegisterInformation(),
+			DiversityInformation(),
+		];
+	}
+	function newSteps() {
+		return [Steps().concat([ViolenceTime()])];
 	}
 
 	return (
@@ -75,18 +96,7 @@ export default function MultiStepForm() {
 			}}
 			onSubmit={onSubmit}
 		>
-			{GenderIdentity()}
-			{DateOfBirth()}
-			{ViolenceType()}
-			{ViolenceLocation()}
-			{ExternalSupport()}
-			{FinancialBlock()}
-			{BeginRegistration()}
-			{SupportType()}
-			{BasicRegisterInformation()}
-			{Geolocation()}
-			{DiversityInformation()}
-			{ViolenceTime()}
+			{ENABLE_NEW_STEPS ? newSteps() : Steps()}
 		</MultiStepFormWrapper>
 	);
 }

@@ -19,6 +19,7 @@ const setup = () => {
 					firstName: "",
 					confirmEmail: "",
 					phone: "",
+					confirmPhone: "",
 				} as Values
 			}
 		>
@@ -39,11 +40,15 @@ describe("<BasicRegisterInformation />", () => {
 			name: "Confirme seu e-mail",
 		});
 		const whatsappInput = screen.getByRole("textbox", { name: "Whatsapp" });
+		const confirmPhoneInput = screen.getByRole("textbox", {
+			name: "Confirme seu Whatsapp",
+		});
 
 		expect(nameInput).toBeInTheDocument();
 		expect(emailInput).toBeInTheDocument();
 		expect(confirmEmailInput).toBeInTheDocument();
 		expect(whatsappInput).toBeInTheDocument();
+		expect(confirmPhoneInput).toBeInTheDocument();
 	});
 
 	it("should render empty field error if no info provided", async () => {
@@ -56,7 +61,7 @@ describe("<BasicRegisterInformation />", () => {
 
 		await screen.findAllByRole("alert");
 
-		expect(screen.getAllByRole("alert")).toHaveLength(4);
+		expect(screen.getAllByRole("alert")).toHaveLength(5);
 	});
 
 	it("should render error if name field is empty", async () => {
@@ -133,4 +138,24 @@ describe("<BasicRegisterInformation />", () => {
 			)
 		).toBeDefined();
 	});
+});
+
+it("should render error if whatsapp confirmation does not match whatsapp", async () => {
+	setup();
+	const phoneInput = screen.getByRole("textbox", { name: "Whatsapp" });
+	await userEvent.type(phoneInput, "81999999999");
+	const confirmPhoneInput = screen.getByRole("textbox", {
+		name: "Confirme seu Whatsapp",
+	});
+	await userEvent.type(confirmPhoneInput, "81999999998");
+
+	const btn = screen.getByRole("button", { name: /enviar/i });
+	await userEvent.click(btn);
+
+	const errors = await screen.findAllByRole("alert");
+	expect(
+		errors.find(
+			(error) => error.textContent === "Os números precisam ser iguais."
+		)
+	).toBeDefined();
 });

@@ -3,6 +3,7 @@
 	"email": "msr@test.com",
 	"confirmEmail": "msr@test.com",
 	"phone": "81999999999",
+	"confirmPhone": "81999999999",
 	"dateOfBirth": "18111996",
 	"colorOption": "Indígena",
 	"hasDisability": "Sim",

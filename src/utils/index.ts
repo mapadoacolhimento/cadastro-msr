@@ -14,3 +14,4 @@ export { default as generateTestEmail } from "./generateTestEmail";
 export { default as getObjectWithoutFalsyValues } from "./getObjectWithoutFalsyValues";
 export { default as formatPhoneNumber } from "./formatPhoneNumber";
 export { default as getVolunteerType } from "./getVolunteerType";
+export { default as generateTestPhone } from "./generateTestPhone";

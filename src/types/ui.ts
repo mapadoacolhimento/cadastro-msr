@@ -30,6 +30,7 @@ export interface Values {
 	firstName: string;
 	confirmEmail: string;
 	phone: string;
+	confirmPhone: string;
 	dateOfBirth: string;
 	color: string;
 	hasDisability: string | null;

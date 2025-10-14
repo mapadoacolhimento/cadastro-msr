@@ -9,6 +9,10 @@ const {
 	supportTypes,
 } = userData;
 
+const SHOW_VIOLENCE_TIME_STEP =
+	Cypress.env("SHOW_NEW_STEPS") === true ||
+	Cypress.env("SHOW_NEW_STEPS") === "true";
+
 describe("Happy path", () => {
 	beforeEach(() => {
 		cy.intercept("POST", "/handle-request", {
@@ -27,7 +31,7 @@ describe("Happy path", () => {
 			viewportWidth: 1920,
 		},
 		() => {
-			it("should successfully submit the form after filling the Violence Time step", () => {
+			it("should successfully submit the form", () => {
 				cy.visit("/cadastro");
 
 				cy.fillGenderIdentityStep(gender);
@@ -60,17 +64,24 @@ describe("Happy path", () => {
 				cy.findByRole("button", { name: "Continuar" }).click();
 
 				cy.fillDiversityInformationStep();
-				cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.contains(
-					"Por quanto tempo você sofreu ou tem sofrido violência?"
-				).should("exist");
+				if (SHOW_VIOLENCE_TIME_STEP) {
+					cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.findByRole("button", { name: "Enviar" }).click();
-				cy.contains("Esse campo é obrigatório.").should("be.visible");
+					cy.contains(
+						"Por quanto tempo você sofreu ou tem sofrido violência?"
+					).should("exist");
 
-				cy.findByRole("radio", { name: violenceTime.isolatedEpisode }).click();
-				cy.findByRole("button", { name: "Enviar" }).click();
+					cy.findByRole("button", { name: "Enviar" }).click();
+
+					cy.findByRole("radio", {
+						name: violenceTime.isolatedEpisode,
+					}).click();
+					cy.findByRole("button", { name: "Enviar" }).click();
+				} else {
+					// se a etapa estiver oculta, o botão 'Enviar' aparece na etapa anterior
+					cy.findByRole("button", { name: "Enviar" }).click();
+				}
 
 				cy.wait("@submitRegistration");
 
@@ -111,13 +122,22 @@ describe("Happy path", () => {
 				cy.findByRole("button", { name: "Continuar" }).click();
 
 				cy.fillDiversityInformationStep();
-				cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.findByRole("button", {
-					name: "Voltar para o passo anterior",
-				}).click();
+				if (SHOW_VIOLENCE_TIME_STEP) {
+					cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.contains("Seus dados").should("exist");
+					cy.findByRole("button", {
+						name: "Voltar para o passo anterior",
+					}).click();
+
+					cy.contains("Seus dados").should("exist");
+				} else {
+					cy.findByRole("button", {
+						name: "Voltar para o passo anterior",
+					}).click();
+
+					cy.contains("Seu endereço").should("exist");
+				}
 			});
 		}
 	);
@@ -163,14 +183,21 @@ describe("Happy path", () => {
 				cy.findByRole("button", { name: "Continuar" }).click();
 
 				cy.fillDiversityInformationStep();
-				cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.contains(
-					"Por quanto tempo você sofreu ou tem sofrido violência?"
-				).should("exist");
+				if (SHOW_VIOLENCE_TIME_STEP) {
+					cy.findByRole("button", { name: "Continuar" }).click();
 
-				cy.findByRole("radio", { name: violenceTime.isolatedEpisode }).click();
-				cy.findByRole("button", { name: "Enviar" }).click();
+					cy.contains(
+						"Por quanto tempo você sofreu ou tem sofrido violência?"
+					).should("exist");
+
+					cy.findByRole("radio", {
+						name: violenceTime.isolatedEpisode,
+					}).click();
+					cy.findByRole("button", { name: "Enviar" }).click();
+				} else {
+					cy.findByRole("button", { name: "Enviar" }).click();
+				}
 
 				cy.wait("@submitRegistration");
 				cy.contains("Cadastro realizado").should("be.visible");

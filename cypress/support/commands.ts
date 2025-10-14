@@ -18,8 +18,12 @@ import {
 	state,
 	city,
 } from "../fixtures/userData.json";
-
 import { generateTestEmail, generateTestPhone } from "../../src/utils";
+
+const SHOW_VIOLENCE_TIME_STEP =
+	Cypress.env("SHOW_NEW_STEPS") === true ||
+	Cypress.env("SHOW_NEW_STEPS") === "true";
+
 
 Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();

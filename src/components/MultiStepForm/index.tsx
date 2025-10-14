@@ -53,6 +53,7 @@ export default function MultiStepForm() {
 			BeginRegistration(),
 			SupportType(),
 			BasicRegisterInformation(),
+			Geolocation(),
 			DiversityInformation(),
 		];
 	}

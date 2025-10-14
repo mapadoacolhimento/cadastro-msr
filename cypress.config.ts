@@ -3,7 +3,9 @@ import { defineConfig } from "cypress";
 export default defineConfig({
 	e2e: {
 		baseUrl: "http://localhost:3000",
-		setupNodeEvents(on) {
+		setupNodeEvents(on, config) {
+			config.env.SHOW_NEW_STEPS = false;
+
 			on("task", {
 				log(message) {
 					console.log(message);

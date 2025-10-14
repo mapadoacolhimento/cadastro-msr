@@ -301,10 +301,14 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();
-	cy.findByRole("button", { name: "Continuar" }).click();
+	if (SHOW_VIOLENCE_TIME_STEP) {
+		cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceTimeStep();
-	cy.findByRole("button", { name: "Enviar" }).click();
+		cy.fillViolenceTimeStep();
+		cy.findByRole("button", { name: "Enviar" }).click();
+	} else {
+		cy.findByRole("button", { name: "Enviar" }).click();
+	}
 });
 
 export {};

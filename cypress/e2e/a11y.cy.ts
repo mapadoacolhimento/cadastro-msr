@@ -323,6 +323,14 @@ describe("Accessbility", () => {
 					});
 
 					it("should pass the accessibility test on Diversity Information step", () => {
+						cy.intercept("POST", "/handle-request", {
+							statusCode: 200,
+							body: {
+								psychological: { supportRequestId: 1 },
+								legal: { supportRequestId: 2 },
+							},
+						}).as("submitRegistration");
+
 						cy.visit("/cadastro");
 
 						cy.fillGenderIdentityStep(gender);
@@ -368,6 +376,8 @@ describe("Accessbility", () => {
 							).should("be.visible");
 						} else {
 							cy.findByRole("button", { name: "Enviar" }).click();
+
+							cy.wait("@submitRegistration");
 
 							cy.contains("Cadastro realizado").should("be.visible");
 						}

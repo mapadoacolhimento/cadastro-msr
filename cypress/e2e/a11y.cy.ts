@@ -7,6 +7,10 @@ import {
 	supportTypes,
 } from "../fixtures/userData.json";
 
+const SHOW_VIOLENCE_TIME_STEP =
+	Cypress.env("SHOW_NEW_STEPS") === true ||
+	Cypress.env("SHOW_NEW_STEPS") === "true";
+
 function terminalLog(violations) {
 	cy.task(
 		"log",
@@ -351,17 +355,32 @@ describe("Accessbility", () => {
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.fillDiversityInformationStep();
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.contains(
-							"Por quanto tempo você sofreu ou tem sofrido violência?"
-						).should("be.visible");
+						cy.contains("Seus dados").should("be.visible");
 
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
+
+						if (SHOW_VIOLENCE_TIME_STEP) {
+							cy.findByRole("button", { name: "Continuar" }).click();
+
+							cy.contains(
+								"Por quanto tempo você sofreu ou tem sofrido violência?"
+							).should("be.visible");
+						} else {
+							cy.findByRole("button", { name: "Enviar" }).click();
+
+							cy.contains("Cadastro realizado").should("be.visible");
+						}
 					});
 
 					it("should pass the accessibility test on Violence Time step", () => {
+						if (!SHOW_VIOLENCE_TIME_STEP) {
+							cy.log(
+								"Skipping test: Violence Time step is disabled by feature flag."
+							);
+							return;
+						}
+
 						cy.visit("/cadastro");
 
 						cy.fillGenderIdentityStep(gender);

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeAll, beforeEach } from "vitest";
 
 import {
 	BasicRegisterInformation,
@@ -56,7 +56,12 @@ describe("Components", () => {
 			const components = getVisibleComponents();
 			expect(components).toHaveProperty("ViolenceTime");
 		});
-	}); // ← Fecha o describe do "true" aqui
+
+		it("should include ViolenceTime in steps", () => {
+			const ENABLE_NEW_STEPS = process.env.SHOW_NEW_STEPS === "true";
+			expect(ENABLE_NEW_STEPS).toBe(true);
+		});
+	});
 
 	describe("when SHOW_NEW_STEPS is false", () => {
 		beforeAll(() => {
@@ -71,6 +76,11 @@ describe("Components", () => {
 		it("should NOT include ViolenceTime component", () => {
 			const components = getVisibleComponents();
 			expect(components).not.toHaveProperty("ViolenceTime");
+		});
+
+		it("should not include ViolenceTime in steps", () => {
+			const ENABLE_NEW_STEPS = process.env.SHOW_NEW_STEPS === "true";
+			expect(ENABLE_NEW_STEPS).toBe(false);
 		});
 	});
 });

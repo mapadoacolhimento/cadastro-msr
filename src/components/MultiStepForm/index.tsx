@@ -31,6 +31,7 @@ export function Steps() {
 		BeginRegistration(),
 		SupportType(),
 		BasicRegisterInformation(),
+		Geolocation(),
 		DiversityInformation(),
 	];
 }

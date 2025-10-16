@@ -1,86 +1,41 @@
-import { describe, it, expect, beforeAll, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 
-import {
-	BasicRegisterInformation,
-	SupportType,
-	GenderIdentity,
-	ViolenceLocation,
-	ExternalSupport,
-	Geolocation,
-	DiversityInformation,
-	DateOfBirth,
-	BeginRegistration,
-	FinancialBlock,
-	ViolenceType,
-	ViolenceTime,
-} from "../Steps";
+vi.mock("../Steps", () => ({
+	BasicRegisterInformation: () => "BasicRegisterInformation",
+	SupportType: () => "SupportType",
+	GenderIdentity: () => "GenderIdentity",
+	ViolenceLocation: () => "ViolenceLocation",
+	ExternalSupport: () => "ExternalSupport",
+	Geolocation: () => "Geolocation",
+	DiversityInformation: () => "DiversityInformation",
+	DateOfBirth: () => "DateOfBirth",
+	BeginRegistration: () => "BeginRegistration",
+	FinancialBlock: () => "FinancialBlock",
+	ViolenceType: () => "ViolenceType",
+	ViolenceTime: () => "ViolenceTime",
+}));
 
-describe("Components", () => {
-	const allComponents = {
-		BasicRegisterInformation,
-		SupportType,
-		GenderIdentity,
-		ViolenceLocation,
-		ExternalSupport,
-		Geolocation,
-		DiversityInformation,
-		DateOfBirth,
-		BeginRegistration,
-		FinancialBlock,
-		ViolenceType,
-		ViolenceTime,
-	};
+import { Steps, newSteps } from "../index";
 
-	const getVisibleComponents = () => {
-		const ENABLE_NEW_STEPS = process.env.SHOW_NEW_STEPS === "true";
-
-		if (ENABLE_NEW_STEPS) {
-			return allComponents;
-		}
-
-		const { ViolenceTime, ...componentsWithoutViolenceTime } = allComponents;
-		return componentsWithoutViolenceTime;
-	};
-
-	describe("when SHOW_NEW_STEPS is true", () => {
-		beforeAll(() => {
-			process.env.SHOW_NEW_STEPS = "true";
-		});
-
-		it("should have exactly 12 components visible", () => {
-			const components = getVisibleComponents();
-			expect(Object.keys(components)).toHaveLength(12);
-		});
-
-		it("should include ViolenceTime component", () => {
-			const components = getVisibleComponents();
-			expect(components).toHaveProperty("ViolenceTime");
-		});
-
-		it("should include ViolenceTime in steps", () => {
-			const ENABLE_NEW_STEPS = process.env.SHOW_NEW_STEPS === "true";
-			expect(ENABLE_NEW_STEPS).toBe(true);
+describe("MultiStepForm - Steps Logic", () => {
+	describe("Steps function", () => {
+		it("should return 10 steps without ViolenceTime", () => {
+			const steps = Steps();
+			expect(steps).toHaveLength(10);
+			expect(steps).not.toContain("ViolenceTime");
 		});
 	});
 
-	describe("when SHOW_NEW_STEPS is false", () => {
-		beforeAll(() => {
-			process.env.SHOW_NEW_STEPS = "false";
-		});
+	describe("newSteps function", () => {
+		it("should return an array with one element containing 11 steps including ViolenceTime", () => {
+			const result = newSteps();
 
-		it("should have exactly 11 components visible", () => {
-			const components = getVisibleComponents();
-			expect(Object.keys(components)).toHaveLength(11);
-		});
+			expect(result).toHaveLength(1);
 
-		it("should NOT include ViolenceTime component", () => {
-			const components = getVisibleComponents();
-			expect(components).not.toHaveProperty("ViolenceTime");
-		});
+			const stepsArray = result[0];
+			expect(stepsArray).toHaveLength(11);
 
-		it("should not include ViolenceTime in steps", () => {
-			const ENABLE_NEW_STEPS = process.env.SHOW_NEW_STEPS === "true";
-			expect(ENABLE_NEW_STEPS).toBe(false);
+			expect(stepsArray[stepsArray.length - 1]).toBe("ViolenceTime");
 		});
 	});
 });

@@ -12,6 +12,7 @@ import {
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
 	propertyOwnershipOptions,
+	violenceTimeOptions,
 	violenceTypeOptions,
 } from "@/lib";
 import { getErrorMessage } from "@/utils";
@@ -60,6 +61,7 @@ const payloadSchema = Yup.object({
 			.oneOf(violenceTypeOptions.map((v) => v.value))
 			.required()
 	),
+	violenceTime: Yup.string().oneOf(violenceTimeOptions.map((o) => o.value)),
 }).required();
 
 export async function POST(request: NextRequest) {

@@ -2,43 +2,9 @@
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
-import {
-	BasicRegisterInformation,
-	SupportType,
-	GenderIdentity,
-	ViolenceLocation,
-	ExternalSupport,
-	Geolocation,
-	DiversityInformation,
-	DateOfBirth,
-	BeginRegistration,
-	FinancialBlock,
-	ViolenceType,
-	ViolenceTime,
-	GenderIdentityViolence,
-} from "./Steps";
+import { getFormSteps, getHiddenStepsForm } from "@/utils/getFormSteps";
 
 const ENABLE_NEW_STEPS = process.env.SHOW_NEW_STEPS === "true";
-
-export function Steps() {
-	return [
-		GenderIdentity(),
-		DateOfBirth(),
-		ViolenceType(),
-		ViolenceLocation(),
-		ExternalSupport(),
-		FinancialBlock(),
-		BeginRegistration(),
-		SupportType(),
-		BasicRegisterInformation(),
-		Geolocation(),
-		DiversityInformation(),
-		GenderIdentityViolence(),
-	];
-}
-export function newSteps() {
-	return [Steps().concat([ViolenceTime()])];
-}
 
 export default function MultiStepForm() {
 	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
@@ -94,11 +60,10 @@ export default function MultiStepForm() {
 				zipcode: "",
 				violenceType: [],
 				violenceTime: "",
-				genderIdViolence: "",
 			}}
 			onSubmit={onSubmit}
 		>
-			{ENABLE_NEW_STEPS ? newSteps() : Steps()}
+			{ENABLE_NEW_STEPS ? getHiddenStepsForm() : getFormSteps()}
 		</MultiStepFormWrapper>
 	);
 }

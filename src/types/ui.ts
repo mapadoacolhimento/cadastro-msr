@@ -56,6 +56,7 @@ export interface Values {
 	propertyOwnership: string;
 	violenceType: string[];
 	violenceTime: string;
+	genderIdViolence: string;
 }
 
 export type SupportRequestData = Awaited<

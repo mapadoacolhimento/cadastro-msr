@@ -1,5 +1,6 @@
 "use client";
-
+import { formatRegisterFormValues } from "@/utils";
+import type { HandleRequestResponse, Values } from "@/types";
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import {
 	BasicRegisterInformation,
@@ -14,9 +15,8 @@ import {
 	FinancialBlock,
 	ViolenceType,
 	ViolenceTime,
+	GenderIdentityViolence,
 } from "./Steps";
-import { formatRegisterFormValues } from "@/utils";
-import type { HandleRequestResponse, Values } from "@/types";
 
 const ENABLE_NEW_STEPS = process.env.SHOW_NEW_STEPS === "true";
 
@@ -33,6 +33,7 @@ export function Steps() {
 		BasicRegisterInformation(),
 		Geolocation(),
 		DiversityInformation(),
+		GenderIdentityViolence(),
 	];
 }
 export function newSteps() {
@@ -93,6 +94,7 @@ export default function MultiStepForm() {
 				zipcode: "",
 				violenceType: [],
 				violenceTime: "",
+				genderIdViolence: "",
 			}}
 			onSubmit={onSubmit}
 		>

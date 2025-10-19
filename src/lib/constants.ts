@@ -314,3 +314,18 @@ export const violenceTimeOptions = [
 		name: "Há mais de 10 anos",
 	},
 ];
+
+export const genderIdViolenceOptions = [
+	{
+		name: "Mulher",
+		value: "women",
+	},
+	{
+		name: "Homem",
+		value: "men",
+	},
+	{
+		name: "Pessoa não-binária",
+		value: "non-binary",
+	},
+];

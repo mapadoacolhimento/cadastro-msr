@@ -10,8 +10,8 @@ const {
 } = userData;
 
 const SHOW_VIOLENCE_TIME_STEP =
-	Cypress.env("SHOW_NEW_STEPS") === true ||
-	Cypress.env("SHOW_NEW_STEPS") === "true";
+	Cypress.env("NEXT_PUBLIC_ENABLE_NEW_STEPS") === true ||
+	Cypress.env("NEXT_PUBLIC_ENABLE_NEW_STEPS") === "true";
 
 describe("Happy path", () => {
 	beforeEach(() => {

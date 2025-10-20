@@ -33,13 +33,16 @@ describe("Happy path", () => {
 				cy.fillDateOfBirthStep(dateOfBirth);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
+				cy.fillViolenceLocationStep(violenceLocation);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
 				cy.fillViolenceTypeStep();
 				cy.findByRole("button", {
 					name: "Voltar para o passo anterior",
 				}).click();
 
-				cy.findByRole("heading", { name: "Sobre você" }).should("exist");
-				cy.findByRole("textbox").should("have.value", "18/11/1996");
+				cy.findByRole("heading", { name: "Sobre a violência" }).should("exist");
+				cy.contains("A violência ocorreu no Brasil?").should("be.visible");
 			});
 		}
 	);
@@ -67,13 +70,16 @@ describe("Happy path", () => {
 				cy.fillDateOfBirthStep(dateOfBirth);
 				cy.findByRole("button", { name: "Continuar" }).click();
 
+				cy.fillViolenceLocationStep(violenceLocation);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
 				cy.fillViolenceTypeStep();
 				cy.findByRole("button", {
 					name: "Voltar para o passo anterior",
 				}).click();
 
-				cy.findByRole("heading", { name: "Sobre você" }).should("exist");
-				cy.findByRole("textbox").should("have.value", "18/11/1996");
+				cy.findByRole("heading", { name: "Sobre a violência" }).should("exist");
+				cy.contains("A violência ocorreu no Brasil?").should("be.visible");
 			});
 		}
 	);
@@ -118,9 +124,6 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceTypeStep();
-		cy.findByRole("button", { name: "Continuar" }).click();
-
 		cy.fillViolenceLocationStep("Não, aconteceu em outro país");
 		cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -153,10 +156,10 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillDateOfBirthStep(dateOfBirth);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceTypeStep();
+		cy.fillViolenceLocationStep(violenceLocation);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceLocationStep(violenceLocation);
+		cy.fillViolenceTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep([
@@ -178,10 +181,10 @@ describe("When MSR does not meet the criteria", () => {
 			cy.fillDateOfBirthStep(dateOfBirth);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillViolenceTypeStep();
+			cy.fillViolenceLocationStep(violenceLocation);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillViolenceLocationStep(violenceLocation);
+			cy.fillViolenceTypeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillExternalSupportStep(externalSupport);
@@ -190,6 +193,7 @@ describe("When MSR does not meet the criteria", () => {
 			cy.fillMonthlyIncomeStep();
 			cy.fillMonthlyIncomeRangeStep();
 		});
+
 		describe("If MSR signals they have a monthly income and its greater than 3 min wages", () => {
 			it("should redirect to `fora-criterios` page if they are a student with income", () => {
 				cy.fillEmploymentStatusStep("Estudante e com renda independente");

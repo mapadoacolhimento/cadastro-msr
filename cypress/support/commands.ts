@@ -263,10 +263,10 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillDateOfBirthStep(dateOfBirth);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceTypeStep();
+	cy.fillViolenceLocationStep(violenceLocation);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceLocationStep(violenceLocation);
+	cy.fillViolenceTypeStep();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillExternalSupportStep(externalSupport);

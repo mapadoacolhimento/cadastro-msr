@@ -53,10 +53,10 @@ it("should fill addres information in the fields in the following step after loa
 	cy.fillDateOfBirthStep(dateOfBirth);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceTypeStep();
+	cy.fillViolenceLocationStep(violenceLocation);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceLocationStep(violenceLocation);
+	cy.fillViolenceTypeStep();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillExternalSupportStep(externalSupport);

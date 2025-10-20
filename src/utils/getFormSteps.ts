@@ -29,5 +29,18 @@ export function getFormSteps() {
 	];
 }
 export function getHiddenStepsForm() {
-	return [getFormSteps().concat([ViolenceTime()])];
+	return [
+		GenderIdentity(),
+		DateOfBirth(),
+		ViolenceType(),
+		ViolenceLocation(),
+		ExternalSupport(),
+		FinancialBlock(),
+		BeginRegistration(),
+		SupportType(),
+		BasicRegisterInformation(),
+		Geolocation(),
+		DiversityInformation(),
+		ViolenceTime(),
+	];
 }

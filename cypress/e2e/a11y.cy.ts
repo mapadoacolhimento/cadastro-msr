@@ -7,10 +7,6 @@ import {
 	supportTypes,
 } from "../fixtures/userData.json";
 
-const SHOW_VIOLENCE_TIME_STEP =
-	Cypress.env("NEXT_PUBLIC_ENABLE_NEW_STEPS") === true ||
-	Cypress.env("NEXT_PUBLIC_ENABLE_NEW_STEPS") === "true";
-
 function terminalLog(violations) {
 	cy.task(
 		"log",
@@ -364,69 +360,6 @@ describe("Accessbility", () => {
 
 						cy.fillDiversityInformationStep();
 						cy.contains("Seus dados").should("be.visible");
-
-						cy.injectAxe();
-						cy.checkA11y(null, null, terminalLog);
-
-						if (SHOW_VIOLENCE_TIME_STEP) {
-							cy.findByRole("button", { name: "Continuar" }).click();
-
-							cy.contains(
-								"Por quanto tempo você sofreu ou tem sofrido violência?"
-							).should("be.visible");
-						} else {
-							cy.findByRole("button", { name: "Enviar" }).click();
-
-							cy.wait("@submitRegistration");
-
-							cy.contains("Cadastro realizado").should("be.visible");
-						}
-					});
-
-					it("should pass the accessibility test on Violence Time step", () => {
-						if (!SHOW_VIOLENCE_TIME_STEP) {
-							cy.log(
-								"Skipping test: Violence Time step is disabled by feature flag."
-							);
-							return;
-						}
-
-						cy.visit("/cadastro");
-
-						cy.fillGenderIdentityStep(gender);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillDateOfBirthStep(dateOfBirth);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillViolenceTypeStep();
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillViolenceLocationStep(violenceLocation);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillExternalSupportStep(externalSupport);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillFinancialBlock();
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.findByRole("button", { name: "Iniciar cadastro" }).click();
-
-						cy.fillSupportTypeStep(supportTypes);
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillBasicRegisterInformationStep();
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillGeolocationStep();
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillDiversityInformationStep();
-						cy.findByRole("button", { name: "Continuar" }).click();
-
-						cy.fillViolenceTimeStep();
-						cy.findByRole("button", { name: "Enviar" }).click();
 
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);

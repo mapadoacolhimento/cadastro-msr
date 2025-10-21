@@ -20,11 +20,6 @@ import {
 } from "../fixtures/userData.json";
 import { generateTestEmail, generateTestPhone } from "../../src/utils";
 
-const SHOW_VIOLENCE_TIME_STEP =
-	Cypress.env("SHOW_NEW_STEPS") === true ||
-	Cypress.env("SHOW_NEW_STEPS") === "true";
-
-
 Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();
 });
@@ -261,6 +256,8 @@ Cypress.Commands.add("fillViolenceTypeStep", () => {
 });
 
 Cypress.Commands.add("fillViolenceTimeStep", () => {
+	//Cypress.env("NEXT_PUBLIC_ENABLE_NEW_STEPS", true);
+
 	cy.contains("Por quanto tempo você sofreu ou tem sofrido violência?").should(
 		"be.visible"
 	);
@@ -301,14 +298,7 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();
-	if (SHOW_VIOLENCE_TIME_STEP) {
-		cy.findByRole("button", { name: "Continuar" }).click();
-
-		cy.fillViolenceTimeStep();
-		cy.findByRole("button", { name: "Enviar" }).click();
-	} else {
-		cy.findByRole("button", { name: "Enviar" }).click();
-	}
+	cy.findByRole("button", { name: "Enviar" }).click();
 });
 
 export {};

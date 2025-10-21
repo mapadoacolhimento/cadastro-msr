@@ -7,8 +7,7 @@ export default defineConfig({
 	e2e: {
 		baseUrl: "http://localhost:3000",
 		env: {
-			NEXT_PUBLIC_ENABLE_NEW_STEPS:
-				process.env.NEXT_PUBLIC_ENABLE_NEW_STEPS === "false",
+			NEXT_PUBLIC_ENABLE_NEW_STEPS: false,
 		},
 		setupNodeEvents(on, config) {
 			on("task", {

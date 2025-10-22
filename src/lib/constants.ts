@@ -302,6 +302,10 @@ export const violenceTimeOptions = [
 		name: "Entre 3 meses e 1 ano",
 	},
 	{
+		value: "moreThanAYear",
+		name: "Entre 1 e 3 anos",
+	},
+	{
 		value: "moreThanThreeYears",
 		name: "Entre 3 e 6 anos",
 	},

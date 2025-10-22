@@ -10,7 +10,7 @@ const perpetratorGenderIdSchema = Yup.object({
 		.required("Esse campo é obrigatório."),
 });
 
-export default function ViolenceGenderId() {
+export default function PerpetratorGenderId() {
 	return (
 		<Step
 			validationSchema={perpetratorGenderIdSchema}
@@ -21,7 +21,7 @@ export default function ViolenceGenderId() {
 			}}
 		>
 			<RadioInput
-				name="violenceGenderId"
+				name="perpetratorGenderId"
 				options={perpetratorGenderIdOptions}
 				question={
 					<>

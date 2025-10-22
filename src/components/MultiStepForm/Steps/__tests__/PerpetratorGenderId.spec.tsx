@@ -1,10 +1,10 @@
-import ViolenceGenderId from "../PerpetratorGenderIdSchema";
 import { expect } from "vitest";
 import { perpetratorGenderIdOptions } from "@/constants";
 import { render, screen } from "@testing-library/react";
 import { type Values } from "@/types";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import userEvent from "@testing-library/user-event";
+import PerpetratorGenderId from "../PerpetratorGenderId";
 
 const setup = () => {
 	return render(
@@ -14,16 +14,16 @@ const setup = () => {
 			}
 			initialValues={
 				{
-					violenceGenderId: "",
+					perpetratorGenderId: "",
 				} as unknown as Values
 			}
 		>
-			{ViolenceGenderId()}
+			{PerpetratorGenderId()}
 		</MultiStepFormWrapper>
 	);
 };
 
-describe("<ViolenceGenderId />", () => {
+describe("<PerpetratorGenderId />", () => {
 	it("should render all violence gender id type options", () => {
 		setup();
 

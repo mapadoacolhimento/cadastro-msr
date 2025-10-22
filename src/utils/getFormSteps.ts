@@ -27,7 +27,6 @@ export function getFormSteps() {
 		BasicRegisterInformation(),
 		Geolocation(),
 		DiversityInformation(),
-		ViolenceGenderId(),
 	];
 }
 export function getHiddenStepsForm() {
@@ -44,5 +43,6 @@ export function getHiddenStepsForm() {
 		Geolocation(),
 		DiversityInformation(),
 		ViolenceTime(),
+		ViolenceGenderId(),
 	];
 }

@@ -11,7 +11,7 @@ import {
 	FinancialBlock,
 	ViolenceType,
 	ViolenceTime,
-	ViolenceGenderId,
+	PerpetratorGenderId,
 } from "../components/MultiStepForm/Steps";
 
 export function getFormSteps() {
@@ -43,6 +43,6 @@ export function getHiddenStepsForm() {
 		Geolocation(),
 		DiversityInformation(),
 		ViolenceTime(),
-		ViolenceGenderId(),
+		PerpetratorGenderId(),
 	];
 }

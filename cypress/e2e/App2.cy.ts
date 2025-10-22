@@ -1,5 +1,5 @@
-// //TODO: arquivo deve ser descomentado uma vez que todos os passos do novo cadastro estejam implementados. Até lá, é possível descomentar o teste e usá-lo
-// //localmente alterando o valor da variável de ambiente setada no cypress.config
+//TODO: arquivo deve ser descomentado uma vez que todos os passos do novo cadastro estejam implementados. Até lá, é possível descomentar o teste e usá-lo
+//localmente alterando o valor da variável de ambiente setada no cypress.config
 
 // import userData from "../fixtures/userData.json";
 
@@ -10,7 +10,7 @@
 // 	violenceTime,
 // 	dateOfBirth,
 // 	supportTypes,
-// 	violenceGenderId
+// 	perpetratorGenderId,
 // } = userData;
 
 // describe("Happy path", () => {
@@ -76,7 +76,7 @@
 // 			cy.fillViolenceTimeStep();
 // 			cy.findByRole("button", { name: "Continuar" }).click();
 
-// 			cy.fillViolenceGenderIdStep(violenceGenderId);
+// 			cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
 
 // 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 // 			cy.contains("Dados da Violência").should("exist");
@@ -134,7 +134,7 @@
 // 			cy.fillViolenceTimeStep();
 // 			cy.findByRole("button", { name: "Continuar" }).click();
 
-// 			cy.fillViolenceGenderIdStep(violenceGenderId);
+// 			cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
 
 // 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 // 			cy.contains("Dados da Violência").should("exist");

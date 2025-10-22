@@ -12,7 +12,7 @@ import {
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
 	propertyOwnershipOptions,
-	violenceGenderIdOptions,
+	perpetratorGenderIdOptions,
 	violenceTimeOptions,
 	violenceTypeOptions,
 } from "@/lib";
@@ -63,8 +63,8 @@ const payloadSchema = Yup.object({
 			.required()
 	),
 	violenceTime: Yup.string().oneOf(violenceTimeOptions.map((o) => o.value)),
-	violenceGenderId: Yup.string().oneOf(
-		violenceGenderIdOptions.map((o) => o.value)
+	perpetratorGenderId: Yup.string().oneOf(
+		perpetratorGenderIdOptions.map((o) => o.value)
 	),
 }).required();
 

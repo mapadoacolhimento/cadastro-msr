@@ -24,7 +24,7 @@
 // 		}).as("submitRegistration");
 // 	});
 
-// 	describe("New Steps added (Desktop)", () => {
+// 	describe("Desktop", () => {
 
 // 		beforeEach(() => {
 // 			cy.viewport(1920, 1080);
@@ -83,7 +83,7 @@
 // 		});
 // 	});
 
-// 	describe("New Steps added (Mobile)", () => {
+// 	describe("Mobile", () => {
 // 		beforeEach(() => {
 // 			cy.viewport(390, 844);
 // 		});

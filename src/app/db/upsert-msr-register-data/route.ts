@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { Gender, SupportType, Race, ViolenceGenderId } from "@prisma/client";
+import { Gender, SupportType, Race } from "@prisma/client";
 import * as Yup from "yup";
 
 import {
@@ -12,6 +12,7 @@ import {
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
 	propertyOwnershipOptions,
+	violenceGenderIdOptions,
 	violenceTimeOptions,
 	violenceTypeOptions,
 } from "@/lib";
@@ -62,7 +63,9 @@ const payloadSchema = Yup.object({
 			.required()
 	),
 	violenceTime: Yup.string().oneOf(violenceTimeOptions.map((o) => o.value)),
-	violenceGenderId: Yup.string().oneOf(Object.values(ViolenceGenderId)),
+	violenceGenderId: Yup.string().oneOf(
+		violenceGenderIdOptions.map((o) => o.value)
+	),
 }).required();
 
 export async function POST(request: NextRequest) {

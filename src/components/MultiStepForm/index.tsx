@@ -66,7 +66,7 @@ export default function MultiStepForm() {
 				zipcode: "",
 				violenceType: [],
 				violenceTime: "",
-				violenceGenderId: "",
+				perpetratorGenderId: "",
 			}}
 			onSubmit={onSubmit}
 		>

@@ -319,6 +319,14 @@ describe("Accessbility", () => {
 					});
 
 					it("should pass the accessibility test on Diversity Information step", () => {
+						cy.intercept("POST", "/handle-request", {
+							statusCode: 200,
+							body: {
+								psychological: { supportRequestId: 1 },
+								legal: { supportRequestId: 2 },
+							},
+						}).as("submitRegistration");
+
 						cy.visit("/cadastro");
 
 						cy.fillGenderIdentityStep(gender);
@@ -350,11 +358,13 @@ describe("Accessbility", () => {
 						cy.fillGeolocationStep();
 						cy.findByRole("button", { name: "Continuar" }).click();
 
-						cy.contains("Cor").should("exist");
+						cy.fillDiversityInformationStep();
+						cy.contains("Seus dados").should("be.visible");
 
 						cy.injectAxe();
 						cy.checkA11y(null, null, terminalLog);
 					});
+
 					describe("Financial block", () => {
 						beforeEach(() => {
 							cy.visit("/cadastro");

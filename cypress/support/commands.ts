@@ -18,7 +18,6 @@ import {
 	state,
 	city,
 } from "../fixtures/userData.json";
-
 import { generateTestEmail, generateTestPhone } from "../../src/utils";
 
 Cypress.Commands.add("goThroughHomePage", () => {
@@ -256,6 +255,17 @@ Cypress.Commands.add("fillViolenceTypeStep", () => {
 	});
 });
 
+Cypress.Commands.add("fillViolenceTimeStep", () => {
+	//Cypress.env("NEXT_PUBLIC_ENABLE_NEW_STEPS", true);
+
+	cy.contains("Por quanto tempo você sofreu ou tem sofrido violência?").should(
+		"be.visible"
+	);
+	cy.findByRole("radio", { name: /Sofri um episódio isolado/i }).click({
+		force: true,
+	});
+});
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();
@@ -285,7 +295,6 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillGeolocationStep();
-
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();

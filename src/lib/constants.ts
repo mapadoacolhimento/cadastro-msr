@@ -283,3 +283,49 @@ export const violenceTypeOptions = [
 		description: "    ",
 	},
 ];
+
+export const violenceTimeOptions = [
+	{
+		value: "isolatedEpisode",
+		name: "Sofri um episódio isolado",
+	},
+	{
+		value: "lastWeek",
+		name: "Na última semana",
+	},
+	{
+		value: "threeMonths",
+		name: "Há menos de 3 meses",
+	},
+	{
+		value: "moreThanThreeMonths",
+		name: "Entre 3 meses e 1 ano",
+	},
+	{
+		value: "moreThanThreeYears",
+		name: "Entre 3 e 6 anos",
+	},
+	{
+		value: "moreThanSixYears",
+		name: "Entre 6 e 10 anos",
+	},
+	{
+		value: "moreThanTenYears",
+		name: "Há mais de 10 anos",
+	},
+];
+
+export const genderIdViolenceOptions = [
+	{
+		name: "Mulher",
+		value: "women",
+	},
+	{
+		name: "Homem",
+		value: "men",
+	},
+	{
+		name: "Pessoa não-binária",
+		value: "non-binary",
+	},
+];

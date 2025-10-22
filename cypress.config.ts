@@ -1,9 +1,15 @@
 import { defineConfig } from "cypress";
+import * as dotenv from "dotenv";
+
+dotenv.config({ path: ".env.test" });
 
 export default defineConfig({
 	e2e: {
 		baseUrl: "http://localhost:3000",
-		setupNodeEvents(on) {
+		env: {
+			NEXT_PUBLIC_ENABLE_NEW_STEPS: false,
+		},
+		setupNodeEvents(on, config) {
 			on("task", {
 				log(message) {
 					console.log(message);
@@ -16,6 +22,7 @@ export default defineConfig({
 					return null;
 				},
 			});
+			return config;
 		},
 	},
 	viewportWidth: 1366,

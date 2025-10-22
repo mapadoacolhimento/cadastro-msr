@@ -45,7 +45,7 @@ export default function MultiStepFormWrapper({
 
 	const nextStep = (values: Values) => {
 		setSnapshot(values);
-		setStepIndex(Math.min(stepIndex + 1, totalSteps - 1));
+		setStepIndex((prev) => Math.min(prev + 1, totalSteps - 1));
 	};
 
 	const previousStep = (values: Values) => {

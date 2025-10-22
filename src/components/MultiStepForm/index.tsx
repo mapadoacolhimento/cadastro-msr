@@ -1,23 +1,18 @@
 "use client";
-
-import MultiStepFormWrapper from "./MultiStepFormWrapper";
-import {
-	BasicRegisterInformation,
-	SupportType,
-	GenderIdentity,
-	ViolenceLocation,
-	ExternalSupport,
-	Geolocation,
-	DiversityInformation,
-	DateOfBirth,
-	BeginRegistration,
-	FinancialBlock,
-	ViolenceType,
-} from "./Steps";
 import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
+import MultiStepFormWrapper from "./MultiStepFormWrapper";
+import { getFormSteps, getHiddenStepsForm } from "@/utils/getFormSteps";
+import { useMemo } from "react";
+
+const ENABLE_NEW_STEPS = process.env.NEXT_PUBLIC_ENABLE_NEW_STEPS === "true";
 
 export default function MultiStepForm() {
+	const steps = useMemo(
+		() => (ENABLE_NEW_STEPS ? getHiddenStepsForm() : getFormSteps()),
+		[ENABLE_NEW_STEPS]
+	);
+
 	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
 		const formattedValues = formatRegisterFormValues(values);
 
@@ -70,20 +65,11 @@ export default function MultiStepForm() {
 				lng: null,
 				zipcode: "",
 				violenceType: [],
+				violenceTime: "",
 			}}
 			onSubmit={onSubmit}
 		>
-			{GenderIdentity()}
-			{DateOfBirth()}
-			{ViolenceType()}
-			{ViolenceLocation()}
-			{ExternalSupport()}
-			{FinancialBlock()}
-			{BeginRegistration()}
-			{SupportType()}
-			{BasicRegisterInformation()}
-			{Geolocation()}
-			{DiversityInformation()}
+			{steps}
 		</MultiStepFormWrapper>
 	);
 }

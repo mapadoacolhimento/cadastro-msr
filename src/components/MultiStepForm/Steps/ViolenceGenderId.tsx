@@ -1,10 +1,8 @@
 import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
-
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
 import { violenceGenderIdOptions } from "@/constants";
-import type { Values } from "@/types";
 
 const violenceGenderIdSchema = Yup.object({
 	violenceLocation: Yup.string()

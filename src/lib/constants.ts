@@ -3,7 +3,6 @@ import {
 	MatchStatus,
 	Race,
 	SupportRequestsStatus,
-	ViolenceGenderId,
 } from "@prisma/client";
 
 export const BRAZILIAN_STATES_OPTIONS = [

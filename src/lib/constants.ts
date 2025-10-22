@@ -315,7 +315,7 @@ export const violenceTimeOptions = [
 	},
 ];
 
-export const genderIdViolenceOptions = [
+export const violenceGenderIdOptions = [
 	{
 		name: "Mulher",
 		value: "women",

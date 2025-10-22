@@ -1,0 +1,37 @@
+import * as Yup from "yup";
+import { Strong } from "@radix-ui/themes";
+
+import Step from "../Step";
+import RadioInput from "../../RadioInput";
+import { violenceGenderIdOptions } from "@/constants";
+import type { Values } from "@/types";
+
+const violenceGenderIdSchema = Yup.object({
+	violenceLocation: Yup.string()
+		.oneOf(violenceGenderIdOptions.map((a) => a.value))
+		.required("Esse campo é obrigatório."),
+});
+
+export default function ViolenceGenderId() {
+	return (
+		<Step
+			validationSchema={violenceGenderIdSchema}
+			title={"Dados da violência"}
+			img={{
+				src: "/illustrations/woman-covering-ears.webp",
+				alt: "Ilustração de uma mulher de cabeça baixa tampando os ouvidos",
+			}}
+		>
+			<RadioInput
+				name="violenceGenderId"
+				options={violenceGenderIdOptions}
+				question={
+					<>
+						Qual a <Strong>identidade de gênero do(a) autor(a)</Strong> da
+						violência?
+					</>
+				}
+			/>
+		</Step>
+	);
+}

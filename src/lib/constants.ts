@@ -3,6 +3,7 @@ import {
 	MatchStatus,
 	Race,
 	SupportRequestsStatus,
+	ViolenceGenderId,
 } from "@prisma/client";
 
 export const BRAZILIAN_STATES_OPTIONS = [
@@ -317,15 +318,15 @@ export const violenceTimeOptions = [
 
 export const violenceGenderIdOptions = [
 	{
+		value: "woman",
 		name: "Mulher",
-		value: "women",
 	},
 	{
+		value: "man",
 		name: "Homem",
-		value: "men",
 	},
 	{
+		value: "non_binary",
 		name: "Pessoa não-binária",
-		value: "non-binary",
 	},
 ];

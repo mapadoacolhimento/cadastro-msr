@@ -13,4 +13,4 @@ export { default as BeginRegistration } from "./BeginRegistration";
 export { default as FinancialBlock } from "./FinancialBlock";
 export { default as ViolenceType } from "./ViolenceType";
 export { default as ViolenceTime } from "./ViolenceTime";
-export { default as PerpetratorGenderId } from "./PerpetratorGenderIdSchema";
+export { default as PerpetratorGenderId } from "./PerpetratorGenderId";

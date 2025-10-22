@@ -265,7 +265,9 @@ Cypress.Commands.add("fillViolenceTimeStep", () => {
 });
 
 Cypress.Commands.add("fillViolenceGenderIdStep", (violenceGenderId: string) => {
-	cy.contains("Qual a identidade de gênero do(a) autor(a) da?").should("exist");
+	cy.contains(
+		"Qual a identidade de gênero do(a) autor(a) da violência?"
+	).should("exist");
 	cy.findByRole("radio", { name: violenceGenderId }).click();
 });
 

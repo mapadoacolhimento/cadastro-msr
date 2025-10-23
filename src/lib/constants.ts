@@ -353,11 +353,6 @@ export const violencePerpetratorOptions = [
 	{
 		value: "formerPartner",
 		name: "Ex-parceiro(a)",
-		description: "Namorado(a), marido/esposa",
-	},
-	{
-		value: "currentPartner",
-		name: "Parceiro(a) atual",
 		description: "Ex-namorado(a), ex-marido/esposa",
 	},
 	{

@@ -10,6 +10,7 @@
 // 	violenceTime,
 // 	dateOfBirth,
 // 	supportTypes,
+// 	perpetratorGenderId,
 // } = userData;
 
 // describe("Happy path", () => {
@@ -23,13 +24,20 @@
 // 		}).as("submitRegistration");
 // 	});
 
-// 	describe("New Steps added (Desktop)", () => {
+// 	describe("Desktop", () => {
 
 // 		beforeEach(() => {
 // 			cy.viewport(1920, 1080);
 // 		});
 
-// 		it("should successfully submit the form", () => {
+// 		it("should continue to next step if all fields are filled correctly", () => {
+// 				cy.visit("/");
+// 				cy.goThroughHomePage();
+
+// 				cy.fillAllSteps(supportTypes);
+// 			});
+
+// 		it("should go back to the previous step when the back button is clicked", () => {
 // 			cy.visit("/cadastro");
 
 // 			cy.fillGenderIdentityStep(gender);
@@ -66,11 +74,25 @@
 // 			cy.findByRole("button", { name: "Continuar" }).click();
 
 // 			cy.fillViolenceTimeStep();
-// 			cy.findByRole("radio", { name: violenceTime.isolatedEpisode }).click();
-// 			cy.findByRole("button", { name: "Enviar" }).click();
+// 			cy.findByRole("button", { name: "Continuar" }).click();
 
-// 			cy.wait("@submitRegistration");
-// 			cy.contains("Cadastro realizado").should("be.visible");
+// 			cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+
+// 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
+// 			cy.contains("Dados da Violência").should("exist");
+// 		});
+// 	});
+
+// 	describe("Mobile", () => {
+// 		beforeEach(() => {
+// 			cy.viewport(390, 844);
+// 		});
+
+// 		it("should continue to next step if all fields are filled correctly", () => {
+// 				cy.visit("/");
+// 				cy.goThroughHomePage();
+
+// 				cy.fillAllSteps(supportTypes);
 // 		});
 
 // 		it("should go back to the previous step when the back button is clicked", () => {
@@ -110,63 +132,12 @@
 // 			cy.findByRole("button", { name: "Continuar" }).click();
 
 // 			cy.fillViolenceTimeStep();
+// 			cy.findByRole("button", { name: "Continuar" }).click();
+
+// 			cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
 
 // 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
-// 			cy.contains("Seus dados").should("exist");
-// 		});
-// 	});
-
-// 	describe("Mobile", () => {
-// 		before(() => {
-// 			cy.viewport(390, 844);
-// 			Cypress.env("NEXT_PUBLIC_ENABLE_NEW_STEPS", true);
-// 		});
-
-// 		it("should successfully submit the form after filling the Violence Time step", () => {
-// 			cy.visit("/cadastro");
-
-// 			cy.fillGenderIdentityStep(gender);
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.fillDateOfBirthStep(dateOfBirth);
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.fillViolenceTypeStep();
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.fillViolenceLocationStep(violenceLocation);
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.fillExternalSupportStep(externalSupport);
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.fillFinancialBlock();
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.goThroughBeginRegistrationStep();
-// 			cy.findByRole("button", { name: "Iniciar cadastro" }).click();
-
-// 			cy.fillSupportTypeStep(supportTypes);
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.fillBasicRegisterInformationStep();
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.fillGeolocationStep();
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.fillDiversityInformationStep();
-// 			cy.findByRole("button", { name: "Continuar" }).click();
-
-// 			cy.contains(
-// 				"Por quanto tempo você sofreu ou tem sofrido violência?"
-// 			).should("exist");
-
-// 			cy.findByRole("radio", { name: violenceTime.isolatedEpisode }).click();
-// 			cy.findByRole("button", { name: "Enviar" }).click();
-
-// 			cy.wait("@submitRegistration");
-// 			cy.contains("Cadastro realizado").should("be.visible");
+// 			cy.contains("Dados da Violência").should("exist");
 // 		});
 // 	});
 // });

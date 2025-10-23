@@ -5,17 +5,17 @@ import { ViolenceTime } from "../../components/MultiStepForm/Steps";
 
 describe("MultiStepForm - Steps Logic", () => {
 	describe("getFormSteps function", () => {
-		it("should return 11 steps without ViolenceTime", () => {
+		it("should return 11 steps without hidden components", () => {
 			const steps = getFormSteps();
 			expect(steps).toHaveLength(11);
 		});
 	});
 
 	describe("getHiddenStepsForm function", () => {
-		it("should return an array with one element containing 12 steps including ViolenceTime", () => {
+		it("should return an array with one element containing 13 steps including new components", () => {
 			const result = getHiddenStepsForm();
 
-			expect(result).toHaveLength(12);
+			expect(result).toHaveLength(13);
 			expect(result[11]).toStrictEqual(ViolenceTime());
 		});
 	});

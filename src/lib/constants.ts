@@ -302,6 +302,10 @@ export const violenceTimeOptions = [
 		name: "Entre 3 meses e 1 ano",
 	},
 	{
+		value: "moreThanAYear",
+		name: "Entre 1 e 3 anos",
+	},
+	{
 		value: "moreThanThreeYears",
 		name: "Entre 3 e 6 anos",
 	},
@@ -315,17 +319,17 @@ export const violenceTimeOptions = [
 	},
 ];
 
-export const genderIdViolenceOptions = [
+export const perpetratorGenderIdOptions = [
 	{
+		value: "woman",
 		name: "Mulher",
-		value: "women",
 	},
 	{
+		value: "man",
 		name: "Homem",
-		value: "men",
 	},
 	{
+		value: "non_binary",
 		name: "Pessoa não-binária",
-		value: "non-binary",
 	},
 ];

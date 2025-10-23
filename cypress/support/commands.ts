@@ -256,8 +256,6 @@ Cypress.Commands.add("fillViolenceTypeStep", () => {
 });
 
 Cypress.Commands.add("fillViolenceTimeStep", () => {
-	//Cypress.env("NEXT_PUBLIC_ENABLE_NEW_STEPS", true);
-
 	cy.contains("Por quanto tempo você sofreu ou tem sofrido violência?").should(
 		"be.visible"
 	);
@@ -265,6 +263,16 @@ Cypress.Commands.add("fillViolenceTimeStep", () => {
 		force: true,
 	});
 });
+
+Cypress.Commands.add(
+	"fillPerpetratorGenderIdStep",
+	(violenceGenderId: string) => {
+		cy.contains(
+			"Qual a identidade de gênero do(a) autor(a) da violência?"
+		).should("exist");
+		cy.findByRole("radio", { name: violenceGenderId }).click();
+	}
+);
 
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);

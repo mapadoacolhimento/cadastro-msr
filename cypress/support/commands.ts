@@ -321,16 +321,6 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillViolenceTimeStep();
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
-	cy.findByRole("button", { name: "Continuar" }).click();
-
-	cy.fillViolencePerpetratorStep();
-
 	cy.findByRole("button", { name: "Enviar" }).click();
 });
 

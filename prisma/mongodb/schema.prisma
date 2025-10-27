@@ -53,4 +53,5 @@ model MsrRegisterData {
   disability           String?
   violenceTime         String?
   perpetratorGenderId  String?
+  violencePerpetrator  String[]
 }

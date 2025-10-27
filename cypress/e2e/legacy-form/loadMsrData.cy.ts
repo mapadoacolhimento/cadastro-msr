@@ -8,7 +8,7 @@ import {
 	supportTypes,
 	dateOfBirth,
 	neighborhood,
-} from "../fixtures/userData.json";
+} from "../../fixtures/userData.json";
 
 const mockValues = {
 	gender: "cis_woman",

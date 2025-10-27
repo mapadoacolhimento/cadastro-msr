@@ -17,6 +17,7 @@ import {
 	neighborhood,
 	state,
 	city,
+	perpetratorGenderId,
 } from "../fixtures/userData.json";
 import { generateTestEmail, generateTestPhone } from "../../src/utils";
 
@@ -276,13 +277,14 @@ Cypress.Commands.add(
 
 Cypress.Commands.add("fillViolencePerpetratorStep", () => {
 	cy.contains("Quem é ou foi o(a) autor(a) da violência?").should("be.visible");
+
 	cy.findByRole("checkbox", { name: /Família Nuclear/i }).click({
 		force: true,
 	});
 	cy.findByRole("checkbox", { name: /Familiar/i }).click({
 		force: true,
 	});
-	cy.findByRole("checkbox", { name: /Parceiro(a) atual/i }).click({
+	cy.findByRole("checkbox", { name: /Parceiro\(a\) atual/i }).click({
 		force: true,
 	});
 });
@@ -319,6 +321,16 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillViolenceTimeStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillViolencePerpetratorStep();
+
 	cy.findByRole("button", { name: "Enviar" }).click();
 });
 

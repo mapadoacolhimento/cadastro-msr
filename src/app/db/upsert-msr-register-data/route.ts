@@ -15,6 +15,7 @@ import {
 	perpetratorGenderIdOptions,
 	violenceTimeOptions,
 	violenceTypeOptions,
+	violencePerpetratorOptions,
 } from "@/lib";
 import { getErrorMessage } from "@/utils";
 
@@ -65,6 +66,11 @@ const payloadSchema = Yup.object({
 	violenceTime: Yup.string().oneOf(violenceTimeOptions.map((o) => o.value)),
 	perpetratorGenderId: Yup.string().oneOf(
 		perpetratorGenderIdOptions.map((o) => o.value)
+	),
+	violencePerpetrator: Yup.array(
+		Yup.string()
+			.oneOf(violencePerpetratorOptions.map((v) => v.value))
+			.required()
 	),
 }).required();
 

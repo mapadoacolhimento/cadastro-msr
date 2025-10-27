@@ -333,3 +333,31 @@ export const perpetratorGenderIdOptions = [
 		name: "Pessoa não-binária",
 	},
 ];
+
+export const violencePerpetratorOptions = [
+	{
+		value: "nuclearFamily",
+		name: "Família Nuclear",
+		description: "Pai, mãe, irmã(o), filho(a)",
+	},
+	{
+		value: "closeFamily",
+		name: "Familiar",
+		description: "Tio(a), primo(a), cunhado(a)",
+	},
+	{
+		value: "currentPartner",
+		name: "Parceiro(a) atual",
+		description: "Namorado(a), marido/esposa",
+	},
+	{
+		value: "formerPartner",
+		name: "Ex-parceiro(a)",
+		description: "Ex-namorado(a), ex-marido/esposa",
+	},
+	{
+		value: "otherPeople",
+		name: "Outras pessoas",
+		description: "Vizinho(a), amigo(a), outros",
+	},
+];

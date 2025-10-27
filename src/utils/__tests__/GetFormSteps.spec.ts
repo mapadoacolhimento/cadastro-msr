@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { getFormSteps, getHiddenStepsForm } from "@/utils/getFormSteps";
 
 import { ViolenceTime } from "../../components/MultiStepForm/Steps";
@@ -12,10 +12,10 @@ describe("MultiStepForm - Steps Logic", () => {
 	});
 
 	describe("getHiddenStepsForm function", () => {
-		it("should return an array with one element containing 13 steps including new components", () => {
+		it("should return an array with one element containing 14 steps including new components", () => {
 			const result = getHiddenStepsForm();
 
-			expect(result).toHaveLength(13);
+			expect(result).toHaveLength(14);
 			expect(result[11]).toStrictEqual(ViolenceTime());
 		});
 	});

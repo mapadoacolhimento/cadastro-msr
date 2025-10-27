@@ -1,5 +1,5 @@
-//TODO: arquivo deve ser descomentado uma vez que todos os passos do novo cadastro estejam implementados. Até lá, é possível descomentar o teste e usá-lo
-//localmente alterando o valor da variável de ambiente setada no cypress.config
+// //TODO: arquivo deve ser descomentado uma vez que todos os passos do novo cadastro estejam implementados. Até lá, é possível descomentar o teste e usá-lo
+// //localmente alterando o valor da variável de ambiente setada no cypress.config
 
 // import userData from "../fixtures/userData.json";
 
@@ -25,17 +25,16 @@
 // 	});
 
 // 	describe("Desktop", () => {
-
 // 		beforeEach(() => {
 // 			cy.viewport(1920, 1080);
 // 		});
 
 // 		it("should continue to next step if all fields are filled correctly", () => {
-// 				cy.visit("/");
-// 				cy.goThroughHomePage();
+// 			cy.visit("/");
+// 			cy.goThroughHomePage();
 
-// 				cy.fillAllSteps(supportTypes);
-// 			});
+// 			cy.fillAllSteps(supportTypes);
+// 		});
 
 // 		it("should go back to the previous step when the back button is clicked", () => {
 // 			cy.visit("/cadastro");
@@ -77,9 +76,14 @@
 // 			cy.findByRole("button", { name: "Continuar" }).click();
 
 // 			cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+// 			cy.findByRole("button", { name: "Continuar" }).click();
 
+// 			cy.fillViolencePerpetratorStep();
 // 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
-// 			cy.contains("Dados da Violência").should("exist");
+
+// 			cy.contains(
+// 				"Qual a identidade de gênero do(a) autor(a) da violência?"
+// 			).should("exist");
 // 		});
 // 	});
 
@@ -89,10 +93,10 @@
 // 		});
 
 // 		it("should continue to next step if all fields are filled correctly", () => {
-// 				cy.visit("/");
-// 				cy.goThroughHomePage();
+// 			cy.visit("/");
+// 			cy.goThroughHomePage();
 
-// 				cy.fillAllSteps(supportTypes);
+// 			cy.fillAllSteps(supportTypes);
 // 		});
 
 // 		it("should go back to the previous step when the back button is clicked", () => {
@@ -135,9 +139,14 @@
 // 			cy.findByRole("button", { name: "Continuar" }).click();
 
 // 			cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+// 			cy.findByRole("button", { name: "Continuar" }).click();
 
+// 			cy.fillViolencePerpetratorStep();
 // 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
-// 			cy.contains("Dados da Violência").should("exist");
+
+// 			cy.contains(
+// 				"Qual a identidade de gênero do(a) autor(a) da violência?"
+// 			).should("exist");
 // 		});
 // 	});
 // });

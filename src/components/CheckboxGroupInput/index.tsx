@@ -74,7 +74,7 @@ export default function CheckboxGroupInput({
 
 	return (
 		<CheckboxGroup.Root
-			defaultValue={field.value}
+			defaultValue={field.value || []}
 			aria-labelledby={"question"}
 			id={`checkbox-group-${name}`}
 			color={"purple"}
@@ -99,7 +99,7 @@ export default function CheckboxGroupInput({
 									onClick={() => handleClick(field.value, option.value)}
 									value={option.value}
 									className={
-										field.value.includes(option.value) ? "is-checked" : ""
+										field.value?.includes(option.value) ? "is-checked" : ""
 									}
 								>
 									<Flex justify={"between"} align="center">

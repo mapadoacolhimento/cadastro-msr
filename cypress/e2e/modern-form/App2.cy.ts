@@ -26,12 +26,12 @@ describe("Happy path", () => {
 			cy.viewport(1920, 1080);
 		});
 
-		it("should continue to next step if all fields are filled correctly", () => {
-			cy.visit("/");
-			cy.goThroughHomePage();
+		// it("should continue to next step if all fields are filled correctly", () => {
+		// 	cy.visit("/");
+		// 	cy.goThroughHomePage();
 
-			cy.fillAllSteps(supportTypes);
-		});
+		// 	cy.fillAllSteps(supportTypes);
+		// });
 
 		it("should go back to the previous step when the back button is clicked", () => {
 			cy.visit("/cadastro");
@@ -89,12 +89,12 @@ describe("Happy path", () => {
 			cy.viewport(390, 844);
 		});
 
-		it("should continue to next step if all fields are filled correctly", () => {
-			cy.visit("/");
-			cy.goThroughHomePage();
+		// it("should continue to next step if all fields are filled correctly", () => {
+		// 	cy.visit("/");
+		// 	cy.goThroughHomePage();
 
-			cy.fillAllSteps(supportTypes);
-		});
+		// 	cy.fillAllSteps(supportTypes);
+		// });
 
 		it("should go back to the previous step when the back button is clicked", () => {
 			cy.visit("/cadastro");

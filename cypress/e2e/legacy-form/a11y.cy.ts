@@ -5,7 +5,7 @@ import {
 	dateOfBirth,
 	financialNeed,
 	supportTypes,
-} from "../fixtures/userData.json";
+} from "../../fixtures/userData.json";
 
 function terminalLog(violations) {
 	cy.task(

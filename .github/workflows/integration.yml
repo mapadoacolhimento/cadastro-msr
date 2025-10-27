@@ -148,10 +148,10 @@ jobs:
         node-version: [20.x]
         pnpm-version: [9.x]
         group:
-          - name: Form
+          - name: Legacy Form
             spec: "cypress/e2e/legacy-form/**/*.cy.{js,ts}"
             enableNewSteps: "false"
-          - name: New Form
+          - name: Modern Form
             spec: "cypress/e2e/modern-form/**/*.cy.{js,ts}"
             enableNewSteps: "true"
     env:

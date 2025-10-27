@@ -1,4 +1,4 @@
-import userData from "../fixtures/userData.json";
+import userData from "../../fixtures/userData.json";
 
 const {
 	gender,

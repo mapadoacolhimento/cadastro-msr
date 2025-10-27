@@ -147,9 +147,17 @@ jobs:
       matrix:
         node-version: [20.x]
         pnpm-version: [9.x]
+        group:
+          - name: Form
+            spec: "cypress/e2e/legacy-form/**/*.cy.{js,ts}"
+            enableNewSteps: "false"
+          - name: New Form
+            spec: "cypress/e2e/modern-form/**/*.cy.{js,ts}"
+            enableNewSteps: "true"
     env:
       DATABASE_URL: postgresql://user:password@localhost:5432/mapa
       MONGO_DB_URL: mongodb://root:password@localhost:27017/mapa-org?authSource=admin&replicaSet=rs0
+
     services:
       postgres:
         image: postgres
@@ -224,6 +232,7 @@ jobs:
         run: |
           cat << EOF > .env
           NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}
+          NEXT_PUBLIC_ENABLE_NEW_STEPS=${{ matrix.group.enableNewSteps }} 
           EOF
 
       - name: Push current migrations to test database
@@ -236,6 +245,7 @@ jobs:
         id: e2e
         uses: cypress-io/github-action@v6
         with:
+          spec: ${{ matrix.group.spec }}
           build: pnpm run build
           start: pnpm run start:ci
           wait-on: "http://localhost:3000"

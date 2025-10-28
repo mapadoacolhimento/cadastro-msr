@@ -356,6 +356,11 @@ export const violencePerpetratorOptions = [
 		description: "Ex-namorado(a), ex-marido/esposa",
 	},
 	{
+		value: "workColleague",
+		name: "Colega de trabalho",
+		description: "Gestor(a), chefe",
+	},
+	{
 		value: "otherPeople",
 		name: "Outras pessoas",
 		description: "Vizinho(a), amigo(a), outros",

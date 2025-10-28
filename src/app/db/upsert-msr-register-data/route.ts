@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { Gender, SupportType, Race } from "@prisma/client";
 import * as Yup from "yup";
-
+import { getErrorMessage } from "@/utils";
 import {
 	dependantsOptions,
 	employmentStatusOptions,
@@ -18,8 +18,6 @@ import {
 	violencePerpetratorOptions,
 	livesWithPerpetratorOptions,
 } from "@/lib";
-import { getErrorMessage } from "@/utils";
-import { LivesWithPerpetrator } from "@/components/MultiStepForm/Steps";
 
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),

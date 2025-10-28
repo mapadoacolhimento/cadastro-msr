@@ -366,3 +366,18 @@ export const violencePerpetratorOptions = [
 		description: "Vizinho(a), amigo(a), outros",
 	},
 ];
+
+export const livesWithPerpetratorOptions = [
+	{
+		value: "yes",
+		name: "Sim",
+	},
+	{
+		value: "no",
+		name: "Não",
+	},
+	{
+		value: "never",
+		name: "Nunca morei com o(a) autor(a) da violência",
+	},
+];

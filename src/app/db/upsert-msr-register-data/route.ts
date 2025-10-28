@@ -16,8 +16,10 @@ import {
 	violenceTimeOptions,
 	violenceTypeOptions,
 	violencePerpetratorOptions,
+	livesWithPerpetratorOptions,
 } from "@/lib";
 import { getErrorMessage } from "@/utils";
+import { LivesWithPerpetrator } from "@/components/MultiStepForm/Steps";
 
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
@@ -71,6 +73,9 @@ const payloadSchema = Yup.object({
 		Yup.string()
 			.oneOf(violencePerpetratorOptions.map((v) => v.value))
 			.required()
+	),
+	LivesWithPerpetrator: Yup.array().of(
+		Yup.string().oneOf(livesWithPerpetratorOptions.map((o) => o.value))
 	),
 }).required();
 

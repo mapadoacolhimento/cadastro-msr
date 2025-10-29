@@ -4,12 +4,9 @@
 import "@testing-library/cypress/add-commands";
 import {
 	firstName,
-	phone,
-	hasDisability,
 	acceptOnlineSupport,
 	colorOption,
 	gender,
-	genderViolence,
 	externalSupport,
 	violenceLocation,
 	dateOfBirth,
@@ -17,7 +14,7 @@ import {
 	neighborhood,
 	state,
 	city,
-	perpetratorGenderId,
+	livesWithPerpetrator,
 } from "../fixtures/userData.json";
 import { generateTestEmail, generateTestPhone } from "../../src/utils";
 
@@ -103,17 +100,6 @@ Cypress.Commands.add("fillAcceptsOnlineSupportStep", () => {
 		name: acceptOnlineSupport.yes,
 	}).click();
 });
-
-Cypress.Commands.add(
-	"fillSupportTypeStep",
-	(supportType: Record<string, string>) => {
-		cy.contains("Que tipo de acolhimento você precisa?").should("exist");
-		if (supportType.psychological)
-			cy.findByLabelText(supportType.psychological).click({ force: true });
-		if (supportType.legal)
-			cy.findByLabelText(supportType.legal).click({ force: true });
-	}
-);
 
 Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
 	cy.contains("Você sofreu ou está sofrendo violência de gênero?").should(
@@ -288,6 +274,14 @@ Cypress.Commands.add("fillViolencePerpetratorStep", () => {
 		force: true,
 	});
 });
+
+Cypress.Commands.add(
+	"fillLivesWithPerpetratorStep",
+	(livesWithPerpetrator: string) => {
+		cy.contains("Você reside com o(a) autor(a) da violência?").should("exist");
+		cy.findByRole("radio", { name: livesWithPerpetrator }).click();
+	}
+);
 
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);

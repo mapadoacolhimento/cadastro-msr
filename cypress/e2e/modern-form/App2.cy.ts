@@ -77,10 +77,13 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillViolencePerpetratorStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillLivesWithPerpetratorStep(livesWithPerpetrator);
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 			cy.contains(
-				"Qual a identidade de gênero do(a) autor(a) da violência?"
+				"Quem é ou foi o(a) autor(a) da violência? (Selecione todas as opções que se aplicam)"
 			).should("exist");
 		});
 	});
@@ -146,7 +149,7 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 			cy.contains(
-				"Quem é ou foi o(aO autor(a) da violência? (Selecione todas as opções que se aplicam)"
+				"Quem é ou foi o(a) autor(a) da violência? (Selecione todas as opções que se aplicam)"
 			).should("exist");
 		});
 	});

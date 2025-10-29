@@ -5,7 +5,7 @@ import { RadioInput } from "@/components";
 import { livesWithPerpetratorOptions } from "@/constants";
 
 const livesWithPerpetratorSchema = Yup.object({
-	gender: Yup.string()
+	livesWithPerpetrator: Yup.string()
 		.oneOf(livesWithPerpetratorOptions.map((o) => o.value))
 		.required("Esse campo é obrigatório."),
 });

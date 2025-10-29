@@ -13,6 +13,7 @@ import {
 	ViolenceTime,
 	PerpetratorGenderId,
 	ViolencePerpetrator,
+	LivesWithPerpetrator,
 } from "../components/MultiStepForm/Steps";
 
 export function getFormSteps() {
@@ -46,5 +47,6 @@ export function getHiddenStepsForm() {
 		ViolenceTime(),
 		PerpetratorGenderId(),
 		ViolencePerpetrator(),
+		LivesWithPerpetrator(),
 	];
 }

@@ -22,6 +22,7 @@ declare namespace Cypress {
 		fillDiversityInformationStep(msrEmail?: string): Chainable<any>;
 		fillDateOfBirthStep(dateOfBirth: string): Chainable<any>;
 		fillAllSteps(supportType: Record<string, string>): Chainable<any>;
+		fillAllStepsApp2(supportType: Record<string, string>): Chainable<any>;
 		checkForaCriteriosPage(): Chainable<any>;
 		goThroughBeginRegistrationStep(): Chainable<any>;
 		fillFinancialBlock(): Chainable<any>;

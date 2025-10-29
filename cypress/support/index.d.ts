@@ -22,6 +22,7 @@ declare namespace Cypress {
 		fillDiversityInformationStep(msrEmail?: string): Chainable<any>;
 		fillDateOfBirthStep(dateOfBirth: string): Chainable<any>;
 		fillAllSteps(supportType: Record<string, string>): Chainable<any>;
+		fillAllStepsApp2(supportType: Record<string, string>): Chainable<any>;
 		checkForaCriteriosPage(): Chainable<any>;
 		goThroughBeginRegistrationStep(): Chainable<any>;
 		fillFinancialBlock(): Chainable<any>;
@@ -38,5 +39,6 @@ declare namespace Cypress {
 		fillViolenceTimeStep(): Chainable<any>;
 		fillPerpetratorGenderIdStep(perpetratorGenderId: string): Chainable<any>;
 		fillViolencePerpetratorStep(): Chainable<any>;
+		fillLivesWithPerpetratorStep(livesWithPerpetrator: string): Chainable<any>;
 	}
 }

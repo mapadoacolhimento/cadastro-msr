@@ -15,3 +15,4 @@ export { default as ViolenceType } from "./ViolenceType";
 export { default as ViolenceTime } from "./ViolenceTime";
 export { default as PerpetratorGenderId } from "./PerpetratorGenderId";
 export { default as ViolencePerpetrator } from "./ViolencePerpetrator";
+export { default as LivesWithPerpetrator } from "./LivesWithPerpetrator";

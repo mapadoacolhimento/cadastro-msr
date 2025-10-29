@@ -4,12 +4,9 @@
 import "@testing-library/cypress/add-commands";
 import {
 	firstName,
-	phone,
-	hasDisability,
 	acceptOnlineSupport,
 	colorOption,
 	gender,
-	genderViolence,
 	externalSupport,
 	violenceLocation,
 	dateOfBirth,
@@ -18,6 +15,7 @@ import {
 	state,
 	city,
 	perpetratorGenderId,
+	livesWithPerpetrator,
 } from "../fixtures/userData.json";
 import { generateTestEmail, generateTestPhone } from "../../src/utils";
 
@@ -289,6 +287,14 @@ Cypress.Commands.add("fillViolencePerpetratorStep", () => {
 	});
 });
 
+Cypress.Commands.add(
+	"fillLivesWithPerpetratorStep",
+	(livesWithPerpetrator: string) => {
+		cy.contains("Você reside com o(a) autor(a) da violência?").should("exist");
+		cy.findByRole("radio", { name: livesWithPerpetrator }).click();
+	}
+);
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();
@@ -323,5 +329,55 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillDiversityInformationStep();
 	cy.findByRole("button", { name: "Enviar" }).click();
 });
+
+Cypress.Commands.add(
+	"fillAllStepsApp2",
+	(supportTypes: Record<string, string>) => {
+		cy.fillGenderIdentityStep(gender);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDateOfBirthStep(dateOfBirth);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillViolenceTypeStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillViolenceLocationStep(violenceLocation);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillExternalSupportStep(externalSupport);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillFinancialBlock();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.goThroughBeginRegistrationStep();
+		cy.findByRole("button", { name: "Iniciar cadastro" }).click();
+
+		cy.fillSupportTypeStep(supportTypes);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillBasicRegisterInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillGeolocationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillDiversityInformationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillViolenceTimeStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillViolencePerpetratorStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillLivesWithPerpetratorStep(livesWithPerpetrator);
+		cy.findByRole("button", { name: "Enviar" }).click();
+	}
+);
 
 export {};

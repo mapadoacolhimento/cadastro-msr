@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { Gender, SupportType, Race } from "@prisma/client";
 import * as Yup from "yup";
-
+import { getErrorMessage } from "@/utils";
 import {
 	dependantsOptions,
 	employmentStatusOptions,
@@ -16,8 +16,8 @@ import {
 	violenceTimeOptions,
 	violenceTypeOptions,
 	violencePerpetratorOptions,
+	livesWithPerpetratorOptions,
 } from "@/lib";
-import { getErrorMessage } from "@/utils";
 
 const payloadSchema = Yup.object({
 	email: Yup.string().email().required(),
@@ -71,6 +71,9 @@ const payloadSchema = Yup.object({
 		Yup.string()
 			.oneOf(violencePerpetratorOptions.map((v) => v.value))
 			.required()
+	),
+	livesWithPerpetrator: Yup.array().of(
+		Yup.string().oneOf(livesWithPerpetratorOptions.map((o) => o.value))
 	),
 }).required();
 

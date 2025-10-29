@@ -102,6 +102,17 @@ Cypress.Commands.add("fillAcceptsOnlineSupportStep", () => {
 	}).click();
 });
 
+Cypress.Commands.add(
+	"fillSupportTypeStep",
+	(supportType: Record<string, string>) => {
+		cy.contains("Que tipo de acolhimento você precisa?").should("exist");
+		if (supportType.psychological)
+			cy.findByLabelText(supportType.psychological).click({ force: true });
+		if (supportType.legal)
+			cy.findByLabelText(supportType.legal).click({ force: true });
+	}
+);
+
 Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
 	cy.contains("Você sofreu ou está sofrendo violência de gênero?").should(
 		"exist"

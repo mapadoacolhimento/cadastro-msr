@@ -8,6 +8,7 @@ const {
 	dateOfBirth,
 	supportTypes,
 	perpetratorGenderId,
+	livesWithPerpetrator,
 } = userData;
 
 describe("Happy path", () => {
@@ -26,12 +27,12 @@ describe("Happy path", () => {
 			cy.viewport(1920, 1080);
 		});
 
-		// it("should continue to next step if all fields are filled correctly", () => {
-		// 	cy.visit("/");
-		// 	cy.goThroughHomePage();
+		it("should continue to next step if all fields are filled correctly", () => {
+			cy.visit("/");
+			cy.goThroughHomePage();
 
-		// 	cy.fillAllSteps(supportTypes);
-		// });
+			cy.fillAllStepsApp2(supportTypes);
+		});
 
 		it("should go back to the previous step when the back button is clicked", () => {
 			cy.visit("/cadastro");
@@ -89,12 +90,12 @@ describe("Happy path", () => {
 			cy.viewport(390, 844);
 		});
 
-		// it("should continue to next step if all fields are filled correctly", () => {
-		// 	cy.visit("/");
-		// 	cy.goThroughHomePage();
+		it("should continue to next step if all fields are filled correctly", () => {
+			cy.visit("/");
+			cy.goThroughHomePage();
 
-		// 	cy.fillAllSteps(supportTypes);
-		// });
+			cy.fillAllStepsApp2(supportTypes);
+		});
 
 		it("should go back to the previous step when the back button is clicked", () => {
 			cy.visit("/cadastro");
@@ -139,10 +140,13 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillViolencePerpetratorStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillLivesWithPerpetratorStep(livesWithPerpetrator);
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 			cy.contains(
-				"Qual a identidade de gênero do(a) autor(a) da violência?"
+				"Quem é ou foi o(aO autor(a) da violência? (Selecione todas as opções que se aplicam)"
 			).should("exist");
 		});
 	});

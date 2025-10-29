@@ -25,7 +25,7 @@ export default function LivesWithPerpetrator() {
 				options={livesWithPerpetratorOptions}
 				question={
 					<>
-						Você <Strong>reside com o (a) autor(a)</Strong> da violência?
+						Você <Strong>reside com o(a) autor(a)</Strong> da violência?
 					</>
 				}
 			/>

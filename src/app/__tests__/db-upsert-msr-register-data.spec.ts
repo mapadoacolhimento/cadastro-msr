@@ -9,7 +9,7 @@ const mockMsrIncompleteData = {
 	gender: "cis_woman",
 	dateOfBirth: new Date("1990-10-10").toISOString(),
 	genderViolence: "yes",
-	violenceLocation: "yes",
+	violenceOccurredInBrazilStep: "yes",
 	externalSupport: ["no"],
 	financialNeed: "yes",
 	monthlyIncomeRange: null,

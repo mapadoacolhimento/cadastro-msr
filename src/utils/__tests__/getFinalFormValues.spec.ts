@@ -1,3 +1,4 @@
+import { ViolenceOccurredInBrazil } from "@/components/MultiStepForm/Steps";
 import getFinalFormValues from "../getFinalFormValues";
 
 const currentValues = {
@@ -12,7 +13,7 @@ const currentValues = {
 	supportType: ["legal", "psychological"],
 	gender: "trans_woman",
 	genderViolence: "",
-	violenceLocation: "yes",
+	ViolenceOccurredInBrazil: "yes",
 	externalSupport: "no",
 	financialNeed: "yes",
 	terms: false,
@@ -28,7 +29,7 @@ const loadValues = {
 	gender: "cis_woman",
 	dateOfBirth: new Date("1990-10-10").toISOString(),
 	genderViolence: "yes",
-	violenceLocation: "yes",
+	ViolenceOccurredInBrazil: "yes",
 	externalSupport: "no",
 	financialNeed: "yes",
 	supportType: ["legal"],

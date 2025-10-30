@@ -17,7 +17,7 @@
 		"legal": "Acolhimento jurídico"
 	},
 	"genderViolence": "Sim, sofro ou sofri violência",
-	"violenceLocation": "Sim, dentro do território brasileiro",
+	"violenceOccurredInBrazil": "Sim, dentro do território brasileiro",
 	"externalSupport": ["Não estou sendo acompanhada"],
 	"financialNeed": "Sim",
 	"zipcode": "12345678",

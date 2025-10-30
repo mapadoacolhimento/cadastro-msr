@@ -15,7 +15,7 @@ declare namespace Cypress {
 		fillAcceptsOnlineSupportStep(): Chainable<any>;
 		fillSupportTypeStep(supportType: Record<string, string>): Chainable<any>;
 		fillGenderViolenceStep(option: string): Chainable<any>;
-		fillViolenceLocationStep(option: string): Chainable<any>;
+		fillViolenceOccurredInBrazilStep(option: string): Chainable<any>;
 		fillExternalSupportStep(option: string[]): Chainable<any>;
 		fillFinancialNeedStep(option: string): Chainable<any>;
 		fillGeolocationStep(): Chainable<any>;

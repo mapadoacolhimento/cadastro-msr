@@ -3,18 +3,18 @@ import { Strong } from "@radix-ui/themes";
 
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
-import { violenceLocationOptions } from "@/constants";
+import { violenceOccurredInBrazilOptions } from "@/constants";
 import type { Values } from "@/types";
 
-const violenceLocationSchema = Yup.object({
-	violenceLocation: Yup.string()
-		.oneOf(violenceLocationOptions.map((a) => a.value))
+const violenceOccurredInBrazilSchema = Yup.object({
+	violenceOccurredInBrazil: Yup.string()
+		.oneOf(violenceOccurredInBrazilOptions.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
 });
 
-export default function ViolenceLocation() {
+export default function ViolenceOccurredInBrazil() {
 	async function handleSubmit(values: Values) {
-		const violenceOutsideBrazil = values.violenceLocation === "no";
+		const violenceOutsideBrazil = values.violenceOccurredInBrazil === "no";
 		if (violenceOutsideBrazil) {
 			return {
 				redirectTo: "/fora-criterios",
@@ -24,7 +24,7 @@ export default function ViolenceLocation() {
 	return (
 		<Step
 			onSubmit={handleSubmit}
-			validationSchema={violenceLocationSchema}
+			validationSchema={violenceOccurredInBrazilSchema}
 			title={"Sobre a violência"}
 			img={{
 				src: "/illustrations/woman-covering-ears.webp",
@@ -32,8 +32,8 @@ export default function ViolenceLocation() {
 			}}
 		>
 			<RadioInput
-				name="violenceLocation"
-				options={violenceLocationOptions}
+				name="violenceOccurredInBrazil"
+				options={violenceOccurredInBrazilOptions}
 				question={
 					<>
 						A violência ocorreu <Strong>no Brasil</Strong>?

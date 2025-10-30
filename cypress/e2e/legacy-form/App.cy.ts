@@ -4,7 +4,7 @@ const {
 	gender,
 	genderViolence,
 	externalSupport,
-	violenceLocation,
+	violenceOccurredInBrazil,
 	supportTypes,
 	dateOfBirth,
 } = userData;
@@ -121,7 +121,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillViolenceTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceLocationStep("Não, aconteceu em outro país");
+		cy.fillViolenceOccurredInBrazilStep("Não, aconteceu em outro país");
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.url().should("include", "/fora-criterios");
@@ -156,7 +156,7 @@ describe("When MSR does not meet the criteria", () => {
 		cy.fillViolenceTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceLocationStep(violenceLocation);
+		cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep([
@@ -181,7 +181,7 @@ describe("When MSR does not meet the criteria", () => {
 			cy.fillViolenceTypeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillViolenceLocationStep(violenceLocation);
+			cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillExternalSupportStep(externalSupport);

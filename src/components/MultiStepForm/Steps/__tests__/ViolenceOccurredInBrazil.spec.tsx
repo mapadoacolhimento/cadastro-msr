@@ -3,10 +3,10 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
 
-import ViolenceLocation from "../ViolenceLocation";
+import ViolenceOccurredInBrazil from "../ViolenceOccurredInBrazil";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import { sleep } from "@/utils";
-import { violenceLocationOptions } from "@/constants";
+import { violenceOccurredInBrazilOptions } from "@/constants";
 import { type Values } from "@/types";
 
 const setup = () => {
@@ -17,20 +17,20 @@ const setup = () => {
 			}
 			initialValues={
 				{
-					violenceLocation: "",
+					violenceOccurredInBrazil: "",
 				} as Values
 			}
 		>
-			{ViolenceLocation()}
+			{ViolenceOccurredInBrazil()}
 		</MultiStepFormWrapper>
 	);
 };
 
-describe("<ViolenceLocation />", () => {
+describe("<ViolenceOccurredInBrazil />", () => {
 	it("should render fields", () => {
 		setup();
 
-		violenceLocationOptions.forEach((option) => {
+		violenceOccurredInBrazilOptions.forEach((option) => {
 			const optionElement = screen.getByRole("radio", { name: option.name });
 			expect(optionElement).toBeInTheDocument();
 		});

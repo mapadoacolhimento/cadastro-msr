@@ -4,7 +4,7 @@ export { default as AcceptsOnlineSupport } from "./AcceptsOnlineSupport";
 export { default as SupportType } from "./SupportType";
 export { default as GenderIdentity } from "./GenderIdentity";
 export { default as GenderViolence } from "./GenderViolence";
-export { default as ViolenceLocation } from "./ViolenceLocation";
+export { default as ViolenceOccurredInBrazil } from "./ViolenceOccurredInBrazil";
 export { default as ExternalSupport } from "./ExternalSupport";
 export { default as DateOfBirth } from "./DateOfBirth";
 export { default as Geolocation } from "./Geolocation";

@@ -8,7 +8,7 @@ import {
 	colorOption,
 	gender,
 	externalSupport,
-	violenceLocation,
+	violenceOccurredInBrazil,
 	dateOfBirth,
 	zipcode,
 	neighborhood,
@@ -120,7 +120,7 @@ Cypress.Commands.add("fillGenderViolenceStep", (option: string) => {
 	cy.findByRole("radio", { name: option }).click();
 });
 
-Cypress.Commands.add("fillViolenceLocationStep", (option: string) => {
+Cypress.Commands.add("fillViolenceOccurredInBrazilStep", (option: string) => {
 	cy.contains("A violência ocorreu no Brasil?").should("exist");
 	cy.findByLabelText(option).click();
 });
@@ -305,7 +305,7 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillViolenceTypeStep();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceLocationStep(violenceLocation);
+	cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillExternalSupportStep(externalSupport);
@@ -342,7 +342,7 @@ Cypress.Commands.add(
 		cy.fillViolenceTypeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillViolenceLocationStep(violenceLocation);
+		cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillExternalSupportStep(externalSupport);

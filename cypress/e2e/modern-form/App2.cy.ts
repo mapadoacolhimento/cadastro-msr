@@ -3,7 +3,7 @@ import userData from "../../fixtures/userData.json";
 const {
 	gender,
 	externalSupport,
-	violenceLocation,
+	violenceOccurredInBrazil,
 	violenceTime,
 	dateOfBirth,
 	supportTypes,
@@ -46,7 +46,7 @@ describe("Happy path", () => {
 			cy.fillViolenceTypeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillViolenceLocationStep(violenceLocation);
+			cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillExternalSupportStep(externalSupport);
@@ -112,7 +112,7 @@ describe("Happy path", () => {
 			cy.fillViolenceTypeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillViolenceLocationStep(violenceLocation);
+			cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillExternalSupportStep(externalSupport);

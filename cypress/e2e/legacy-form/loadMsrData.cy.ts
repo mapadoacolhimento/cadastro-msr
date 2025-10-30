@@ -4,7 +4,7 @@ import {
 	gender,
 	genderViolence,
 	externalSupport,
-	violenceLocation,
+	violenceOccurredInBrazil,
 	supportTypes,
 	dateOfBirth,
 	neighborhood,
@@ -14,7 +14,7 @@ const mockValues = {
 	gender: "cis_woman",
 	dateOfBirth: new Date("1996-11-18").toISOString(),
 	genderViolence: "yes",
-	violenceLocation: "yes",
+	violenceOccurredInBrazil: "yes",
 	externalSupport: ["no"],
 	financialNeed: "yes",
 	supportType: ["psychological", "legal"],
@@ -56,7 +56,7 @@ it("should fill addres information in the fields in the following step after loa
 	cy.fillViolenceTypeStep();
 	cy.findByRole("button", { name: "Continuar" }).click();
 
-	cy.fillViolenceLocationStep(violenceLocation);
+	cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillExternalSupportStep(externalSupport);

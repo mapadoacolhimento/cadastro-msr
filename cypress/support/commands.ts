@@ -295,6 +295,16 @@ Cypress.Commands.add(
 	}
 );
 
+Cypress.Commands.add("fillViolenceLocationStep", () => {
+	cy.contains("Onde ocorreu a violência?").should("be.visible");
+	cy.findByRole("checkbox", { name: /Ambiente doméstico/i }).click({
+		force: true,
+	});
+	cy.findByRole("checkbox", { name: /Ambiente de trabalho/i }).click({
+		force: true,
+	});
+});
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();

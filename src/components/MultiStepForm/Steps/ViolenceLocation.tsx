@@ -5,7 +5,7 @@ import CheckboxGroupInput from "../../CheckboxGroupInput";
 import { violenceLocationOptions } from "@/constants";
 
 const violenceLocationSchema = Yup.object({
-	violenceLocationOptions: Yup.array()
+	violenceLocation: Yup.array()
 		.of(Yup.string().oneOf(violenceLocationOptions.map((o) => o.value)))
 		.min(1, "Selecione uma ou mais opções.")
 		.required("Selecione uma ou mais opções."),
@@ -22,7 +22,7 @@ export default function ViolenceLocation() {
 			}}
 		>
 			<CheckboxGroupInput
-				name="violenceLocation"
+				name={"violenceLocation"}
 				options={violenceLocationOptions}
 				question={
 					<>

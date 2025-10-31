@@ -69,7 +69,7 @@ export default function MultiStepForm() {
 				perpetratorGenderId: "",
 				violencePerpetrator: [],
 				livesWithPerpetrator: "",
-				violenceLocation: "",
+				violenceLocation: [],
 			}}
 			onSubmit={onSubmit}
 		>

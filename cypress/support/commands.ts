@@ -386,6 +386,9 @@ Cypress.Commands.add(
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillLivesWithPerpetratorStep(livesWithPerpetrator);
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillViolenceLocationStep();
 		cy.findByRole("button", { name: "Enviar" }).click();
 	}
 );

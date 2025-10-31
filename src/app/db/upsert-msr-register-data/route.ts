@@ -17,6 +17,7 @@ import {
 	violenceTypeOptions,
 	violencePerpetratorOptions,
 	livesWithPerpetratorOptions,
+	violenceLocationOptions,
 } from "@/lib";
 
 const payloadSchema = Yup.object({
@@ -74,6 +75,9 @@ const payloadSchema = Yup.object({
 	),
 	livesWithPerpetrator: Yup.array().of(
 		Yup.string().oneOf(livesWithPerpetratorOptions.map((o) => o.value))
+	),
+	violenceLocation: Yup.array().of(
+		Yup.string().oneOf(violenceLocationOptions.map((o) => o.value))
 	),
 }).required();
 

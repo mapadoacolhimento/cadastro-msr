@@ -41,5 +41,11 @@
 		"formerPartner": "Ex-parceiro(a)",
 		"otherPeople": "Outras pessoas"
 	},
-	"livesWithPerpetrator": "Não"
+	"livesWithPerpetrator": "Não",
+	"violenceLocation": {
+		"homeSpace": "Ambiente Doméstico",
+		"publicSpace": "Ambiente Público",
+		"workSpace": "Ambiente de trabalho",
+		"internetSpace": "Internet/redes sociais"
+	}
 }

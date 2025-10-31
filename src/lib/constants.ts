@@ -381,3 +381,22 @@ export const livesWithPerpetratorOptions = [
 		name: "Nunca morei com o(a) autor(a) da violência",
 	},
 ];
+
+export const violenceLocationOptions = [
+	{
+		value: "homeSpace",
+		name: "Ambiente Doméstico",
+	},
+	{
+		value: "publicSpace",
+		name: "Ambiente Público",
+	},
+	{
+		value: "workSpace",
+		name: "Ambiente de trabalho",
+	},
+	{
+		value: "internetSpace",
+		name: "Internet/redes sociais",
+	},
+];

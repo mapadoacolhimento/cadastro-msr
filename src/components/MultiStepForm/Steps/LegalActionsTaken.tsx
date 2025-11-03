@@ -26,7 +26,7 @@ export default function ViolenceLocation() {
 				options={legalActionsTakenOptions}
 				question={
 					<>
-						Foram tomadas <Strong>provedências jurídicas</Strong>?{" "}
+						Foram tomadas <Strong>providências jurídicas</Strong>?{" "}
 						<em>(Selecione todas as opções que se aplicam)</em>
 					</>
 				}

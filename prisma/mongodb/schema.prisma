@@ -30,7 +30,6 @@ model MsrRegisterData {
   supportType              SupportType[]
   gender                   String?
   genderViolence           String?
-  violenceLocation         String?
   violenceOccurredInBrazil String?
   externalSupport          String[]
   financialNeed            String?
@@ -56,4 +55,5 @@ model MsrRegisterData {
   perpetratorGenderId      String?
   violencePerpetrator      String[]
   livesWithPerpetrator     String?
+  violenceLocation         String[]
 }

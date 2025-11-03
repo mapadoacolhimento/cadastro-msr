@@ -15,7 +15,7 @@ describe("MultiStepForm - Steps Logic", () => {
 		it("should return an array with one element containing 17 steps including new components", () => {
 			const result = getHiddenStepsForm();
 
-			expect(result).toHaveLength(17);
+			expect(result).toHaveLength(18);
 			expect(result[11]).toStrictEqual(ViolenceTime());
 		});
 	});

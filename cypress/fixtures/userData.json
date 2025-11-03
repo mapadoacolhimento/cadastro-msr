@@ -47,5 +47,9 @@
 		"publicSpace": "Ambiente Público",
 		"workSpace": "Ambiente de trabalho",
 		"internetSpace": "Internet/redes sociais"
+	},
+	"policeReportDifficulty": {
+		"yes": "Sim",
+		"no": "Não"
 	}
 }

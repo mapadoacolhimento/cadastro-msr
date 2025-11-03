@@ -400,3 +400,14 @@ export const violenceLocationOptions = [
 		name: "Internet/redes sociais",
 	},
 ];
+
+export const policeReportDifficultyOptions = [
+	{
+		value: "yes",
+		name: "Sim",
+	},
+	{
+		value: "no",
+		name: "Não",
+	},
+];

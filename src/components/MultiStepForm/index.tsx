@@ -70,6 +70,7 @@ export default function MultiStepForm() {
 				violencePerpetrator: [],
 				livesWithPerpetrator: "",
 				violenceLocation: [],
+				policeReportDifficulty: "",
 			}}
 			onSubmit={onSubmit}
 		>

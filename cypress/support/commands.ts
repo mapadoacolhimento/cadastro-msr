@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
-
+import { generateTestEmail, generateTestPhone } from "../../src/utils";
 import "@testing-library/cypress/add-commands";
 import {
 	firstName,
@@ -16,8 +16,8 @@ import {
 	city,
 	perpetratorGenderId,
 	livesWithPerpetrator,
+	policeReportDifficulty,
 } from "../fixtures/userData.json";
-import { generateTestEmail, generateTestPhone } from "../../src/utils";
 
 Cypress.Commands.add("goThroughHomePage", () => {
 	cy.findByRole("link", { name: "Quero ser acolhida" }).click();
@@ -305,6 +305,18 @@ Cypress.Commands.add("fillViolenceLocationStep", () => {
 	});
 });
 
+Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
+	cy.findByRole("heading", { name: "Dados da Violência" }).should("exist");
+	cy.contains(
+		"A acolhida teve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência?"
+	).should("exist");
+
+	cy.findByRole("radio", { name: policeReportDifficulty.yes }).should("exist");
+	cy.findByRole("radio", { name: policeReportDifficulty.no }).should("exist");
+
+	cy.findByRole("radio", { name: policeReportDifficulty.yes }).click();
+});
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();
@@ -389,6 +401,9 @@ Cypress.Commands.add(
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillViolenceLocationStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillPoliceReportDifficultyStep();
 		cy.findByRole("button", { name: "Enviar" }).click();
 	}
 );

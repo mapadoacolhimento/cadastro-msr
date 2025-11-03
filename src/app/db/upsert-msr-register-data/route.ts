@@ -79,6 +79,7 @@ const payloadSchema = Yup.object({
 	violenceLocation: Yup.array().of(
 		Yup.string().oneOf(violenceLocationOptions.map((o) => o.value))
 	),
+	policeReportDifficulty: Yup.string(),
 }).required();
 
 export async function POST(request: NextRequest) {

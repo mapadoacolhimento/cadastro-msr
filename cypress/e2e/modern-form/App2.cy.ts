@@ -86,10 +86,13 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillPoliceReportDifficultyStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillLegalActionsTakenStep();
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 			cy.contains(
-				"Onde ocorreu a violência? (Selecione todas as opções que se aplicam)"
+				"A acolhida teve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência?"
 			).should("exist");
 		});
 	});
@@ -158,10 +161,13 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillPoliceReportDifficultyStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillLegalActionsTakenStep();
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 			cy.contains(
-				"Onde ocorreu a violência? (Selecione todas as opções que se aplicam)"
+				"A acolhida teve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência?"
 			).should("exist");
 		});
 	});

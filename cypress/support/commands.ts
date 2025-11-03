@@ -317,6 +317,18 @@ Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
 	cy.findByRole("radio", { name: policeReportDifficulty.yes }).click();
 });
 
+Cypress.Commands.add("fillLegalActionsTakenStep", () => {
+	cy.contains(
+		"Foram tomadas providências jurídicas? (Selecione todas as opções que se aplicam)"
+	).should("be.visible");
+	cy.findByRole("checkbox", { name: /Inquérito policial/i }).click({
+		force: true,
+	});
+	cy.findByRole("checkbox", { name: /Processo trabalhista/i }).click({
+		force: true,
+	});
+});
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();

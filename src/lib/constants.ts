@@ -411,3 +411,30 @@ export const policeReportDifficultyOptions = [
 		name: "Não",
 	},
 ];
+
+export const legalActionsTakenOptions = [
+	{
+		value: "physicalExamination",
+		name: "Exame de corpo delito (IML)",
+	},
+	{
+		value: "policeInquiry",
+		name: "Inquérito Policial",
+	},
+	{
+		value: "criminalCase",
+		name: "Processo penal/criminal",
+	},
+	{
+		value: "civilCase",
+		name: "Processo cível (direito e família)",
+	},
+	{
+		value: "labourCase",
+		name: "Processo trabalhista",
+	},
+	{
+		value: "noneTaken",
+		name: "Nenhuma providência foi tomada",
+	},
+];

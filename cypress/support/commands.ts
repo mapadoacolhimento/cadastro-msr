@@ -416,6 +416,9 @@ Cypress.Commands.add(
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillPoliceReportDifficultyStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillLegalActionsTakenStep();
 		cy.findByRole("button", { name: "Enviar" }).click();
 	}
 );

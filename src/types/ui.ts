@@ -61,6 +61,7 @@ export interface Values {
 	livesWithPerpetrator: string;
 	violenceLocation: string[];
 	policeReportDifficulty: string;
+	legalActionsTaken: string[];
 }
 
 export type SupportRequestData = Awaited<

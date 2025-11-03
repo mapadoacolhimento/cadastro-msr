@@ -42,5 +42,6 @@ declare namespace Cypress {
 		fillLivesWithPerpetratorStep(livesWithPerpetrator: string): Chainable<any>;
 		fillViolenceLocationStep(): Chainable<any>;
 		fillPoliceReportDifficultyStep(): Chainable<any>;
+		fillLegalActionsTakenStep(): Chainable<any>;
 	}
 }

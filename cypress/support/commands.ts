@@ -308,7 +308,7 @@ Cypress.Commands.add("fillViolenceLocationStep", () => {
 Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
 	cy.findByRole("heading", { name: "Dados da Violência" }).should("exist");
 	cy.contains(
-		"A acolhida teve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência?"
+		"Houve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência?"
 	).should("exist");
 
 	cy.findByRole("radio", { name: policeReportDifficulty.yes }).should("exist");

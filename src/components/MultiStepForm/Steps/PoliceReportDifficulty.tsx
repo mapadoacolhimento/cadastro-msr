@@ -24,8 +24,8 @@ export default function PoliceReportDifficulty() {
 				options={policeReportDifficultyOptions}
 				question={
 					<>
-						A acolhida teve dificuldade para solicitar medida protetiva e/ou
-						denunciar e/ou registrar um boletim de ocorrência?
+						Houve dificuldade para solicitar medida protetiva e/ou denunciar
+						e/ou registrar um boletim de ocorrência?
 					</>
 				}
 			/>

@@ -415,10 +415,10 @@ Cypress.Commands.add(
 		cy.fillViolenceLocationStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillPoliceReportDifficultyStep();
+		cy.fillLegalActionsTakenStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillLegalActionsTakenStep();
+		cy.fillPoliceReportDifficultyStep();
 		cy.findByRole("button", { name: "Enviar" }).click();
 	}
 );

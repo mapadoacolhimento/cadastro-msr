@@ -52,7 +52,7 @@ export function getHiddenStepsForm() {
 		ViolencePerpetrator(),
 		LivesWithPerpetrator(),
 		ViolenceLocation(),
-		PoliceReportDifficulty(),
 		LegalActionsTaken(),
+		PoliceReportDifficulty(),
 	];
 }

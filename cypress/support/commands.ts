@@ -306,15 +306,20 @@ Cypress.Commands.add("fillViolenceLocationStep", () => {
 });
 
 Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
-	cy.findByRole("heading", { name: "Dados da Violência" }).should("exist");
 	cy.contains(
 		"Houve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência?"
-	).should("exist");
+	).should("be.visible");
 
-	cy.findByRole("radio", { name: policeReportDifficulty.yes }).should("exist");
-	cy.findByRole("radio", { name: policeReportDifficulty.no }).should("exist");
-
-	cy.findByRole("radio", { name: policeReportDifficulty.yes }).click();
+	cy.findByRole("checkbox", {
+		name: /Desencorajou sob o argumento de improcedência da denúncia/i,
+	}).click({
+		force: true,
+	});
+	cy.findByRole("checkbox", { name: /Negou-se a registrar a denúncia/i }).click(
+		{
+			force: true,
+		}
+	);
 });
 
 Cypress.Commands.add("fillLegalActionsTakenStep", () => {

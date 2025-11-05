@@ -420,7 +420,7 @@ export const policeReportDifficultyOptions = [
 	},
 	{
 		value: "others",
-		name: "Outro(s) motivo(s)",
+		name: "Outro motivo",
 	},
 ];
 

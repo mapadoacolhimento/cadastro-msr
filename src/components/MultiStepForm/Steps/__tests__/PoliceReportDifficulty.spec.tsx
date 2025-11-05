@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import PoliceReportDifficulty from "../PoliceReportDifficulty";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
+import { policeReportDifficultyOptions } from "@/constants";
 import { sleep } from "@/utils";
 import type { Values } from "@/types";
 
@@ -23,12 +24,15 @@ const setup = () => {
 };
 
 describe("<PoliceReportDifficulty />", () => {
-	it("should render two options", () => {
+	it("should render all difficulty reasons options", () => {
 		setup();
 
-		expect(screen.getByRole("radio", { name: /sim/i })).toBeInTheDocument();
-
-		expect(screen.getByRole("radio", { name: /não/i })).toBeInTheDocument();
+		policeReportDifficultyOptions.forEach((option) => {
+			const roleOptionElement = screen.getByRole("checkbox", {
+				name: new RegExp(option.name, "i"),
+			});
+			expect(roleOptionElement).toBeInTheDocument();
+		});
 	});
 
 	it("should render an error if no option is selected", async () => {

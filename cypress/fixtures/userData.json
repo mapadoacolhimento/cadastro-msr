@@ -58,5 +58,12 @@
 	"legalActionsTaken": {
 		"policeInquiry": "Inquérito Policial",
 		"labourCase": "Processo trabalhista"
+	},
+	"protectiveFactors": {
+		"supportNetwork": "Tenho rede de apoio (familiares, amigos, vizinhos)",
+		"dontLiveWithPerpetrator": "Não moro com o(a) autor(a) da violência",
+		"fellsSafe": "Me sinto segura em casa",
+		"isNotDependant": "Não dependo financeiramente do(a) autor(a) da violência",
+		"n/a": "Nenhuma das opções anteriores"
 	}
 }

@@ -49,8 +49,11 @@
 		"internetSpace": "Internet/redes sociais"
 	},
 	"policeReportDifficulty": {
-		"yes": "Sim",
-		"no": "Não"
+		"no": "Não houve dificuldade ou impedimento",
+		"discourageReporting": "Desencorajou sob o argumento de improcedência da denúncia",
+		"notTheirCompetence": "Informou não ser de sua competência",
+		"refusedToReport": "Negou-se a registrar a denúncia",
+		"others": "Outro(s) motivo(s)"
 	},
 	"legalActionsTaken": {
 		"policeInquiry": "Inquérito Policial",

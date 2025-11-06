@@ -403,12 +403,28 @@ export const violenceLocationOptions = [
 
 export const policeReportDifficultyOptions = [
 	{
-		value: "yes",
-		name: "Sim",
+		value: "no",
+		name: "Não houve dificuldade ou impedimento",
 	},
 	{
-		value: "no",
-		name: "Não",
+		value: "discourageReporting",
+		name: "Desencorajou sob o argumento de improcedência da denúncia",
+	},
+	{
+		value: "notTheirCompetence",
+		name: "Informou não ser de sua competência",
+	},
+	{
+		value: "refusedToReport",
+		name: "Negou-se a registrar a denúncia",
+	},
+	{
+		value: "others",
+		name: "Outro motivo",
+	},
+	{
+		value: "n/a",
+		name: "Não se aplica",
 	},
 ];
 

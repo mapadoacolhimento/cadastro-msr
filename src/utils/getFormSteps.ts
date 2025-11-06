@@ -17,6 +17,7 @@ import {
 	ViolenceLocation,
 	PoliceReportDifficulty,
 	LegalActionsTaken,
+	ProtectiveFactors,
 } from "../components/MultiStepForm/Steps";
 
 export function getFormSteps() {
@@ -54,5 +55,6 @@ export function getHiddenStepsForm() {
 		ViolenceLocation(),
 		LegalActionsTaken(),
 		PoliceReportDifficulty(),
+		ProtectiveFactors(),
 	];
 }

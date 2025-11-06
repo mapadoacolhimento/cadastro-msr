@@ -19,3 +19,4 @@ export { default as LivesWithPerpetrator } from "./LivesWithPerpetrator";
 export { default as ViolenceLocation } from "./ViolenceLocation";
 export { default as PoliceReportDifficulty } from "./PoliceReportDifficulty";
 export { default as LegalActionsTaken } from "./LegalActionsTaken";
+export { default as ProtectiveFactors } from "./ProtectiveFactors";

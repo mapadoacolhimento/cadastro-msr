@@ -26,7 +26,7 @@ export default function ProtectiveFactors() {
 				options={protectiveFactorsOptions}
 				question={
 					<>
-						Selecione as opções que <Strong>aplicam ao seu caso</Strong>{" "}
+						Selecione as opções que <Strong>se aplicam ao seu caso</Strong>{" "}
 					</>
 				}
 			/>

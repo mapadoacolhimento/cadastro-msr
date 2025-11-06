@@ -465,7 +465,7 @@ export const protectiveFactorsOptions = [
 		name: "Não moro com o(a) autor(a) da violência",
 	},
 	{
-		value: "fellSafe",
+		value: "fellsSafe",
 		name: "Me sinto segura em casa",
 	},
 	{

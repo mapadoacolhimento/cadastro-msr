@@ -344,7 +344,7 @@ Cypress.Commands.add("fillProtectiveFactorsStep", () => {
 	}).click({
 		force: true,
 	});
-	cy.findByRole("checkbox", { name: /"Me sinto segura em casa"/i }).click({
+	cy.findByRole("checkbox", { name: /Me sinto segura em casa/i }).click({
 		force: true,
 	});
 });

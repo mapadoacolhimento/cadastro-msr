@@ -422,6 +422,10 @@ export const policeReportDifficultyOptions = [
 		value: "others",
 		name: "Outro motivo",
 	},
+	{
+		value: "n/a",
+		name: "Não se aplica",
+	},
 ];
 
 export const legalActionsTakenOptions = [

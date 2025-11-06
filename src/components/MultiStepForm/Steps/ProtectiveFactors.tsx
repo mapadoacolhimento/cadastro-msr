@@ -7,11 +7,11 @@ import { Strong } from "@radix-ui/themes";
 const protectiveFactorsSchema = Yup.object({
 	protectiveFactors: Yup.array()
 		.of(Yup.string().oneOf(protectiveFactorsOptions.map((o) => o.value)))
-		.min(1, "Selecione um ou mais tipos de violência")
-		.required("Selecione um ou mais tipos de violência"),
+		.min(1, "Selecione uma ou mais opções")
+		.required("Selecione uma ou mais opções"),
 });
 
-export default function ViolenceType() {
+export default function ProtectiveFactors() {
 	return (
 		<Step
 			validationSchema={protectiveFactorsSchema}

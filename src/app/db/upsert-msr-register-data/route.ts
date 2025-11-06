@@ -18,6 +18,7 @@ import {
 	violencePerpetratorOptions,
 	livesWithPerpetratorOptions,
 	violenceLocationOptions,
+	protectiveFactorsOptions,
 } from "@/lib";
 
 const payloadSchema = Yup.object({
@@ -80,6 +81,9 @@ const payloadSchema = Yup.object({
 		Yup.string().oneOf(violenceLocationOptions.map((o) => o.value))
 	),
 	policeReportDifficulty: Yup.string(),
+	protectiveFactors: Yup.array().of(
+		Yup.string().oneOf(protectiveFactorsOptions.map((o) => o.value))
+	),
 }).required();
 
 export async function POST(request: NextRequest) {

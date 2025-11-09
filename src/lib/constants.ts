@@ -454,3 +454,26 @@ export const legalActionsTakenOptions = [
 		name: "Nenhuma providência foi tomada",
 	},
 ];
+
+export const protectiveFactorsOptions = [
+	{
+		value: "supportNetwork",
+		name: "Tenho rede de apoio (familiares, amigos, vizinhos)",
+	},
+	{
+		value: "dontLiveWithPerpetrator",
+		name: "Não moro com o(a) autor(a) da violência",
+	},
+	{
+		value: "fellsSafe",
+		name: "Me sinto segura em casa",
+	},
+	{
+		value: "isNotDependant",
+		name: "Não dependo financeiramente do(a) autor(a) da violência",
+	},
+	{
+		value: "n/a",
+		name: "Nenhuma das opções anteriores",
+	},
+];

@@ -334,6 +334,21 @@ Cypress.Commands.add("fillLegalActionsTakenStep", () => {
 	});
 });
 
+Cypress.Commands.add("fillProtectiveFactorsStep", () => {
+	cy.contains("Selecione as opções que se aplicam ao seu caso").should(
+		"be.visible"
+	);
+
+	cy.findByRole("checkbox", {
+		name: /Tenho rede de apoio \(familiares, amigos, vizinhos\)/i,
+	}).click({
+		force: true,
+	});
+	cy.findByRole("checkbox", { name: /Me sinto segura em casa/i }).click({
+		force: true,
+	});
+});
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();
@@ -424,6 +439,9 @@ Cypress.Commands.add(
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillPoliceReportDifficultyStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillProtectiveFactorsStep();
 		cy.findByRole("button", { name: "Enviar" }).click();
 	}
 );

@@ -115,7 +115,7 @@ describe("Happy path", () => {
 			cy.fillAllStepsApp2(supportTypes);
 		});
 
-		it.only("should go back to the previous step when the back button is clicked", () => {
+		it("should go back to the previous step when the back button is clicked", () => {
 			cy.visit("/cadastro");
 
 			cy.fillGenderIdentityStep(gender);

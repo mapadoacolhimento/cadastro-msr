@@ -56,7 +56,7 @@ model MsrRegisterData {
   violencePerpetrator      String[]
   livesWithPerpetrator     String?
   violenceLocation         String[]
-  legalActionsTaken        String?
+  legalActionsTaken        String[]
   policeReportDifficulty   String[]
   protectiveFactors        String[]
   riskFactors              String[]

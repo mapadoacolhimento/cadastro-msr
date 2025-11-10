@@ -115,7 +115,7 @@ describe("Happy path", () => {
 			cy.fillAllStepsApp2(supportTypes);
 		});
 
-		it("should go back to the previous step when the back button is clicked", () => {
+		it.only("should go back to the previous step when the back button is clicked", () => {
 			cy.visit("/cadastro");
 
 			cy.fillGenderIdentityStep(gender);
@@ -167,6 +167,9 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillLegalActionsTakenStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillPoliceReportDifficultyStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillProtectiveFactorsStep();

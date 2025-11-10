@@ -492,56 +492,16 @@ export const riskFactorsOptions = [
 		name: "A violência ocorreu durante a gestação",
 	},
 	{
-		value: "dontFeelSafeAtHome",
-		name: "Eu moro com o autor da violência e não me sinto segura em casa",
-	},
-	{
-		value: "perpetratorMentalHealth",
-		name: "O(A) autor(a) da violência tem diagnóstico de doença psiquiátrica",
-	},
-	{
-		value: "perpetratorDrugs",
-		name: "O(A) autor(a) da violência faz uso de drogas/substância psicoativa",
-	},
-	{
-		value: "financialDependancy",
-		name: "Dependo financeiramente do(a) autor(a) da violência",
-	},
-	{
-		value: "workingPlace",
-		name: "A violência ocorreu em ambiente de trabalho",
-	},
-	{
-		value: "publicSpace",
-		name: "A violência ocorreu em ambiente público (internet, rua, etc)",
-	},
-	{
 		value: "deniedPublicServices",
 		name: "Tive acesso negado aos serviços públicos de atendimento à mulher",
-	},
-	{
-		value: "violenceFrequencyIncreased",
-		name: "As agressões ou ameaças do(a) autor(a) da violência contra mim se tornaram mais frequentes ou mais graves nos últimos meses",
 	},
 	{
 		value: "noAccessToSuppportNetwork",
 		name: "Eu não possuo rede de apoio (familiares, amigos, vizinhos etc)",
 	},
 	{
-		value: "violenceReachedClosePeople",
-		name: "O(A) autor(a) da violência já ameaçou/agrediu você ou algum familiar, colega/amigo, filhos e/ou animal de estimação com a finalidade de atingi-la",
-	},
-	{
-		value: "sexualViolenceImposed",
-		name: "O(A) autor(a) da violência já obrigou você a ter relações sexuais ou praticar atos sexuais contra sua vontade",
-	},
-	{
 		value: "perpetratorIsCriminal",
 		name: "O (a) autor da violência tem envolvimento com o crime organizado",
-	},
-	{
-		value: "perpetratorHasCriminalRecord",
-		name: "O autor da violência tem antecedentes criminais",
 	},
 	{
 		value: "perpetratorIsImprisoned",
@@ -552,8 +512,12 @@ export const riskFactorsOptions = [
 		name: "Você se sente isolada de amigos, familiares, pessoas da comunidade ou trabalho",
 	},
 	{
+		value: "trustedPeopleAccess",
+		name: "Atualmente você consegue acessar pessoas de confiança que te ajudem em caso de uma violência sofrida?",
+	},
+	{
 		value: "otherRisks",
-		name: "O ambiente em que você se encontra apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
+		name: "O local onde você mora apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
 	},
 	{
 		value: "neededMedicalAttention",

@@ -65,5 +65,9 @@
 		"fellsSafe": "Me sinto segura em casa",
 		"isNotDependant": "Não dependo financeiramente do(a) autor(a) da violência",
 		"n/a": "Nenhuma das opções anteriores"
+	},
+	"riskFactors": {
+		"deniedPublicServices": "Tive acesso negado aos serviços públicos de atendimento à mulher",
+		"violenceDuringPregnancy": "A violência ocorreu durante a gestação"
 	}
 }

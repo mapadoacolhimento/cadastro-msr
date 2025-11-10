@@ -21,6 +21,7 @@ import {
 	protectiveFactorsOptions,
 	riskFactorsOptions,
 	policeReportDifficultyOptions,
+	legalActionsTakenOptions,
 } from "@/lib";
 
 const payloadSchema = Yup.object({
@@ -84,6 +85,9 @@ const payloadSchema = Yup.object({
 	),
 	policeReportDifficulty: Yup.array().of(
 		Yup.string().oneOf(policeReportDifficultyOptions.map((o) => o.value))
+	),
+	legalActionsTaken: Yup.array().of(
+		Yup.string().oneOf(legalActionsTakenOptions.map((o) => o.value))
 	),
 	protectiveFactors: Yup.array().of(
 		Yup.string().oneOf(protectiveFactorsOptions.map((o) => o.value))

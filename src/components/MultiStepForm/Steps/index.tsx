@@ -21,3 +21,4 @@ export { default as PoliceReportDifficulty } from "./PoliceReportDifficulty";
 export { default as LegalActionsTaken } from "./LegalActionsTaken";
 export { default as ProtectiveFactors } from "./ProtectiveFactors";
 export { default as RiskFactors } from "./RiskFactors";
+export { default as ConsentConfirmation } from "./ConsentConfirmation";

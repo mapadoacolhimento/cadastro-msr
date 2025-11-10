@@ -64,6 +64,7 @@ export interface Values {
 	policeReportDifficulty: string[];
 	protectiveFactors: string[];
 	riskFactors: string[];
+	consentTerms: boolean;
 }
 
 export type SupportRequestData = Awaited<

@@ -92,11 +92,14 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillProtectiveFactorsStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillRiskFactorsStep();
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
-			cy.contains(
-				"Houve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência? O que a pessoa que te atendeu fez? (Selecione todas as opções que se aplicam)"
-			).should("exist");
+			cy.contains("Selecione as opções que se aplicam ao seu caso").should(
+				"exist"
+			);
 		});
 	});
 
@@ -170,11 +173,14 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillProtectiveFactorsStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillRiskFactorsStep();
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
-			cy.contains(
-				"Houve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência? O que a pessoa que te atendeu fez? (Selecione todas as opções que se aplicam)"
-			).should("exist");
+			cy.contains("Selecione as opções que se aplicam ao seu caso").should(
+				"exist"
+			);
 		});
 	});
 });

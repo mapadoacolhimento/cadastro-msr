@@ -349,6 +349,22 @@ Cypress.Commands.add("fillProtectiveFactorsStep", () => {
 	});
 });
 
+Cypress.Commands.add("fillRiskFactorsStep", () => {
+	cy.contains("Selecione as opções que se aplicam ao seu caso").should(
+		"be.visible"
+	);
+	cy.findByRole("checkbox", {
+		name: /A violência ocorreu durante a gestação/i,
+	}).click({
+		force: true,
+	});
+	cy.findByRole("checkbox", {
+		name: /Tive acesso negado aos serviços públicos de atendimento à mulher/i,
+	}).click({
+		force: true,
+	});
+});
+
 Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.fillGenderIdentityStep(gender);
 	cy.findByRole("button", { name: "Continuar" }).click();
@@ -442,6 +458,9 @@ Cypress.Commands.add(
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillProtectiveFactorsStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillRiskFactorsStep();
 		cy.findByRole("button", { name: "Enviar" }).click();
 	}
 );

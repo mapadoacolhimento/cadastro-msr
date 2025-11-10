@@ -73,6 +73,7 @@ export default function MultiStepForm() {
 				policeReportDifficulty: [],
 				legalActionsTaken: "",
 				protectiveFactors: [],
+				riskFactors: [],
 			}}
 			onSubmit={onSubmit}
 		>

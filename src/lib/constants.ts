@@ -477,3 +477,50 @@ export const protectiveFactorsOptions = [
 		name: "Nenhuma das opções anteriores",
 	},
 ];
+
+export const riskFactorsOptions = [
+	{
+		value: "gunAccess",
+		name: "O(A) autor(a) da violência possui acesso à arma de fogo",
+	},
+	{
+		value: "imprisonment",
+		name: "Estou em cárcere privado",
+	},
+	{
+		value: "violenceDuringPregnancy",
+		name: "A violência ocorreu durante a gestação",
+	},
+	{
+		value: "deniedPublicServices",
+		name: "Tive acesso negado aos serviços públicos de atendimento à mulher",
+	},
+	{
+		value: "noAccessToSuppportNetwork",
+		name: "Eu não possuo rede de apoio (familiares, amigos, vizinhos etc)",
+	},
+	{
+		value: "perpetratorIsCriminal",
+		name: "O (a) autor da violência tem envolvimento com o crime organizado",
+	},
+	{
+		value: "perpetratorIsImprisoned",
+		name: "O(A) autor(a) da violência esteve ou está recluso no sistema prisional",
+	},
+	{
+		value: "feelsIsolated",
+		name: "Você se sente isolada de amigos, familiares, pessoas da comunidade ou trabalho",
+	},
+	{
+		value: "trustedPeopleAccess",
+		name: "Atualmente você consegue acessar pessoas de confiança que te ajudem em caso de uma violência sofrida?",
+	},
+	{
+		value: "otherRisks",
+		name: "O local onde você mora apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
+	},
+	{
+		value: "neededMedicalAttention",
+		name: "Após algum episódio de agressão você já necessitou de atendimento de saúde (atendimento médico; internação; necessitou, mas não buscou atendimento médico)",
+	},
+];

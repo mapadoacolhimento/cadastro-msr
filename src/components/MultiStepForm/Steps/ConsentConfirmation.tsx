@@ -1,5 +1,4 @@
-import { Box, Link, Strong } from "@radix-ui/themes";
-import CheckboxInput from "../../CheckboxInput";
+import TermsAcceptanceInput from "../../TermsAcceptanceInput";
 import Step from "../Step";
 import * as Yup from "yup";
 
@@ -16,25 +15,18 @@ export default function ConsentConfirmation() {
 			validationSchema={consentConfirmationSchema}
 			title={"Confirmação de Consentimento"}
 			img={{
-				src: "/illustrations/woman-floating.webp",
-				alt: "Ilustração com uma mulher flutuando.",
+				src: "/illustrations/woman-getting-support.webp",
+				alt: "Ilustração com duas mulheres sentadas uma em frente a outra",
 			}}
 		>
-			<Box pt={"6"}>
-				<Strong>
-					<Link
-						href="https://docs.google.com/document/d/e/2PACX-1vTI5h8RBjeC7MkZ4bAponamp02YdYhjhPCJC0dQ2kp7inzA1LPoiE_JFgOwmbwv1PPJvU4pMqfEEQn9/pub"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Termo de Consentimento
-					</Link>
-				</Strong>
-				<CheckboxInput name="consentTerm">
-					Estou ciente de que as informações aqui registradas são verdadeiras e
-					que podem ser utilizadas (LGPD).
-				</CheckboxInput>
-			</Box>
+			<TermsAcceptanceInput
+				name="consentTerm"
+				termsUrl="https://docs.google.com/document/d/1bcZ3Fqcm_IlWouBD5I9_vkn52yNl5jLK/edit"
+				termsLinkText="Termo de Consentimento"
+			>
+				Estou ciente de que as informações aqui registradas são verdadeiras e
+				que podem ser utilizadas (LGPD).
+			</TermsAcceptanceInput>
 		</Step>
 	);
 }

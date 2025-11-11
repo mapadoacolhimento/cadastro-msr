@@ -20,7 +20,7 @@ export default function ConsentConfirmation() {
 			}}
 		>
 			<TermsAcceptanceInput
-				name="consentTerm"
+				name="consentTerms"
 				termsUrl="https://docs.google.com/document/d/1bcZ3Fqcm_IlWouBD5I9_vkn52yNl5jLK/edit"
 				termsLinkText="Termo de Consentimento"
 			>

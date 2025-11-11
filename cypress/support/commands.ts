@@ -322,6 +322,13 @@ Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
 	);
 });
 
+Cypress.Commands.add("fillConsentConfirmationStep", () => {
+	cy.findByRole("heading", { name: "Confirmação de Consentimento" }).should(
+		"exist"
+	);
+	cy.findByRole("checkbox").click();
+});
+
 Cypress.Commands.add("fillLegalActionsTakenStep", () => {
 	cy.contains(
 		"Foram tomadas providências jurídicas? (Selecione todas as opções que se aplicam)"
@@ -461,6 +468,9 @@ Cypress.Commands.add(
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillRiskFactorsStep();
+		cy.findByRole("button", { name: "Continuar" }).click();
+
+		cy.fillConsentConfirmationStep();
 		cy.findByRole("button", { name: "Enviar" }).click();
 	}
 );

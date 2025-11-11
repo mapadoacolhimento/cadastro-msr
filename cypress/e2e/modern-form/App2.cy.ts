@@ -95,6 +95,9 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillRiskFactorsStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillConsentConfirmationStep();
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 			cy.contains("Selecione as opções que se aplicam ao seu caso").should(
@@ -115,7 +118,7 @@ describe("Happy path", () => {
 			cy.fillAllStepsApp2(supportTypes);
 		});
 
-		it.only("should go back to the previous step when the back button is clicked", () => {
+		it("should go back to the previous step when the back button is clicked", () => {
 			cy.visit("/cadastro");
 
 			cy.fillGenderIdentityStep(gender);
@@ -176,6 +179,9 @@ describe("Happy path", () => {
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillRiskFactorsStep();
+			cy.findByRole("button", { name: "Continuar" }).click();
+
+			cy.fillConsentConfirmationStep();
 			cy.findByRole("button", { name: "Voltar para o passo anterior" }).click();
 
 			cy.contains("Selecione as opções que se aplicam ao seu caso").should(

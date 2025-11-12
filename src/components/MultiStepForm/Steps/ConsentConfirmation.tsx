@@ -3,7 +3,7 @@ import Step from "../Step";
 import * as Yup from "yup";
 
 const consentConfirmationSchema = Yup.object({
-	consentTerms: Yup.boolean().oneOf(
+	terms: Yup.boolean().oneOf(
 		[true],
 		"Você precisar aceitar o termo para receber atendimento."
 	),
@@ -20,7 +20,7 @@ export default function ConsentConfirmation() {
 			}}
 		>
 			<TermsAcceptanceInput
-				name="consentTerms"
+				name="terms"
 				termsUrl="https://docs.google.com/document/d/1bcZ3Fqcm_IlWouBD5I9_vkn52yNl5jLK/edit"
 				termsLinkText="Termo de Consentimento"
 			>

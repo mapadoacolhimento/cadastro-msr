@@ -74,7 +74,6 @@ export default function MultiStepForm() {
 				legalActionsTaken: "",
 				protectiveFactors: [],
 				riskFactors: [],
-				consentTerms: false,
 			}}
 			onSubmit={onSubmit}
 		>

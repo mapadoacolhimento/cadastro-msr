@@ -13,7 +13,7 @@ const setup = () => {
 			}
 			initialValues={
 				{
-					consentTerms: false,
+					terms: false,
 				} as Values
 			}
 		>

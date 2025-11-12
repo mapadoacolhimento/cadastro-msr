@@ -5,9 +5,9 @@ import { ViolenceTime } from "../../components/MultiStepForm/Steps";
 
 describe("MultiStepForm - Steps Logic", () => {
 	describe("getFormSteps function", () => {
-		it("should return 11 steps without hidden components", () => {
+		it("should return 12 steps without hidden components", () => {
 			const steps = getFormSteps();
-			expect(steps).toHaveLength(11);
+			expect(steps).toHaveLength(12);
 		});
 	});
 

@@ -35,6 +35,7 @@ export function getFormSteps() {
 		BasicRegisterInformation(),
 		Geolocation(),
 		DiversityInformation(),
+		ConsentConfirmation(),
 	];
 }
 export function getHiddenStepsForm() {

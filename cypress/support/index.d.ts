@@ -45,5 +45,6 @@ declare namespace Cypress {
 		fillLegalActionsTakenStep(): Chainable<any>;
 		fillProtectiveFactorsStep(): Chainable<any>;
 		fillRiskFactorsStep(): Chainable<any>;
+		fillConsentConfirmationStep(): Chainable<any>;
 	}
 }

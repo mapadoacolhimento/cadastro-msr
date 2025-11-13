@@ -365,6 +365,50 @@ describe("Accessbility", () => {
 						cy.checkA11y(null, null, terminalLog);
 					});
 
+					it("should pass the accessibility test on Consent Confirmation step", () => {
+						cy.visit("/cadastro");
+
+						cy.fillGenderIdentityStep(gender);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDateOfBirthStep(dateOfBirth);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillViolenceTypeStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillExternalSupportStep(externalSupport);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillFinancialBlock();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.findByRole("button", { name: "Iniciar cadastro" }).click();
+
+						cy.fillSupportTypeStep(supportTypes);
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillBasicRegisterInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillGeolocationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.fillDiversityInformationStep();
+						cy.findByRole("button", { name: "Continuar" }).click();
+
+						cy.findByRole("heading", {
+							name: "Confirmação de Consentimento",
+						}).should("exist");
+						cy.findByRole("checkbox").click();
+
+						cy.injectAxe();
+						cy.checkA11y(null, null, terminalLog);
+					});
+
 					describe("Financial block", () => {
 						beforeEach(() => {
 							cy.visit("/cadastro");

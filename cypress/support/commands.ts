@@ -49,8 +49,6 @@ Cypress.Commands.add("fillDiversityInformationStep", () => {
 		name: "Cor",
 	}).click();
 	cy.contains(colorOption).should("be.visible").click();
-	//checkbox dos termos de aceite
-	cy.findByRole("checkbox").click();
 });
 
 Cypress.Commands.add("fillGeolocationStep", () => {
@@ -326,7 +324,7 @@ Cypress.Commands.add("fillConsentConfirmationStep", () => {
 	cy.findByRole("heading", { name: "Confirmação de Consentimento" }).should(
 		"exist"
 	);
-	cy.findByRole("checkbox").click();
+	cy.findByRole("termsInput").click();
 });
 
 Cypress.Commands.add("fillLegalActionsTakenStep", () => {
@@ -404,6 +402,9 @@ Cypress.Commands.add("fillAllSteps", (supportTypes: Record<string, string>) => {
 	cy.findByRole("button", { name: "Continuar" }).click();
 
 	cy.fillDiversityInformationStep();
+	cy.findByRole("button", { name: "Continuar" }).click();
+
+	cy.fillConsentConfirmationStep();
 	cy.findByRole("button", { name: "Enviar" }).click();
 });
 

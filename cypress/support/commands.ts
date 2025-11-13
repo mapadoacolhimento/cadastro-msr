@@ -324,7 +324,7 @@ Cypress.Commands.add("fillConsentConfirmationStep", () => {
 	cy.findByRole("heading", { name: "Confirmação de Consentimento" }).should(
 		"exist"
 	);
-	cy.findByRole("termsInput").click();
+	cy.findByRole("checkbox").click();
 });
 
 Cypress.Commands.add("fillLegalActionsTakenStep", () => {

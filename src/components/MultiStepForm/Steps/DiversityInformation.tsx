@@ -6,10 +6,6 @@ import { colorOptions } from "@/constants";
 
 const diversityInformationSchema = Yup.object({
 	color: Yup.string().required("Selecione sua cor."),
-	terms: Yup.boolean().oneOf(
-		[true],
-		"Você precisar aceitar os termos para receber atendimento."
-	),
 });
 
 export default function DiversityInformation() {

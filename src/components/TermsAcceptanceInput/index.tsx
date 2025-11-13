@@ -22,28 +22,21 @@ const TermsAcceptanceInput: React.FC<TermsAcceptanceInputProps> = ({
 		helpers.setValue(checked === true);
 	};
 
-	const handleCardClick = () => {
-		helpers.setValue(!field.value);
-	};
-
 	return (
 		<>
 			<Card
 				size="2"
 				className={`terms-acceptance-card ${field.value ? "is-checked" : ""}`}
-				onClick={handleCardClick}
 			>
-				<Text as="label" htmlFor={name}>
+				<label htmlFor={name}>
 					<Flex align="start" as="span" gap="4">
 						<Checkbox
 							id={name}
 							checked={field.value}
 							onCheckedChange={handleCheckedChange}
 							color="purple"
-							onClick={(e) => e.stopPropagation()}
+							aria-label={termsLinkText}
 						/>
-
-						{/* texto do termo + descrição */}
 						<Flex direction="column" gap="2">
 							<Strong>
 								<Link
@@ -51,7 +44,6 @@ const TermsAcceptanceInput: React.FC<TermsAcceptanceInputProps> = ({
 									target="_blank"
 									rel="noopener noreferrer"
 									className={`terms-link ${field.value ? "is-checked" : ""}`}
-									onClick={(e) => e.stopPropagation()}
 								>
 									{termsLinkText}
 								</Link>
@@ -62,7 +54,7 @@ const TermsAcceptanceInput: React.FC<TermsAcceptanceInputProps> = ({
 							</Text>
 						</Flex>
 					</Flex>
-				</Text>
+				</label>
 			</Card>
 
 			<ErrorMessage name={name} />

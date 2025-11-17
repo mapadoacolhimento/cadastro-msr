@@ -1,0 +1,37 @@
+.terms-acceptance-card {
+	cursor: pointer;
+	transition: all 0.2s ease;
+	width: 100%;
+}
+
+.terms-acceptance-card.is-checked {
+	--checkbox-cards-item-background-color: var(--accent-a3);
+}
+
+.terms-acceptance-card.is-checked::after {
+	box-shadow: none;
+	border: 1px solid var(--accent-8);
+}
+
+.terms-acceptance-card:hover {
+	background-color: var(--gray-a2);
+}
+
+.terms-acceptance-card.is-checked:hover {
+	background-color: var(--accent-a4);
+}
+
+.terms-link {
+	color: #7a2e8e; /* roxo padrão */
+	text-decoration: none;
+	font-weight: 600;
+	transition:
+		color 0.2s ease,
+		text-decoration 0.2s ease;
+}
+
+.terms-link:hover,
+.terms-link:focus {
+	text-decoration: underline;
+	color: #5a1f6b;
+}

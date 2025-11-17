@@ -19,6 +19,7 @@ import {
 	LegalActionsTaken,
 	ProtectiveFactors,
 	RiskFactors,
+	ConsentConfirmation,
 } from "../components/MultiStepForm/Steps";
 
 export function getFormSteps() {
@@ -34,6 +35,7 @@ export function getFormSteps() {
 		BasicRegisterInformation(),
 		Geolocation(),
 		DiversityInformation(),
+		ConsentConfirmation(),
 	];
 }
 export function getHiddenStepsForm() {
@@ -58,5 +60,6 @@ export function getHiddenStepsForm() {
 		PoliceReportDifficulty(),
 		ProtectiveFactors(),
 		RiskFactors(),
+		ConsentConfirmation(),
 	];
 }

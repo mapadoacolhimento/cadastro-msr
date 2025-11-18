@@ -40,6 +40,7 @@ export default function RadioInput({
 					width={"100%"}
 					align={"center"}
 					pr={options.length > 4 ? { initial: "6", sm: "8" } : "0"}
+					mb={"80px"}
 				>
 					{options.map((option: RadioOption, i) => {
 						return (

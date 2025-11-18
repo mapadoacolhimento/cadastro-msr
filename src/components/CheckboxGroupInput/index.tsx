@@ -85,6 +85,7 @@ export default function CheckboxGroupInput({
 				type={options.length > 4 ? "always" : undefined}
 				scrollbars="vertical"
 				style={{ height: 440 }}
+				tabIndex={0}
 			>
 				<Flex
 					pr={options.length > 4 ? { initial: "6", sm: "8" } : "0"}

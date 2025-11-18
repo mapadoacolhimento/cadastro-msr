@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import { Box, Card, Flex, Text } from "@radix-ui/themes";
+import { Box, Card, Flex, Text, ScrollArea } from "@radix-ui/themes";
 
 import ErrorMessage from "../ErrorMessage";
 import "./RadioInput.css";
@@ -29,31 +29,43 @@ export default function RadioInput({
 	return (
 		<Box role="radiogroup" aria-labelledby={"question"} width={"100%"}>
 			<Question id={"question"}>{question}</Question>
-			<Flex gap={"4"} direction={"column"} width={"100%"} align={"center"}>
-				{options.map((option: RadioOption, i) => {
-					return (
-						<Card asChild key={option.value} className={"radio"}>
-							<Flex
-								role={"radio"}
-								aria-checked={field.value === option.value}
-								tabIndex={0}
-								aria-labelledby={`radio-label-${i}`}
-								data-value={option.value}
-								onClick={() => handleClick(option.value)}
-								justify={"center"}
-								width={"100%"}
-								maxWidth={"22rem"}
-								style={{ cursor: "pointer" }}
-								display={"inline-flex"}
-							>
-								<Text asChild size={"2"} weight={"medium"}>
-									<label id={`radio-label-${i}`}>{option.name}</label>
-								</Text>
-							</Flex>
-						</Card>
-					);
-				})}
-			</Flex>
+			<ScrollArea
+				type={options.length > 4 ? "always" : undefined}
+				scrollbars="vertical"
+				style={{ height: 440 }}
+			>
+				<Flex
+					gap={"4"}
+					direction={"column"}
+					width={"100%"}
+					align={"center"}
+					pr={options.length > 4 ? { initial: "6", sm: "8" } : "0"}
+				>
+					{options.map((option: RadioOption, i) => {
+						return (
+							<Card asChild key={option.value} className={"radio"}>
+								<Flex
+									role={"radio"}
+									aria-checked={field.value === option.value}
+									tabIndex={0}
+									aria-labelledby={`radio-label-${i}`}
+									data-value={option.value}
+									onClick={() => handleClick(option.value)}
+									justify={"center"}
+									width={"100%"}
+									maxWidth={"22rem"}
+									style={{ cursor: "pointer" }}
+									display={"inline-flex"}
+								>
+									<Text asChild size={"2"} weight={"medium"}>
+										<label id={`radio-label-${i}`}>{option.name}</label>
+									</Text>
+								</Flex>
+							</Card>
+						);
+					})}
+				</Flex>
+			</ScrollArea>
 			<ErrorMessage name={name} />
 		</Box>
 	);

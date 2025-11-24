@@ -70,8 +70,13 @@ export default function MultiStepFormWrapper({
 
 			if (step.props.onSubmit) {
 				const submit = await step.props.onSubmit(values, bag);
+
 				if (submit && submit.redirectTo) {
 					return router.push(submit.redirectTo);
+				}
+
+				if (submit && submit.skipSteps) {
+					setStepIndex(Math.max(stepIndex + submit.skipSteps, 0));
 				}
 			}
 

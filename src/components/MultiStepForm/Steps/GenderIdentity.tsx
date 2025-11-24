@@ -34,6 +34,7 @@ export default function GenderIdentity() {
 			<RadioInput
 				name="gender"
 				options={genderIdentityOptions}
+				scrollAreaHeight={200}
 				question={
 					<>
 						Qual sua <Strong>identidade de gênero</Strong>?

@@ -239,7 +239,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.checkA11y(null, null, terminalLog);
 				});
 
-				it.only("should pass the accessibility test on Risk Factors step", () => {
+				it("should pass the accessibility test on Risk Factors step", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 

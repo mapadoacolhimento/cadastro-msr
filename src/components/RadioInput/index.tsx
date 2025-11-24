@@ -14,12 +14,14 @@ type RadioInputProps = {
 	name: string;
 	options: RadioOption[];
 	question: React.ReactNode;
+	scrollAreaHeight?: number;
 };
 
 export default function RadioInput({
 	options,
 	name,
 	question,
+	scrollAreaHeight = 440,
 }: Readonly<RadioInputProps>) {
 	const [field, _meta, helpers] = useField(name);
 
@@ -32,7 +34,7 @@ export default function RadioInput({
 			<ScrollArea
 				type={options.length > 4 ? "always" : undefined}
 				scrollbars="vertical"
-				style={{ height: 440 }}
+				style={{ height: scrollAreaHeight }}
 			>
 				<Flex
 					gap={"4"}

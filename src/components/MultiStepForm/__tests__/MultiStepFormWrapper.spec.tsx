@@ -353,6 +353,18 @@ describe("<MultiStepFormWrapper />", () => {
 				level: 1,
 			})
 		).toBeInTheDocument();
+
+		const goBackBtn = screen.getByRole("button", {
+			name: /voltar para o passo anterior/i,
+		});
+		await userEvent.click(goBackBtn);
+
+		expect(
+			await screen.findByRole("heading", {
+				name: /Qual sua forma de renda mensal\?/i,
+				level: 1,
+			})
+		).toBeInTheDocument();
 	});
 
 	test("should not skip steps when skipSteps is not  provided", async () => {

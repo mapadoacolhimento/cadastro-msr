@@ -36,6 +36,7 @@ export default function MultiStepFormWrapper({
 	const [status, setStatus] = useState<Status | null>(Status.idle);
 	const childrenSteps = Children.toArray(children);
 	const router = useRouter();
+	const [skippedSteps, setSkippedSteps] = useState<number[]>([]);
 
 	const step = childrenSteps[stepIndex] as ReactElement<StepChildrenProps>;
 	const totalSteps = Children.count(children);
@@ -50,7 +51,15 @@ export default function MultiStepFormWrapper({
 
 	const previousStep = (values: Values) => {
 		setSnapshot(values);
-		setStepIndex(Math.max(stepIndex - 1, 0));
+
+		if (skippedSteps.includes(stepIndex - 1)) {
+			setSkippedSteps((skippedSteps) =>
+				skippedSteps.filter((step) => step !== stepIndex - 1)
+			);
+			setStepIndex(Math.max(stepIndex - 2, 0));
+		} else {
+			setStepIndex(Math.max(stepIndex - 1, 0));
+		}
 	};
 
 	const handleSubmit = async (values: Values, bag: FormikHelpers<Values>) => {
@@ -70,8 +79,17 @@ export default function MultiStepFormWrapper({
 
 			if (step.props.onSubmit) {
 				const submit = await step.props.onSubmit(values, bag);
+
 				if (submit && submit.redirectTo) {
 					return router.push(submit.redirectTo);
+				}
+
+				if (submit && submit.skipSteps) {
+					setSkippedSteps((skippedSteps) => [
+						...skippedSteps,
+						Math.max(stepIndex + 1, 0),
+					]);
+					setStepIndex(Math.max(stepIndex + submit.skipSteps, 0));
 				}
 			}
 

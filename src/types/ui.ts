@@ -7,7 +7,8 @@ export interface StepChildrenProps {
 		values: Values,
 		bag: FormikHelpers<Values>
 	) => Promise<{
-		redirectTo: string;
+		redirectTo?: string;
+		skipSteps?: number;
 	} | null | void>;
 	validationSchema: AnyObjectSchema;
 	title: string;

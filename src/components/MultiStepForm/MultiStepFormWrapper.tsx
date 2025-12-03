@@ -85,10 +85,14 @@ export default function MultiStepFormWrapper({
 				}
 
 				if (submit && submit.skipSteps) {
-					setSkippedSteps((skippedSteps) => [
-						...skippedSteps,
-						Math.max(stepIndex + 1, 0),
-					]);
+					let skipCount = submit.skipSteps ?? 0;
+					while (skipCount > 0) {
+						setSkippedSteps((skippedSteps) => [
+							...skippedSteps,
+							Math.max(stepIndex + skipCount, 0),
+						]);
+						skipCount--;
+					}
 					setStepIndex(Math.max(stepIndex + submit.skipSteps, 0));
 				}
 			}

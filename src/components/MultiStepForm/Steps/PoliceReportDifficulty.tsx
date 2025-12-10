@@ -9,9 +9,12 @@ const policeReportDifficultySchema = Yup.object({
 		.of(Yup.string().oneOf(policeReportDifficultyOptions.map((a) => a.value)))
 		.min(1, "Selecione pelo menos uma opção.")
 		.required("Esse campo é obrigatório."),
+
 	policeReportDifficultyOther: Yup.string().when("policeReportDifficulty", {
 		is: (val: string[]) => val?.includes("others"),
-		then: (schema) => schema.required("Por favor, descreva o motivo."),
+		then: (schema) =>
+			//trim para evitar que usuária envie apenas espaços em branco
+			schema.trim().required("Por favor, descreva o motivo."),
 		otherwise: (schema) => schema.notRequired(),
 	}),
 });

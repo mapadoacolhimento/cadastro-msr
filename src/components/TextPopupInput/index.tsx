@@ -22,10 +22,12 @@ export default function TextPopupInput({
 	placeholder,
 	onClose,
 }: TextPopupInputProps) {
-	const { values, setFieldValue, errors, touched } = useFormikContext<any>();
+	const { values, setFieldValue, errors, touched, setFieldTouched } =
+		useFormikContext<any>();
 	const [isOpen, setIsOpen] = useState(false);
 	const [textValue, setTextValue] = useState("");
 	const [mounted, setMounted] = useState(false);
+	const [prevTriggerValues, setPrevTriggerValues] = useState<any[]>([]);
 
 	useEffect(() => {
 		setMounted(true);
@@ -33,31 +35,42 @@ export default function TextPopupInput({
 	}, []);
 
 	useEffect(() => {
-		const triggerValues = values[triggerFieldName];
-		const shouldOpen = Array.isArray(triggerValues)
-			? triggerValues.includes(triggerValue)
-			: triggerValues === triggerValue;
+		const triggerValues = values[triggerFieldName] || [];
 
-		if (shouldOpen && !isOpen) {
+		const wasSelectedBefore = prevTriggerValues.includes(triggerValue);
+		const isSelectedNow = triggerValues.includes(triggerValue);
+
+		if (!wasSelectedBefore && isSelectedNow) {
 			setIsOpen(true);
 			setTextValue(values[name] || "");
-		} else if (!shouldOpen && isOpen) {
+		}
+		if (wasSelectedBefore && !isSelectedNow) {
 			setIsOpen(false);
 			setFieldValue(name, "");
+			setTextValue("");
 		}
-	}, [values, triggerFieldName, triggerValue, isOpen, name, setFieldValue]);
+
+		setPrevTriggerValues(triggerValues);
+	}, [
+		values,
+		triggerFieldName,
+		triggerValue,
+		name,
+		setFieldValue,
+		prevTriggerValues,
+	]);
 
 	const handleClose = () => {
 		setIsOpen(false);
 		setFieldValue(name, "");
 		setTextValue("");
-		if (onClose) onClose();
 	};
 
 	const handleSubmit = () => {
 		if (textValue.trim()) {
 			setFieldValue(name, textValue);
 			setIsOpen(false);
+			setFieldTouched(name, true);
 		}
 	};
 
@@ -91,7 +104,7 @@ export default function TextPopupInput({
 						onClick={handleClose}
 						className="text-popup-btn text-popup-btn--secondary"
 					>
-						Fechar
+						Cancelar
 					</button>
 					<button
 						type="button"

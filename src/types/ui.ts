@@ -63,6 +63,7 @@ export interface Values {
 	violenceLocation: string[];
 	legalActionsTaken: string;
 	policeReportDifficulty: string[];
+	policeReportDifficultyOther: string;
 	protectiveFactors: string[];
 	riskFactors: string[];
 }

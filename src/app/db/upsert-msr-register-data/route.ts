@@ -86,6 +86,7 @@ const payloadSchema = Yup.object({
 	policeReportDifficulty: Yup.array().of(
 		Yup.string().oneOf(policeReportDifficultyOptions.map((o) => o.value))
 	),
+	policeReportDifficultyOther: Yup.string(),
 	legalActionsTaken: Yup.array().of(
 		Yup.string().oneOf(legalActionsTakenOptions.map((o) => o.value))
 	),

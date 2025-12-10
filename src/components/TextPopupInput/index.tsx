@@ -49,21 +49,8 @@ export default function TextPopupInput({
 
 	const handleClose = () => {
 		setIsOpen(false);
-
-		// Remove o valor trigger do campo que acionou o popup
-		const currentValues = values[triggerFieldName];
-		if (Array.isArray(currentValues)) {
-			const updatedValues = currentValues.filter(
-				(item: string) => item !== triggerValue
-			);
-			setFieldValue(triggerFieldName, updatedValues);
-		} else {
-			setFieldValue(triggerFieldName, "");
-		}
-
 		setFieldValue(name, "");
 		setTextValue("");
-
 		if (onClose) onClose();
 	};
 

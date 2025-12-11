@@ -20,10 +20,15 @@ export default function TextPopupInput({
 	triggerValue,
 	title,
 	placeholder,
-	onClose,
 }: TextPopupInputProps) {
-	const { values, setFieldValue, errors, touched, setFieldTouched } =
-		useFormikContext<any>();
+	const {
+		values,
+		setFieldValue,
+		errors,
+		touched,
+		setFieldTouched,
+		validateField,
+	} = useFormikContext<any>();
 	const [isOpen, setIsOpen] = useState(false);
 	const [textValue, setTextValue] = useState("");
 	const [mounted, setMounted] = useState(false);
@@ -74,11 +79,18 @@ export default function TextPopupInput({
 		setIsOpen(false);
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (textValue.trim()) {
-			setFieldValue(name, textValue);
-			setIsOpen(false);
-			setFieldTouched(name, true);
+			// atualiza o valor
+			await setFieldValue(name, textValue);
+			// marca como touched
+			await setFieldTouched(name, true);
+			// valida o campo
+			const error = await validateField(name);
+			// só fecha se não houver erro
+			if (!error) {
+				setIsOpen(false);
+			}
 		}
 	};
 

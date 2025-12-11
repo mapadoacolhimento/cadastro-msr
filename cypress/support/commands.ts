@@ -313,11 +313,20 @@ Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
 	}).click({
 		force: true,
 	});
-	cy.findByRole("checkbox", { name: /Negou-se a registrar a denúncia/i }).click(
-		{
-			force: true,
-		}
+	cy.findByRole("checkbox", { name: /Outro motivo/i }).click({
+		force: true,
+	});
+	cy.findByRole("dialog").should("be.visible");
+
+	cy.findByText(/Descreva a situação/i).should("be.visible");
+	cy.findByPlaceholderText(/Escreva aqui/i).type(
+		"Descrição adicional da dificuldade enfrentada"
 	);
+	cy.findByRole("dialog")
+		.findByRole("button", { name: /Enviar/i })
+		.click();
+
+	cy.findByRole("dialog").should("not.exist");
 });
 
 Cypress.Commands.add("fillConsentConfirmationStep", () => {

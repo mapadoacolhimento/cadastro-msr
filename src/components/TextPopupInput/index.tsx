@@ -60,10 +60,18 @@ export default function TextPopupInput({
 		prevTriggerValues,
 	]);
 
+	useEffect(() => {
+		const triggerValues = values[triggerFieldName] || [];
+		const isSelectedNow = triggerValues.includes(triggerValue);
+
+		if (isSelectedNow && touched[name] && errors[name] && !isOpen) {
+			setIsOpen(true);
+			setTextValue(values[name] || "");
+		}
+	}, [errors, touched, name, triggerFieldName, triggerValue, values, isOpen]);
+
 	const handleClose = () => {
 		setIsOpen(false);
-		setFieldValue(name, "");
-		setTextValue("");
 	};
 
 	const handleSubmit = () => {

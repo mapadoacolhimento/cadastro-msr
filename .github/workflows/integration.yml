@@ -135,6 +135,10 @@ jobs:
         run: pnpm run test:int:ci
 
   e2e:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+ 
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:

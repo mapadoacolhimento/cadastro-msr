@@ -17,47 +17,48 @@ enum SupportType {
 }
 
 model MsrRegisterData {
-  id                       String        @id @default(auto()) @map("_id") @db.ObjectId
-  email                    String        @unique
-  firstName                String?
-  confirmEmail             String?
-  phone                    String?
-  confirmPhone             String?
-  dateOfBirth              String?
-  color                    String?
-  hasDisability            String?
-  acceptsOnlineSupport     String?
-  supportType              SupportType[]
-  gender                   String?
-  genderViolence           String?
-  violenceOccurredInBrazil String?
-  externalSupport          String[]
-  financialNeed            String?
-  terms                    Boolean?
-  zipcode                  String?
-  neighborhood             String?
-  city                     String?
-  state                    String?
-  street                   String?
-  lat                      Float?
-  lng                      Float?
-  createdAt                DateTime      @default(now())
-  updatedAt                DateTime      @default(now())
-  monthlyIncome            String?
-  monthlyIncomeRange       Float?
-  employmentStatus         String?
-  dependants               String?
-  familyProvider           String?
-  propertyOwnership        String?
-  violenceType             String[]
-  disability               String?
-  violenceTime             String?
-  perpetratorGenderId      String?
-  violencePerpetrator      String[]
-  livesWithPerpetrator     String?
-  violenceLocation         String[]
-  legalActionsTaken        String[]
-  policeReportDifficulty   String[]
-  protectiveFactors        String[]
-  riskFactors              String[]
+  id                          String        @id @default(auto()) @map("_id") @db.ObjectId
+  email                       String        @unique
+  firstName                   String?
+  confirmEmail                String?
+  phone                       String?
+  confirmPhone                String?
+  dateOfBirth                 String?
+  color                       String?
+  hasDisability               String?
+  acceptsOnlineSupport        String?
+  supportType                 SupportType[]
+  gender                      String?
+  genderViolence              String?
+  violenceOccurredInBrazil    String?
+  externalSupport             String[]
+  financialNeed               String?
+  terms                       Boolean?
+  zipcode                     String?
+  neighborhood                String?
+  city                        String?
+  state                       String?
+  street                      String?
+  lat                         Float?
+  lng                         Float?
+  createdAt                   DateTime      @default(now())
+  updatedAt                   DateTime      @default(now())
+  monthlyIncome               String?
+  monthlyIncomeRange          Float?
+  employmentStatus            String?
+  dependants                  String?
+  familyProvider              String?
+  propertyOwnership           String?
+  violenceType                String[]
+  disability                  String?
+  violenceTime                String?
+  perpetratorGenderId         String?
+  violencePerpetrator         String[]
+  livesWithPerpetrator        String?
+  violenceLocation            String[]
+  legalActionsTaken           String[]
+  policeReportDifficulty      String[]
+  policeReportDifficultyOther String?
+  protectiveFactors           String[]
+  riskFactors                 String[]
 }

@@ -137,9 +137,9 @@ jobs:
         run: pnpm run test:int:ci
 
   e2e:
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: false
+    #concurrency:
+      # group: 
+      # cancel-in-progress: false
  
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -154,6 +154,7 @@ jobs:
           - name: Modern Form
             spec: "cypress/e2e/modern-form/**/*.cy.{js,ts}"
             enableNewSteps: "true"
+      max-parallel: 1
     env:
       DATABASE_URL: postgresql://user:password@localhost:5432/mapa
       MONGO_DB_URL: mongodb://root:password@localhost:27017/mapa-org?authSource=admin&replicaSet=rs0

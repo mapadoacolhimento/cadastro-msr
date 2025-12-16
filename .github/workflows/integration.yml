@@ -9,12 +9,10 @@ on:
     branches:
       - "main"
 
-
-
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     strategy:
       matrix:
         node-version: [20.x]
@@ -137,15 +135,11 @@ jobs:
         run: pnpm run test:int:ci
 
   e2e:
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: false
- 
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 30
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [20.x]
         pnpm-version: [9.x]
         group:
           - name: Legacy Form
@@ -213,21 +207,27 @@ jobs:
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: v2-${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            v2-${{ runner.os }}-pnpm-store-
 
       - name: Set up Cypress binary cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: v2-cypress-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            cypress-${{ runner.os }}-cypress-
+            v2-cypress-${{ runner.os }}-
 
       - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+        timeout-minutes: 10
+
+      - name: Verify Cypress installation
         run: |
-          pnpm i --frozen-lockfile
+          pnpm exec cypress verify
+          pnpm exec cypress info
+        timeout-minutes: 5
 
       - name: Create env file
         run: |
@@ -238,34 +238,125 @@ jobs:
 
       - name: Push current migrations to test database
         run: pnpm db:push && pnpm mongodb:push
+        timeout-minutes: 5
 
       - name: Seed db
         run: pnpm db:seed
+        timeout-minutes: 3
 
-      - name: Run e2e tests
-        id: e2e
-        uses: cypress-io/github-action@v6
-        with:
-          spec: ${{ matrix.group.spec }}
-          build: pnpm run build
-          start: pnpm run start:ci
-          wait-on: "http://localhost:3000"
-          wait-on-timeout: 120
-          browser: chrome
-          install: false
+      - name: Build application
+        run: pnpm run build
+        timeout-minutes: 10
 
-      - name: Saves Cypress screenshots
+      - name: Start server in background
+        run: |
+          echo "Starting Next.js server..."
+          pnpm run start:ci > server.log 2>&1 &
+          SERVER_PID=$!
+          echo $SERVER_PID > .server.pid
+          echo "Server started with PID: $SERVER_PID"
+          
+          # Aguarda um pouco para o servidor iniciar
+          sleep 5
+          
+          # Verifica se o processo ainda está rodando
+          if ps -p $SERVER_PID > /dev/null; then
+            echo "Server process is running"
+          else
+            echo "Server failed to start. Log contents:"
+            cat server.log
+            exit 1
+          fi
+
+      - name: Wait for server to be ready
+        run: |
+          echo "Waiting for server at http://localhost:3000..."
+          timeout 120 bash -c '
+            until curl -f http://localhost:3000 > /dev/null 2>&1; do 
+              echo "Still waiting..."; 
+              sleep 2; 
+            done
+          ' || {
+            echo "Server failed to become ready. Server log:"
+            cat server.log
+            exit 1
+          }
+          echo "Server is ready!"
+
+      - name: Run Cypress tests - ${{ matrix.group.name }}
+        run: |
+          echo "Running Cypress tests for: ${{ matrix.group.name }}"
+          pnpm exec cypress run \
+            --spec "${{ matrix.group.spec }}" \
+            --browser chrome \
+            --config video=false,screenshotOnRunFailure=true \
+            --reporter spec
+        timeout-minutes: 15
+        env:
+          CYPRESS_baseUrl: http://localhost:3000
+
+      - name: Stop server
+        if: always()
+        run: |
+          echo "Stopping server..."
+          
+          if [ -f .server.pid ]; then
+            SERVER_PID=$(cat .server.pid)
+            echo "Attempting to kill server PID: $SERVER_PID"
+            
+            # Tenta SIGTERM primeiro (graceful shutdown)
+            kill -15 $SERVER_PID 2>/dev/null || echo "SIGTERM failed or process already dead"
+            
+            # Aguarda 3 segundos
+            sleep 3
+            
+            # Se ainda estiver rodando, força com SIGKILL
+            if ps -p $SERVER_PID > /dev/null 2>/dev/null; then
+              echo "Process still running, forcing kill..."
+              kill -9 $SERVER_PID 2>/dev/null || echo "SIGKILL failed or process already dead"
+            fi
+          else
+            echo "No .server.pid file found"
+          fi
+          
+          # Força matar qualquer processo Node.js/Next.js restante
+          echo "Cleaning up any remaining processes..."
+          pkill -9 -f "next start" 2>/dev/null || true
+          pkill -9 -f "node.*start:ci" 2>/dev/null || true
+          pkill -9 -f "pnpm.*start:ci" 2>/dev/null || true
+          
+          # Remove o arquivo PID
+          rm -f .server.pid
+          
+          echo "Server cleanup complete"
+          
+          # Lista processos restantes para debug (opcional)
+          echo "Remaining node processes:"
+          ps aux | grep -E "next|node|pnpm" | grep -v grep || echo "No node processes found"
+
+      - name: Upload Cypress screenshots
         uses: actions/upload-artifact@v4
-        if: ${{ always() && failure() && steps.e2e.outcome == 'failure' }}
+        if: failure()
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-${{ matrix.group.name }}
           path: cypress/screenshots
           if-no-files-found: ignore
+          retention-days: 7
 
-      - name: Saves Cypress videos
-        if: ${{ always() && failure() && steps.e2e.outcome == 'failure' }}
+      - name: Upload Cypress videos
         uses: actions/upload-artifact@v4
+        if: failure()
         with:
-          name: cypress-videos
+          name: cypress-videos-${{ matrix.group.name }}
           path: cypress/videos
           if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload server logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-logs-${{ matrix.group.name }}
+          path: server.log
+          if-no-files-found: ignore
+          retention-days: 3

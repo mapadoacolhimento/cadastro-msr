@@ -11,13 +11,14 @@ const policeReportDifficultySchema = Yup.object({
 		.min(1, "Selecione pelo menos uma opção.")
 		.required("Esse campo é obrigatório."),
 
-	policeReportDifficultyOther: Yup.string().when("policeReportDifficulty", {
-		is: (val: string[]) => val?.includes("others"),
-		then: (schema) =>
-			//trim para evitar que usuária envie apenas espaços em branco
-			schema.trim().required("Por favor, descreva o motivo."),
-		otherwise: (schema) => schema.notRequired(),
-	}),
+	policeReportDifficultyOther: Yup.string().when(
+		"policeReportDifficulty",
+		([val], schema) => {
+			return val?.includes("others")
+				? schema.trim().required("Por favor, descreva o motivo.")
+				: schema.notRequired();
+		}
+	),
 });
 
 export default function PoliceReportDifficulty() {

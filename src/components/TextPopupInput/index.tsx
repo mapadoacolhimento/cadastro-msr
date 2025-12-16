@@ -11,7 +11,6 @@ interface TextPopupInputProps {
 	triggerValue: string;
 	title?: string;
 	placeholder?: string;
-	onClose?: () => void;
 }
 
 export default function TextPopupInput({

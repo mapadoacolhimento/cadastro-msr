@@ -12,7 +12,7 @@ on:
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     strategy:
       matrix:
         node-version: [20.x]
@@ -135,15 +135,11 @@ jobs:
         run: pnpm run test:int:ci
 
   e2e:
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: false
- 
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [20.x]
         pnpm-version: [9.x]
         group:
           - name: Legacy Form

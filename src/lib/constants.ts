@@ -4,6 +4,7 @@ import {
 	Race,
 	SupportRequestsStatus,
 } from "@prisma/client";
+import { Description } from "@radix-ui/themes/src/components/alert-dialog.jsx";
 
 export const BRAZILIAN_STATES_OPTIONS = [
 	{ value: "AC", label: "Acre" },
@@ -55,10 +56,12 @@ export const supportTypeOptions = [
 	{
 		name: "Acolhimento psicológico",
 		value: "psychological",
+		description: "Suporte emocional e fortalecimento ",
 	},
 	{
 		name: "Acolhimento jurídico",
 		value: "legal",
+		description: "Orientação legal e encaminhamento ",
 	},
 ];
 

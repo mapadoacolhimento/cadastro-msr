@@ -21,7 +21,7 @@ export default function ConsentConfirmation() {
 		>
 			<TermsAcceptanceInput
 				name="terms"
-				termsUrl="https://docs.google.com/document/d/1bcZ3Fqcm_IlWouBD5I9_vkn52yNl5jLK/edit"
+				termsUrl="https://bit.ly/termoacolhida"
 				termsLinkText="Termo de Consentimento"
 			>
 				Estou ciente de que as informações aqui registradas são verdadeiras e

@@ -465,7 +465,7 @@ export const legalActionsTakenOptions = [
 export const protectiveFactorsOptions = [
 	{
 		value: "supportNetwork",
-		name: "Tenho rede de apoio (familiares, amigos, vizinhos)",
+		name: "Possuo rede de apoio (familiares, amigos, vizinhos)",
 	},
 	{
 		value: "dontLiveWithPerpetrator",
@@ -480,8 +480,8 @@ export const protectiveFactorsOptions = [
 		name: "Não dependo financeiramente do(a) autor(a) da violência",
 	},
 	{
-		value: "n/a",
-		name: "Nenhuma das opções anteriores",
+		value: "publicServices",
+		name: "O local onde moro possui serviços públicos de atendimento à mulher com atendimento qualificado",
 	},
 ];
 

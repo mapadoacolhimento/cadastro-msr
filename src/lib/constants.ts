@@ -508,7 +508,7 @@ export const riskFactorsOptions = [
 	},
 	{
 		value: "perpetratorIsCriminal",
-		name: "O (a) autor da violência tem envolvimento com o crime organizado",
+		name: "O(A) autor da violência tem envolvimento com o crime organizado",
 	},
 	{
 		value: "perpetratorIsImprisoned",
@@ -516,18 +516,14 @@ export const riskFactorsOptions = [
 	},
 	{
 		value: "feelsIsolated",
-		name: "Você se sente isolada de amigos, familiares, pessoas da comunidade ou trabalho",
-	},
-	{
-		value: "trustedPeopleAccess",
-		name: "Atualmente você consegue acessar pessoas de confiança que te ajudem em caso de uma violência sofrida?",
+		name: "Me sinto isolada de amigos, familiares, pessoas da comunidade ou trabalho e/ou não consigo acessar pessoas de confiança que me ajudem em caso de uma violência sofrida",
 	},
 	{
 		value: "otherRisks",
-		name: "O local onde você mora apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
+		name: "O local onde moro apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
 	},
 	{
 		value: "neededMedicalAttention",
-		name: "Após algum episódio de agressão você já necessitou de atendimento de saúde (atendimento médico; internação; necessitou, mas não buscou atendimento médico)",
+		name: "Após algum episódio de agressão já necessitei de atendimento de saúde (atendimento médico; internação)",
 	},
 ];

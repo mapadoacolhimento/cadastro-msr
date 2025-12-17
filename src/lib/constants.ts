@@ -442,15 +442,23 @@ export const legalActionsTakenOptions = [
 	},
 	{
 		value: "civilCase",
-		name: "Processo cível (direito e família)",
+		name: "Processo cível/Direito de família",
 	},
 	{
 		value: "labourCase",
 		name: "Processo trabalhista",
 	},
 	{
+		value: "policeReport",
+		name: "Registro de Ocorrência (B.O)",
+	},
+	{
+		value: "restrainingOrder",
+		name: "Requerimento de Medida Protetiva (Delegacia de Polícia)",
+	},
+	{
 		value: "noneTaken",
-		name: "Nenhuma providência foi tomada",
+		name: "Não foi realizada nenhuma providência jurídica",
 	},
 ];
 

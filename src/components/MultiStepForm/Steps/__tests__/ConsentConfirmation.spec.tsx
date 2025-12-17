@@ -34,10 +34,7 @@ describe("<ConsentConfirmation />", () => {
 
 		expect(text).toBeInTheDocument();
 		expect(link).toBeInTheDocument();
-		expect(link).toHaveAttribute(
-			"href",
-			"https://docs.google.com/document/d/1bcZ3Fqcm_IlWouBD5I9_vkn52yNl5jLK/edit"
-		);
+		expect(link).toHaveAttribute("href", "https://bit.ly/termoacolhida");
 		expect(checkbox).toBeInTheDocument();
 	});
 

@@ -402,12 +402,8 @@ export const violenceLocationOptions = [
 
 export const policeReportDifficultyOptions = [
 	{
-		value: "no",
-		name: "Não houve dificuldade ou impedimento",
-	},
-	{
 		value: "discourageReporting",
-		name: "Desencorajou sob o argumento de improcedência da denúncia",
+		name: "Desencorajou sob o argumento de inexistência criminosa",
 	},
 	{
 		value: "notTheirCompetence",
@@ -415,11 +411,15 @@ export const policeReportDifficultyOptions = [
 	},
 	{
 		value: "refusedToReport",
-		name: "Negou-se a registrar a denúncia",
+		name: "Negou-se a registrar a ocorrência",
 	},
 	{
-		value: "others",
-		name: "Outro motivo",
+		value: "deniedJusticeAccess",
+		name: "Não viabilizou o acesso à justiça",
+	},
+	{
+		value: "deniedRestrainingOrder",
+		name: "Negou o requerimento à medida protetiva",
 	},
 	{
 		value: "n/a",

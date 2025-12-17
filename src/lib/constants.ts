@@ -289,10 +289,6 @@ export const violenceTypeOptions = [
 
 export const violenceTimeOptions = [
 	{
-		value: "isolatedEpisode",
-		name: "Sofri um episódio isolado",
-	},
-	{
 		value: "lastWeek",
 		name: "Na última semana",
 	},

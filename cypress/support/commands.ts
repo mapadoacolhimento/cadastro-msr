@@ -257,9 +257,9 @@ Cypress.Commands.add("fillViolenceTypeStep", () => {
 });
 
 Cypress.Commands.add("fillViolenceTimeStep", () => {
-	cy.contains("Por quanto tempo você sofreu ou tem sofrido violência?").should(
-		"be.visible"
-	);
+	cy.contains(
+		"Por qual período de tempo você sofreu ou está sofrendo violência?"
+	).should("be.visible");
 	cy.findByRole("radio", { name: /Há menos de 3 meses/i }).click({
 		force: true,
 	});
@@ -308,9 +308,9 @@ Cypress.Commands.add("fillViolenceLocationStep", () => {
 });
 
 Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
-	cy.contains(
-		"Houve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência?"
-	).should("be.visible");
+	cy.contains("Se sim, o que a pessoa que te atendeu fez?").should(
+		"be.visible"
+	);
 
 	cy.findByRole("checkbox", {
 		name: /Desencorajou sob o argumento de inexistência criminosa/i,

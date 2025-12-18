@@ -25,7 +25,7 @@ export default function ViolenceTime() {
 				options={violenceTimeOptions}
 				question={
 					<>
-						Por qual<Strong>período de tempo</Strong> você sofreu ou está
+						Por qual <Strong>período de tempo</Strong> você sofreu ou está
 						sofrendo violência?
 					</>
 				}

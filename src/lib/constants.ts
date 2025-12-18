@@ -4,7 +4,6 @@ import {
 	Race,
 	SupportRequestsStatus,
 } from "@prisma/client";
-import { Description } from "@radix-ui/themes/src/components/alert-dialog.jsx";
 
 export const BRAZILIAN_STATES_OPTIONS = [
 	{ value: "AC", label: "Acre" },

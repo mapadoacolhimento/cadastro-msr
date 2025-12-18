@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import CheckboxGroupInput from "../../CheckboxGroupInput";
 import { policeReportDifficultyOptions } from "@/constants";

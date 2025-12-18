@@ -202,7 +202,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.contains(
-						"Foram tomadas providências jurídicas? (Selecione todas as opções que se aplicam)"
+						"Se sim, o que a pessoa que te atendeu fez? (Selecione todas as opções que se aplicam)"
 					).should("exist");
 
 					cy.injectAxe();

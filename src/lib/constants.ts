@@ -55,10 +55,12 @@ export const supportTypeOptions = [
 	{
 		name: "Acolhimento psicológico",
 		value: "psychological",
+		description: "Suporte emocional e fortalecimento ",
 	},
 	{
 		name: "Acolhimento jurídico",
 		value: "legal",
+		description: "Orientação legal e encaminhamento ",
 	},
 ];
 
@@ -286,10 +288,6 @@ export const violenceTypeOptions = [
 
 export const violenceTimeOptions = [
 	{
-		value: "isolatedEpisode",
-		name: "Sofri um episódio isolado",
-	},
-	{
 		value: "lastWeek",
 		name: "Na última semana",
 	},
@@ -403,12 +401,8 @@ export const violenceLocationOptions = [
 
 export const policeReportDifficultyOptions = [
 	{
-		value: "no",
-		name: "Não houve dificuldade ou impedimento",
-	},
-	{
 		value: "discourageReporting",
-		name: "Desencorajou sob o argumento de improcedência da denúncia",
+		name: "Desencorajou sob o argumento de inexistência criminosa",
 	},
 	{
 		value: "notTheirCompetence",
@@ -416,11 +410,15 @@ export const policeReportDifficultyOptions = [
 	},
 	{
 		value: "refusedToReport",
-		name: "Negou-se a registrar a denúncia",
+		name: "Negou-se a registrar a ocorrência",
 	},
 	{
-		value: "others",
-		name: "Outro motivo",
+		value: "deniedJusticeAccess",
+		name: "Não viabilizou o acesso à justiça",
+	},
+	{
+		value: "deniedRestrainingOrder",
+		name: "Negou o requerimento à medida protetiva",
 	},
 	{
 		value: "n/a",
@@ -443,22 +441,30 @@ export const legalActionsTakenOptions = [
 	},
 	{
 		value: "civilCase",
-		name: "Processo cível (direito e família)",
+		name: "Processo cível/Direito de família",
 	},
 	{
 		value: "labourCase",
 		name: "Processo trabalhista",
 	},
 	{
+		value: "policeReport",
+		name: "Registro de Ocorrência (B.O)",
+	},
+	{
+		value: "restrainingOrder",
+		name: "Requerimento de Medida Protetiva (Delegacia de Polícia)",
+	},
+	{
 		value: "noneTaken",
-		name: "Nenhuma providência foi tomada",
+		name: "Não foi realizada nenhuma providência jurídica",
 	},
 ];
 
 export const protectiveFactorsOptions = [
 	{
 		value: "supportNetwork",
-		name: "Tenho rede de apoio (familiares, amigos, vizinhos)",
+		name: "Possuo rede de apoio (familiares, amigos, vizinhos)",
 	},
 	{
 		value: "dontLiveWithPerpetrator",
@@ -473,8 +479,8 @@ export const protectiveFactorsOptions = [
 		name: "Não dependo financeiramente do(a) autor(a) da violência",
 	},
 	{
-		value: "n/a",
-		name: "Nenhuma das opções anteriores",
+		value: "publicServices",
+		name: "O local onde moro possui serviços públicos de atendimento à mulher com atendimento qualificado",
 	},
 ];
 
@@ -501,7 +507,7 @@ export const riskFactorsOptions = [
 	},
 	{
 		value: "perpetratorIsCriminal",
-		name: "O (a) autor da violência tem envolvimento com o crime organizado",
+		name: "O(A) autor da violência tem envolvimento com o crime organizado",
 	},
 	{
 		value: "perpetratorIsImprisoned",
@@ -509,18 +515,14 @@ export const riskFactorsOptions = [
 	},
 	{
 		value: "feelsIsolated",
-		name: "Você se sente isolada de amigos, familiares, pessoas da comunidade ou trabalho",
-	},
-	{
-		value: "trustedPeopleAccess",
-		name: "Atualmente você consegue acessar pessoas de confiança que te ajudem em caso de uma violência sofrida?",
+		name: "Me sinto isolada de amigos, familiares, pessoas da comunidade ou trabalho e/ou não consigo acessar pessoas de confiança que me ajudem em caso de uma violência sofrida",
 	},
 	{
 		value: "otherRisks",
-		name: "O local onde você mora apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
+		name: "O local onde moro apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
 	},
 	{
 		value: "neededMedicalAttention",
-		name: "Após algum episódio de agressão você já necessitou de atendimento de saúde (atendimento médico; internação; necessitou, mas não buscou atendimento médico)",
+		name: "Após algum episódio de agressão já necessitei de atendimento de saúde (atendimento médico; internação)",
 	},
 ];

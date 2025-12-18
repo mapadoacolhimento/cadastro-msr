@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import CheckboxGroupInput from "../../CheckboxGroupInput";
 import { policeReportDifficultyOptions } from "@/constants";
@@ -26,9 +25,7 @@ export default function PoliceReportDifficulty() {
 				options={policeReportDifficultyOptions}
 				question={
 					<>
-						Houve dificuldade para solicitar medida protetiva e/ou denunciar
-						e/ou registrar um boletim de ocorrência?{" "}
-						<Strong>O que a pessoa que te atendeu fez?</Strong>{" "}
+						Se sim, o que a pessoa que te atendeu fez?{" "}
 						<em>(Selecione todas as opções que se aplicam)</em>
 					</>
 				}

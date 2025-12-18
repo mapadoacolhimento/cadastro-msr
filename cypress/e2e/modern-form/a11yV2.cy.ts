@@ -87,7 +87,7 @@ describe("Accessibility - App2 New Steps", () => {
 
 				it("should pass the accessibility test on Violence Time step", () => {
 					cy.contains(
-						"Por quanto tempo você sofreu ou tem sofrido violência?"
+						"Por qual período de tempo você sofreu ou está sofrendo violência?"
 					).should("exist");
 
 					cy.injectAxe();
@@ -202,7 +202,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.contains(
-						"Houve dificuldade para solicitar medida protetiva e/ou denunciar e/ou registrar um boletim de ocorrência?"
+						"Se sim, o que a pessoa que te atendeu fez? (Selecione todas as opções que se aplicam)"
 					).should("exist");
 
 					cy.injectAxe();

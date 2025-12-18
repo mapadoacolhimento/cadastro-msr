@@ -105,9 +105,13 @@ Cypress.Commands.add(
 	(supportType: Record<string, string>) => {
 		cy.contains("Que tipo de acolhimento você precisa?").should("exist");
 		if (supportType.psychological)
-			cy.findByLabelText(supportType.psychological).click({ force: true });
+			cy.findByRole("checkbox", {
+				name: /Acolhimento Psicológico/i,
+			}).click({ force: true });
 		if (supportType.legal)
-			cy.findByLabelText(supportType.legal).click({ force: true });
+			cy.findByRole("checkbox", {
+				name: /Acolhimento Jurídico/i,
+			}).click({ force: true });
 	}
 );
 
@@ -256,7 +260,7 @@ Cypress.Commands.add("fillViolenceTimeStep", () => {
 	cy.contains("Por quanto tempo você sofreu ou tem sofrido violência?").should(
 		"be.visible"
 	);
-	cy.findByRole("radio", { name: /Sofri um episódio isolado/i }).click({
+	cy.findByRole("radio", { name: /Há menos de 3 meses/i }).click({
 		force: true,
 	});
 });
@@ -309,15 +313,15 @@ Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
 	).should("be.visible");
 
 	cy.findByRole("checkbox", {
-		name: /Desencorajou sob o argumento de improcedência da denúncia/i,
+		name: /Desencorajou sob o argumento de inexistência criminosa/i,
 	}).click({
 		force: true,
 	});
-	cy.findByRole("checkbox", { name: /Negou-se a registrar a denúncia/i }).click(
-		{
-			force: true,
-		}
-	);
+	cy.findByRole("checkbox", {
+		name: /Negou-se a registrar a ocorrência/i,
+	}).click({
+		force: true,
+	});
 });
 
 Cypress.Commands.add("fillConsentConfirmationStep", () => {
@@ -345,7 +349,7 @@ Cypress.Commands.add("fillProtectiveFactorsStep", () => {
 	);
 
 	cy.findByRole("checkbox", {
-		name: /Tenho rede de apoio \(familiares, amigos, vizinhos\)/i,
+		name: /Possuo rede de apoio \(familiares, amigos, vizinhos\)/i,
 	}).click({
 		force: true,
 	});

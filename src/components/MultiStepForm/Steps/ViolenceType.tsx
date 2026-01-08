@@ -88,11 +88,14 @@ export default function ViolenceType() {
 				question={
 					<>
 						<Strong>
-							Quais tipos de violência você sofreu ou está sofrendo?
+							Qual(is) tipos de violência você sofreu ou está sofrendo pelo fato
+							de ser mulher?
 						</Strong>{" "}
-						Você pode selecionar <Strong>um ou mais tipos de violência</Strong>{" "}
-						que deseja relatar. Escolha abaixo as opções que se aplicam ao seu
-						caso.
+						<em>
+							(<Strong>Não é</Strong> necessário que você tenha experimentado
+							todos os tipos de violência exemplificados nas opções abaixo.
+							Qualquer uma das ações <Strong>já configura violência.</Strong>)
+						</em>
 					</>
 				}
 				actionButton={

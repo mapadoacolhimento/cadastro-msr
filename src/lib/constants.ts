@@ -245,6 +245,13 @@ export const violenceTypeOptions = [
 			"Impedir o uso de métodos contraceptivos ou forçar a abortar; impedir você de usar preservativo, se negar a usar preservativo durante a relação sexual com você; forçar ao matrimônio, gravidez ou prostituição por meio de coação, chantagem, suborno ou manipulação; limitar ou anular o exercício dos seus direitos sexuais e/ou reprodutivos; forçar à alguma prática sexual na intenção de corrigir sua orientação sexual; exigir práticas sexuais que você não gosta ou se sente desconfortável; em seu ambiente de trabalho, ser forçada à alguma conduta que gerou constrangimento e/ou violou sua liberdade sexual (essa opção vale para condutas de natureza sexual manifestadas fisicamente, ou por palavras, ou gestos ou outros meios no ambiente de trabalho).",
 	},
 	{
+		value: "moralViolence",
+		name: "Violência Moral",
+		description: "Ex: calúnia, injúria e difamação",
+		fullDescription:
+			"Se você está sendo (ou foi) acusada falsamente de ter cometido um crime; se alguém está atribuindo (ou atribuiu) a você algum fato ofensivo à sua reputação; ou se você está tendo (ou teve) sua dignidade afrontada com xingamentos ou palavras desonrosas.",
+	},
+	{
 		value: "digitalViolence",
 		name: "Violência digital",
 		description: "Ex: cyberbullying, invasão de privacidade",

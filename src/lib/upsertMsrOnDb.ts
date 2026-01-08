@@ -8,7 +8,7 @@ import {
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
 	propertyOwnershipOptions,
-} from "@/lib";
+} from "@/lib/constants";
 
 const payloadSchema = Yup.object({
 	msrZendeskUserId: Yup.number().required(),

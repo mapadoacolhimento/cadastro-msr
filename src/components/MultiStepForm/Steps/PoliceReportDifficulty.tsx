@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 import Step from "../Step";
 import CheckboxGroupInput from "../../CheckboxGroupInput";
-import TextPopupInput from "../../TextPopupInput";
 import { policeReportDifficultyOptions } from "@/constants";
 
 const policeReportDifficultySchema = Yup.object({
@@ -9,15 +8,6 @@ const policeReportDifficultySchema = Yup.object({
 		.of(Yup.string().oneOf(policeReportDifficultyOptions.map((a) => a.value)))
 		.min(1, "Selecione pelo menos uma opção.")
 		.required("Esse campo é obrigatório."),
-
-	policeReportDifficultyOther: Yup.string().when(
-		"policeReportDifficulty",
-		([val], schema) => {
-			return val?.includes("others")
-				? schema.trim().required("Por favor, descreva o motivo.")
-				: schema.notRequired();
-		}
-	),
 });
 
 export default function PoliceReportDifficulty() {
@@ -35,18 +25,11 @@ export default function PoliceReportDifficulty() {
 				options={policeReportDifficultyOptions}
 				question={
 					<>
-						Se sim, o que a pessoa que te atendeu fez?{" "}
+						Houve dificuldade ou impedimento para realizar alguma das
+						providências jurídicas? Se sim, o que a pessoa que te atendeu fez?{" "}
 						<em>(Selecione todas as opções que se aplicam)</em>
 					</>
 				}
-			/>
-
-			<TextPopupInput
-				name="policeReportDifficultyOther"
-				triggerFieldName="policeReportDifficulty"
-				triggerValue="others"
-				title="Descreva a situação"
-				placeholder="Escreva aqui"
 			/>
 		</Step>
 	);

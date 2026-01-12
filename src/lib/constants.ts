@@ -175,12 +175,12 @@ export const monthlyIncomeOptions = [
 
 export const monthlyIncomeRangeOptions = [
 	{ value: 0, name: "Não possuo renda" },
-	{ value: 0.5, name: "Até meio salário mínimo (R$660,00)" },
-	{ value: 1, name: "Até um salário mínimo (R$1.320,00)" },
-	{ value: 2, name: "Até dois salários mínimos (R$2.640,00)" },
-	{ value: 3, name: "Até três salários mínimos (R$3.960,00)" },
-	{ value: 4, name: "Até quatro salários mínimos (R$5.280,00)" },
-	{ value: 5, name: "Cinco salários mínimos ou mais (R$6.600,00 ou mais)" },
+	{ value: 0.5, name: "Até meio salário mínimo (R$810,00)" },
+	{ value: 1, name: "Até um salário mínimo (R$1.621,00)" },
+	{ value: 2, name: "Até dois salários mínimos (R$3.242,00)" },
+	{ value: 3, name: "Até três salários mínimos (R$4.863,00)" },
+	{ value: 4, name: "Até quatro salários mínimos (R$6.484,00)" },
+	{ value: 5, name: "Cinco salários mínimos ou mais (R$8.105,00 ou mais)" },
 ];
 
 export const employmentStatusOptions = [
@@ -211,6 +211,10 @@ export const familyProviderOptions = [
 	{
 		value: "no",
 		name: "Não",
+	},
+	{
+		value: "partially",
+		name: "Divido a responsabilidade financeira da casa com alguém",
 	},
 ];
 
@@ -294,6 +298,10 @@ export const violenceTypeOptions = [
 ];
 
 export const violenceTimeOptions = [
+	{
+		value: "isolatedEpisode",
+		name: "Sofri um eisódio isolado",
+	},
 	{
 		value: "lastWeek",
 		name: "Na última semana",

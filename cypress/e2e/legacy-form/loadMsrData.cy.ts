@@ -93,6 +93,6 @@ it("should fill addres information in the fields in the following step after loa
 
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.findByRole("combobox", {
-		name: "Cor",
+		name: "Selecione sua cor",
 	}).should("exist");
 });

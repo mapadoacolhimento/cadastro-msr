@@ -27,7 +27,9 @@ describe("<DiversityInformation />", () => {
 	it("should render fields", () => {
 		setup();
 
-		const colorInput = screen.getByRole("combobox", { name: "Cor" });
+		const colorInput = screen.getByRole("combobox", {
+			name: "Selecione sua cor",
+		});
 
 		expect(colorInput).toBeInTheDocument();
 	});

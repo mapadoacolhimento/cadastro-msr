@@ -46,7 +46,7 @@ Cypress.Commands.add(
 Cypress.Commands.add("fillDiversityInformationStep", () => {
 	cy.findByRole("heading", { name: "Seus dados" }).should("exist");
 	cy.findByRole("combobox", {
-		name: "Cor",
+		name: "Selecione sua cor",
 	}).click();
 	cy.contains(colorOption).should("be.visible").click();
 });
@@ -230,9 +230,9 @@ Cypress.Commands.add("fillFinancialBlock", () => {
 });
 
 Cypress.Commands.add("fillNoViolenceTypeStep", () => {
-	cy.contains("Quais tipos de violência você sofreu ou está sofrendo?").should(
-		"be.visible"
-	);
+	cy.contains(
+		"Qual(is) tipos de violência você sofreu ou está sofrendo pelo fato de ser mulher?"
+	).should("be.visible");
 
 	cy.findByRole("checkbox", {
 		name: /Não estou sofrendo violência|Não sofri violência/i,

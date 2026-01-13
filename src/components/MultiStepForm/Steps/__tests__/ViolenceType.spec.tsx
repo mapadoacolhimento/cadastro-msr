@@ -81,6 +81,16 @@ it("should return redirect to /fora-criterios when 'noViolence' is selected", as
 	expect(result).toEqual({ redirectTo: "/fora-criterios" });
 });
 
+it("should not redirect when 'noViolence' is selected with other violence types", async () => {
+	const values = {
+		violenceType: ["noViolence", "physical"],
+	} as Values;
+
+	const result = await handleSubmit(values);
+
+	expect(result).not.toEqual({ redirectTo: "/fora-criterios" });
+});
+
 it("renders info buttons only for options with descriptions", () => {
 	setup();
 

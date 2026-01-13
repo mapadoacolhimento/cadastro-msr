@@ -63,8 +63,12 @@ function renderDialogContent({
 }
 
 export async function handleSubmit(values: Values) {
-	const noViolence = values.violenceType.includes("noViolence");
-	if (noViolence) {
+	const selectedViolenceTypes = values.violenceType || [];
+	const onlyNoViolence =
+		selectedViolenceTypes.includes("noViolence") &&
+		selectedViolenceTypes.length === 1;
+
+	if (onlyNoViolence) {
 		return {
 			redirectTo: "/fora-criterios",
 		};

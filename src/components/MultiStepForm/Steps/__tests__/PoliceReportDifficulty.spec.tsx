@@ -15,7 +15,6 @@ const setup = () => {
 			initialValues={
 				{
 					policeReportDifficulty: [],
-					policeReportDifficultyOther: "",
 				} as unknown as Values
 			}
 		>

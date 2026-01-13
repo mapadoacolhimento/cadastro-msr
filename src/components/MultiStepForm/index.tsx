@@ -71,7 +71,6 @@ export default function MultiStepForm() {
 				livesWithPerpetrator: "",
 				violenceLocation: [],
 				policeReportDifficulty: [],
-				policeReportDifficultyOther: "",
 				legalActionsTaken: "",
 				protectiveFactors: [],
 				riskFactors: [],

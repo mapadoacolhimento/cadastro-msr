@@ -175,7 +175,7 @@ Cypress.Commands.add("fillMonthlyIncomeRangeStep", () => {
 		"Assinale a opção que corresponde a sua renda individual (per capita):"
 	).should("exist");
 	cy.findByRole("radio", {
-		name: "Até quatro salários mínimos (R$5.280,00)",
+		name: "Até quatro salários mínimos (R$6.484,00)",
 	}).click();
 	cy.findByRole("button", { name: "Continuar" }).click();
 });
@@ -242,9 +242,9 @@ Cypress.Commands.add("fillNoViolenceTypeStep", () => {
 });
 
 Cypress.Commands.add("fillViolenceTypeStep", () => {
-	cy.contains("Quais tipos de violência você sofreu ou está sofrendo?").should(
-		"be.visible"
-	);
+	cy.contains(
+		"Qual(is) tipos de violência você sofreu ou está sofrendo pelo fato de ser mulher?"
+	).should("be.visible");
 	cy.findByRole("checkbox", { name: /Violência psicológica/i }).click({
 		force: true,
 	});

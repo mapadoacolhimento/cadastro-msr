@@ -300,7 +300,7 @@ export const violenceTypeOptions = [
 export const violenceTimeOptions = [
 	{
 		value: "isolatedEpisode",
-		name: "Sofri um eisódio isolado",
+		name: "Sofri um episódio isolado",
 	},
 	{
 		value: "lastWeek",
@@ -497,6 +497,10 @@ export const protectiveFactorsOptions = [
 		value: "publicServices",
 		name: "O local onde moro possui serviços públicos de atendimento à mulher com atendimento qualificado",
 	},
+	{
+		value: "N/A",
+		name: "Não se aplica",
+	},
 ];
 
 export const riskFactorsOptions = [
@@ -539,5 +543,9 @@ export const riskFactorsOptions = [
 	{
 		value: "neededMedicalAttention",
 		name: "Após algum episódio de agressão já necessitei de atendimento de saúde (atendimento médico; internação)",
+	},
+	{
+		value: "N/A",
+		name: "Não se aplica",
 	},
 ];

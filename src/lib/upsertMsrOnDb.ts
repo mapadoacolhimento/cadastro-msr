@@ -1,6 +1,16 @@
 import * as Yup from "yup";
 import { db } from ".";
 import { Gender, MSRStatus, Race } from "@prisma/client";
+import {
+	dependantsOptions,
+	employmentStatusOptions,
+	familyProviderOptions,
+	monthlyIncomeOptions,
+	monthlyIncomeRangeOptions,
+	propertyOwnershipOptions,
+} from "@/lib/constants";
+
+const yesNoToBoolean = (value?: string | null) => value === "yes";
 
 const payloadSchema = Yup.object({
 	msrZendeskUserId: Yup.number().required(),
@@ -18,6 +28,18 @@ const payloadSchema = Yup.object({
 	gender: Yup.string().oneOf(Object.values(Gender)).required(),
 	hasDisability: Yup.boolean().required().nullable(),
 	acceptsOnlineSupport: Yup.boolean().required(),
+	monthlyIncome: Yup.string().oneOf(monthlyIncomeOptions.map((o) => o.value)),
+	monthlyIncomeRange: Yup.number()
+		.oneOf(monthlyIncomeRangeOptions.map((o) => o.value))
+		.nullable(),
+	employmentStatus: Yup.string().oneOf(
+		employmentStatusOptions.map((o) => o.value)
+	),
+	dependants: Yup.string().oneOf(dependantsOptions.map((o) => o.value)),
+	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
+	propertyOwnership: Yup.string().oneOf(
+		propertyOwnershipOptions.map((o) => o.value)
+	),
 }).required();
 
 export default async function upsertMsrOnDb(
@@ -47,6 +69,18 @@ export default async function upsertMsrOnDb(
 		dateOfBirth: payload.dateOfBirth ?? null,
 	};
 
+	const msrSocioeconomicData = {
+		monthlyIncome: payload.monthlyIncome ?? null,
+		monthlyIncomeRange: payload.monthlyIncomeRange ?? null,
+		employmentStatus: payload.employmentStatus ?? null,
+		dependants: payload.dependants ?? null,
+		familyProvider: payload.familyProvider ?? null,
+		propertyOwnership:
+			payload.propertyOwnership !== null
+				? yesNoToBoolean(payload.propertyOwnership)
+				: null,
+	};
+
 	const msrResult = await db.mSRs.upsert({
 		where: {
 			msrId: payload.msrZendeskUserId,
@@ -61,6 +95,12 @@ export default async function upsertMsrOnDb(
 			MSRPii: {
 				update: msrPii,
 			},
+			MSRSocioeconomicData: {
+				upsert: {
+					update: msrSocioeconomicData,
+					create: msrSocioeconomicData,
+				},
+			},
 		},
 		create: {
 			msrId: payload.msrZendeskUserId,
@@ -72,6 +112,9 @@ export default async function upsertMsrOnDb(
 			},
 			MSRPii: {
 				create: msrPii,
+			},
+			MSRSocioeconomicData: {
+				create: msrSocioeconomicData,
 			},
 		},
 	});

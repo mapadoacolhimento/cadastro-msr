@@ -10,6 +10,8 @@ import {
 	propertyOwnershipOptions,
 } from "@/lib/constants";
 
+const yesNoToBoolean = (value?: string | null) => value === "yes";
+
 const payloadSchema = Yup.object({
 	msrZendeskUserId: Yup.number().required(),
 	email: Yup.string().email().required(),
@@ -73,7 +75,10 @@ export default async function upsertMsrOnDb(
 		employmentStatus: payload.employmentStatus ?? null,
 		dependants: payload.dependants ?? null,
 		familyProvider: payload.familyProvider ?? null,
-		propertyOwnership: payload.propertyOwnership ?? null,
+		propertyOwnership:
+			payload.propertyOwnership !== null
+				? yesNoToBoolean(payload.propertyOwnership)
+				: null,
 	};
 
 	const msrResult = await db.mSRs.upsert({

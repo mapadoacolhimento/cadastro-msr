@@ -299,10 +299,6 @@ export const violenceTypeOptions = [
 
 export const violenceTimeOptions = [
 	{
-		value: "isolatedEpisode",
-		name: "Sofri um episódio isolado",
-	},
-	{
 		value: "lastWeek",
 		name: "Na última semana",
 	},
@@ -376,7 +372,7 @@ export const violencePerpetratorOptions = [
 	{
 		value: "otherPeople",
 		name: "Outras pessoas",
-		description: "Vizinho(a), amigo(a), outros",
+		description: "Vizinho(a), amigo(a), outros(as)",
 	},
 ];
 
@@ -522,11 +518,11 @@ export const riskFactorsOptions = [
 	},
 	{
 		value: "noAccessToSuppportNetwork",
-		name: "Eu não possuo rede de apoio (familiares, amigos, vizinhos etc)",
+		name: "Não possuo rede de apoio (familiares, amigos, vizinhos etc)",
 	},
 	{
 		value: "perpetratorIsCriminal",
-		name: "O(A) autor da violência tem envolvimento com o crime organizado",
+		name: "O(A) autor(a) da violência tem envolvimento com o crime organizado",
 	},
 	{
 		value: "perpetratorIsImprisoned",
@@ -538,7 +534,7 @@ export const riskFactorsOptions = [
 	},
 	{
 		value: "otherRisks",
-		name: "O local onde moro apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
+		name: "O local onde moro apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região, disputa de território, exposição a ambiente de exploração sexual)",
 	},
 	{
 		value: "neededMedicalAttention",

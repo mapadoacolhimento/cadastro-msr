@@ -44,7 +44,10 @@ export const colorOptions = [
 ];
 
 export const acceptsOnlineSupportOptions = [
-	{ value: "yes", name: "Sim, aceito ser atendida online" },
+	{
+		value: "yes",
+		name: "Sim, aceito ser atendida online",
+	},
 	{
 		value: "no",
 		name: "Não, só posso receber atendimento presencial",
@@ -65,7 +68,10 @@ export const supportTypeOptions = [
 ];
 
 export const genderIdentityOptions = [
-	{ value: Gender.cis_woman, name: "Eu sou uma mulher cis" },
+	{
+		value: Gender.cis_woman,
+		name: "Eu sou uma mulher cis",
+	},
 	{
 		value: Gender.trans_woman,
 		name: "Eu sou uma mulher trans/travesti",
@@ -77,7 +83,10 @@ export const genderIdentityOptions = [
 ];
 
 export const genderViolenceOptions = [
-	{ value: "yes", name: "Sim, sofro ou sofri violência" },
+	{
+		value: "yes",
+		name: "Sim, sofro ou sofri violência",
+	},
 	{
 		value: "no",
 		name: "Não, não sofro ou sofri violência",
@@ -85,7 +94,10 @@ export const genderViolenceOptions = [
 ];
 
 export const violenceOccurredInBrazilOptions = [
-	{ value: "yes", name: "Sim, dentro do território brasileiro" },
+	{
+		value: "yes",
+		name: "Sim, dentro do território brasileiro",
+	},
 	{
 		value: "no",
 		name: "Não, aconteceu em outro país",
@@ -112,7 +124,10 @@ export const externalSupportOptions = [
 ];
 
 export const financialNeedOptions = [
-	{ value: "yes", name: "Sim" },
+	{
+		value: "yes",
+		name: "Sim",
+	},
 	{
 		value: "no",
 		name: "Não",
@@ -162,7 +177,10 @@ export const ZENDESK_NEW_TICKET_STATUS = "solicitação_recebida";
 export const ZENDESK_DUPLICATED_TICKET_STATUS = "solicitação_repetida";
 
 export const monthlyIncomeOptions = [
-	{ value: "yes", name: "Sim" },
+	{
+		value: "yes",
+		name: "Sim",
+	},
 	{
 		value: "no",
 		name: "Não",
@@ -192,14 +210,29 @@ export const employmentStatusOptions = [
 		value: "employedPj",
 		name: "Trabalhadora sem carteira de trabalho assinada",
 	},
-	{ value: "student", name: "Estudante e dependente da minha família" },
-	{ value: "studentWithIncome", name: "Estudante e com renda independente" },
-	{ value: "retired", name: "Aposentada" },
-	{ value: "unemployed", name: "Desempregada" },
+	{
+		value: "student",
+		name: "Estudante e dependente da minha família",
+	},
+	{
+		value: "studentWithIncome",
+		name: "Estudante e com renda independente",
+	},
+	{
+		value: "retired",
+		name: "Aposentada",
+	},
+	{
+		value: "unemployed",
+		name: "Desempregada",
+	},
 ];
 
 export const dependantsOptions = [
-	{ value: "yes", name: "Sim" },
+	{
+		value: "yes",
+		name: "Sim",
+	},
 	{
 		value: "no",
 		name: "Não",
@@ -207,7 +240,10 @@ export const dependantsOptions = [
 ];
 
 export const familyProviderOptions = [
-	{ value: "yes", name: "Sim" },
+	{
+		value: "yes",
+		name: "Sim",
+	},
 	{
 		value: "no",
 		name: "Não",
@@ -219,7 +255,10 @@ export const familyProviderOptions = [
 ];
 
 export const propertyOwnershipOptions = [
-	{ value: "yes", name: "Sim" },
+	{
+		value: "yes",
+		name: "Sim",
+	},
 	{
 		value: "no",
 		name: "Não",

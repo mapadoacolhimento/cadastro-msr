@@ -21,7 +21,7 @@ export default function DiversityInformation() {
 			<Box pt={"3"}>
 				<SelectInput
 					name="color"
-					label="Cor"
+					label="Selecione sua cor"
 					options={colorOptions}
 					placeholder="Cor"
 				/>

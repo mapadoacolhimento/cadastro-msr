@@ -16,3 +16,4 @@ export { default as Question } from "./Question";
 export { default as MainTitle } from "./MainTitle";
 export * from "./SupportRequestStatus";
 export { default as TermsAcceptanceInput } from "./TermsAcceptanceInput";
+export { default as TextPopupInput } from "./TextPopupInput";

@@ -175,12 +175,12 @@ export const monthlyIncomeOptions = [
 
 export const monthlyIncomeRangeOptions = [
 	{ value: 0, name: "Não possuo renda" },
-	{ value: 0.5, name: "Até meio salário mínimo (R$660,00)" },
-	{ value: 1, name: "Até um salário mínimo (R$1.320,00)" },
-	{ value: 2, name: "Até dois salários mínimos (R$2.640,00)" },
-	{ value: 3, name: "Até três salários mínimos (R$3.960,00)" },
-	{ value: 4, name: "Até quatro salários mínimos (R$5.280,00)" },
-	{ value: 5, name: "Cinco salários mínimos ou mais (R$6.600,00 ou mais)" },
+	{ value: 0.5, name: "Até meio salário mínimo (R$810,00)" },
+	{ value: 1, name: "Até um salário mínimo (R$1.621,00)" },
+	{ value: 2, name: "Até dois salários mínimos (R$3.242,00)" },
+	{ value: 3, name: "Até três salários mínimos (R$4.863,00)" },
+	{ value: 4, name: "Até quatro salários mínimos (R$6.484,00)" },
+	{ value: 5, name: "Cinco salários mínimos ou mais (R$8.105,00 ou mais)" },
 ];
 
 export const employmentStatusOptions = [
@@ -211,6 +211,10 @@ export const familyProviderOptions = [
 	{
 		value: "no",
 		name: "Não",
+	},
+	{
+		value: "partially",
+		name: "Divido a responsabilidade financeira da casa com alguém",
 	},
 ];
 
@@ -243,6 +247,13 @@ export const violenceTypeOptions = [
 		description: "Ex: abuso sexual, assédio, importunação",
 		fullDescription:
 			"Impedir o uso de métodos contraceptivos ou forçar a abortar; impedir você de usar preservativo, se negar a usar preservativo durante a relação sexual com você; forçar ao matrimônio, gravidez ou prostituição por meio de coação, chantagem, suborno ou manipulação; limitar ou anular o exercício dos seus direitos sexuais e/ou reprodutivos; forçar à alguma prática sexual na intenção de corrigir sua orientação sexual; exigir práticas sexuais que você não gosta ou se sente desconfortável; em seu ambiente de trabalho, ser forçada à alguma conduta que gerou constrangimento e/ou violou sua liberdade sexual (essa opção vale para condutas de natureza sexual manifestadas fisicamente, ou por palavras, ou gestos ou outros meios no ambiente de trabalho).",
+	},
+	{
+		value: "moralViolence",
+		name: "Violência Moral",
+		description: "Ex: calúnia, injúria e difamação",
+		fullDescription:
+			"Se você está sendo (ou foi) acusada falsamente de ter cometido um crime; se alguém está atribuindo (ou atribuiu) a você algum fato ofensivo à sua reputação; ou se você está tendo (ou teve) sua dignidade afrontada com xingamentos ou palavras desonrosas.",
 	},
 	{
 		value: "digitalViolence",
@@ -361,7 +372,7 @@ export const violencePerpetratorOptions = [
 	{
 		value: "otherPeople",
 		name: "Outras pessoas",
-		description: "Vizinho(a), amigo(a), outros",
+		description: "Vizinho(a), amigo(a), outros(as)",
 	},
 ];
 
@@ -482,6 +493,10 @@ export const protectiveFactorsOptions = [
 		value: "publicServices",
 		name: "O local onde moro possui serviços públicos de atendimento à mulher com atendimento qualificado",
 	},
+	{
+		value: "N/A",
+		name: "Não se aplica",
+	},
 ];
 
 export const riskFactorsOptions = [
@@ -503,11 +518,11 @@ export const riskFactorsOptions = [
 	},
 	{
 		value: "noAccessToSuppportNetwork",
-		name: "Eu não possuo rede de apoio (familiares, amigos, vizinhos etc)",
+		name: "Não possuo rede de apoio (familiares, amigos, vizinhos etc)",
 	},
 	{
 		value: "perpetratorIsCriminal",
-		name: "O(A) autor da violência tem envolvimento com o crime organizado",
+		name: "O(A) autor(a) da violência tem envolvimento com o crime organizado",
 	},
 	{
 		value: "perpetratorIsImprisoned",
@@ -519,10 +534,14 @@ export const riskFactorsOptions = [
 	},
 	{
 		value: "otherRisks",
-		name: "O local onde moro apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região - disputa de território, exposição a ambiente de exploração sexual)",
+		name: "O local onde moro apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região, disputa de território, exposição a ambiente de exploração sexual)",
 	},
 	{
 		value: "neededMedicalAttention",
 		name: "Após algum episódio de agressão já necessitei de atendimento de saúde (atendimento médico; internação)",
+	},
+	{
+		value: "N/A",
+		name: "Não se aplica",
 	},
 ];

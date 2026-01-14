@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 import { Em, Strong } from "@radix-ui/themes";
-
 import Step from "../../Step";
 import RadioInput from "../../../RadioInput";
 import { monthlyIncomeRangeOptions } from "@/constants";

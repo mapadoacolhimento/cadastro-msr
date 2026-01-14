@@ -43,10 +43,11 @@
 		"react-input-mask": "3.0.0-alpha.2",
 		"react-select": "^5.8.0",
 		"react-toastify": "^10.0.6",
+		"reactjs-popup": "^2.0.6",
 		"yup": "^1.4.0"
 	},
 	"devDependencies": {
-		"@prisma/nextjs-monorepo-workaround-plugin": "^5.20.0",
+		"@prisma/nextjs-monorepo-workaround-plugin": "^5.22.0",
 		"@testing-library/cypress": "^10.0.2",
 		"@testing-library/dom": "^10.2.0",
 		"@testing-library/jest-dom": "^6.4.6",

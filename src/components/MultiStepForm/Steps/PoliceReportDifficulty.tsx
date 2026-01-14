@@ -25,7 +25,8 @@ export default function PoliceReportDifficulty() {
 				options={policeReportDifficultyOptions}
 				question={
 					<>
-						Se sim, o que a pessoa que te atendeu fez?{" "}
+						Houve dificuldade ou impedimento para realizar alguma das
+						providências jurídicas? Se sim, o que a pessoa que te atendeu fez?{" "}
 						<em>(Selecione todas as opções que se aplicam)</em>
 					</>
 				}

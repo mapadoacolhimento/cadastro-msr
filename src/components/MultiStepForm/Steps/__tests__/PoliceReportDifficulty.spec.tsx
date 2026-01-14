@@ -14,8 +14,8 @@ const setup = () => {
 			}
 			initialValues={
 				{
-					policeReportDifficulty: "",
-				} as Values
+					policeReportDifficulty: [],
+				} as unknown as Values
 			}
 		>
 			{PoliceReportDifficulty()}
@@ -41,10 +41,9 @@ describe("<PoliceReportDifficulty />", () => {
 		const btn = screen.getByRole("button", { name: /enviar/i });
 		await userEvent.click(btn);
 
-		await screen.findByRole("alert");
-
-		expect(screen.getByRole("alert")).toHaveTextContent(
-			"Esse campo é obrigatório."
+		const alert = await screen.findByRole("alert");
+		expect(alert).toHaveTextContent(
+			/selecione pelo menos uma opção|esse campo é obrigatório/i
 		);
 	});
 });

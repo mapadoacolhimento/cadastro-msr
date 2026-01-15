@@ -106,15 +106,15 @@ export const violenceOccurredInBrazilOptions = [
 
 export const externalSupportOptions = [
 	{
-		value: "privateTherapist",
+		value: "private_therapist",
 		name: "Estou sendo acompanhada por um(a) psicólogo(a) particular",
 	},
 	{
-		value: "privateLawyer",
+		value: "private_lawyer",
 		name: "Estou sendo acompanhada por um(a) advogado(a) particular",
 	},
 	{
-		value: "publicDefender",
+		value: "public_defender",
 		name: "Estou sendo acompanhada na defensoria pública/NUDEM",
 	},
 	{
@@ -186,7 +186,7 @@ export const monthlyIncomeOptions = [
 		name: "Não",
 	},
 	{
-		value: "noAccess",
+		value: "no_access",
 		name: "Estou sem acesso a minha renda",
 	},
 ];
@@ -203,11 +203,11 @@ export const monthlyIncomeRangeOptions = [
 
 export const employmentStatusOptions = [
 	{
-		value: "employedClt",
+		value: "employed_clt",
 		name: "Trabalhadora com carteira de trabalho assinada",
 	},
 	{
-		value: "employedPj",
+		value: "employed_pj",
 		name: "Trabalhadora sem carteira de trabalho assinada",
 	},
 	{
@@ -215,7 +215,7 @@ export const employmentStatusOptions = [
 		name: "Estudante e dependente da minha família",
 	},
 	{
-		value: "studentWithIncome",
+		value: "student_with_income",
 		name: "Estudante e com renda independente",
 	},
 	{
@@ -249,7 +249,7 @@ export const familyProviderOptions = [
 		name: "Não",
 	},
 	{
-		value: "partially",
+		value: "shared_responsibility",
 		name: "Divido a responsabilidade financeira da casa com alguém",
 	},
 ];
@@ -267,49 +267,49 @@ export const propertyOwnershipOptions = [
 
 export const violenceTypeOptions = [
 	{
-		value: "physicalViolence",
+		value: "physical_violence",
 		name: "Violência física",
 		description: "Ex: tapas, empurrões, socos",
 		fullDescription:
 			"Soco, chute, tapa, empurrão, puxão de cabelo, queimadura, enforcamento, sufocamento, tiro, afogamento, facada, paulada, estrangulamento ou sufocamento, espancamento, atirar objetos, sacudir e apertar os braços, lesões com objetos cortantes ou perfurantes, ferimentos causados por queimaduras ou armas de fogo, tortura.",
 	},
 	{
-		value: "psychologicalViolence",
+		value: "psychological_violence",
 		name: "Violência psicológica",
 		description: "Ex: manipulação, controle emocional",
 		fullDescription:
 			"Ameaças, constrangimento, humilhação, manipulação, isolamento (proibir de estudar, trabalhar, viajar, ir ao médico, falar com amigos e parentes, etc.), chantagem, limitação do direito de ir e vir, tirar a liberdade de crença, distorcer e omitir fatos para deixar você em dúvida sobre a sua memória e sanidade (gaslighting), controle, críticas, insultos, desrespeito com a sua identidade, proibir de usar certos tipos de roupa.",
 	},
 	{
-		value: "sexualViolence",
+		value: "sexual_violence",
 		name: "Violência sexual",
 		description: "Ex: abuso sexual, assédio, importunação",
 		fullDescription:
 			"Impedir o uso de métodos contraceptivos ou forçar a abortar; impedir você de usar preservativo, se negar a usar preservativo durante a relação sexual com você; forçar ao matrimônio, gravidez ou prostituição por meio de coação, chantagem, suborno ou manipulação; limitar ou anular o exercício dos seus direitos sexuais e/ou reprodutivos; forçar à alguma prática sexual na intenção de corrigir sua orientação sexual; exigir práticas sexuais que você não gosta ou se sente desconfortável; em seu ambiente de trabalho, ser forçada à alguma conduta que gerou constrangimento e/ou violou sua liberdade sexual (essa opção vale para condutas de natureza sexual manifestadas fisicamente, ou por palavras, ou gestos ou outros meios no ambiente de trabalho).",
 	},
 	{
-		value: "moralViolence",
+		value: "moral_violence",
 		name: "Violência Moral",
 		description: "Ex: calúnia, injúria e difamação",
 		fullDescription:
 			"Se você está sendo (ou foi) acusada falsamente de ter cometido um crime; se alguém está atribuindo (ou atribuiu) a você algum fato ofensivo à sua reputação; ou se você está tendo (ou teve) sua dignidade afrontada com xingamentos ou palavras desonrosas.",
 	},
 	{
-		value: "digitalViolence",
+		value: "digital_violence",
 		name: "Violência digital",
 		description: "Ex: cyberbullying, invasão de privacidade",
 		fullDescription:
 			"Vazar/compartilhar na internet suas informações pessoais,dados ou imagens íntimas sem seu consentimento; Stalking online (perseguição ou observação obsessiva).",
 	},
 	{
-		value: "patrimonialViolence",
+		value: "patrimonial_violence",
 		name: "Violência patrimonial",
 		description: "Ex: destruição de bens, controle financeiro",
 		fullDescription:
 			"Controlar seu dinheiro, destruir seus objetos, destruir seus documentos pessoais, ocultar bens e propriedades, impedir de ter acesso ao dinheiro, à conta bancária ou outros bens, extorsão,danos propositais a objetos que você gosta.",
 	},
 	{
-		value: "obstetricViolence",
+		value: "obstetric_violence",
 		name: "Violência obstétrica",
 		description: "Ex: tratamento desrespeitoso no parto",
 		fullDescription:
@@ -323,14 +323,14 @@ export const violenceTypeOptions = [
 			"Ameaçar, agredir, violentar sexualmente, matar, ou qualquer outro mal grave; perseguir pessoalmente pelos lugares por onde você vai.",
 	},
 	{
-		value: "politicalViolence",
+		value: "political_violence",
 		name: "Violência política contra a mulher",
 		description: "Ex: restrição de direitos políticos",
 		fullDescription:
 			"Ação ou omissão com a finalidade de impedir, criar obstáculos ou restringir seus direitos políticos por ser mulher; sofrer distinção, exclusão ou restrição no reconhecimento, gozo ou exercício dos seus direitos e liberdades políticas fundamentais, em virtude do gênero.",
 	},
 	{
-		value: "noViolence",
+		value: "no_violence",
 		name: "Não estou sofrendo violência/Não sofri violência",
 		description: "    ",
 	},
@@ -338,31 +338,31 @@ export const violenceTypeOptions = [
 
 export const violenceTimeOptions = [
 	{
-		value: "lastWeek",
+		value: "last_week",
 		name: "Na última semana",
 	},
 	{
-		value: "threeMonths",
+		value: "less_than_3_months",
 		name: "Há menos de 3 meses",
 	},
 	{
-		value: "moreThanThreeMonths",
+		value: "between_3_months_and_1_year",
 		name: "Entre 3 meses e 1 ano",
 	},
 	{
-		value: "moreThanAYear",
+		value: "between_1_and_3_years",
 		name: "Entre 1 e 3 anos",
 	},
 	{
-		value: "moreThanThreeYears",
+		value: "between_3_and_6_years",
 		name: "Entre 3 e 6 anos",
 	},
 	{
-		value: "moreThanSixYears",
+		value: "between_6_and_10_years",
 		name: "Entre 6 e 10 anos",
 	},
 	{
-		value: "moreThanTenYears",
+		value: "more_than_10_years",
 		name: "Há mais de 10 anos",
 	},
 ];
@@ -384,32 +384,32 @@ export const perpetratorGenderIdOptions = [
 
 export const violencePerpetratorOptions = [
 	{
-		value: "nuclearFamily",
+		value: "nuclear_family",
 		name: "Família Nuclear",
 		description: "Pai, mãe, irmã(o), filho(a)",
 	},
 	{
-		value: "closeFamily",
+		value: "close_family",
 		name: "Familiar",
 		description: "Tio(a), primo(a), cunhado(a)",
 	},
 	{
-		value: "currentPartner",
+		value: "current_partner",
 		name: "Parceiro(a) atual",
 		description: "Namorado(a), marido/esposa",
 	},
 	{
-		value: "formerPartner",
+		value: "former_partner",
 		name: "Ex-parceiro(a)",
 		description: "Ex-namorado(a), ex-marido/esposa",
 	},
 	{
-		value: "workColleague",
+		value: "work_colleague",
 		name: "Colega de trabalho",
 		description: "Gestor(a), chefe",
 	},
 	{
-		value: "otherPeople",
+		value: "other_people",
 		name: "Outras pessoas",
 		description: "Vizinho(a), amigo(a), outros(as)",
 	},
@@ -432,115 +432,115 @@ export const livesWithPerpetratorOptions = [
 
 export const violenceLocationOptions = [
 	{
-		value: "homeSpace",
+		value: "home_space",
 		name: "Ambiente Doméstico",
 	},
 	{
-		value: "publicSpace",
+		value: "public_space",
 		name: "Ambiente Público",
 	},
 	{
-		value: "workSpace",
+		value: "work_space",
 		name: "Ambiente de trabalho",
 	},
 	{
-		value: "internetSpace",
+		value: "internet_space",
 		name: "Internet/redes sociais",
 	},
 ];
 
 export const policeReportDifficultyOptions = [
 	{
-		value: "discourageReporting",
+		value: "discouraged",
 		name: "Desencorajou sob o argumento de inexistência criminosa",
 	},
 	{
-		value: "notTheirCompetence",
+		value: "not_competent",
 		name: "Informou não ser de sua competência",
 	},
 	{
-		value: "refusedToReport",
+		value: "refused_to_register",
 		name: "Negou-se a registrar a ocorrência",
 	},
 	{
-		value: "deniedJusticeAccess",
+		value: "no_access_to_justice",
 		name: "Não viabilizou o acesso à justiça",
 	},
 	{
-		value: "deniedRestrainingOrder",
+		value: "denied_restraining_order",
 		name: "Negou o requerimento à medida protetiva",
 	},
 	{
-		value: "n/a",
+		value: "not_applicable",
 		name: "Não se aplica",
 	},
 ];
 
 export const legalActionsTakenOptions = [
 	{
-		value: "physicalExamination",
+		value: "physical_examination",
 		name: "Exame de corpo delito (IML)",
 	},
 	{
-		value: "policeInquiry",
+		value: "police_inquiry",
 		name: "Inquérito Policial",
 	},
 	{
-		value: "criminalCase",
+		value: "criminal_case",
 		name: "Processo penal/criminal",
 	},
 	{
-		value: "civilCase",
+		value: "civil_case",
 		name: "Processo cível/Direito de família",
 	},
 	{
-		value: "labourCase",
+		value: "labour_case",
 		name: "Processo trabalhista",
 	},
 	{
-		value: "policeReport",
+		value: "police_report",
 		name: "Registro de Ocorrência (B.O)",
 	},
 	{
-		value: "restrainingOrder",
+		value: "protective_measure",
 		name: "Requerimento de Medida Protetiva (Delegacia de Polícia)",
 	},
 	{
-		value: "noneTaken",
+		value: "none_taken",
 		name: "Não foi realizada nenhuma providência jurídica",
 	},
 ];
 
 export const protectiveFactorsOptions = [
 	{
-		value: "supportNetwork",
+		value: "support_network",
 		name: "Possuo rede de apoio (familiares, amigos, vizinhos)",
 	},
 	{
-		value: "dontLiveWithPerpetrator",
+		value: "dont_live_with_perpetrator",
 		name: "Não moro com o(a) autor(a) da violência",
 	},
 	{
-		value: "fellsSafe",
+		value: "fells_safe",
 		name: "Me sinto segura em casa",
 	},
 	{
-		value: "isNotDependant",
+		value: "is_not_dependant",
 		name: "Não dependo financeiramente do(a) autor(a) da violência",
 	},
 	{
-		value: "publicServices",
+		value: "has_qualified_public_services",
 		name: "O local onde moro possui serviços públicos de atendimento à mulher com atendimento qualificado",
 	},
 	{
-		value: "N/A",
+		value: "not_applicable",
 		name: "Não se aplica",
 	},
 ];
 
 export const riskFactorsOptions = [
 	{
-		value: "gunAccess",
+		value: "gun_access",
 		name: "O(A) autor(a) da violência possui acesso à arma de fogo",
 	},
 	{
@@ -548,39 +548,39 @@ export const riskFactorsOptions = [
 		name: "Estou em cárcere privado",
 	},
 	{
-		value: "violenceDuringPregnancy",
+		value: "violence_during_pregnancy",
 		name: "A violência ocorreu durante a gestação",
 	},
 	{
-		value: "deniedPublicServices",
+		value: "denied_public_services",
 		name: "Tive acesso negado aos serviços públicos de atendimento à mulher",
 	},
 	{
-		value: "noAccessToSuppportNetwork",
+		value: "no_support_network",
 		name: "Não possuo rede de apoio (familiares, amigos, vizinhos etc)",
 	},
 	{
-		value: "perpetratorIsCriminal",
+		value: "perpetrator_is_a_criminal",
 		name: "O(A) autor(a) da violência tem envolvimento com o crime organizado",
 	},
 	{
-		value: "perpetratorIsImprisoned",
+		value: "perpetrator_is_imprisoned",
 		name: "O(A) autor(a) da violência esteve ou está recluso no sistema prisional",
 	},
 	{
-		value: "feelsIsolated",
+		value: "feels_isolated",
 		name: "Me sinto isolada de amigos, familiares, pessoas da comunidade ou trabalho e/ou não consigo acessar pessoas de confiança que me ajudem em caso de uma violência sofrida",
 	},
 	{
-		value: "otherRisks",
+		value: "other_risks",
 		name: "O local onde moro apresenta outras situações de risco de violência (tráfico de mulheres, tráfico de drogas na região, disputa de território, exposição a ambiente de exploração sexual)",
 	},
 	{
-		value: "neededMedicalAttention",
+		value: "needed_medical_attention",
 		name: "Após algum episódio de agressão já necessitei de atendimento de saúde (atendimento médico; internação)",
 	},
 	{
-		value: "N/A",
+		value: "not_applicable",
 		name: "Não se aplica",
 	},
 ];

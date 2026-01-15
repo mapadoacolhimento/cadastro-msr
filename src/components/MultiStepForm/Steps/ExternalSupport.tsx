@@ -17,10 +17,10 @@ export default function ExternalSupport() {
 		values: Yup.InferType<typeof externalSupportSchema>
 	) {
 		const hasExternalLegalSupport =
-			values.externalSupport.includes("privateLawyer") ||
-			values.externalSupport.includes("publicDefender");
+			values.externalSupport.includes("private_lawyer") ||
+			values.externalSupport.includes("public_defender");
 		const hasExternalPsychologicalSupport =
-			values.externalSupport.includes("privateTherapist");
+			values.externalSupport.includes("private_therapist");
 
 		if (hasExternalLegalSupport && hasExternalPsychologicalSupport) {
 			return {

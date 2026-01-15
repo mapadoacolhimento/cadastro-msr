@@ -73,7 +73,7 @@ it("should redirect to `fora-criterios` if MSR is not suffering violence", async
 
 it("should return redirect to /fora-criterios when 'noViolence' is selected", async () => {
 	const values = {
-		violenceType: ["noViolence"],
+		violenceType: ["no_violence"],
 	} as Values;
 
 	const result = await handleSubmit(values);
@@ -83,7 +83,7 @@ it("should return redirect to /fora-criterios when 'noViolence' is selected", as
 
 it("should not redirect when 'noViolence' is selected with other violence types", async () => {
 	const values = {
-		violenceType: ["noViolence", "physical"],
+		violenceType: ["no_violence", "physical"],
 	} as Values;
 
 	const result = await handleSubmit(values);
@@ -95,7 +95,7 @@ it("renders info buttons only for options with descriptions", () => {
 	setup();
 
 	const expectedButtons = violenceTypeOptions.filter(
-		(o) => o.value !== "noViolence"
+		(o) => o.value !== "no_violence"
 	).length;
 	const infoButtons = screen.getAllByRole("button", {
 		name: /saiba mais sobre essa violência/i,

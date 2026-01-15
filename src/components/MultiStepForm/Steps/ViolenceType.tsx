@@ -65,7 +65,7 @@ function renderDialogContent({
 export async function handleSubmit(values: Values) {
 	const selectedViolenceTypes = values.violenceType || [];
 	const onlyNoViolence =
-		selectedViolenceTypes.includes("noViolence") &&
+		selectedViolenceTypes.includes("no_violence") &&
 		selectedViolenceTypes.length === 1;
 
 	if (onlyNoViolence) {

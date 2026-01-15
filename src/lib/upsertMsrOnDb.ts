@@ -42,6 +42,24 @@ const payloadSchema = Yup.object({
 	),
 }).required();
 
+const monthlyIncomeRangeMap: Record<number, string> = {
+	0: "no_income",
+	0.5: "half_minimum_wage",
+	1: "up_to_one_minimum_wage",
+	2: "up_to_two_minimum_wages",
+	3: "up_to_three_minimum_wages",
+	4: "up_to_four_minimum_wages",
+	5: "five_minimum_wages_or_more",
+};
+
+const mapMonthlyIncomeRange = (value?: number | null): string | null => {
+	if (value === null || value === undefined) {
+		return null;
+	}
+
+	return monthlyIncomeRangeMap[value] ?? null;
+};
+
 export default async function upsertMsrOnDb(
 	payload: Yup.InferType<typeof payloadSchema>
 ) {
@@ -74,19 +92,16 @@ export default async function upsertMsrOnDb(
 			? (payload.monthlyIncome as MonthlyIncome)
 			: null,
 
-		incomeRange:
-			payload.monthlyIncome !== null && payload.monthlyIncomeRange !== undefined
-				? String(payload.monthlyIncomeRange)
-				: null,
+		monthlyIncomeRange: mapMonthlyIncomeRange(payload.monthlyIncomeRange),
 
-		EmploymentStatus: payload.employmentStatus ?? null,
+		employmentStatus: payload.employmentStatus ?? null,
 
 		hasFinancialDependents:
 			payload.dependants !== null && payload.dependants !== undefined
 				? payload.dependants === "yes"
 				: null,
 
-		FamilyProvider: payload.familyProvider ?? null,
+		familyProvider: payload.familyProvider ?? null,
 
 		propertyOwnership:
 			payload.propertyOwnership !== null

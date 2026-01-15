@@ -56,6 +56,7 @@ describe("/handle-request", async () => {
 			);
 
 			const response = await POST(request);
+
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
 				legal: { supportRequestId: mockMatchLegalNew.supportRequestId },
@@ -88,6 +89,7 @@ describe("/handle-request", async () => {
 			);
 
 			const response = await POST(request);
+
 			expect(response.status).toStrictEqual(200);
 			expect(await response.json()).toStrictEqual({
 				psychological: {

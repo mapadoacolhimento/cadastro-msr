@@ -5,6 +5,24 @@ import {
 	MSR_ZENDESK_USER_ID,
 } from "./constants";
 
+const monthlyIncomeRangeMap: Record<number, string> = {
+	0: "no_income",
+	0.5: "half_minimum_wage",
+	1: "up_to_one_minimum_wage",
+	2: "up_to_two_minimum_wages",
+	3: "up_to_three_minimum_wages",
+	4: "up_to_four_minimum_wages",
+	5: "five_minimum_wages_or_more",
+};
+
+const mapMonthlyIncomeRange = (value?: number | null): string | null => {
+	if (value === null || value === undefined) {
+		return null;
+	}
+
+	return monthlyIncomeRangeMap[value] ?? null;
+};
+
 export default function initDB() {
 	return [
 		db.volunteers.create({
@@ -94,6 +112,18 @@ export default function initDB() {
 				dateOfBirth: null,
 			},
 		}),
+		db.mSRSocioeconomicData.create({
+			data: {
+				msrId: MSR_ZENDESK_USER_ID,
+				hasMonthlyIncome: "yes" as const,
+				monthlyIncomeRange: mapMonthlyIncomeRange(1),
+				employmentStatus: "employed_clt" as const,
+				hasFinancialDependents: false,
+				familyProvider: "shared_responsibility" as const,
+				propertyOwnership: false,
+			},
+		}),
+
 		db.cities.create({
 			data: {
 				city_value: "SAO PAULO",

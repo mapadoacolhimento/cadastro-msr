@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { db } from ".";
-import { Gender, MSRStatus, Race } from "@prisma/client";
+import { Gender, MSRStatus, Race, MonthlyIncome } from "@prisma/client";
 import {
 	dependantsOptions,
 	employmentStatusOptions,
@@ -70,11 +70,24 @@ export default async function upsertMsrOnDb(
 	};
 
 	const msrSocioeconomicData = {
-		monthlyIncome: payload.monthlyIncome ?? null,
-		monthlyIncomeRange: payload.monthlyIncomeRange ?? null,
-		employmentStatus: payload.employmentStatus ?? null,
-		dependants: payload.dependants ?? null,
-		familyProvider: payload.familyProvider ?? null,
+		hasMonthlyIncome: payload.monthlyIncome
+			? (payload.monthlyIncome as MonthlyIncome)
+			: null,
+
+		incomeRange:
+			payload.monthlyIncome !== null && payload.monthlyIncomeRange !== undefined
+				? String(payload.monthlyIncomeRange)
+				: null,
+
+		EmploymentStatus: payload.employmentStatus ?? null,
+
+		hasFinancialDependents:
+			payload.dependants !== null && payload.dependants !== undefined
+				? payload.dependants === "yes"
+				: null,
+
+		FamilyProvider: payload.familyProvider ?? null,
+
 		propertyOwnership:
 			payload.propertyOwnership !== null
 				? yesNoToBoolean(payload.propertyOwnership)

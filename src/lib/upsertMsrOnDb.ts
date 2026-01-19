@@ -1,6 +1,12 @@
 import * as Yup from "yup";
 import { db } from ".";
-import { Gender, MSRStatus, Race, MonthlyIncome } from "@prisma/client";
+import {
+	Gender,
+	MSRStatus,
+	Race,
+	MonthlyIncome,
+	MonthlyIncomeRange,
+} from "@prisma/client";
 import {
 	dependantsOptions,
 	employmentStatusOptions,
@@ -42,21 +48,22 @@ const payloadSchema = Yup.object({
 	),
 }).required();
 
-const monthlyIncomeRangeMap: Record<number, string> = {
-	0: "no_income",
-	0.5: "half_minimum_wage",
-	1: "up_to_one_minimum_wage",
-	2: "up_to_two_minimum_wages",
-	3: "up_to_three_minimum_wages",
-	4: "up_to_four_minimum_wages",
-	5: "five_minimum_wages_or_more",
+const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
+	0: MonthlyIncomeRange.no_income,
+	0.5: MonthlyIncomeRange.half_minimum_wage,
+	1: MonthlyIncomeRange.up_to_one_minimum_wage,
+	2: MonthlyIncomeRange.up_to_two_minimum_wages,
+	3: MonthlyIncomeRange.up_to_three_minimum_wages,
+	4: MonthlyIncomeRange.up_to_four_minimum_wages,
+	5: MonthlyIncomeRange.five_minimum_wages_or_more,
 };
 
-const mapMonthlyIncomeRange = (value?: number | null): string | null => {
+const mapMonthlyIncomeRange = (
+	value?: number | null
+): MonthlyIncomeRange | null => {
 	if (value === null || value === undefined) {
 		return null;
 	}
-
 	return monthlyIncomeRangeMap[value] ?? null;
 };
 

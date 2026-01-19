@@ -4,23 +4,56 @@ import {
 	LAWYER_ZENDESK_USER_ID,
 	MSR_ZENDESK_USER_ID,
 } from "./constants";
+import {
+	MonthlyIncomeRange,
+	EmploymentStatus,
+	FamilyProvider,
+} from "@prisma/client";
 
-const monthlyIncomeRangeMap: Record<number, string> = {
-	0: "no_income",
-	0.5: "half_minimum_wage",
-	1: "up_to_one_minimum_wage",
-	2: "up_to_two_minimum_wages",
-	3: "up_to_three_minimum_wages",
-	4: "up_to_four_minimum_wages",
-	5: "five_minimum_wages_or_more",
+const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
+	0: MonthlyIncomeRange.no_income,
+	0.5: MonthlyIncomeRange.half_minimum_wage,
+	1: MonthlyIncomeRange.up_to_one_minimum_wage,
+	2: MonthlyIncomeRange.up_to_two_minimum_wages,
+	3: MonthlyIncomeRange.up_to_three_minimum_wages,
+	4: MonthlyIncomeRange.up_to_four_minimum_wages,
+	5: MonthlyIncomeRange.five_minimum_wages_or_more,
 };
 
-const mapMonthlyIncomeRange = (value?: number | null): string | null => {
+const employmentStatusMap: Record<string, EmploymentStatus> = {
+	employed_clt: EmploymentStatus.employed_clt,
+	employed_pj: EmploymentStatus.employed_pj,
+	student: EmploymentStatus.student,
+	student_with_income: EmploymentStatus.student_with_income,
+	retired: EmploymentStatus.retired,
+	unemployed: EmploymentStatus.unemployed,
+};
+
+const familyProviderMap: Record<string, FamilyProvider> = {
+	yes: FamilyProvider.yes,
+	no: FamilyProvider.no,
+	shared_responsibility: FamilyProvider.shared_responsibility,
+};
+
+const mapMonthlyIncomeRange = (
+	value?: number | null
+): MonthlyIncomeRange | null => {
 	if (value === null || value === undefined) {
 		return null;
 	}
-
 	return monthlyIncomeRangeMap[value] ?? null;
+};
+
+const mapEmploymentStatus = (
+	value?: string | null
+): EmploymentStatus | null => {
+	if (!value) return null;
+	return employmentStatusMap[value] ?? null;
+};
+
+const mapFamilyProvider = (value?: string | null): FamilyProvider | null => {
+	if (!value) return null;
+	return familyProviderMap[value] ?? null;
 };
 
 export default function initDB() {
@@ -117,9 +150,9 @@ export default function initDB() {
 				msrId: MSR_ZENDESK_USER_ID,
 				hasMonthlyIncome: "yes" as const,
 				monthlyIncomeRange: mapMonthlyIncomeRange(1),
-				employmentStatus: "employed_clt" as const,
+				employmentStatus: mapEmploymentStatus("employed_clt"),
 				hasFinancialDependents: false,
-				familyProvider: "shared_responsibility" as const,
+				familyProvider: mapFamilyProvider("shared_responsibility"),
 				propertyOwnership: false,
 			},
 		}),

@@ -19,7 +19,7 @@ export default function EmploymentStatus() {
 			values.monthlyIncomeRange !== null && values.monthlyIncomeRange > 3;
 		const isStudent =
 			values.employmentStatus === "student" ||
-			values.employmentStatus === "studentWithIncome";
+			values.employmentStatus === "student_with_income";
 
 		if (isPaidMoreThanThreeMinWages && isStudent && hasAccessToIncome) {
 			return {

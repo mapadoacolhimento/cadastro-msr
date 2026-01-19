@@ -6,6 +6,8 @@ import {
 	Race,
 	MonthlyIncome,
 	MonthlyIncomeRange,
+	EmploymentStatus,
+	FamilyProvider,
 } from "@prisma/client";
 import {
 	dependantsOptions,
@@ -101,14 +103,18 @@ export default async function upsertMsrOnDb(
 
 		monthlyIncomeRange: mapMonthlyIncomeRange(payload.monthlyIncomeRange),
 
-		employmentStatus: payload.employmentStatus ?? null,
+		employmentStatus: payload.employmentStatus
+			? (payload.employmentStatus as EmploymentStatus)
+			: null,
 
 		hasFinancialDependents:
 			payload.dependants !== null && payload.dependants !== undefined
 				? payload.dependants === "yes"
 				: null,
 
-		familyProvider: payload.familyProvider ?? null,
+		familyProvider: payload.familyProvider
+			? (payload.familyProvider as FamilyProvider)
+			: null,
 
 		propertyOwnership:
 			payload.propertyOwnership !== null

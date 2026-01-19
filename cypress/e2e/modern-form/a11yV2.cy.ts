@@ -202,7 +202,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.contains(
-						"Se sim, o que a pessoa que te atendeu fez? (Selecione todas as opções que se aplicam)"
+						"Houve dificuldade ou impedimento para realizar alguma das providências jurídicas? Se sim, o que a pessoa que te atendeu fez?"
 					).should("exist");
 
 					cy.injectAxe();

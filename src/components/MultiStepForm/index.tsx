@@ -21,7 +21,7 @@ export default function MultiStepForm() {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(formattedValues),
+			body: formattedValues,
 		});
 
 		if (!response.ok) {

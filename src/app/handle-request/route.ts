@@ -4,6 +4,7 @@ import {
 	Race,
 	type MSRPiiSec,
 	type SupportRequests,
+	EmploymentStatus,
 } from "@prisma/client";
 import * as Yup from "yup";
 import {
@@ -36,6 +37,9 @@ const payloadSchema = Yup.object({
 	dateOfBirth: Yup.string().datetime().required(),
 	hasDisability: Yup.boolean().required().nullable(),
 	acceptsOnlineSupport: Yup.boolean().required(),
+	employmentStatus: Yup.string()
+		.oneOf(Object.values(EmploymentStatus))
+		.required(),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
 	).required(),

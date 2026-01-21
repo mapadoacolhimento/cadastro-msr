@@ -3,6 +3,8 @@ import {
 	MatchStatus,
 	Race,
 	SupportRequestsStatus,
+	EmploymentStatus,
+	FamilyProvider,
 } from "@prisma/client";
 
 export const BRAZILIAN_STATES_OPTIONS = [
@@ -192,7 +194,7 @@ export const monthlyIncomeOptions = [
 ];
 
 export const monthlyIncomeRangeOptions = [
-	{ value: 0, name: "Não possuo renda" },
+	{ value: 0, name: MonthlyIncomeRange.no_income },
 	{ value: 0.5, name: "Até meio salário mínimo (R$810,00)" },
 	{ value: 1, name: "Até um salário mínimo (R$1.621,00)" },
 	{ value: 2, name: "Até dois salários mínimos (R$3.242,00)" },
@@ -203,27 +205,27 @@ export const monthlyIncomeRangeOptions = [
 
 export const employmentStatusOptions = [
 	{
-		value: "employed_clt",
+		value: EmploymentStatus.employed_clt,
 		name: "Trabalhadora com carteira de trabalho assinada",
 	},
 	{
-		value: "employed_pj",
+		value: EmploymentStatus.employed_pj,
 		name: "Trabalhadora sem carteira de trabalho assinada",
 	},
 	{
-		value: "student",
+		value: EmploymentStatus.student,
 		name: "Estudante e dependente da minha família",
 	},
 	{
-		value: "student_with_income",
+		value: EmploymentStatus.student_with_income,
 		name: "Estudante e com renda independente",
 	},
 	{
-		value: "retired",
+		value: EmploymentStatus.retired,
 		name: "Aposentada",
 	},
 	{
-		value: "unemployed",
+		value: EmploymentStatus.unemployed,
 		name: "Desempregada",
 	},
 ];
@@ -241,15 +243,15 @@ export const dependantsOptions = [
 
 export const familyProviderOptions = [
 	{
-		value: "yes",
+		value: FamilyProvider.yes,
 		name: "Sim",
 	},
 	{
-		value: "no",
+		value: FamilyProvider.no,
 		name: "Não",
 	},
 	{
-		value: "shared_responsibility",
+		value: FamilyProvider.shared_responsibility,
 		name: "Divido a responsabilidade financeira da casa com alguém",
 	},
 ];

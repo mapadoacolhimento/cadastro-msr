@@ -19,22 +19,6 @@ const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
 	4: MonthlyIncomeRange.up_to_four_minimum_wages,
 	5: MonthlyIncomeRange.five_minimum_wages_or_more,
 };
-
-const employmentStatusMap: Record<string, EmploymentStatus> = {
-	employed_clt: EmploymentStatus.employed_clt,
-	employed_pj: EmploymentStatus.employed_pj,
-	student: EmploymentStatus.student,
-	student_with_income: EmploymentStatus.student_with_income,
-	retired: EmploymentStatus.retired,
-	unemployed: EmploymentStatus.unemployed,
-};
-
-const familyProviderMap: Record<string, FamilyProvider> = {
-	yes: FamilyProvider.yes,
-	no: FamilyProvider.no,
-	shared_responsibility: FamilyProvider.shared_responsibility,
-};
-
 const mapMonthlyIncomeRange = (
 	value?: number | null
 ): MonthlyIncomeRange | null => {
@@ -42,18 +26,6 @@ const mapMonthlyIncomeRange = (
 		return null;
 	}
 	return monthlyIncomeRangeMap[value] ?? null;
-};
-
-const mapEmploymentStatus = (
-	value?: string | null
-): EmploymentStatus | null => {
-	if (!value) return null;
-	return employmentStatusMap[value] ?? null;
-};
-
-const mapFamilyProvider = (value?: string | null): FamilyProvider | null => {
-	if (!value) return null;
-	return familyProviderMap[value] ?? null;
 };
 
 export default function initDB() {
@@ -150,9 +122,9 @@ export default function initDB() {
 				msrId: MSR_ZENDESK_USER_ID,
 				hasMonthlyIncome: "yes" as const,
 				monthlyIncomeRange: mapMonthlyIncomeRange(1),
-				employmentStatus: mapEmploymentStatus("employed_clt"),
+				employmentStatus: "employed_clt" as EmploymentStatus,
 				hasFinancialDependents: false,
-				familyProvider: mapFamilyProvider("shared_responsibility"),
+				familyProvider: "shared_responsibility" as FamilyProvider,
 				propertyOwnership: false,
 			},
 		}),

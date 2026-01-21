@@ -2,18 +2,18 @@ import * as Yup from "yup";
 import { Strong } from "@radix-ui/themes";
 import Step from "../Step";
 import RadioInput from "../../RadioInput";
-import { perpetratorGenderIdOptions } from "@/constants";
+import { perpetratorGenderOptions } from "@/constants";
 
-const perpetratorGenderIdSchema = Yup.object({
-	perpetratorGenderId: Yup.string()
-		.oneOf(perpetratorGenderIdOptions.map((a) => a.value))
+const perpetratorGenderSchema = Yup.object({
+	perpetratorGender: Yup.string()
+		.oneOf(perpetratorGenderOptions.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
 });
 
-export default function PerpetratorGenderId() {
+export default function PerpetratorGender() {
 	return (
 		<Step
-			validationSchema={perpetratorGenderIdSchema}
+			validationSchema={perpetratorGenderSchema}
 			title={"Dados da violência"}
 			img={{
 				src: "/illustrations/woman-covering-ears.webp",
@@ -21,8 +21,8 @@ export default function PerpetratorGenderId() {
 			}}
 		>
 			<RadioInput
-				name="perpetratorGenderId"
-				options={perpetratorGenderIdOptions}
+				name="perpetratorGender"
+				options={perpetratorGenderOptions}
 				question={
 					<>
 						Qual a <Strong>identidade de gênero do(a) autor(a)</Strong> da

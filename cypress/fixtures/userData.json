@@ -33,7 +33,7 @@
 		"moreThanSixYears": "Entre 6 e 10 anos",
 		"moreThanTenYears": "Há mais de 10 anos"
 	},
-	"perpetratorGenderId": "Homem",
+	"perpetratorGender": "Homem",
 	"violencePerpetrator": {
 		"nuclearFamily": "Família Nuclear",
 		"closeFamily": "Familiar",

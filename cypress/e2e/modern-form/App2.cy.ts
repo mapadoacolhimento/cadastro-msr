@@ -7,7 +7,7 @@ const {
 	violenceTime,
 	dateOfBirth,
 	supportTypes,
-	perpetratorGenderId,
+	perpetratorGender,
 	livesWithPerpetrator,
 } = userData;
 
@@ -73,7 +73,7 @@ describe("Happy path", () => {
 			cy.fillViolenceTimeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+			cy.fillperpetratorGenderStep(perpetratorGender);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillViolencePerpetratorStep();
@@ -157,7 +157,7 @@ describe("Happy path", () => {
 			cy.fillViolenceTimeStep();
 			cy.findByRole("button", { name: "Continuar" }).click();
 
-			cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+			cy.fillperpetratorGenderStep(perpetratorGender);
 			cy.findByRole("button", { name: "Continuar" }).click();
 
 			cy.fillViolencePerpetratorStep();

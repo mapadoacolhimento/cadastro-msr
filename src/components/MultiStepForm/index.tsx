@@ -66,7 +66,7 @@ export default function MultiStepForm() {
 				zipcode: "",
 				violenceType: [],
 				violenceTime: "",
-				perpetratorGenderId: "",
+				perpetratorGender: "",
 				violencePerpetrator: [],
 				livesWithPerpetrator: "",
 				violenceLocation: [],

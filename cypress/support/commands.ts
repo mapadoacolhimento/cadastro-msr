@@ -14,7 +14,7 @@ import {
 	neighborhood,
 	state,
 	city,
-	perpetratorGenderId,
+	perpetratorGender,
 	livesWithPerpetrator,
 	policeReportDifficulty,
 } from "../fixtures/userData.json";
@@ -268,7 +268,7 @@ Cypress.Commands.add("fillViolenceTimeStep", () => {
 });
 
 Cypress.Commands.add(
-	"fillPerpetratorGenderIdStep",
+	"fillperpetratorGenderStep",
 	(violenceGenderId: string) => {
 		cy.contains(
 			"Qual a identidade de gênero do(a) autor(a) da violência?"
@@ -453,7 +453,7 @@ Cypress.Commands.add(
 		cy.fillViolenceTimeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+		cy.fillperpetratorGenderStep(perpetratorGender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillViolencePerpetratorStep();

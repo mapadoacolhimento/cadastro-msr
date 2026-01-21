@@ -57,7 +57,7 @@ export interface Values {
 	propertyOwnership: string;
 	violenceType: string[];
 	violenceTime: string;
-	perpetratorGenderId: string;
+	perpetratorGender: string;
 	violencePerpetrator: string[];
 	livesWithPerpetrator: string;
 	violenceLocation: string[];

@@ -1,10 +1,10 @@
 import { expect } from "vitest";
-import { perpetratorGenderIdOptions } from "@/constants";
+import { perpetratorGenderOptions } from "@/constants";
 import { render, screen } from "@testing-library/react";
 import { type Values } from "@/types";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
 import userEvent from "@testing-library/user-event";
-import PerpetratorGenderId from "../PerpetratorGenderId";
+import PerpetratorGender from "../PerpetratorGender";
 
 const setup = () => {
 	return render(
@@ -14,20 +14,20 @@ const setup = () => {
 			}
 			initialValues={
 				{
-					perpetratorGenderId: "",
+					perpetratorGender: "",
 				} as unknown as Values
 			}
 		>
-			{PerpetratorGenderId()}
+			{PerpetratorGender()}
 		</MultiStepFormWrapper>
 	);
 };
 
-describe("<PerpetratorGenderId />", () => {
+describe("<PerpetratorGender/>", () => {
 	it("should render all violence gender id type options", () => {
 		setup();
 
-		perpetratorGenderIdOptions.forEach((option) => {
+		perpetratorGenderOptions.forEach((option) => {
 			const roleOptionElement = screen.getByRole("radio", {
 				name: option.name,
 			});

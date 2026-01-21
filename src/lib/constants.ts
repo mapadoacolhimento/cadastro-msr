@@ -369,7 +369,7 @@ export const violenceTimeOptions = [
 	},
 ];
 
-export const perpetratorGenderIdOptions = [
+export const perpetratorGenderOptions = [
 	{
 		value: "woman",
 		name: "Mulher",

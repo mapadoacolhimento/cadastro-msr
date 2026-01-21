@@ -194,7 +194,7 @@ export const monthlyIncomeOptions = [
 ];
 
 export const monthlyIncomeRangeOptions = [
-	{ value: 0, name: MonthlyIncomeRange.no_income },
+	{ value: 0, name: "Não possuo renda" },
 	{ value: 0.5, name: "Até meio salário mínimo (R$810,00)" },
 	{ value: 1, name: "Até um salário mínimo (R$1.621,00)" },
 	{ value: 2, name: "Até dois salários mínimos (R$3.242,00)" },

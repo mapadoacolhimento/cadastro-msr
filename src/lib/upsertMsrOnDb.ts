@@ -7,18 +7,17 @@ import {
 	MonthlyIncome,
 	MonthlyIncomeRange,
 	EmploymentStatus,
-	FamilyProvider,
 } from "@prisma/client";
 import {
 	dependantsOptions,
-	employmentStatusOptions,
 	familyProviderOptions,
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
 	propertyOwnershipOptions,
 } from "@/lib/constants";
 
-const yesNoToBoolean = (value?: string | null) => value === "yes";
+const yesNoToBoolean = (value?: string | null): boolean | null =>
+	value == null ? null : value === "yes";
 
 const payloadSchema = Yup.object({
 	msrZendeskUserId: Yup.number().required(),
@@ -40,9 +39,9 @@ const payloadSchema = Yup.object({
 	monthlyIncomeRange: Yup.number()
 		.oneOf(monthlyIncomeRangeOptions.map((o) => o.value))
 		.nullable(),
-	employmentStatus: Yup.string().oneOf(
-		employmentStatusOptions.map((o) => o.value)
-	),
+	employmentStatus: Yup.string()
+		.oneOf(Object.values(EmploymentStatus))
+		.required(),
 	dependants: Yup.string().oneOf(dependantsOptions.map((o) => o.value)),
 	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
 	propertyOwnership: Yup.string().oneOf(
@@ -60,21 +59,6 @@ const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
 	5: MonthlyIncomeRange.five_minimum_wages_or_more,
 };
 
-const employmentStatusMap: Record<string, EmploymentStatus> = {
-	employed_clt: EmploymentStatus.employed_clt,
-	employed_pj: EmploymentStatus.employed_pj,
-	student: EmploymentStatus.student,
-	student_with_income: EmploymentStatus.student_with_income,
-	retired: EmploymentStatus.retired,
-	unemployed: EmploymentStatus.unemployed,
-};
-
-const familyProviderMap: Record<string, FamilyProvider> = {
-	yes: FamilyProvider.yes,
-	no: FamilyProvider.no,
-	shared_responsibility: FamilyProvider.shared_responsibility,
-};
-
 const mapMonthlyIncomeRange = (
 	value?: number | null
 ): MonthlyIncomeRange | null => {
@@ -82,18 +66,6 @@ const mapMonthlyIncomeRange = (
 		return null;
 	}
 	return monthlyIncomeRangeMap[value] ?? null;
-};
-
-const mapEmploymentStatus = (
-	value?: string | null
-): EmploymentStatus | null => {
-	if (!value) return null;
-	return employmentStatusMap[value] ?? null;
-};
-
-const mapFamilyProvider = (value?: string | null): FamilyProvider | null => {
-	if (!value) return null;
-	return familyProviderMap[value] ?? null;
 };
 
 export default async function upsertMsrOnDb(
@@ -130,14 +102,14 @@ export default async function upsertMsrOnDb(
 
 		monthlyIncomeRange: mapMonthlyIncomeRange(payload.monthlyIncomeRange),
 
-		employmentStatus: mapEmploymentStatus(payload.employmentStatus),
+		employmentStatus: payload.employmentStatus,
 
 		hasFinancialDependents:
 			payload.dependants !== null && payload.dependants !== undefined
 				? payload.dependants === "yes"
 				: null,
 
-		familyProvider: mapFamilyProvider(payload.familyProvider),
+		familyProvider: payload.familyProvider,
 
 		propertyOwnership:
 			payload.propertyOwnership !== null

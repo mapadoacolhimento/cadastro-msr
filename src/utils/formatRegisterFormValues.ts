@@ -15,7 +15,6 @@ export default function formatRegisterFormValues(values: Values) {
 		zipcode: formatZipcode(values.zipcode),
 		phone: values.phone.replace(/\D/g, ""),
 		city: normalizeCity(values.city),
-		employmentStatus: values.employmentStatus,
 	};
 
 	const replaceYesNoWithBoolean = JSON.stringify(parseValues)

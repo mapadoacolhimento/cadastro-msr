@@ -40,6 +40,17 @@ const payloadSchema = Yup.object({
 	dependants: Yup.boolean().nullable(),
 	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
 	propertyOwnership: Yup.boolean().nullable(),
+	violenceType: Yup.array().nullable(),
+	violenceTime: Yup.string().nullable(),
+	violenceOccurredInBrazil: Yup.boolean().nullable(),
+	perpetratorGender: Yup.string().nullable(),
+	violencePerpetrator: Yup.array().nullable(),
+	livesWithPerpetrator: Yup.string().nullable(),
+	violenceLocation: Yup.array().nullable(),
+	policeReportDifficulty: Yup.array().nullable(),
+	legalActionsTaken: Yup.array().nullable(),
+	protectiveFactors: Yup.array().nullable(),
+	riskFactors: Yup.array().nullable(),
 }).required();
 
 const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
@@ -108,6 +119,20 @@ export default async function upsertMsrOnDb(
 				: null,
 	};
 
+	const msrViolenceHistory = {
+		violenceType: payload.violenceType ?? [],
+		violenceTime: payload.violenceTime ?? null,
+		violenceOccurredInBrazil: payload.violenceOccurredInBrazil ?? false,
+		perpetratorGender: payload.perpetratorGender ?? null,
+		violencePerpetrator: payload.violencePerpetrator ?? [],
+		livesWithPerpetrator: payload.livesWithPerpetrator ?? [],
+		violenceLocation: payload.violenceLocation ?? [],
+		policeReportDifficulty: payload.policeReportDifficulty ?? null,
+		legalActionsTaken: payload.legalActionsTaken ?? [],
+		protectiveFactors: payload.protectiveFactors ?? [],
+		riskFactors: payload.riskFactors,
+	};
+
 	const msrResult = await db.mSRs.upsert({
 		where: {
 			msrId: payload.msrZendeskUserId,
@@ -127,6 +152,12 @@ export default async function upsertMsrOnDb(
 					update: msrSocioeconomicData,
 					create: msrSocioeconomicData,
 				},
+			},
+		},
+		MSRViolenceHistory: {
+			upsert: {
+				update: msrViolenceHistory,
+				create: msrViolenceHistory,
 			},
 		},
 		create: {

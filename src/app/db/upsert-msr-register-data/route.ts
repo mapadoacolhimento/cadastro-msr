@@ -72,11 +72,9 @@ const payloadSchema = Yup.object({
 	perpetratorGender: Yup.string().oneOf(
 		perpetratorGenderOptions.map((o) => o.value)
 	),
-	violencePerpetrator: Yup.array(
-		Yup.string()
-			.oneOf(violencePerpetratorOptions.map((v) => v.value))
-			.required()
-	),
+	violencePerpetrator: Yup.string()
+		.oneOf(violencePerpetratorOptions.map((v) => v.value))
+		.required(),
 	livesWithPerpetrator: Yup.string().oneOf(
 		livesWithPerpetratorOptions.map((o) => o.value)
 	),

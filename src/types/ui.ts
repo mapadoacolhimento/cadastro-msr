@@ -58,10 +58,10 @@ export interface Values {
 	violenceType: string[];
 	violenceTime: string;
 	perpetratorGender: string;
-	violencePerpetrator: string[];
+	violencePerpetrator: string;
 	livesWithPerpetrator: string;
 	violenceLocation: string[];
-	legalActionsTaken: string;
+	legalActionsTaken: string[];
 	legalActionDifficulty: string[];
 	protectiveFactors: string[];
 	riskFactors: string[];

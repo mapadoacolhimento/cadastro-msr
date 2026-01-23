@@ -16,7 +16,7 @@ import {
 	city,
 	perpetratorGender,
 	livesWithPerpetrator,
-	policeReportDifficulty,
+	legalActionDifficulty,
 } from "../fixtures/userData.json";
 
 Cypress.Commands.add("goThroughHomePage", () => {
@@ -309,7 +309,7 @@ Cypress.Commands.add("fillViolenceLocationStep", () => {
 	});
 });
 
-Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
+Cypress.Commands.add("fillLegalActionDifficultyStep", () => {
 	cy.contains("Se sim, o que a pessoa que te atendeu fez?").should(
 		"be.visible"
 	);
@@ -468,7 +468,7 @@ Cypress.Commands.add(
 		cy.fillLegalActionsTakenStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillPoliceReportDifficultyStep();
+		cy.fillLegalActionDifficultyStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillProtectiveFactorsStep();

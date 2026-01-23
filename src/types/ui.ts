@@ -62,7 +62,7 @@ export interface Values {
 	livesWithPerpetrator: string;
 	violenceLocation: string[];
 	legalActionsTaken: string;
-	policeReportDifficulty: string[];
+	legalActionDifficulty: string[];
 	protectiveFactors: string[];
 	riskFactors: string[];
 }

@@ -70,7 +70,7 @@ export default function MultiStepForm() {
 				violencePerpetrator: [],
 				livesWithPerpetrator: "",
 				violenceLocation: [],
-				policeReportDifficulty: [],
+				legalActionDifficulty: [],
 				legalActionsTaken: "",
 				protectiveFactors: [],
 				riskFactors: [],

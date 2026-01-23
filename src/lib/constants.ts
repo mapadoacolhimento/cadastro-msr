@@ -451,7 +451,7 @@ export const violenceLocationOptions = [
 	},
 ];
 
-export const policeReportDifficultyOptions = [
+export const legalActionDifficultyOptions = [
 	{
 		value: "discouraged",
 		name: "Desencorajou sob o argumento de inexistência criminosa",

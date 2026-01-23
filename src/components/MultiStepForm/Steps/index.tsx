@@ -17,7 +17,7 @@ export { default as PerpetratorGender } from "./PerpetratorGender";
 export { default as ViolencePerpetrator } from "./ViolencePerpetrator";
 export { default as LivesWithPerpetrator } from "./LivesWithPerpetrator";
 export { default as ViolenceLocation } from "./ViolenceLocation";
-export { default as PoliceReportDifficulty } from "./PoliceReportDifficulty";
+export { default as LegalActionDifficulty } from "./LegalActionDifficulty";
 export { default as LegalActionsTaken } from "./LegalActionsTaken";
 export { default as ProtectiveFactors } from "./ProtectiveFactors";
 export { default as RiskFactors } from "./RiskFactors";

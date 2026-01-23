@@ -39,18 +39,18 @@ const payloadSchema = Yup.object({
 		.required(),
 	dependants: Yup.boolean().nullable(),
 	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
+	violenceType: Yup.array().of(Yup.string()).nullable(),
 	propertyOwnership: Yup.boolean().nullable(),
-	violenceType: Yup.array().nullable(),
 	violenceTime: Yup.string().nullable(),
-	violenceOccurredInBrazil: Yup.boolean().nullable(),
+	violenceOccurredInBrazil: Yup.string().nullable(),
 	perpetratorGender: Yup.string().nullable(),
-	violencePerpetrator: Yup.array().nullable(),
+	violencePerpetrator: Yup.string().nullable(),
 	livesWithPerpetrator: Yup.string().nullable(),
 	violenceLocation: Yup.array().nullable(),
-	legalActionDifficulty: Yup.array().nullable(),
-	legalActionsTaken: Yup.array().nullable(),
-	protectiveFactors: Yup.array().nullable(),
-	riskFactors: Yup.array().nullable(),
+	legalActionDifficulty: Yup.array().of(Yup.string()).nullable(),
+	legalActionsTaken: Yup.array().of(Yup.string()).nullable(),
+	protectiveFactors: Yup.array().of(Yup.string()).nullable(),
+	riskFactors: Yup.array().of(Yup.string()).nullable(),
 }).required();
 
 const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
@@ -119,10 +119,13 @@ export default async function upsertMsrOnDb(
 				: null,
 	};
 
-	const msrViolenceHistory = {
+	const msrViolenceHistoryData = {
 		violenceType: payload.violenceType ?? [],
 		violenceTime: payload.violenceTime ?? null,
-		violenceOccurredInBrazil: payload.violenceOccurredInBrazil ?? false,
+		violenceOccurredInBrazil:
+			payload.violenceOccurredInBrazil !== null
+				? yesNoToBoolean(payload.violenceOccurredInBrazil)
+				: null,
 		perpetratorGender: payload.perpetratorGender ?? null,
 		violencePerpetrator: payload.violencePerpetrator ?? [],
 		livesWithPerpetrator: payload.livesWithPerpetrator ?? [],
@@ -154,10 +157,10 @@ export default async function upsertMsrOnDb(
 				},
 			},
 		},
-		MSRViolenceHistory: {
+		MSRViolenceHistoryData: {
 			upsert: {
-				update: msrViolenceHistory,
-				create: msrViolenceHistory,
+				update: msrViolenceHistoryData,
+				create: msrViolenceHistoryData,
 			},
 		},
 		create: {

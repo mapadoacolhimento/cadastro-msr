@@ -4,6 +4,29 @@ import {
 	LAWYER_ZENDESK_USER_ID,
 	MSR_ZENDESK_USER_ID,
 } from "./constants";
+import {
+	MonthlyIncomeRange,
+	EmploymentStatus,
+	FamilyProvider,
+} from "@prisma/client";
+
+const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
+	0: MonthlyIncomeRange.no_income,
+	0.5: MonthlyIncomeRange.half_minimum_wage,
+	1: MonthlyIncomeRange.up_to_one_minimum_wage,
+	2: MonthlyIncomeRange.up_to_two_minimum_wages,
+	3: MonthlyIncomeRange.up_to_three_minimum_wages,
+	4: MonthlyIncomeRange.up_to_four_minimum_wages,
+	5: MonthlyIncomeRange.five_minimum_wages_or_more,
+};
+const mapMonthlyIncomeRange = (
+	value?: number | null
+): MonthlyIncomeRange | null => {
+	if (value === null || value === undefined) {
+		return null;
+	}
+	return monthlyIncomeRangeMap[value] ?? null;
+};
 
 export default function initDB() {
 	return [
@@ -94,6 +117,18 @@ export default function initDB() {
 				dateOfBirth: null,
 			},
 		}),
+		db.mSRSocioeconomicData.create({
+			data: {
+				msrId: MSR_ZENDESK_USER_ID,
+				hasMonthlyIncome: "yes" as const,
+				monthlyIncomeRange: mapMonthlyIncomeRange(1),
+				employmentStatus: "employed_clt" as EmploymentStatus,
+				hasFinancialDependents: false,
+				familyProvider: "shared_responsibility" as FamilyProvider,
+				propertyOwnership: false,
+			},
+		}),
+
 		db.cities.create({
 			data: {
 				city_value: "SAO PAULO",

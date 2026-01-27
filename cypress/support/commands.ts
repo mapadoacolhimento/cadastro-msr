@@ -194,12 +194,14 @@ Cypress.Commands.add(
 	}
 );
 
-Cypress.Commands.add("fillDependantsStep", (hasDependant = true) => {
-	// Dependants
+Cypress.Commands.add("fillDependantsStep", (hasDependants: boolean = true) => {
 	cy.contains(
 		"Você tem pessoas que são dependentes financeiramente da sua renda?"
 	).should("exist");
-	cy.findByRole("radio", { name: hasDependant ? "Sim" : "Não" }).click();
+
+	const optionLabel = hasDependants ? "Sim" : "Não";
+
+	cy.findByRole("radio", { name: optionLabel }).click();
 	cy.findByRole("button", { name: "Continuar" }).click();
 });
 

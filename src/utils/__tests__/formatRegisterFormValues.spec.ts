@@ -14,6 +14,8 @@ describe("formatRegisterFormValues", () => {
 			zipcode: "12345-678",
 			phone: "(11) 99456-7890",
 			city: "example city",
+			dependants: "yes",
+			propertyOwnership: "no",
 		} as Values;
 
 		const expected = {
@@ -26,6 +28,8 @@ describe("formatRegisterFormValues", () => {
 			zipcode: "12345678",
 			phone: "11994567890",
 			city: "EXAMPLE CITY",
+			dependants: true,
+			propertyOwnership: false,
 		};
 
 		const result = formatRegisterFormValues(values);

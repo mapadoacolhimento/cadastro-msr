@@ -25,6 +25,7 @@ export function msrPayload(
 		lat: -12.995,
 		lng: -38.504,
 		supportType: ["legal", "psychological"],
+		employmentStatus: "employed_clt",
 		...msr,
 	};
 }

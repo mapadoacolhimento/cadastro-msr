@@ -4,6 +4,7 @@ import {
 	Race,
 	type MSRPiiSec,
 	type SupportRequests,
+	EmploymentStatus,
 } from "@prisma/client";
 import * as Yup from "yup";
 import {
@@ -36,6 +37,9 @@ const payloadSchema = Yup.object({
 	dateOfBirth: Yup.string().datetime().required(),
 	hasDisability: Yup.boolean().required().nullable(),
 	acceptsOnlineSupport: Yup.boolean().required(),
+	employmentStatus: Yup.string()
+		.oneOf(Object.values(EmploymentStatus))
+		.required(),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
 	).required(),
@@ -190,13 +194,13 @@ export async function POST(request: Request) {
 		if (error["name"] === "ValidationError") {
 			const errorMsg = `Validation error: ${getErrorMessage(error)}`;
 
-			logger.error(`[checkMatchEligibility] - 400: ${errorMsg}`);
+			logger.error(`[handleRequest] - 400: ${errorMsg}`);
 			return new Response(errorMsg, {
 				status: 400,
 			});
 		}
 
-		logger.error(`[checkMatchEligibility] - 500: ${getErrorMessage(error)}`);
+		logger.error(`[handleRequest] - 500: ${getErrorMessage(error)}`);
 		return new Response(getErrorMessage(error), {
 			status: 500,
 		});

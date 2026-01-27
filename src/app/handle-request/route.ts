@@ -194,13 +194,13 @@ export async function POST(request: Request) {
 		if (error["name"] === "ValidationError") {
 			const errorMsg = `Validation error: ${getErrorMessage(error)}`;
 
-			logger.error(`[checkMatchEligibility] - 400: ${errorMsg}`);
+			logger.error(`[handleRequest] - 400: ${errorMsg}`);
 			return new Response(errorMsg, {
 				status: 400,
 			});
 		}
 
-		logger.error(`[checkMatchEligibility] - 500: ${getErrorMessage(error)}`);
+		logger.error(`[handleRequest] - 500: ${getErrorMessage(error)}`);
 		return new Response(getErrorMessage(error), {
 			status: 500,
 		});

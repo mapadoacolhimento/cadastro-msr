@@ -9,15 +9,10 @@ import {
 	EmploymentStatus,
 } from "@prisma/client";
 import {
-	dependantsOptions,
 	familyProviderOptions,
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
-	propertyOwnershipOptions,
 } from "@/lib/constants";
-
-const yesNoToBoolean = (value?: string | null): boolean | null =>
-	value == null ? null : value === "yes";
 
 const payloadSchema = Yup.object({
 	msrZendeskUserId: Yup.number().required(),
@@ -42,11 +37,9 @@ const payloadSchema = Yup.object({
 	employmentStatus: Yup.string()
 		.oneOf(Object.values(EmploymentStatus))
 		.required(),
-	dependants: Yup.string().oneOf(dependantsOptions.map((o) => o.value)),
+	dependants: Yup.boolean().nullable(),
 	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
-	propertyOwnership: Yup.string().oneOf(
-		propertyOwnershipOptions.map((o) => o.value)
-	),
+	propertyOwnership: Yup.boolean().nullable(),
 }).required();
 
 const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
@@ -105,15 +98,13 @@ export default async function upsertMsrOnDb(
 		employmentStatus: payload.employmentStatus,
 
 		hasFinancialDependents:
-			payload.dependants !== null && payload.dependants !== undefined
-				? payload.dependants === "yes"
-				: null,
+			typeof payload.dependants === "boolean" ? payload.dependants : null,
 
 		familyProvider: payload.familyProvider,
 
 		propertyOwnership:
-			payload.propertyOwnership !== null
-				? yesNoToBoolean(payload.propertyOwnership)
+			typeof payload.propertyOwnership === "boolean"
+				? payload.propertyOwnership
 				: null,
 	};
 

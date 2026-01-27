@@ -5,6 +5,9 @@ import formatZipcode from "./formatZipcode";
 import normalizeCity from "./normalizeCity";
 import formatDate from "./formatDate";
 
+const yesNoToBoolean = (value?: string | null): boolean | null =>
+	value == null || value === "" ? null : value === "yes";
+
 export default function formatRegisterFormValues(values: Values) {
 	const parseValues = {
 		...values,
@@ -15,11 +18,11 @@ export default function formatRegisterFormValues(values: Values) {
 		zipcode: formatZipcode(values.zipcode),
 		phone: values.phone.replace(/\D/g, ""),
 		city: normalizeCity(values.city),
+		dependants: yesNoToBoolean(values.dependants),
+		propertyOwnership: yesNoToBoolean(values.propertyOwnership),
+		acceptsOnlineSupport: yesNoToBoolean(values.acceptsOnlineSupport),
+		hasDisability: yesNoToBoolean(values.hasDisability),
 	};
 
-	const replaceYesNoWithBoolean = JSON.stringify(parseValues)
-		.replace(/"yes"/g, "true")
-		.replace(/"no"/g, "false");
-
-	return replaceYesNoWithBoolean;
+	return JSON.stringify(parseValues);
 }

@@ -1,6 +1,18 @@
 import * as Yup from "yup";
 import { db } from ".";
-import { Gender, MSRStatus, Race } from "@prisma/client";
+import {
+	Gender,
+	MSRStatus,
+	Race,
+	MonthlyIncome,
+	MonthlyIncomeRange,
+	EmploymentStatus,
+} from "@prisma/client";
+import {
+	familyProviderOptions,
+	monthlyIncomeOptions,
+	monthlyIncomeRangeOptions,
+} from "@/lib/constants";
 
 const payloadSchema = Yup.object({
 	msrZendeskUserId: Yup.number().required(),
@@ -18,7 +30,36 @@ const payloadSchema = Yup.object({
 	gender: Yup.string().oneOf(Object.values(Gender)).required(),
 	hasDisability: Yup.boolean().required().nullable(),
 	acceptsOnlineSupport: Yup.boolean().required(),
+	monthlyIncome: Yup.string().oneOf(monthlyIncomeOptions.map((o) => o.value)),
+	monthlyIncomeRange: Yup.number()
+		.oneOf(monthlyIncomeRangeOptions.map((o) => o.value))
+		.nullable(),
+	employmentStatus: Yup.string()
+		.oneOf(Object.values(EmploymentStatus))
+		.required(),
+	dependants: Yup.boolean().nullable(),
+	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
+	propertyOwnership: Yup.boolean().nullable(),
 }).required();
+
+const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
+	0: MonthlyIncomeRange.no_income,
+	0.5: MonthlyIncomeRange.half_minimum_wage,
+	1: MonthlyIncomeRange.up_to_one_minimum_wage,
+	2: MonthlyIncomeRange.up_to_two_minimum_wages,
+	3: MonthlyIncomeRange.up_to_three_minimum_wages,
+	4: MonthlyIncomeRange.up_to_four_minimum_wages,
+	5: MonthlyIncomeRange.five_minimum_wages_or_more,
+};
+
+const mapMonthlyIncomeRange = (
+	value?: number | null
+): MonthlyIncomeRange | null => {
+	if (value === null || value === undefined) {
+		return null;
+	}
+	return monthlyIncomeRangeMap[value] ?? null;
+};
 
 export default async function upsertMsrOnDb(
 	payload: Yup.InferType<typeof payloadSchema>
@@ -47,6 +88,26 @@ export default async function upsertMsrOnDb(
 		dateOfBirth: payload.dateOfBirth ?? null,
 	};
 
+	const msrSocioeconomicData = {
+		hasMonthlyIncome: payload.monthlyIncome
+			? (payload.monthlyIncome as MonthlyIncome)
+			: null,
+
+		monthlyIncomeRange: mapMonthlyIncomeRange(payload.monthlyIncomeRange),
+
+		employmentStatus: payload.employmentStatus,
+
+		hasFinancialDependents:
+			typeof payload.dependants === "boolean" ? payload.dependants : null,
+
+		familyProvider: payload.familyProvider,
+
+		propertyOwnership:
+			typeof payload.propertyOwnership === "boolean"
+				? payload.propertyOwnership
+				: null,
+	};
+
 	const msrResult = await db.mSRs.upsert({
 		where: {
 			msrId: payload.msrZendeskUserId,
@@ -61,6 +122,12 @@ export default async function upsertMsrOnDb(
 			MSRPii: {
 				update: msrPii,
 			},
+			MSRSocioeconomicData: {
+				upsert: {
+					update: msrSocioeconomicData,
+					create: msrSocioeconomicData,
+				},
+			},
 		},
 		create: {
 			msrId: payload.msrZendeskUserId,
@@ -72,6 +139,9 @@ export default async function upsertMsrOnDb(
 			},
 			MSRPii: {
 				create: msrPii,
+			},
+			MSRSocioeconomicData: {
+				create: msrSocioeconomicData,
 			},
 		},
 	});

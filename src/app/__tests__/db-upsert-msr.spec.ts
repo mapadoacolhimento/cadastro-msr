@@ -1,10 +1,16 @@
 import { expect } from "vitest";
 import { NextRequest } from "next/server";
 import { mockReset } from "vitest-mock-extended";
-import { type Gender, type MSRStatus, type Race } from "@prisma/client";
+import {
+	type Gender,
+	type MSRStatus,
+	type Race,
+	type EmploymentStatus,
+} from "@prisma/client";
 import mockedDb from "@/tests/unit/db";
 import { msrPayload } from "@/tests/unit/payloads";
 import { POST } from "../db/upsert-msr/route";
+import { employmentStatusOptions } from "@/lib";
 
 const mockPayload = msrPayload();
 
@@ -27,6 +33,7 @@ const mockIncompletePayload = {
 	status: "registered",
 	hasDisability: null,
 	acceptsOnlineSupport: false,
+	employmentStatus: "employed_clt" as EmploymentStatus,
 };
 
 const mockMsr = {
@@ -56,6 +63,7 @@ const mockMsr2 = {
 	status: mockPayload2.status as MSRStatus,
 	hasDisability: mockPayload2.hasDisability,
 	acceptsOnlineSupport: mockPayload2.acceptsOnlineSupport,
+	employmentStatus: mockPayload2.employmentStatus,
 	createdAt: new Date(),
 	updatedAt: new Date(),
 };

@@ -22,6 +22,10 @@ export default function formatRegisterFormValues(values: Values) {
 		propertyOwnership: yesNoToBoolean(values.propertyOwnership),
 		acceptsOnlineSupport: yesNoToBoolean(values.acceptsOnlineSupport),
 		hasDisability: yesNoToBoolean(values.hasDisability),
+		livesWithPerpetrator:
+			values.livesWithPerpetrator && values.livesWithPerpetrator !== ""
+				? values.livesWithPerpetrator
+				: "no",
 	};
 
 	return JSON.stringify(parseValues);

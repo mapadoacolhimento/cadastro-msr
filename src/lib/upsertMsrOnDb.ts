@@ -7,11 +7,23 @@ import {
 	MonthlyIncome,
 	MonthlyIncomeRange,
 	EmploymentStatus,
+	ViolenceType,
+	ViolenceTime,
+	PerpetratorGender,
+	ViolenceLocation,
+	LegalActionsTaken,
+	LegalActionDifficulty,
+	ProtectiveFactor,
+	RiskFactor,
+	ViolencePerpetrator,
+	LivesWithPerpetrator,
 } from "@prisma/client";
 import {
 	familyProviderOptions,
+	livesWithPerpetratorOptions,
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
+	perpetratorGenderOptions,
 } from "@/lib/constants";
 
 const payloadSchema = Yup.object({
@@ -39,18 +51,30 @@ const payloadSchema = Yup.object({
 		.required(),
 	dependants: Yup.boolean().nullable(),
 	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
-	violenceType: Yup.array().of(Yup.string()).nullable(),
 	propertyOwnership: Yup.boolean().nullable(),
-	violenceTime: Yup.string().nullable(),
-	violenceOccurredInBrazil: Yup.string().nullable(),
-	perpetratorGender: Yup.string().nullable(),
-	violencePerpetrator: Yup.string().nullable(),
-	livesWithPerpetrator: Yup.string().nullable(),
-	violenceLocation: Yup.array().nullable(),
-	legalActionDifficulty: Yup.array().of(Yup.string()).nullable(),
-	legalActionsTaken: Yup.array().of(Yup.string()).nullable(),
-	protectiveFactors: Yup.array().of(Yup.string()).nullable(),
-	riskFactors: Yup.array().of(Yup.string()).nullable(),
+	violenceType: Yup.array().of(Yup.string().oneOf(Object.values(ViolenceType))),
+	violenceTime: Yup.string().oneOf(Object.values(ViolenceTime)),
+	violenceOccurredInBrazil: Yup.string().required(),
+	perpetratorGender: Yup.string().oneOf(
+		perpetratorGenderOptions.map((o) => o.value)
+	),
+	violencePerpetrator: Yup.string().oneOf(Object.values(ViolencePerpetrator)),
+	livesWithPerpetrator: Yup.string().oneOf(
+		livesWithPerpetratorOptions.map((o) => o.value)
+	),
+	violenceLocation: Yup.array().of(
+		Yup.string().oneOf(Object.values(ViolenceLocation))
+	),
+	legalActionsTaken: Yup.array().of(
+		Yup.string().oneOf(Object.values(LegalActionsTaken))
+	),
+	legalActionDifficulty: Yup.array().of(
+		Yup.string().oneOf(Object.values(LegalActionDifficulty))
+	),
+	protectiveFactors: Yup.array().of(
+		Yup.string().oneOf(Object.values(ProtectiveFactor))
+	),
+	riskFactors: Yup.array().of(Yup.string().oneOf(Object.values(RiskFactor))),
 }).required();
 
 const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
@@ -71,6 +95,9 @@ const mapMonthlyIncomeRange = (
 	}
 	return monthlyIncomeRangeMap[value] ?? null;
 };
+
+const yesNoToBoolean = (value?: string | null): boolean | undefined =>
+	value == null || value === "" ? undefined : value === "yes";
 
 export default async function upsertMsrOnDb(
 	payload: Yup.InferType<typeof payloadSchema>
@@ -119,22 +146,56 @@ export default async function upsertMsrOnDb(
 				: null,
 	};
 
-	const msrViolenceHistoryData = {
-		violenceType: payload.violenceType ?? [],
-		violenceTime: payload.violenceTime ?? null,
-		violenceOccurredInBrazil:
-			payload.violenceOccurredInBrazil !== null
-				? yesNoToBoolean(payload.violenceOccurredInBrazil)
+	function mapPayloadToViolenceHistory(
+		payload: Yup.InferType<typeof payloadSchema>
+	) {
+		return {
+			violenceType: payload.violenceType?.length
+				? (payload.violenceType as ViolenceType[])
+				: [],
+
+			violenceTime: payload.violenceTime
+				? (payload.violenceTime as ViolenceTime)
 				: null,
-		perpetratorGender: payload.perpetratorGender ?? null,
-		violencePerpetrator: payload.violencePerpetrator ?? [],
-		livesWithPerpetrator: payload.livesWithPerpetrator ?? [],
-		violenceLocation: payload.violenceLocation ?? [],
-		legalActionDifficulty: payload.legalActionDifficulty ?? null,
-		legalActionsTaken: payload.legalActionsTaken ?? [],
-		protectiveFactors: payload.protectiveFactors ?? [],
-		riskFactors: payload.riskFactors,
-	};
+
+			violenceOccurredInBrazil:
+				yesNoToBoolean(payload.violenceOccurredInBrazil) ?? false,
+
+			perpetratorGender: payload.perpetratorGender
+				? (payload.perpetratorGender as PerpetratorGender)
+				: null,
+
+			violencePerpetrator: payload.violencePerpetrator
+				? (payload.violencePerpetrator as ViolencePerpetrator)
+				: null,
+
+			livesWithPerpetrator: payload.livesWithPerpetrator
+				? (payload.livesWithPerpetrator as LivesWithPerpetrator)
+				: null,
+
+			violenceLocation: payload.violenceLocation?.length
+				? (payload.violenceLocation as ViolenceLocation[])
+				: [],
+
+			legalActionsTaken: payload.legalActionsTaken?.length
+				? (payload.legalActionsTaken as LegalActionsTaken[])
+				: [],
+
+			legalActionDifficulty: payload.legalActionDifficulty?.length
+				? (payload.legalActionDifficulty as LegalActionDifficulty[])
+				: [],
+
+			protectiveFactors: payload.protectiveFactors?.length
+				? (payload.protectiveFactors as ProtectiveFactor[])
+				: [],
+
+			riskFactors: payload.riskFactors?.length
+				? (payload.riskFactors as RiskFactor[])
+				: [],
+		};
+	}
+
+	const msrViolenceHistoryData = mapPayloadToViolenceHistory(payload);
 
 	const msrResult = await db.mSRs.upsert({
 		where: {
@@ -157,12 +218,6 @@ export default async function upsertMsrOnDb(
 				},
 			},
 		},
-		MSRViolenceHistoryData: {
-			upsert: {
-				update: msrViolenceHistoryData,
-				create: msrViolenceHistoryData,
-			},
-		},
 		create: {
 			msrId: payload.msrZendeskUserId,
 			...msr,
@@ -177,6 +232,17 @@ export default async function upsertMsrOnDb(
 			MSRSocioeconomicData: {
 				create: msrSocioeconomicData,
 			},
+		},
+	});
+
+	await db.mSRViolenceHistory.upsert({
+		where: {
+			msrId: payload.msrZendeskUserId,
+		},
+		update: msrViolenceHistoryData,
+		create: {
+			msrId: payload.msrZendeskUserId,
+			...msrViolenceHistoryData,
 		},
 	});
 

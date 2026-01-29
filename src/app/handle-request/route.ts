@@ -40,6 +40,7 @@ const payloadSchema = Yup.object({
 	employmentStatus: Yup.string()
 		.oneOf(Object.values(EmploymentStatus))
 		.required(),
+	violenceOccurredInBrazil: Yup.string().required(),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
 	).required(),

@@ -5,6 +5,7 @@ export default function resetDb() {
 		db.mSRStatusHistory.deleteMany(),
 		db.mSRSocioeconomicData.deleteMany(),
 		db.mSRPiiSec.deleteMany(),
+		db.mSRViolenceHistory.deleteMany(),
 		db.mSRs.deleteMany(),
 		db.matchStatusHistory.deleteMany(),
 		db.matches.deleteMany(),

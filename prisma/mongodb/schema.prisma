@@ -52,13 +52,13 @@ model MsrRegisterData {
   violenceType                String[]
   disability                  String?
   violenceTime                String?
-  perpetratorGenderId         String?
+  perpetratorGender           String?
   violencePerpetrator         String[]
   livesWithPerpetrator        String?
   violenceLocation            String[]
   legalActionsTaken           String[]
   policeReportDifficulty      String[]
-  policeReportDifficultyOther String?
+  legalActionDifficulty       String[]
   protectiveFactors           String[]
   riskFactors                 String[]
 }

@@ -10,7 +10,6 @@ import {
 import mockedDb from "@/tests/unit/db";
 import { msrPayload } from "@/tests/unit/payloads";
 import { POST } from "../db/upsert-msr/route";
-import { employmentStatusOptions } from "@/lib";
 
 const mockPayload = msrPayload();
 
@@ -115,7 +114,7 @@ describe("POST /db/upsert-msr", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: msrZendeskUserId is a required field"
+			"Validation error: violenceOccurredInBrazil is a required field"
 		);
 	});
 });

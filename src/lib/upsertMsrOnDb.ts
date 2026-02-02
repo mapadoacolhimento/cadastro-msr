@@ -167,9 +167,9 @@ export default async function upsertMsrOnDb(
 				? (payload.perpetratorGender as PerpetratorGender)
 				: null,
 
-			violencePerpetrator: payload.violencePerpetrator
-				? (payload.violencePerpetrator as ViolencePerpetrator)
-				: null,
+			violencePerpetrator: payload.violencePerpetrator?.length
+				? (payload.violencePerpetrator as ViolencePerpetrator[])
+				: [],
 
 			livesWithPerpetrator: payload.livesWithPerpetrator
 				? (payload.livesWithPerpetrator as LivesWithPerpetrator)

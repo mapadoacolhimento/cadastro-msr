@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { Gender, SupportType, Race } from "@prisma/client";
+import { Gender, SupportType, Race, ViolencePerpetrator } from "@prisma/client";
 import * as Yup from "yup";
 import { getErrorMessage } from "@/utils";
 import {
@@ -72,9 +72,9 @@ const payloadSchema = Yup.object({
 	perpetratorGender: Yup.string().oneOf(
 		perpetratorGenderOptions.map((o) => o.value)
 	),
-	violencePerpetrator: Yup.array()
-		.of(Yup.string().oneOf(violencePerpetratorOptions.map((v) => v.value)))
-		.required(),
+	violencePerpetrator: Yup.array(
+		Yup.string().oneOf(Object.values(ViolencePerpetrator)).required()
+	),
 	livesWithPerpetrator: Yup.string().oneOf(
 		livesWithPerpetratorOptions.map((o) => o.value)
 	),

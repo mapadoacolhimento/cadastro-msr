@@ -5,8 +5,8 @@ import RadioInput from "../../RadioInput";
 import { perpetratorGenderOptions } from "@/constants";
 
 const perpetratorGenderSchema = Yup.object({
-	perpetratorGender: Yup.array()
-		.of(Yup.string().oneOf(perpetratorGenderOptions.map((a) => a.value)))
+	perpetratorGender: Yup.string()
+		.oneOf(perpetratorGenderOptions.map((a) => a.value))
 		.required("Esse campo é obrigatório."),
 });
 

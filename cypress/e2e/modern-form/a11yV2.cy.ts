@@ -94,7 +94,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.checkA11y(null, null, terminalLog);
 				});
 
-				it("should pass the accessibility test on Perpetrator Gender Id step", () => {
+				it("should pass the accessibility test on Perpetrator Gender step", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -182,7 +182,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.checkA11y(null, null, terminalLog);
 				});
 
-				it("should pass the accessibility test on Police Report Difficulty step", () => {
+				it("should pass the accessibility test on Legal Action Difficulty step", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 

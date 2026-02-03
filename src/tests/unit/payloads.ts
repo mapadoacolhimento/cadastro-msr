@@ -29,7 +29,7 @@ export function msrPayload(
 		perpetratorGender: "man",
 		violenceOccurredInBrazil: "yes",
 		violenceType: ["physical_violence"],
-		violencePerpetrator: "ex_partner",
+		violencePerpetrator: ["ex_partner"],
 		...msr,
 	};
 }

@@ -129,6 +129,23 @@ export default function initDB() {
 			},
 		}),
 
+		db.mSRViolenceHistory.create({
+			data: {
+				msrId: MSR_ZENDESK_USER_ID,
+				violenceType: ["physical_violence", "psychological_violence"],
+				violencePerpetrator: ["ex_partner"],
+				perpetratorGender: "man",
+				violenceTime: "less_than_3_months",
+				violenceOccurredInBrazil: true,
+				livesWithPerpetrator: "no",
+				violenceLocation: ["public_space"],
+				legalActionsTaken: ["physical_examination"],
+				legalActionDifficulty: ["not_applicable"],
+				protectiveFactors: ["support_network"],
+				riskFactors: ["not_applicable"],
+			},
+		}),
+
 		db.cities.create({
 			data: {
 				city_value: "SAO PAULO",

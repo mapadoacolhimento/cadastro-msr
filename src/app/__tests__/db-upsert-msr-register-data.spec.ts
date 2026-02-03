@@ -149,7 +149,7 @@ describe("POST /upsert-msr-register-data", () => {
 		const response = await POST(request);
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
-			"Validation error: violencePerpetrator is a required field"
+			"Validation error: email is a required field"
 		);
 	});
 
@@ -692,6 +692,7 @@ describe("POST /upsert-msr-register-data", () => {
 					violenceTime: mockMsrViolenceData.violenceTime,
 					violenceOccurredInBrazil:
 						mockMsrViolenceData.violenceOccurredInBrazil,
+					violencePerpetrator: mockMsrViolenceData.violencePerpetrator,
 					perpetratorGender: mockMsrViolenceData.perpetratorGender,
 					livesWithPerpetrator: mockMsrViolenceData.livesWithPerpetrator,
 					violenceLocation: mockMsrViolenceData.violenceLocation,

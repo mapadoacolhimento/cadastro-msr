@@ -14,9 +14,9 @@ import {
 	neighborhood,
 	state,
 	city,
-	perpetratorGenderId,
+	perpetratorGender,
 	livesWithPerpetrator,
-	policeReportDifficulty,
+	legalActionDifficulty,
 } from "../fixtures/userData.json";
 
 Cypress.Commands.add("goThroughHomePage", () => {
@@ -268,12 +268,12 @@ Cypress.Commands.add("fillViolenceTimeStep", () => {
 });
 
 Cypress.Commands.add(
-	"fillPerpetratorGenderIdStep",
-	(violenceGenderId: string) => {
+	"fillPerpetratorGenderStep",
+	(perpetratorGender: string) => {
 		cy.contains(
 			"Qual a identidade de gênero do(a) autor(a) da violência?"
 		).should("exist");
-		cy.findByRole("radio", { name: violenceGenderId }).click();
+		cy.findByRole("radio", { name: perpetratorGender }).click();
 	}
 );
 
@@ -309,7 +309,7 @@ Cypress.Commands.add("fillViolenceLocationStep", () => {
 	});
 });
 
-Cypress.Commands.add("fillPoliceReportDifficultyStep", () => {
+Cypress.Commands.add("fillLegalActionDifficultyStep", () => {
 	cy.contains("Se sim, o que a pessoa que te atendeu fez?").should(
 		"be.visible"
 	);
@@ -453,7 +453,7 @@ Cypress.Commands.add(
 		cy.fillViolenceTimeStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+		cy.fillPerpetratorGenderStep(perpetratorGender);
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillViolencePerpetratorStep();
@@ -468,7 +468,7 @@ Cypress.Commands.add(
 		cy.fillLegalActionsTakenStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
-		cy.fillPoliceReportDifficultyStep();
+		cy.fillLegalActionDifficultyStep();
 		cy.findByRole("button", { name: "Continuar" }).click();
 
 		cy.fillProtectiveFactorsStep();

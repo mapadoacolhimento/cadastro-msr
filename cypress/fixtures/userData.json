@@ -33,7 +33,7 @@
 		"moreThanSixYears": "Entre 6 e 10 anos",
 		"moreThanTenYears": "Há mais de 10 anos"
 	},
-	"perpetratorGenderId": "Homem",
+	"perpetratorGender": "Homem",
 	"violencePerpetrator": {
 		"nuclearFamily": "Família Nuclear",
 		"closeFamily": "Familiar",
@@ -48,7 +48,7 @@
 		"workSpace": "Ambiente de trabalho",
 		"internetSpace": "Internet/redes sociais"
 	},
-	"policeReportDifficulty": {
+	"legalActionDifficulty": {
 		"no": "Não houve dificuldade ou impedimento",
 		"discourageReporting": "Desencorajou sob o argumento de improcedência da denúncia",
 		"notTheirCompetence": "Informou não ser de sua competência",

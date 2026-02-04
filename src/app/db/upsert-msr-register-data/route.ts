@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { Gender, SupportType, Race } from "@prisma/client";
+import { Gender, SupportType, Race, ViolencePerpetrator } from "@prisma/client";
 import * as Yup from "yup";
 import { getErrorMessage } from "@/utils";
 import {
@@ -12,7 +12,7 @@ import {
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
 	propertyOwnershipOptions,
-	perpetratorGenderIdOptions,
+	perpetratorGenderOptions,
 	violenceTimeOptions,
 	violenceTypeOptions,
 	violencePerpetratorOptions,
@@ -20,7 +20,7 @@ import {
 	violenceLocationOptions,
 	protectiveFactorsOptions,
 	riskFactorsOptions,
-	policeReportDifficultyOptions,
+	legalActionDifficultyOptions,
 	legalActionsTakenOptions,
 } from "@/lib";
 
@@ -69,13 +69,11 @@ const payloadSchema = Yup.object({
 			.required()
 	),
 	violenceTime: Yup.string().oneOf(violenceTimeOptions.map((o) => o.value)),
-	perpetratorGenderId: Yup.string().oneOf(
-		perpetratorGenderIdOptions.map((o) => o.value)
+	perpetratorGender: Yup.string().oneOf(
+		perpetratorGenderOptions.map((o) => o.value)
 	),
 	violencePerpetrator: Yup.array(
-		Yup.string()
-			.oneOf(violencePerpetratorOptions.map((v) => v.value))
-			.required()
+		Yup.string().oneOf(Object.values(ViolencePerpetrator)).required()
 	),
 	livesWithPerpetrator: Yup.string().oneOf(
 		livesWithPerpetratorOptions.map((o) => o.value)
@@ -83,8 +81,8 @@ const payloadSchema = Yup.object({
 	violenceLocation: Yup.array().of(
 		Yup.string().oneOf(violenceLocationOptions.map((o) => o.value))
 	),
-	policeReportDifficulty: Yup.array().of(
-		Yup.string().oneOf(policeReportDifficultyOptions.map((o) => o.value))
+	legalActionDifficulty: Yup.array().of(
+		Yup.string().oneOf(legalActionDifficultyOptions.map((o) => o.value))
 	),
 	legalActionsTaken: Yup.array().of(
 		Yup.string().oneOf(legalActionsTakenOptions.map((o) => o.value))

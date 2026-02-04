@@ -7,11 +7,23 @@ import {
 	MonthlyIncome,
 	MonthlyIncomeRange,
 	EmploymentStatus,
+	ViolenceType,
+	ViolenceTime,
+	PerpetratorGender,
+	ViolenceLocation,
+	LegalActionsTaken,
+	LegalActionDifficulty,
+	ProtectiveFactor,
+	RiskFactor,
+	ViolencePerpetrator,
+	LivesWithPerpetrator,
 } from "@prisma/client";
 import {
 	familyProviderOptions,
+	livesWithPerpetratorOptions,
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
+	perpetratorGenderOptions,
 } from "@/lib/constants";
 
 const payloadSchema = Yup.object({
@@ -40,6 +52,31 @@ const payloadSchema = Yup.object({
 	dependants: Yup.boolean().nullable(),
 	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
 	propertyOwnership: Yup.boolean().nullable(),
+	violenceType: Yup.array().of(Yup.string().oneOf(Object.values(ViolenceType))),
+	violenceTime: Yup.string().oneOf(Object.values(ViolenceTime)),
+	violenceOccurredInBrazil: Yup.string().required(),
+	perpetratorGender: Yup.string().oneOf(
+		perpetratorGenderOptions.map((o) => o.value)
+	),
+	violencePerpetrator: Yup.array().of(
+		Yup.string().oneOf(Object.values(ViolencePerpetrator))
+	),
+	livesWithPerpetrator: Yup.string().oneOf(
+		livesWithPerpetratorOptions.map((o) => o.value)
+	),
+	violenceLocation: Yup.array().of(
+		Yup.string().oneOf(Object.values(ViolenceLocation))
+	),
+	legalActionsTaken: Yup.array().of(
+		Yup.string().oneOf(Object.values(LegalActionsTaken))
+	),
+	legalActionDifficulty: Yup.array().of(
+		Yup.string().oneOf(Object.values(LegalActionDifficulty))
+	),
+	protectiveFactors: Yup.array().of(
+		Yup.string().oneOf(Object.values(ProtectiveFactor))
+	),
+	riskFactors: Yup.array().of(Yup.string().oneOf(Object.values(RiskFactor))),
 }).required();
 
 const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {
@@ -60,6 +97,9 @@ const mapMonthlyIncomeRange = (
 	}
 	return monthlyIncomeRangeMap[value] ?? null;
 };
+
+const yesNoToBoolean = (value?: string | null): boolean | undefined =>
+	value == null || value === "" ? undefined : value === "yes";
 
 export default async function upsertMsrOnDb(
 	payload: Yup.InferType<typeof payloadSchema>
@@ -108,6 +148,57 @@ export default async function upsertMsrOnDb(
 				: null,
 	};
 
+	function mapPayloadToViolenceHistory(
+		payload: Yup.InferType<typeof payloadSchema>
+	) {
+		return {
+			violenceType: payload.violenceType?.length
+				? (payload.violenceType as ViolenceType[])
+				: [],
+
+			violenceTime: payload.violenceTime
+				? (payload.violenceTime as ViolenceTime)
+				: null,
+
+			violenceOccurredInBrazil:
+				yesNoToBoolean(payload.violenceOccurredInBrazil) ?? false,
+
+			perpetratorGender: payload.perpetratorGender
+				? (payload.perpetratorGender as PerpetratorGender)
+				: null,
+
+			violencePerpetrator: payload.violencePerpetrator?.length
+				? (payload.violencePerpetrator as ViolencePerpetrator[])
+				: [],
+
+			livesWithPerpetrator: payload.livesWithPerpetrator
+				? (payload.livesWithPerpetrator as LivesWithPerpetrator)
+				: null,
+
+			violenceLocation: payload.violenceLocation?.length
+				? (payload.violenceLocation as ViolenceLocation[])
+				: [],
+
+			legalActionsTaken: payload.legalActionsTaken?.length
+				? (payload.legalActionsTaken as LegalActionsTaken[])
+				: [],
+
+			legalActionDifficulty: payload.legalActionDifficulty?.length
+				? (payload.legalActionDifficulty as LegalActionDifficulty[])
+				: [],
+
+			protectiveFactors: payload.protectiveFactors?.length
+				? (payload.protectiveFactors as ProtectiveFactor[])
+				: [],
+
+			riskFactors: payload.riskFactors?.length
+				? (payload.riskFactors as RiskFactor[])
+				: [],
+		};
+	}
+
+	const msrViolenceHistoryData = mapPayloadToViolenceHistory(payload);
+
 	const msrResult = await db.mSRs.upsert({
 		where: {
 			msrId: payload.msrZendeskUserId,
@@ -143,6 +234,17 @@ export default async function upsertMsrOnDb(
 			MSRSocioeconomicData: {
 				create: msrSocioeconomicData,
 			},
+		},
+	});
+
+	await db.mSRViolenceHistory.upsert({
+		where: {
+			msrId: payload.msrZendeskUserId,
+		},
+		update: msrViolenceHistoryData,
+		create: {
+			msrId: payload.msrZendeskUserId,
+			...msrViolenceHistoryData,
 		},
 	});
 

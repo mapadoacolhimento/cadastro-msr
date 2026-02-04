@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import PoliceReportDifficulty from "../PoliceReportDifficulty";
+import LegalActionDifficulty from "../LegalActionDifficulty";
 import MultiStepFormWrapper from "../../MultiStepFormWrapper";
-import { policeReportDifficultyOptions } from "@/constants";
+import { legalActionDifficultyOptions } from "@/constants";
 import { sleep } from "@/utils";
 import type { Values } from "@/types";
 
@@ -14,20 +14,20 @@ const setup = () => {
 			}
 			initialValues={
 				{
-					policeReportDifficulty: [],
+					legalActionDifficulty: [],
 				} as unknown as Values
 			}
 		>
-			{PoliceReportDifficulty()}
+			{LegalActionDifficulty()}
 		</MultiStepFormWrapper>
 	);
 };
 
-describe("<PoliceReportDifficulty />", () => {
+describe("<LegalActionDifficulty />", () => {
 	it("should render all difficulty reasons options", () => {
 		setup();
 
-		policeReportDifficultyOptions.forEach((option) => {
+		legalActionDifficultyOptions.forEach((option) => {
 			const roleOptionElement = screen.getByRole("checkbox", {
 				name: new RegExp(option.name, "i"),
 			});

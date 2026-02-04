@@ -26,6 +26,10 @@ export function msrPayload(
 		lng: -38.504,
 		supportType: ["legal", "psychological"],
 		employmentStatus: "employed_clt",
+		perpetratorGender: "man",
+		violenceOccurredInBrazil: "yes",
+		violenceType: ["physical_violence"],
+		violencePerpetrator: ["ex_partner"],
 		...msr,
 	};
 }

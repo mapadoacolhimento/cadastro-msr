@@ -4,7 +4,7 @@ import {
 	violenceOccurredInBrazil,
 	dateOfBirth,
 	supportTypes,
-	perpetratorGenderId,
+	perpetratorGender,
 	livesWithPerpetrator,
 } from "../../fixtures/userData.json";
 
@@ -94,7 +94,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.checkA11y(null, null, terminalLog);
 				});
 
-				it("should pass the accessibility test on Perpetrator Gender Id step", () => {
+				it("should pass the accessibility test on Perpetrator Gender step", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
@@ -110,7 +110,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+					cy.fillPerpetratorGenderStep(perpetratorGender);
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.contains("Quem é ou foi o(a) autor(a) da violência?").should(
@@ -125,7 +125,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+					cy.fillPerpetratorGenderStep(perpetratorGender);
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.fillViolencePerpetratorStep();
@@ -143,7 +143,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+					cy.fillPerpetratorGenderStep(perpetratorGender);
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.fillViolencePerpetratorStep();
@@ -162,7 +162,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+					cy.fillPerpetratorGenderStep(perpetratorGender);
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.fillViolencePerpetratorStep();
@@ -182,11 +182,11 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.checkA11y(null, null, terminalLog);
 				});
 
-				it("should pass the accessibility test on Police Report Difficulty step", () => {
+				it("should pass the accessibility test on Legal Action Difficulty step", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+					cy.fillPerpetratorGenderStep(perpetratorGender);
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.fillViolencePerpetratorStep();
@@ -213,7 +213,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+					cy.fillPerpetratorGenderStep(perpetratorGender);
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.fillViolencePerpetratorStep();
@@ -228,7 +228,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.fillLegalActionsTakenStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPoliceReportDifficultyStep();
+					cy.fillLegalActionDifficultyStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.contains("Selecione as opções que se aplicam ao seu caso").should(
@@ -243,7 +243,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.fillViolenceTimeStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPerpetratorGenderIdStep(perpetratorGenderId);
+					cy.fillPerpetratorGenderStep(perpetratorGender);
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.fillViolencePerpetratorStep();
@@ -258,7 +258,7 @@ describe("Accessibility - App2 New Steps", () => {
 					cy.fillLegalActionsTakenStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
-					cy.fillPoliceReportDifficultyStep();
+					cy.fillLegalActionDifficultyStep();
 					cy.findByRole("button", { name: "Continuar" }).click();
 
 					cy.fillProtectiveFactorsStep();

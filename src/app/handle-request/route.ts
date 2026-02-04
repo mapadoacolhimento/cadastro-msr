@@ -2,6 +2,7 @@ import {
 	Gender,
 	SupportType,
 	Race,
+	ViolencePerpetrator,
 	type MSRPiiSec,
 	type SupportRequests,
 	EmploymentStatus,
@@ -40,6 +41,10 @@ const payloadSchema = Yup.object({
 	employmentStatus: Yup.string()
 		.oneOf(Object.values(EmploymentStatus))
 		.required(),
+	violenceOccurredInBrazil: Yup.string().required(),
+	violencePerpetrator: Yup.array().of(
+		Yup.string().oneOf(Object.values(ViolencePerpetrator))
+	),
 	supportType: Yup.array(
 		Yup.string().oneOf(Object.values(SupportType)).required()
 	).required(),

@@ -80,7 +80,7 @@ const setup = (skipSteps?: number) => {
 			</Step>
 			<Step
 				onSubmit={() => {
-					if (skipSteps) return { skipSteps: 2 };
+					if (skipSteps) return { skipSteps: 1 };
 					sleep(300).then(() => console.log("Step3 onSubmit"));
 				}}
 				validationSchema={Yup.object({
@@ -368,7 +368,7 @@ describe("<MultiStepFormWrapper />", () => {
 	});
 
 	test("should not skip steps when skipSteps is not  provided", async () => {
-		setup(0);
+		setup();
 
 		const emailInput = screen.getByRole("textbox", {
 			name: /E-mail/i,
@@ -394,11 +394,11 @@ describe("<MultiStepFormWrapper />", () => {
 			})
 		).toBeInTheDocument();
 
-		const no = await screen.findByRole("radio", {
-			name: /Nao tenho renda/i,
+		const clt = await screen.findByRole("radio", {
+			name: /Sou CLT/i,
 		});
 
-		await userEvent.click(no);
+		await userEvent.click(clt);
 		const btn2 = screen.getByRole("button", { name: /continuar/i });
 		await userEvent.click(btn2);
 

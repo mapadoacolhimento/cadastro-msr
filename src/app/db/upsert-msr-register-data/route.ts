@@ -1,5 +1,17 @@
 import { NextRequest } from "next/server";
-import { Gender, SupportType, Race, ViolencePerpetrator } from "@prisma/client";
+import {
+	Gender,
+	SupportType,
+	Race,
+	ViolencePerpetrator,
+	ProtectiveFactor,
+	RiskFactor,
+	ViolenceType,
+	ViolenceTime,
+	ViolenceLocation,
+	LegalActionsTaken,
+	LegalActionDifficulty,
+} from "@prisma/client";
 import * as Yup from "yup";
 import { getErrorMessage } from "@/utils";
 import {
@@ -12,16 +24,6 @@ import {
 	monthlyIncomeOptions,
 	monthlyIncomeRangeOptions,
 	propertyOwnershipOptions,
-	perpetratorGenderOptions,
-	violenceTimeOptions,
-	violenceTypeOptions,
-	violencePerpetratorOptions,
-	livesWithPerpetratorOptions,
-	violenceLocationOptions,
-	protectiveFactorsOptions,
-	riskFactorsOptions,
-	legalActionDifficultyOptions,
-	legalActionsTakenOptions,
 } from "@/lib";
 
 const payloadSchema = Yup.object({
@@ -64,35 +66,27 @@ const payloadSchema = Yup.object({
 		propertyOwnershipOptions.map((o) => o.value)
 	),
 	violenceType: Yup.array(
-		Yup.string()
-			.oneOf(violenceTypeOptions.map((v) => v.value))
-			.required()
+		Yup.string().oneOf(Object.values(ViolenceType)).required()
 	),
-	violenceTime: Yup.string().oneOf(violenceTimeOptions.map((o) => o.value)),
-	perpetratorGender: Yup.string().oneOf(
-		perpetratorGenderOptions.map((o) => o.value)
-	),
+	violenceTime: Yup.string().oneOf(Object.values(ViolenceTime)),
 	violencePerpetrator: Yup.array(
 		Yup.string().oneOf(Object.values(ViolencePerpetrator)).required()
-	),
-	livesWithPerpetrator: Yup.string().oneOf(
-		livesWithPerpetratorOptions.map((o) => o.value)
-	),
-	violenceLocation: Yup.array().of(
-		Yup.string().oneOf(violenceLocationOptions.map((o) => o.value))
-	),
-	legalActionDifficulty: Yup.array().of(
-		Yup.string().oneOf(legalActionDifficultyOptions.map((o) => o.value))
-	),
-	legalActionsTaken: Yup.array().of(
-		Yup.string().oneOf(legalActionsTakenOptions.map((o) => o.value))
-	),
-	protectiveFactors: Yup.array().of(
-		Yup.string().oneOf(protectiveFactorsOptions.map((o) => o.value))
-	),
-	riskFactors: Yup.array().of(
-		Yup.string().oneOf(riskFactorsOptions.map((o) => o.value))
-	),
+	).nullable(),
+	violenceLocation: Yup.array()
+		.of(Yup.string().oneOf(Object.values(ViolenceLocation)))
+		.nullable(),
+	legalActionDifficulty: Yup.array()
+		.of(Yup.string().oneOf(Object.values(LegalActionDifficulty)))
+		.nullable(),
+	legalActionsTaken: Yup.array()
+		.of(Yup.string().oneOf(Object.values(LegalActionsTaken)))
+		.nullable(),
+	protectiveFactors: Yup.array()
+		.of(Yup.string().oneOf(Object.values(ProtectiveFactor)))
+		.nullable(),
+	riskFactors: Yup.array()
+		.of(Yup.string().oneOf(Object.values(RiskFactor)))
+		.nullable(),
 }).required();
 
 export async function POST(request: NextRequest) {

@@ -56,10 +56,10 @@ export interface Values {
 	familyProvider: string;
 	propertyOwnership: string;
 	violenceType: string[];
-	violenceTime: string;
-	perpetratorGender: string;
+	violenceTime: string | null;
+	perpetratorGender: string | null;
 	violencePerpetrator: string[];
-	livesWithPerpetrator: string;
+	livesWithPerpetrator: string | null;
 	violenceLocation: string[];
 	legalActionsTaken: string[];
 	legalActionDifficulty: string[];

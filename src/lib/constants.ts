@@ -409,7 +409,7 @@ export const violencePerpetratorOptions = [
 		description: "Namorado(a), marido/esposa",
 	},
 	{
-		value: ViolencePerpetrator.ex_partner,
+		value: ViolencePerpetrator.former_partner,
 		name: "Ex-parceiro(a)",
 		description: "Ex-namorado(a), ex-marido/esposa",
 	},

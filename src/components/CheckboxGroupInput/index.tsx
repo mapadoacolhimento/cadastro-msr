@@ -65,16 +65,18 @@ export default function CheckboxGroupInput({
 				const hiddenCheckboxButtonContent = document.getElementById(
 					`checkbox-group-button-content-${checkboxButtonValue}`
 				);
-				checkboxButton.appendChild(
-					hiddenCheckboxButtonContent?.cloneNode(true) as Node
-				);
+				if (hiddenCheckboxButtonContent) {
+					checkboxButton.appendChild(
+						hiddenCheckboxButtonContent.cloneNode(true)
+					);
+				}
 			}
 		});
 	}, []);
 
 	return (
 		<CheckboxGroup.Root
-			defaultValue={field.value || []}
+			defaultValue={field.value ?? []}
 			aria-labelledby={"question"}
 			id={`checkbox-group-${name}`}
 			color={"purple"}

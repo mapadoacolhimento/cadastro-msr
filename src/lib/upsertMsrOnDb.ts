@@ -53,30 +53,32 @@ const payloadSchema = Yup.object({
 	familyProvider: Yup.string().oneOf(familyProviderOptions.map((o) => o.value)),
 	propertyOwnership: Yup.boolean().nullable(),
 	violenceType: Yup.array().of(Yup.string().oneOf(Object.values(ViolenceType))),
-	violenceTime: Yup.string().oneOf(Object.values(ViolenceTime)),
+	violenceTime: Yup.string().oneOf(Object.values(ViolenceTime)).nullable(),
 	violenceOccurredInBrazil: Yup.string().required(),
-	perpetratorGender: Yup.string().oneOf(
-		perpetratorGenderOptions.map((o) => o.value)
-	),
-	violencePerpetrator: Yup.array().of(
-		Yup.string().oneOf(Object.values(ViolencePerpetrator))
-	),
-	livesWithPerpetrator: Yup.string().oneOf(
-		livesWithPerpetratorOptions.map((o) => o.value)
-	),
-	violenceLocation: Yup.array().of(
-		Yup.string().oneOf(Object.values(ViolenceLocation))
-	),
-	legalActionsTaken: Yup.array().of(
-		Yup.string().oneOf(Object.values(LegalActionsTaken))
-	),
-	legalActionDifficulty: Yup.array().of(
-		Yup.string().oneOf(Object.values(LegalActionDifficulty))
-	),
-	protectiveFactors: Yup.array().of(
-		Yup.string().oneOf(Object.values(ProtectiveFactor))
-	),
-	riskFactors: Yup.array().of(Yup.string().oneOf(Object.values(RiskFactor))),
+	perpetratorGender: Yup.string()
+		.oneOf(perpetratorGenderOptions.map((o) => o.value))
+		.nullable(),
+	violencePerpetrator: Yup.array()
+		.of(Yup.string().oneOf(Object.values(ViolencePerpetrator)))
+		.nullable(),
+	livesWithPerpetrator: Yup.string()
+		.oneOf(livesWithPerpetratorOptions.map((o) => o.value))
+		.nullable(),
+	violenceLocation: Yup.array()
+		.of(Yup.string().oneOf(Object.values(ViolenceLocation)))
+		.nullable(),
+	legalActionsTaken: Yup.array()
+		.of(Yup.string().oneOf(Object.values(LegalActionsTaken)))
+		.nullable(),
+	legalActionDifficulty: Yup.array()
+		.of(Yup.string().oneOf(Object.values(LegalActionDifficulty)))
+		.nullable(),
+	protectiveFactors: Yup.array()
+		.of(Yup.string().oneOf(Object.values(ProtectiveFactor)))
+		.nullable(),
+	riskFactors: Yup.array()
+		.of(Yup.string().oneOf(Object.values(RiskFactor)))
+		.nullable(),
 }).required();
 
 const monthlyIncomeRangeMap: Record<number, MonthlyIncomeRange> = {

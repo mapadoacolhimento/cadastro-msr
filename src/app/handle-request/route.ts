@@ -189,9 +189,19 @@ export async function POST(request: Request) {
 					payload.firstName
 				);
 
+				if (!updatedSupportRequest) {
+					logger.warn(
+						`[handleRequest] - handleDuplicatedSupportRequest returned null for supportRequestId '${supportRequestId}' and supportType '${supportType}'`
+					);
+				}
 				response[supportType] = updatedSupportRequest;
 			}
-		}
+		} 
+				if (Object.keys(response).length === 0) {
+					logger.error(
+						`[handleRequest] - Response is empty after processing all supportTypes for email '${payload.email}'`
+					);
+				}
 
 		return Response.json(response);
 	} catch (e) {

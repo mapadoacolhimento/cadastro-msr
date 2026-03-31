@@ -1,0 +1,63 @@
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
+
+envs:
+  - key: MONGODB_URL
+    scope: RUN_AND_BUILD_TIME
+    value: "${MONGODB_URL}"
+  - key: DATABASE_URL
+    scope: RUN_AND_BUILD_TIME
+    value: "${DATABASE_URL}"
+  - key: ZENDESK_API_TOKEN
+    scope: RUN_AND_BUILD_TIME
+    value: "${ZENDESK_API_TOKEN}"
+  - key: ZENDESK_API_USER
+    scope: RUN_AND_BUILD_TIME
+    value: "${ZENDESK_API_USER}"
+  - key: ZENDESK_SUBDOMAIN
+    scope: RUN_AND_BUILD_TIME
+    value: "${ZENDESK_SUBDOMAIN}"
+  - key: MATCH_LAMBDA_URL
+    scope: RUN_AND_BUILD_TIME
+    value: "${MATCH_LAMBDA_URL}"
+  - key: JWT_SECRET
+    scope: RUN_AND_BUILD_TIME
+    value: "${JWT_SECRET}"
+  - key: VOLUNTEER_API_URL
+    scope: RUN_AND_BUILD_TIME
+    value: "${VOLUNTEER_API_URL}"
+  - key: NEW_RELIC_LICENSE_KEY
+    scope: RUN_AND_BUILD_TIME
+    value: "${NEW_RELIC_LICENSE_KEY}"
+  - key: NEW_RELIC_ENVIRONMENT
+    scope: RUN_AND_BUILD_TIME
+    value: "${NEW_RELIC_ENVIRONMENT}"
+  - key: NODE_ENV
+    scope: RUN_AND_BUILD_TIME
+    value: "${NODE_ENV}"
+  - key: NEXT_PUBLIC_ENABLE_NEW_STEPS
+    scope: RUN_AND_BUILD_TIME
+    value: "${NEXT_PUBLIC_ENABLE_NEW_STEPS}"
+
+ingress:
+  rules:
+  - component:
+      name: cadastro-msr
+    match:
+      path:
+        prefix: /
+
+name: cadastro-msr-staging
+region: nyc
+
+services:
+- dockerfile_path: Dockerfile
+  github:
+    branch: staging
+    deploy_on_push: true
+    repo: mapadoacolhimento/cadastro-msr
+  http_port: 3000
+  instance_count: 1
+  instance_size_slug: apps-s-1vcpu-0.5gb
+  name: cadastro-msr

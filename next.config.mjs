@@ -6,6 +6,7 @@ import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 
 const nextConfig = {
 	reactStrictMode: true,
+	output: "standalone",
 	experimental: {
 		serverComponentsExternalPackages: ["newrelic"],
 	},

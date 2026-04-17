@@ -17,6 +17,7 @@ export default async function createMatch(
 		});
 
 		if (!token.ok) {
+			logger.error(`[createMatch] - Failed to fetch auth token. Status: ${token.status} - ${token.statusText}`);
 			throw new Error(token.statusText);
 		}
 
@@ -31,6 +32,7 @@ export default async function createMatch(
 		const composePayload = [rest];
 
 		const createMatchLambdaUrl = `${MATCH_LAMBDA_URL}/${supportRequestId ? "handle-match" : "compose"}`;
+
 		const resCreateMatch = await fetch(createMatchLambdaUrl, {
 			body: JSON.stringify(
 				supportRequestId ? handleMatchPayload : composePayload
@@ -42,6 +44,7 @@ export default async function createMatch(
 		});
 
 		if (!resCreateMatch.ok) {
+			logger.error(`[createMatch] - Lambda responded with error. Status: ${resCreateMatch.status} - ${resCreateMatch.statusText}`);
 			throw new Error(resCreateMatch.statusText);
 		}
 
@@ -52,7 +55,8 @@ export default async function createMatch(
 		logger.error(
 			`[createMatch] - Something went wrong when creating a match for this support request '${
 				supportRequest.supportRequestId
-			}' for this user '${supportRequest.msrId}': ${getErrorMessage(e)}`
+			}' for this user '${supportRequest.msrId}': ${getErrorMessage(e)}`,
+			{ cause: e instanceof Error ? e.cause : undefined, stack: e instanceof Error ? e.stack : undefined, targetUrl: MATCH_LAMBDA_URL }
 		);
 		return null;
 	}

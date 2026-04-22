@@ -14,16 +14,17 @@ const mockPayloadCreate = {
 	statusAcolhimento: "solicitação_recebida",
 	supportType: "legal",
 	comment: {
-		body: "Gerado pelo cadastro",
+		html_body: "<p>Gerado pelo cadastro</p>",
 		public: false,
 	},
 };
+
 const mockPayloadUpdate = {
 	ticketId: 5678,
 	status: "open",
 	supportType: "legal",
 	comment: {
-		body: "MSR tentou fazer pedido de acolhimento novamente",
+		html_body: "<p>MSR tentou fazer pedido de acolhimento novamente</p>",
 		public: false,
 	},
 };
@@ -60,7 +61,9 @@ describe("POST /zendesk/ticket", () => {
 				body: JSON.stringify({}),
 			})
 		);
+
 		const response = await POST(request);
+
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
 			"Validation error: msrName is a required field"
@@ -76,7 +79,9 @@ describe("POST /zendesk/ticket", () => {
 				}),
 			})
 		);
+
 		const response = await POST(request);
+
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
 			"Validation error: Must have at least one field to update"
@@ -85,13 +90,16 @@ describe("POST /zendesk/ticket", () => {
 
 	it("should create new zendesk ticket with payload", async () => {
 		fetch.mockResolvedValueOnce(Response.json({ ticket: { id: 1234 } }));
+
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",
 				body: JSON.stringify(mockPayloadCreate),
 			})
 		);
+
 		const response = await POST(request);
+
 		expect(response.status).toEqual(200);
 		expect(fetch).toHaveBeenCalledWith(endpoint, {
 			body: JSON.stringify({ ticket: mockCreateTicket }),
@@ -106,13 +114,16 @@ describe("POST /zendesk/ticket", () => {
 
 	it("should update zendesk ticket with payload", async () => {
 		fetch.mockResolvedValueOnce(Response.json({ ticket: { id: 5678 } }));
+
 		const request = new NextRequest(
 			new Request("http://localhost:3000/zendesk/ticket", {
 				method: "POST",
 				body: JSON.stringify(mockPayloadUpdate),
 			})
 		);
+
 		const response = await POST(request);
+
 		expect(response.status).toEqual(200);
 		expect(fetch).toHaveBeenCalledWith(`${endpoint}5678`, {
 			body: JSON.stringify({ ticket: mockUpdateTicket }),
@@ -134,7 +145,9 @@ describe("POST /zendesk/ticket", () => {
 				body: JSON.stringify(mockPayloadCreate),
 			})
 		);
+
 		const response = await POST(request);
+
 		expect(response.status).toEqual(500);
 		expect(await response.text()).toEqual(
 			"Unable to upsert ticket '' from user '12345678' on Zendesk"

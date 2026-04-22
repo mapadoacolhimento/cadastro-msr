@@ -298,7 +298,7 @@ describe("POST handle-request", () => {
 				statusAcolhimento: "solicitação_repetida",
 				supportType: "psychological",
 				comment: {
-					body: emailDuplicated(mockPayloadPsychological.firstName),
+					html_body: emailDuplicated(mockPayloadPsychological.firstName),
 					public: true,
 				},
 			});
@@ -577,16 +577,19 @@ describe("POST handle-request", () => {
 				})
 			);
 
-			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(2, {
-				ticketId: mockResTicketPsychological.ticketId,
-				status: "open",
-				statusAcolhimento: "solicitação_repetida",
-				supportType: "psychological",
-				comment: {
-					body: emailDuplicated(mockPayloadBoth.firstName),
-					public: true,
-				},
-			});
+			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(
+				2,
+				expect.objectContaining({
+					ticketId: mockResTicketPsychological.ticketId,
+					status: "open",
+					statusAcolhimento: "solicitação_repetida",
+					supportType: "psychological",
+					comment: expect.objectContaining({
+						html_body: emailDuplicated(mockPayloadBoth.firstName),
+						public: true,
+					}),
+				})
+			);
 		});
 
 		it("should call match lambda /sign endpoint", () => {

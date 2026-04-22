@@ -102,7 +102,7 @@ export const buildZendeskInternalComment = (
     ${row("Possui deficiência", formatBoolean(msr.hasDisability))}
     ${row("Aceita atendimento online", formatBoolean(msr.acceptsOnlineSupport))}
 </ul>
-
+<br>
 <p><strong>Dados socioeconômicos</strong></p>
 <ul>
     ${row("Situação de trabalho", getOptionLabel(employmentStatusOptions, msr.employmentStatus))}
@@ -112,7 +112,7 @@ export const buildZendeskInternalComment = (
     ${row("Responsável financeira da casa", getOptionLabel(familyProviderOptions, msr.familyProvider))}
     ${row("Possui imóvel", formatBoolean(msr.propertyOwnership))}
 </ul>
-
+<br>
 <p><strong>Histórico de violência</strong></p>
 <ul>
     ${row("Tipos de violência", getOptionLabels(violenceTypeOptions, msr.violenceType))}

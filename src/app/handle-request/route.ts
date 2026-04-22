@@ -22,7 +22,7 @@ import {
 import type { HandleRequestResponse } from "@/types";
 import { getErrorMessage } from "@/utils";
 import { ZENDESK_NEW_TICKET_STATUS } from "@/constants";
-import { buildZendeskInternalComment } from "./support";
+import { buildZendeskInternalComment } from "./handle-request-support";
 
 export const maxDuration = 30;
 

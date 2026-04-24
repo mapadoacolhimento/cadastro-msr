@@ -36,18 +36,6 @@ const mockResMsr = {
 	msrId: 12346789 as unknown as bigint,
 };
 
-const mockSupportRequestsLegal = {
-	supportRequestId: 1234,
-};
-
-const mockSupportRequestsPsychological = {
-	supportRequestId: 7890,
-};
-
-const mockSupportRequestStatusHistory = {
-	supportRequestStatusHistoryId: 2,
-};
-
 const bodyCheckEligibilityLegal = {
 	email: mockPayloadLegal.email,
 	supportType: "legal",
@@ -85,19 +73,11 @@ const mockResCheckEligibilityPsychological = {
 };
 
 const mockMatchLegal = {
-	matchId: 3456,
-	supportRequestId: mockSupportRequestsLegal.supportRequestId,
-	msrZendeskTicketId: mockResTicketLegal.ticketId,
-	supportType: "legal",
-	status: "waiting_contact",
+	supportRequestId: 1234,
 };
 
 const mockMatchPsychological = {
-	matchId: 3457,
-	supportType: "psychological",
-	supportRequestId: mockSupportRequestsPsychological.supportRequestId,
-	msrZendeskTicketId: mockResTicketLegal.ticketId,
-	status: "waiting_contact",
+	supportRequestId: 7890,
 };
 
 const bodyComposeLegal = {
@@ -125,7 +105,9 @@ describe("POST handle-request", () => {
 				body: JSON.stringify({}),
 			})
 		);
+
 		const response = await POST(request);
+
 		expect(response.status).toEqual(400);
 		expect(await response.text()).toEqual(
 			"Validation error: supportType is a required field"
@@ -155,13 +137,14 @@ describe("POST handle-request", () => {
 			vi.resetAllMocks();
 		});
 
-		it("should respond with legal match info", async () => {
+		it("should return legal match info", async () => {
 			const request = new NextRequest(
 				new Request("http://localhost:3000/handle-request", {
 					method: "POST",
 					body: JSON.stringify(mockPayloadLegal),
 				})
 			);
+
 			const response = await POST(request);
 
 			expect(response.status).toStrictEqual(200);
@@ -170,7 +153,7 @@ describe("POST handle-request", () => {
 			});
 		});
 
-		it("should call checkMatchEligibility with correct params ", () => {
+		it("should call checkMatchEligibility with correct params", () => {
 			expect(mockcheckMatchEligibility).toHaveBeenCalledWith({
 				email: mockPayloadLegal.email,
 				supportType: mockPayloadLegal.supportType[0],
@@ -187,20 +170,48 @@ describe("POST handle-request", () => {
 			expect(mockUpsertMsrOnDb).toHaveBeenCalledWith(mockPayloadLegal);
 		});
 
-		it("should call validateAndUpserZendeskTicket with correct params", () => {
-			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
-				ticketId: null,
-				msrZendeskUserId: mockPayloadLegal.msrZendeskUserId,
-				status: "pending",
-				subject: "[Jurídico] Msr, SALVADOR - BA",
-				statusAcolhimento: "solicitação_recebida",
-				msrName: mockPayloadLegal.firstName,
-				supportType: "legal",
-				comment: {
-					body: `${mockPayloadLegal.firstName} solicitou acolhimento jurídico pelo cadastro.`,
-					public: false,
-				},
-			});
+		it("should call validateAndUpsertZendeskTicket with correct params", () => {
+			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith(
+				expect.objectContaining({
+					ticketId: null,
+					msrZendeskUserId: mockPayloadLegal.msrZendeskUserId,
+					status: "pending",
+					subject: "[Jurídico] Msr, SALVADOR - BA",
+					statusAcolhimento: "solicitação_recebida",
+					msrName: mockPayloadLegal.firstName,
+					supportType: "legal",
+					comment: expect.objectContaining({
+						html_body: expect.stringContaining(
+							"Nova solicitação de acolhimento jurídico"
+						),
+						public: false,
+					}),
+				})
+			);
+
+			const firstCall = mockValidateAndUpsertZendeskTicket.mock.calls[0][0];
+			const htmlBody = firstCall.comment.html_body;
+
+			expect(firstCall.comment).not.toHaveProperty("body");
+			expect(firstCall.comment).toHaveProperty("html_body");
+
+			expect(htmlBody).toContain("<strong>Dados gerais</strong>");
+			expect(htmlBody).toContain("<strong>Dados socioeconômicos</strong>");
+			expect(htmlBody).toContain("<strong>Histórico de violência</strong>");
+
+			expect(htmlBody).toContain("<strong>Raça/cor:</strong> Preta");
+			expect(htmlBody).toContain(
+				"<strong>Situação de trabalho:</strong> Trabalhadora com carteira de trabalho assinada"
+			);
+			expect(htmlBody).toContain(
+				"<strong>Tipos de violência:</strong> Violência física"
+			);
+			expect(htmlBody).toContain(
+				"<strong>Gênero da pessoa agressora:</strong> Homem"
+			);
+			expect(htmlBody).toContain(
+				"<strong>Pessoa agressora:</strong> Ex-parceiro(a)"
+			);
 		});
 
 		it("should call match lambda /sign endpoint", () => {
@@ -211,6 +222,7 @@ describe("POST handle-request", () => {
 
 		it("should call match lambda with correct params", () => {
 			const { supportRequestId, ...rest } = bodyComposeLegal;
+
 			expect(fetch).toHaveBeenNthCalledWith(2, `${MATCH_LAMBDA_URL}/compose`, {
 				body: JSON.stringify([rest]),
 				method: "POST",
@@ -254,14 +266,16 @@ describe("POST handle-request", () => {
 					body: JSON.stringify(mockPayloadPsychological),
 				})
 			);
+
 			const response = await POST(request);
+
 			expect(response.status).toEqual(200);
 			expect(await response.json()).toEqual({
 				psychological: { status: "duplicated" },
 			});
 		});
 
-		it("should call checkMatchEligibility with correct params ", () => {
+		it("should call checkMatchEligibility with correct params", () => {
 			expect(mockcheckMatchEligibility).toHaveBeenCalledWith(
 				bodyCheckEligibilityPsychological
 			);
@@ -277,14 +291,14 @@ describe("POST handle-request", () => {
 			expect(mockUpsertMsrOnDb).toHaveBeenCalledWith(mockPayloadPsychological);
 		});
 
-		it("should call validateAndUpserZendeskTicket with correct params", () => {
+		it("should call validateAndUpsertZendeskTicket with correct params", () => {
 			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
 				ticketId: mockResTicketPsychological.ticketId,
 				status: "open",
 				statusAcolhimento: "solicitação_repetida",
 				supportType: "psychological",
 				comment: {
-					body: emailDuplicated(mockPayloadPsychological.firstName),
+					html_body: emailDuplicated(mockPayloadPsychological.firstName),
 					public: true,
 				},
 			});
@@ -343,7 +357,6 @@ describe("POST handle-request", () => {
 			);
 
 			fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
-
 			fetch.mockResolvedValueOnce(
 				createFetchResponse({ message: [mockMatchPsychological] })
 			);
@@ -361,6 +374,7 @@ describe("POST handle-request", () => {
 					body: JSON.stringify(mockPayloadBoth),
 				})
 			);
+
 			const response = await POST(request);
 
 			expect(response.status).toEqual(200);
@@ -372,7 +386,7 @@ describe("POST handle-request", () => {
 			});
 		});
 
-		it("should call checkMatchEligibility with correct params ", () => {
+		it("should call checkMatchEligibility with correct params", () => {
 			expect(mockcheckMatchEligibility).toHaveBeenNthCalledWith(
 				1,
 				bodyCheckEligibilityLegal
@@ -394,34 +408,44 @@ describe("POST handle-request", () => {
 			expect(mockUpsertMsrOnDb).toHaveBeenCalledWith(mockPayloadBoth);
 		});
 
-		it("should call validateAndUpserZendeskTicket with correct params", () => {
-			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(1, {
-				ticketId: null,
-				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "pending",
-				subject: "[Jurídico] Msr, SALVADOR - BA",
-				statusAcolhimento: "solicitação_recebida",
-				msrName: mockPayloadBoth.firstName,
-				supportType: "legal",
-				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento jurídico pelo cadastro.`,
-					public: false,
-				},
-			});
+		it("should call validateAndUpsertZendeskTicket with correct params", () => {
+			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(
+				1,
+				expect.objectContaining({
+					ticketId: null,
+					msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
+					status: "pending",
+					subject: "[Jurídico] Msr, SALVADOR - BA",
+					statusAcolhimento: "solicitação_recebida",
+					msrName: mockPayloadBoth.firstName,
+					supportType: "legal",
+					comment: expect.objectContaining({
+						html_body: expect.stringContaining(
+							"Nova solicitação de acolhimento jurídico"
+						),
+						public: false,
+					}),
+				})
+			);
 
-			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(2, {
-				ticketId: null,
-				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "pending",
-				subject: "[Psicológico] Msr, SALVADOR - BA",
-				statusAcolhimento: "solicitação_recebida",
-				msrName: mockPayloadBoth.firstName,
-				supportType: "psychological",
-				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento psicológico pelo cadastro.`,
-					public: false,
-				},
-			});
+			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(
+				2,
+				expect.objectContaining({
+					ticketId: null,
+					msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
+					status: "pending",
+					subject: "[Psicológico] Msr, SALVADOR - BA",
+					statusAcolhimento: "solicitação_recebida",
+					msrName: mockPayloadBoth.firstName,
+					supportType: "psychological",
+					comment: expect.objectContaining({
+						html_body: expect.stringContaining(
+							"Nova solicitação de acolhimento psicológico"
+						),
+						public: false,
+					}),
+				})
+			);
 		});
 
 		it("should call match lambda /sign endpoint", () => {
@@ -435,6 +459,7 @@ describe("POST handle-request", () => {
 
 		it("should call match lambda with correct params", () => {
 			const { supportRequestId: legalId, ...legalRest } = bodyComposeLegal;
+
 			expect(fetch).toHaveBeenNthCalledWith(2, `${MATCH_LAMBDA_URL}/compose`, {
 				body: JSON.stringify([legalRest]),
 				method: "POST",
@@ -449,6 +474,7 @@ describe("POST handle-request", () => {
 				zendeskTicketId: mockResTicketPsychological.ticketId,
 			};
 			const { supportRequestId: psyId, ...psyRest } = bodyComposePsychological;
+
 			expect(fetch).toHaveBeenNthCalledWith(4, `${MATCH_LAMBDA_URL}/compose`, {
 				body: JSON.stringify([psyRest]),
 				method: "POST",
@@ -500,7 +526,9 @@ describe("POST handle-request", () => {
 					body: JSON.stringify(mockPayloadBoth),
 				})
 			);
+
 			const response = await POST(request);
+
 			expect(response.status).toEqual(200);
 			expect(await response.json()).toEqual({
 				psychological: { status: "duplicated" },
@@ -508,7 +536,7 @@ describe("POST handle-request", () => {
 			});
 		});
 
-		it("should call checkMatchEligibility with correct params ", () => {
+		it("should call checkMatchEligibility with correct params", () => {
 			expect(mockcheckMatchEligibility).toHaveBeenNthCalledWith(
 				1,
 				bodyCheckEligibilityLegal
@@ -529,30 +557,39 @@ describe("POST handle-request", () => {
 			expect(mockUpsertMsrOnDb).toHaveBeenCalledWith(mockPayloadBoth);
 		});
 
-		it("should call validateAndUpserZendeskTicket with correct params", () => {
-			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(1, {
-				ticketId: mockResCheckEligibilityLegal.zendeskTicketId,
-				msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
-				status: "pending",
-				subject: "[Jurídico] Msr, SALVADOR - BA",
-				statusAcolhimento: "solicitação_recebida",
-				msrName: mockPayloadBoth.firstName,
-				supportType: "legal",
-				comment: {
-					body: `${mockPayloadBoth.firstName} solicitou acolhimento jurídico pelo cadastro.`,
-					public: false,
-				},
-			});
-			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(2, {
-				ticketId: mockResTicketPsychological.ticketId,
-				status: "open",
-				statusAcolhimento: "solicitação_repetida",
-				supportType: "psychological",
-				comment: {
-					body: emailDuplicated(mockPayloadBoth.firstName),
-					public: true,
-				},
-			});
+		it("should call validateAndUpsertZendeskTicket with correct params", () => {
+			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(
+				1,
+				expect.objectContaining({
+					ticketId: mockResCheckEligibilityLegal.zendeskTicketId,
+					msrZendeskUserId: mockPayloadBoth.msrZendeskUserId,
+					status: "pending",
+					subject: "[Jurídico] Msr, SALVADOR - BA",
+					statusAcolhimento: "solicitação_recebida",
+					msrName: mockPayloadBoth.firstName,
+					supportType: "legal",
+					comment: expect.objectContaining({
+						html_body: expect.stringContaining(
+							"Nova solicitação de acolhimento jurídico"
+						),
+						public: false,
+					}),
+				})
+			);
+
+			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenNthCalledWith(
+				2,
+				expect.objectContaining({
+					ticketId: mockResTicketPsychological.ticketId,
+					status: "open",
+					statusAcolhimento: "solicitação_repetida",
+					supportType: "psychological",
+					comment: expect.objectContaining({
+						html_body: emailDuplicated(mockPayloadBoth.firstName),
+						public: true,
+					}),
+				})
+			);
 		});
 
 		it("should call match lambda /sign endpoint", () => {
@@ -571,6 +608,7 @@ describe("POST handle-request", () => {
 				shouldRandomize: true,
 				matchType: "msr",
 			};
+
 			expect(fetch).toHaveBeenNthCalledWith(
 				2,
 				`${MATCH_LAMBDA_URL}/handle-match`,

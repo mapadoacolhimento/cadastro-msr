@@ -18,7 +18,7 @@ const ticketSchemaCreate = Yup.object({
 	statusAcolhimento: Yup.string().required(),
 	supportType: Yup.string().oneOf(Object.values(SupportType)).required(),
 	comment: Yup.object({
-		body: Yup.string().required(),
+		html_body: Yup.string().required(),
 		public: Yup.boolean().required(),
 	}).required(),
 	msrName: Yup.string().required(),
@@ -31,7 +31,7 @@ const ticketSchemaUpdate = Yup.object({
 	statusAcolhimento: Yup.string(),
 	supportType: Yup.string().oneOf(Object.values(SupportType)),
 	comment: Yup.object({
-		body: Yup.string().required(),
+		html_body: Yup.string().required(),
 		public: Yup.boolean().required(),
 	}).default(null),
 	msrZendeskUserId: Yup.number(),

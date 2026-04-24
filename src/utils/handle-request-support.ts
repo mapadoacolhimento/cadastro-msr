@@ -1,4 +1,4 @@
-import { type CreateMatch } from "./route";
+import { type CreateMatch } from "../app/handle-request/route";
 import {
 	colorOptions,
 	employmentStatusOptions,

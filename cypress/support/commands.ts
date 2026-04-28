@@ -157,7 +157,7 @@ Cypress.Commands.add("goThroughBeginRegistrationStep", () => {
 		"exist"
 	);
 	cy.findByText(
-		"Com base nas suas respostas identificamos que você pode ser atendida pelo projeto. Agora precisamos de mais algumas informações para concluir o seu cadastro e te direcionar para o atendimento adequado. Vamos lá?"
+		"Com base nas suas respostas identificamos que você pode ser atendida pelo Mapa do Acolhimento. Agora precisamos de mais algumas informações para concluir o seu cadastro e te direcionar para o atendimento adequado. Vamos lá?"
 	).should("exist");
 	cy.findByRole("button", { name: "Iniciar cadastro" }).should("exist");
 });
@@ -245,7 +245,7 @@ Cypress.Commands.add("fillNoViolenceTypeStep", () => {
 
 Cypress.Commands.add("fillViolenceTypeStep", () => {
 	cy.contains(
-		"Qual(is) tipos de violência você sofreu ou está sofrendo pelo fato de ser mulher?"
+		"Qual(is) tipo(s) de violência você sofreu ou está sofrendo pelo fato de ser mulher?"
 	).should("be.visible");
 	cy.findByRole("checkbox", { name: /Violência psicológica/i }).click({
 		force: true,

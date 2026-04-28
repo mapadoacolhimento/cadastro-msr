@@ -233,7 +233,7 @@ Cypress.Commands.add("fillFinancialBlock", () => {
 
 Cypress.Commands.add("fillNoViolenceTypeStep", () => {
 	cy.contains(
-		"Qual(is) tipos de violência você sofreu ou está sofrendo pelo fato de ser mulher?"
+		"Qual(is) tipo(s) de violência você sofreu ou está sofrendo pelo fato de ser mulher?"
 	).should("be.visible");
 
 	cy.findByRole("checkbox", {

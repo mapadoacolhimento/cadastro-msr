@@ -6,6 +6,8 @@ import {
 	type MSRPiiSec,
 	type SupportRequests,
 	EmploymentStatus,
+	MSRSocioeconomicData,
+	MSRViolenceHistory,
 } from "@prisma/client";
 import * as Yup from "yup";
 import {
@@ -20,6 +22,7 @@ import {
 import type { HandleRequestResponse } from "@/types";
 import { getErrorMessage } from "@/utils";
 import { ZENDESK_NEW_TICKET_STATUS } from "@/constants";
+import { buildZendeskInternalComment } from "../../utils/handle-request-support";
 
 export const maxDuration = 30;
 
@@ -70,13 +73,33 @@ const handleUpsertMsrOnZendeskAndDb = async (
 	return msrZendeskUserId;
 };
 
-type CreateMatch = {
-	msr: Pick<MSRPiiSec, "firstName"> &
+export type CreateMatch = {
+	msr: Pick<MSRPiiSec, "firstName" | "msrId"> &
+		Pick<
+			MSRSocioeconomicData,
+			| "employmentStatus"
+			| "monthlyIncomeRange"
+			| "hasFinancialDependents"
+			| "familyProvider"
+			| "propertyOwnership"
+		> &
+		Pick<
+			MSRViolenceHistory,
+			| "violenceType"
+			| "violenceTime"
+			| "perpetratorGender"
+			| "violencePerpetrator"
+			| "livesWithPerpetrator"
+			| "violenceLocation"
+			| "legalActionsTaken"
+			| "legalActionDifficulty"
+			| "riskFactors"
+			| "protectiveFactors"
+		> &
 		Pick<
 			SupportRequests,
 			| "lat"
 			| "lng"
-			| "msrId"
 			| "city"
 			| "state"
 			| "hasDisability"
@@ -85,6 +108,8 @@ type CreateMatch = {
 	supportRequestId: SupportRequests["supportRequestId"] | null;
 	zendeskTicketId: SupportRequests["zendeskTicketId"] | null;
 	supportType: SupportRequests["supportType"];
+	gender?: Gender;
+	color?: Race;
 };
 
 const handleCreateMatch = async ({
@@ -105,7 +130,7 @@ const handleCreateMatch = async ({
 		msrName: msr.firstName,
 		supportType: supportType,
 		comment: {
-			body: `${msr.firstName} solicitou acolhimento ${subjectSupportType.toLowerCase()} pelo cadastro.`,
+			html_body: buildZendeskInternalComment(msr as any, subjectSupportType),
 			public: false,
 		},
 	};

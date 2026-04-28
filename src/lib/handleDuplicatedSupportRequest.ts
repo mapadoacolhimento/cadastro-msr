@@ -52,7 +52,7 @@ const handleDuplicatedSupportRequest = async (
 		statusAcolhimento: ZENDESK_DUPLICATED_TICKET_STATUS,
 		supportType: supportRequest.supportType,
 		comment: {
-			body: emailDuplicated(msrFirstName),
+			html_body: emailDuplicated(msrFirstName),
 			public: true,
 		},
 	});

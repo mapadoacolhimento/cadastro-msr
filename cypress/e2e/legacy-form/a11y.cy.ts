@@ -145,7 +145,7 @@ describe("Accessbility", () => {
 						cy.findByRole("button", { name: "Continuar" }).click();
 
 						cy.contains(
-							"Qual(is) tipos de violência você sofreu ou está sofrendo pelo fato de ser mulher?"
+							"Qual(is) tipo(s) de violência você sofreu ou está sofrendo pelo fato de ser mulher?"
 						).should("exist");
 
 						cy.injectAxe();

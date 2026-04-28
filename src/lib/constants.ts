@@ -299,7 +299,7 @@ export const violenceTypeOptions = [
 	},
 	{
 		value: ViolenceType.moral_violence,
-		name: "Violência Moral",
+		name: "Violência moral",
 		description: "Ex: calúnia, injúria e difamação",
 		fullDescription:
 			"Se você está sendo (ou foi) acusada falsamente de ter cometido um crime; se alguém está atribuindo (ou atribuiu) a você algum fato ofensivo à sua reputação; ou se você está tendo (ou teve) sua dignidade afrontada com xingamentos ou palavras desonrosas.",
@@ -309,14 +309,14 @@ export const violenceTypeOptions = [
 		name: "Violência digital",
 		description: "Ex: cyberbullying, invasão de privacidade",
 		fullDescription:
-			"Vazar/compartilhar na internet suas informações pessoais,dados ou imagens íntimas sem seu consentimento; Stalking online (perseguição ou observação obsessiva).",
+			"Vazar/compartilhar na internet suas informações pessoais, dados ou imagens íntimas sem seu consentimento; stalking online (perseguição ou observação obsessiva).",
 	},
 	{
 		value: ViolenceType.patrimonial_violence,
 		name: "Violência patrimonial",
 		description: "Ex: destruição de bens, controle financeiro",
 		fullDescription:
-			"Controlar seu dinheiro, destruir seus objetos, destruir seus documentos pessoais, ocultar bens e propriedades, impedir de ter acesso ao dinheiro, à conta bancária ou outros bens, extorsão,danos propositais a objetos que você gosta.",
+			"Controlar seu dinheiro, destruir seus objetos, destruir seus documentos pessoais, ocultar bens e propriedades, impedir de ter acesso ao dinheiro, à conta bancária ou outros bens, extorsão, danos propositais a objetos que você gosta.",
 	},
 	{
 		value: ViolenceType.obstetric_violence,
@@ -443,11 +443,11 @@ export const livesWithPerpetratorOptions = [
 export const violenceLocationOptions = [
 	{
 		value: ViolenceLocation.home_space,
-		name: "Ambiente Doméstico",
+		name: "Ambiente doméstico",
 	},
 	{
 		value: ViolenceLocation.public_space,
-		name: "Ambiente Público",
+		name: "Ambiente público",
 	},
 	{
 		value: ViolenceLocation.work_space,
@@ -493,7 +493,7 @@ export const legalActionsTakenOptions = [
 	},
 	{
 		value: LegalActionsTaken.police_inquiry,
-		name: "Inquérito Policial",
+		name: "Inquérito policial",
 	},
 	{
 		value: LegalActionsTaken.criminal_case,
@@ -509,11 +509,11 @@ export const legalActionsTakenOptions = [
 	},
 	{
 		value: LegalActionsTaken.police_report,
-		name: "Registro de Ocorrência (B.O)",
+		name: "Registro de ocorrência (B.O)",
 	},
 	{
 		value: LegalActionsTaken.protective_measure,
-		name: "Requerimento de Medida Protetiva (Delegacia de Polícia)",
+		name: "Requerimento de medida protetiva (Delegacia de Polícia)",
 	},
 	{
 		value: LegalActionsTaken.none_taken,

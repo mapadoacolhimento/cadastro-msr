@@ -158,6 +158,8 @@ const handleCreateMatch = async ({
 		city: msr.city,
 		state: msr.state,
 		supportRequestId: supportRequestId,
+		public_services_referral: null,
+		referral_date: null,
 	};
 
 	const match = await createMatch(matchBody);

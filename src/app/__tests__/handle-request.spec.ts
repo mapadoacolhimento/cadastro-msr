@@ -95,6 +95,8 @@ const bodyComposeLegal = {
 	city: mockPayloadLegal.city,
 	state: mockPayloadLegal.state,
 	supportRequestId: null,
+	public_services_referral: null,
+	referral_date: null,
 };
 
 describe("POST handle-request", () => {

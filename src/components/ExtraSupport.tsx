@@ -25,7 +25,7 @@ const ExtraSupport = () => (
 		</Box>
 		<Flex gap={"4"} direction={"column"}>
 			<InfoBox
-				link={"https://www.servicospublicos.mapadoacolhimento.org/"}
+				link={"https://www.mapadoacolhimento.org/servicos-publicos/"}
 				imgSrc="/illustrations/woman-getting-support.webp"
 				imgAlt="Mulher recebendo atendimento por outra mulher"
 				title="Onde e como posso pedir ajuda?"

@@ -27,7 +27,7 @@ describe("<BeginRegistration />", () => {
 		setup();
 		expect(
 			screen.getByText(
-				/Com base nas suas respostas identificamos que você pode ser atendida pelo projeto. Agora precisamos de mais algumas informações para concluir o seu cadastro e te direcionar para o atendimento adequado. Vamos lá?/i
+				/Com base nas suas respostas identificamos que você pode ser atendida pelo Mapa do Acolhimento. Agora precisamos de mais algumas informações para concluir o seu cadastro e te direcionar para o atendimento adequado. Vamos lá?/i
 			)
 		).toBeInTheDocument();
 	});

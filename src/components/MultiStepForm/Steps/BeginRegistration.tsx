@@ -24,9 +24,9 @@ export default function BeginRegistration() {
 				<Box pb={{ initial: "5", sm: "6" }} width={"100%"}>
 					<Text align={"center"} as={"p"} size={"3"}>
 						Com base nas suas respostas identificamos que você pode ser atendida
-						pelo projeto. Agora precisamos de mais algumas informações para
-						concluir o seu cadastro e te direcionar para o atendimento adequado.
-						Vamos lá?
+						pelo Mapa do Acolhimento. Agora precisamos de mais algumas
+						informações para concluir o seu cadastro e te direcionar para o
+						atendimento adequado. Vamos lá?
 					</Text>
 				</Box>
 

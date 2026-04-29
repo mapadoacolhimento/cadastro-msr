@@ -18,6 +18,7 @@ import {
 	checkMatchEligibility,
 	createMatch,
 	logger,
+	db,
 } from "@/lib";
 import type { HandleRequestResponse } from "@/types";
 import { getErrorMessage } from "@/utils";
@@ -141,6 +142,26 @@ const handleCreateMatch = async ({
 		throw new Error(
 			`Unable to upsert ticket ${zendeskTicketId ?? ""} from user '${msr.msrId}' on Zendesk`
 		);
+	}
+
+	let currentSupportRequestId = supportRequestId;
+
+	if (!currentSupportRequestId) {
+		const newSupportRequest = await db.supportRequests.create({
+			data: {
+				msrId: msr.msrId,
+				supportType: supportType,
+				status: "open",
+				zendeskTicketId: zendeskTicket.ticketId,
+				lat: msr.lat,
+				lng: msr.lng,
+				city: msr.city,
+				state: msr.state,
+				hasDisability: msr.hasDisability,
+				acceptsOnlineSupport: msr.acceptsOnlineSupport,
+			},
+		});
+		currentSupportRequestId = newSupportRequest.supportRequestId;
 	}
 
 	const matchBody = {

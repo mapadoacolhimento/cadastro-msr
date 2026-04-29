@@ -80,6 +80,14 @@ const mockMatchPsychological = {
 	supportRequestId: 7890,
 };
 
+const mockCreatedSupportRequestLegal = {
+	supportRequestId: 1234,
+} as SupportRequests;
+
+const mockCreatedSupportRequestPsychological = {
+	supportRequestId: 7890,
+} as SupportRequests;
+
 const bodyComposeLegal = {
 	msrId: mockPayloadLegal.msrZendeskUserId,
 	zendeskTicketId: mockResTicketLegal.ticketId,
@@ -127,6 +135,9 @@ describe("POST handle-request", () => {
 			mockUpsertMsrOnDb.mockResolvedValueOnce(mockResMsr);
 			mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 				mockResTicketLegal
+			);
+			mockedDb.supportRequests.create.mockResolvedValueOnce(
+				mockCreatedSupportRequestLegal
 			);
 			fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
 			fetch.mockResolvedValueOnce(
@@ -214,6 +225,34 @@ describe("POST handle-request", () => {
 			expect(htmlBody).toContain(
 				"<strong>Pessoa agressora:</strong> Ex-parceiro(a)"
 			);
+		});
+
+		it("should create support request on db when supportRequestId is null", () => {
+			expect(mockedDb.supportRequests.create).toHaveBeenCalledWith({
+				data: {
+					msrId: mockResZendeskUser.msrZendeskUserId,
+					supportType: "legal",
+					status: "open",
+					zendeskTicketId: mockResTicketLegal.ticketId,
+					lat: mockPayloadLegal.lat,
+					lng: mockPayloadLegal.lng,
+					city: mockPayloadLegal.city,
+					state: mockPayloadLegal.state,
+					hasDisability: mockPayloadLegal.hasDisability,
+					acceptsOnlineSupport: mockPayloadLegal.acceptsOnlineSupport,
+				},
+			});
+		});
+
+		it("should use the db-created supportRequestId when composing the match", () => {
+			const { supportRequestId, ...rest } = bodyComposeLegal;
+			expect(fetch).toHaveBeenNthCalledWith(2, `${MATCH_LAMBDA_URL}/compose`, {
+				body: JSON.stringify([rest]),
+				method: "POST",
+				headers: {
+					Authorization: undefined,
+				},
+			});
 		});
 
 		it("should call match lambda /sign endpoint", () => {
@@ -306,6 +345,10 @@ describe("POST handle-request", () => {
 			});
 		});
 
+		it("should NOT create a support request on db when request is duplicated", () => {
+			expect(mockedDb.supportRequests.create).not.toHaveBeenCalled();
+		});
+
 		it("should call to update support request with 'duplicated' status", () => {
 			expect(mockedDb.supportRequests.update).toHaveBeenCalledWith({
 				where: {
@@ -351,6 +394,12 @@ describe("POST handle-request", () => {
 			);
 			mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
 				mockResTicketPsychological
+			);
+			mockedDb.supportRequests.create.mockResolvedValueOnce(
+				mockCreatedSupportRequestLegal
+			);
+			mockedDb.supportRequests.create.mockResolvedValueOnce(
+				mockCreatedSupportRequestPsychological
 			);
 
 			fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
@@ -448,6 +497,44 @@ describe("POST handle-request", () => {
 					}),
 				})
 			);
+		});
+
+		it("should create legal support request on db when supportRequestId is null", () => {
+			expect(mockedDb.supportRequests.create).toHaveBeenNthCalledWith(1, {
+				data: {
+					msrId: mockResZendeskUser.msrZendeskUserId,
+					supportType: "legal",
+					status: "open",
+					zendeskTicketId: mockResTicketLegal.ticketId,
+					lat: mockPayloadBoth.lat,
+					lng: mockPayloadBoth.lng,
+					city: mockPayloadBoth.city,
+					state: mockPayloadBoth.state,
+					hasDisability: mockPayloadBoth.hasDisability,
+					acceptsOnlineSupport: mockPayloadBoth.acceptsOnlineSupport,
+				},
+			});
+		});
+
+		it("should create psychological support request on db when supportRequestId is null", () => {
+			expect(mockedDb.supportRequests.create).toHaveBeenNthCalledWith(2, {
+				data: {
+					msrId: mockResZendeskUser.msrZendeskUserId,
+					supportType: "psychological",
+					status: "open",
+					zendeskTicketId: mockResTicketPsychological.ticketId,
+					lat: mockPayloadBoth.lat,
+					lng: mockPayloadBoth.lng,
+					city: mockPayloadBoth.city,
+					state: mockPayloadBoth.state,
+					hasDisability: mockPayloadBoth.hasDisability,
+					acceptsOnlineSupport: mockPayloadBoth.acceptsOnlineSupport,
+				},
+			});
+		});
+
+		it("should call db.supportRequests.create exactly twice for two new requests", () => {
+			expect(mockedDb.supportRequests.create).toHaveBeenCalledTimes(2);
 		});
 
 		it("should call match lambda /sign endpoint", () => {
@@ -592,6 +679,12 @@ describe("POST handle-request", () => {
 					}),
 				})
 			);
+		});
+
+		it("should NOT create support request on db when supportRequestId already exists", () => {
+			// mockResCheckEligibilityLegal já tem supportRequestId: 1234 (não-nulo),
+			// portanto o bloco de criação não deve ser executado
+			expect(mockedDb.supportRequests.create).not.toHaveBeenCalled();
 		});
 
 		it("should call match lambda /sign endpoint", () => {

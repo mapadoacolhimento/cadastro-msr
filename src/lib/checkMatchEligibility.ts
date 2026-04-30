@@ -5,7 +5,7 @@ import {
 	statusOnGoingMatch,
 	statusSupportRequestisAlreadyInQueue,
 	statusSupportRequestOngoingSocialWorker,
-	statusSupportRequestDuplicated
+	statusSupportRequestDuplicated,
 } from "@/lib";
 
 const payloadSchema = Yup.object({
@@ -33,6 +33,7 @@ export default async function checkMatchEligibility(
 			supportRequestId: null,
 			zendeskTicketId: null,
 			shouldCreateMatch: true,
+			ticketWasClosed: false,
 		};
 	}
 
@@ -61,6 +62,7 @@ export default async function checkMatchEligibility(
 			supportRequestId: ongoingMatch.supportRequestId,
 			zendeskTicketId: ongoingMatch.msrZendeskTicketId,
 			shouldCreateMatch: false,
+			ticketWasClosed: false,
 		};
 	}
 
@@ -86,21 +88,25 @@ export default async function checkMatchEligibility(
 			supportRequestId: null,
 			zendeskTicketId: null,
 			shouldCreateMatch: true,
+			ticketWasClosed: false,
 		};
 	}
 
 	const statusOngoingSupportRequest: string[] = [
 		...statusSupportRequestisAlreadyInQueue,
 		...statusSupportRequestOngoingSocialWorker,
-		...statusSupportRequestDuplicated
+		...statusSupportRequestDuplicated,
 	];
 	const hasOngoingSupport = statusOngoingSupportRequest.includes(
 		supportRequest.status
 	);
 
+	// Há um support_request existente elegível para novo match, mas com ticket fechado:
+	// shouldCreateMatch=true + supportRequestId não-nulo = esse caso
 	return {
 		supportRequestId: supportRequest.supportRequestId,
 		zendeskTicketId: supportRequest.zendeskTicketId,
 		shouldCreateMatch: !hasOngoingSupport,
+		ticketWasClosed: !hasOngoingSupport && !!supportRequest.supportRequestId,
 	};
 }

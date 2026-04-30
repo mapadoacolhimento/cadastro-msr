@@ -18,6 +18,7 @@ import {
 	checkMatchEligibility,
 	createMatch,
 	logger,
+	db,
 } from "@/lib";
 import type { HandleRequestResponse } from "@/types";
 import { getErrorMessage } from "@/utils";
@@ -108,6 +109,7 @@ export type CreateMatch = {
 	supportRequestId: SupportRequests["supportRequestId"] | null;
 	zendeskTicketId: SupportRequests["zendeskTicketId"] | null;
 	supportType: SupportRequests["supportType"];
+	ticketWasClosed: boolean;
 	gender?: Gender;
 	color?: Race;
 };
@@ -116,6 +118,7 @@ const handleCreateMatch = async ({
 	supportType,
 	supportRequestId,
 	zendeskTicketId,
+	ticketWasClosed,
 	msr,
 }: CreateMatch) => {
 	const subjectSupportType =
@@ -143,6 +146,37 @@ const handleCreateMatch = async ({
 		);
 	}
 
+	let currentSupportRequestId = supportRequestId;
+
+	if (ticketWasClosed && currentSupportRequestId) {
+		// Ticket estava fechado: atualiza o support_request existente com o novo ticket
+		// sem criar novo registro (evita violação de unique constraint em zendesk_ticket_id)
+		await db.supportRequests.update({
+			where: { supportRequestId: currentSupportRequestId },
+			data: {
+				zendeskTicketId: zendeskTicket.ticketId,
+				status: "open",
+			},
+		});
+	} else if (!currentSupportRequestId) {
+		// Pedido totalmente novo: cria o support_request pela primeira vez
+		const newSupportRequest = await db.supportRequests.create({
+			data: {
+				msrId: msr.msrId,
+				supportType: supportType,
+				status: "open",
+				zendeskTicketId: zendeskTicket.ticketId,
+				lat: msr.lat,
+				lng: msr.lng,
+				city: msr.city,
+				state: msr.state,
+				hasDisability: msr.hasDisability,
+				acceptsOnlineSupport: msr.acceptsOnlineSupport,
+			},
+		});
+		currentSupportRequestId = newSupportRequest.supportRequestId;
+	}
+
 	const matchBody = {
 		msrId: msr.msrId,
 		zendeskTicketId: zendeskTicket.ticketId,
@@ -157,7 +191,7 @@ const handleCreateMatch = async ({
 		lng: msr.lng,
 		city: msr.city,
 		state: msr.state,
-		supportRequestId: supportRequestId,
+		supportRequestId: currentSupportRequestId,
 		public_services_referral: null,
 		referral_date: null,
 	};
@@ -166,11 +200,14 @@ const handleCreateMatch = async ({
 
 	if (!match) {
 		throw new Error(
-			`Unable to create match for MSR '${msr.msrId}' of supportRequestId '${supportRequestId}'`
+			`Unable to create match for MSR '${msr.msrId}' of supportRequestId '${currentSupportRequestId}'`
 		);
 	}
 
-	return match;
+	return {
+		...match,
+		supportRequestId: currentSupportRequestId,
+	};
 };
 
 export async function POST(request: Request) {
@@ -186,17 +223,22 @@ export async function POST(request: Request) {
 		for (let i = 0; payload.supportType.length > i; i++) {
 			const supportType: SupportType = payload.supportType[i];
 
-			const { supportRequestId, zendeskTicketId, shouldCreateMatch } =
-				await checkMatchEligibility({
-					email: payload.email,
-					supportType: supportType,
-				});
+			const {
+				supportRequestId,
+				zendeskTicketId,
+				shouldCreateMatch,
+				ticketWasClosed,
+			} = await checkMatchEligibility({
+				email: payload.email,
+				supportType: supportType,
+			});
 
 			if (shouldCreateMatch) {
 				const match = await handleCreateMatch({
 					supportType,
 					supportRequestId,
 					zendeskTicketId,
+					ticketWasClosed,
 					msr: {
 						...payload,
 						msrId: msrZendeskUserId,
@@ -204,7 +246,7 @@ export async function POST(request: Request) {
 				});
 
 				response[supportType] = {
-					supportRequestId: supportRequestId ?? match.supportRequestId,
+					supportRequestId: match.supportRequestId,
 				};
 			} else {
 				const updatedSupportRequest = await handleDuplicatedSupportRequest(

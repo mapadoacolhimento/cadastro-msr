@@ -45,7 +45,6 @@ describe("POST /check-eligibility", () => {
 			supportType: "psychological",
 			zendeskTicketId: 5678,
 		},
-
 		{
 			supportRequestId: 223,
 			status: "matched",
@@ -78,6 +77,7 @@ describe("POST /check-eligibility", () => {
 			supportRequestId: 222,
 			zendeskTicketId: 5678,
 			shouldCreateMatch: false,
+			ticketWasClosed: false,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
 			select: {
@@ -97,9 +97,8 @@ describe("POST /check-eligibility", () => {
 		});
 	});
 
-	it("should return `psychological: {shouldCreateMatch: false, legal: {shouldCreateMatch: true, supportRequestId: 223}` when msr exists and has one match", async () => {
+	it("should return `psychological: {shouldCreateMatch: true, supportRequestId: 223, ticketWasClosed: true}` when msr exists and has one match", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec2);
-
 		mockedDb.supportRequests.findFirst.mockResolvedValue(mockSupportRequest[1]);
 
 		const request = new NextRequest(
@@ -114,6 +113,7 @@ describe("POST /check-eligibility", () => {
 			supportRequestId: 223,
 			zendeskTicketId: 9012,
 			shouldCreateMatch: true,
+			ticketWasClosed: true,
 		});
 		expect(mockedDb.supportRequests.findFirst).toHaveBeenCalledWith({
 			select: {
@@ -131,9 +131,8 @@ describe("POST /check-eligibility", () => {
 		});
 	});
 
-	it("should return `legal: {shouldCreateMatch: false, supportRequestId: 224}` when msr exists and has one match", async () => {
+	it("should return `legal: {shouldCreateMatch: false, supportRequestId: 224}` when msr exists and has one ongoing match", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec3);
-
 		mockedDb.matches.findFirst.mockResolvedValue(mockMatch);
 
 		const request = new NextRequest(
@@ -148,10 +147,11 @@ describe("POST /check-eligibility", () => {
 			supportRequestId: 224,
 			zendeskTicketId: 1234,
 			shouldCreateMatch: false,
+			ticketWasClosed: false,
 		});
 	});
 
-	it("should return `psychological: {supportRequestId: null,  shouldCreateMatch: true}` when msr does not exist", async () => {
+	it("should return `psychological: {supportRequestId: null, shouldCreateMatch: true, ticketWasClosed: false}` when msr does not exist", async () => {
 		const request = new NextRequest(
 			new Request("http://localhost:3000/check-eligibility", {
 				method: "POST",
@@ -164,12 +164,12 @@ describe("POST /check-eligibility", () => {
 			supportRequestId: null,
 			zendeskTicketId: null,
 			shouldCreateMatch: true,
+			ticketWasClosed: false,
 		});
 	});
 
-	it("should return `psychological: {supportRequestId: null,  shouldCreateMatch: true}` when msr exists but she has no matches and no support_requests", async () => {
+	it("should return `psychological: {supportRequestId: null, shouldCreateMatch: true, ticketWasClosed: false}` when msr exists but she has no matches and no support_requests", async () => {
 		mockedDb.mSRPiiSec.findUnique.mockResolvedValueOnce(mockMsrPiiSec);
-
 		mockedDb.matches.findFirst.mockResolvedValue(null);
 		mockedDb.supportRequests.findFirst.mockResolvedValue(null);
 
@@ -185,6 +185,7 @@ describe("POST /check-eligibility", () => {
 			supportRequestId: null,
 			zendeskTicketId: null,
 			shouldCreateMatch: true,
+			ticketWasClosed: false,
 		});
 	});
 

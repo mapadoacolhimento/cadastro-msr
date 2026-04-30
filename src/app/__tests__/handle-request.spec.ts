@@ -50,6 +50,7 @@ const mockResCheckEligibilityNew = {
 	supportRequestId: null,
 	zendeskTicketId: null,
 	shouldCreateMatch: true,
+	ticketWasClosed: false,
 };
 
 const mockResTicketLegal = {
@@ -60,16 +61,25 @@ const mockResTicketPsychological = {
 	ticketId: 7890,
 };
 
+const mockResCheckEligibilityClosedTicketLegal = {
+	supportRequestId: 1234,
+	zendeskTicketId: 1234 as unknown as bigint,
+	shouldCreateMatch: true,
+	ticketWasClosed: true,
+};
+
 const mockResCheckEligibilityLegal = {
 	supportRequestId: 1234,
 	zendeskTicketId: 1234 as unknown as bigint,
 	shouldCreateMatch: true,
+	ticketWasClosed: false,
 };
 
 const mockResCheckEligibilityPsychological = {
 	supportRequestId: 5678,
 	zendeskTicketId: 7890 as unknown as bigint,
 	shouldCreateMatch: false,
+	ticketWasClosed: false,
 };
 
 const mockMatchLegal = {
@@ -244,15 +254,8 @@ describe("POST handle-request", () => {
 			});
 		});
 
-		it("should use the db-created supportRequestId when composing the match", () => {
-			const { supportRequestId, ...rest } = bodyComposeLegal;
-			expect(fetch).toHaveBeenNthCalledWith(2, `${MATCH_LAMBDA_URL}/compose`, {
-				body: JSON.stringify([rest]),
-				method: "POST",
-				headers: {
-					Authorization: undefined,
-				},
-			});
+		it("should NOT update support request on db when supportRequestId is null", () => {
+			expect(mockedDb.supportRequests.update).not.toHaveBeenCalled();
 		});
 
 		it("should call match lambda /sign endpoint", () => {
@@ -261,16 +264,28 @@ describe("POST handle-request", () => {
 			});
 		});
 
-		it("should call match lambda with correct params", () => {
-			const { supportRequestId, ...rest } = bodyComposeLegal;
-
-			expect(fetch).toHaveBeenNthCalledWith(2, `${MATCH_LAMBDA_URL}/compose`, {
-				body: JSON.stringify([rest]),
-				method: "POST",
-				headers: {
-					Authorization: undefined,
+		it("should call handle-match lambda with the new supportRequestId created on db", () => {
+			// após o db.create, supportRequestId é 1234 (não-nulo), então createMatch roteia para /handle-match em vez de /compose
+			const bodyHandleMatchLegal = {
+				supportRequest: {
+					...bodyComposeLegal,
+					supportRequestId: mockCreatedSupportRequestLegal.supportRequestId,
 				},
-			});
+				shouldRandomize: true,
+				matchType: "msr",
+			};
+
+			expect(fetch).toHaveBeenNthCalledWith(
+				2,
+				`${MATCH_LAMBDA_URL}/handle-match`,
+				{
+					body: JSON.stringify(bodyHandleMatchLegal),
+					method: "POST",
+					headers: {
+						Authorization: undefined,
+					},
+				}
+			);
 		});
 	});
 
@@ -537,6 +552,10 @@ describe("POST handle-request", () => {
 			expect(mockedDb.supportRequests.create).toHaveBeenCalledTimes(2);
 		});
 
+		it("should NOT update any support request on db for new requests", () => {
+			expect(mockedDb.supportRequests.update).not.toHaveBeenCalled();
+		});
+
 		it("should call match lambda /sign endpoint", () => {
 			expect(fetch).toHaveBeenNthCalledWith(1, `${MATCH_LAMBDA_URL}/sign`, {
 				method: "GET",
@@ -546,31 +565,52 @@ describe("POST handle-request", () => {
 			});
 		});
 
-		it("should call match lambda with correct params", () => {
-			const { supportRequestId: legalId, ...legalRest } = bodyComposeLegal;
-
-			expect(fetch).toHaveBeenNthCalledWith(2, `${MATCH_LAMBDA_URL}/compose`, {
-				body: JSON.stringify([legalRest]),
-				method: "POST",
-				headers: {
-					Authorization: undefined,
+		it("should call handle-match lambda with correct params for both new requests", () => {
+			// após db.create, ambos os supportRequestId são não-nulos, então createMatch roteia para /handle-match em vez de /compose
+			const bodyHandleMatchLegal = {
+				supportRequest: {
+					...bodyComposeLegal,
+					supportRequestId: mockCreatedSupportRequestLegal.supportRequestId,
 				},
-			});
-
-			const bodyComposePsychological = {
-				...bodyComposeLegal,
-				supportType: "psychological",
-				zendeskTicketId: mockResTicketPsychological.ticketId,
+				shouldRandomize: true,
+				matchType: "msr",
 			};
-			const { supportRequestId: psyId, ...psyRest } = bodyComposePsychological;
 
-			expect(fetch).toHaveBeenNthCalledWith(4, `${MATCH_LAMBDA_URL}/compose`, {
-				body: JSON.stringify([psyRest]),
-				method: "POST",
-				headers: {
-					Authorization: undefined,
+			expect(fetch).toHaveBeenNthCalledWith(
+				2,
+				`${MATCH_LAMBDA_URL}/handle-match`,
+				{
+					body: JSON.stringify(bodyHandleMatchLegal),
+					method: "POST",
+					headers: {
+						Authorization: undefined,
+					},
+				}
+			);
+
+			const bodyHandleMatchPsychological = {
+				supportRequest: {
+					...bodyComposeLegal,
+					supportType: "psychological",
+					zendeskTicketId: mockResTicketPsychological.ticketId,
+					supportRequestId:
+						mockCreatedSupportRequestPsychological.supportRequestId,
 				},
-			});
+				shouldRandomize: true,
+				matchType: "msr",
+			};
+
+			expect(fetch).toHaveBeenNthCalledWith(
+				4,
+				`${MATCH_LAMBDA_URL}/handle-match`,
+				{
+					body: JSON.stringify(bodyHandleMatchPsychological),
+					method: "POST",
+					headers: {
+						Authorization: undefined,
+					},
+				}
+			);
 		});
 	});
 
@@ -682,8 +722,6 @@ describe("POST handle-request", () => {
 		});
 
 		it("should NOT create support request on db when supportRequestId already exists", () => {
-			// mockResCheckEligibilityLegal já tem supportRequestId: 1234 (não-nulo),
-			// portanto o bloco de criação não deve ser executado
 			expect(mockedDb.supportRequests.create).not.toHaveBeenCalled();
 		});
 
@@ -740,6 +778,115 @@ describe("POST handle-request", () => {
 					status: "duplicated",
 				},
 			});
+		});
+	});
+
+	describe("Legal support request with closed ticket", () => {
+		beforeAll(async () => {
+			mockcheckMatchEligibility.mockResolvedValueOnce(
+				mockResCheckEligibilityClosedTicketLegal
+			);
+			mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
+				mockResZendeskUser
+			);
+			mockUpsertMsrOnDb.mockResolvedValueOnce(mockResMsr);
+			// validateAndUpsertZendeskTicket recebe o ticketId antigo mas deve gerar um novo
+			mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce(
+				mockResTicketLegal
+			);
+			// update do support_request com o novo zendeskTicketId
+			mockedDb.supportRequests.update.mockResolvedValueOnce({
+				supportRequestId:
+					mockResCheckEligibilityClosedTicketLegal.supportRequestId,
+				zendeskTicketId: mockResTicketLegal.ticketId,
+				status: "open",
+			} as unknown as SupportRequests);
+
+			fetch.mockResolvedValueOnce(createFetchResponse({ message: undefined }));
+			fetch.mockResolvedValueOnce(
+				createFetchResponse({ message: mockMatchLegal })
+			);
+		});
+
+		afterAll(() => {
+			mockReset(mockedDb);
+			vi.resetAllMocks();
+		});
+
+		it("should return legal match info", async () => {
+			const request = new NextRequest(
+				new Request("http://localhost:3000/handle-request", {
+					method: "POST",
+					body: JSON.stringify(mockPayloadLegal),
+				})
+			);
+
+			const response = await POST(request);
+
+			expect(response.status).toStrictEqual(200);
+			expect(await response.json()).toStrictEqual({
+				legal: { supportRequestId: mockMatchLegal.supportRequestId },
+			});
+		});
+
+		it("should call validateAndUpsertZendeskTicket with the old ticketId to generate a new ticket", () => {
+			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith(
+				expect.objectContaining({
+					ticketId: mockResCheckEligibilityClosedTicketLegal.zendeskTicketId,
+					status: "pending",
+					statusAcolhimento: "solicitação_recebida",
+					supportType: "legal",
+				})
+			);
+		});
+
+		it("should update existing support request with new zendeskTicketId and status open", () => {
+			//não cria novo registro, atualiza o existente para evitar violação de unique constraint
+			expect(mockedDb.supportRequests.update).toHaveBeenCalledWith({
+				where: {
+					supportRequestId:
+						mockResCheckEligibilityClosedTicketLegal.supportRequestId,
+				},
+				data: {
+					zendeskTicketId: mockResTicketLegal.ticketId,
+					status: "open",
+				},
+			});
+		});
+
+		it("should NOT create a new support request on db when ticket was closed", () => {
+			expect(mockedDb.supportRequests.create).not.toHaveBeenCalled();
+		});
+
+		it("should call match lambda /sign endpoint", () => {
+			expect(fetch).toHaveBeenNthCalledWith(1, `${MATCH_LAMBDA_URL}/sign`, {
+				method: "GET",
+			});
+		});
+
+		it("should call handle-match lambda with the existing supportRequestId and new zendeskTicketId", () => {
+			const bodyHandleMatchLegal = {
+				supportRequest: {
+					...bodyComposeLegal,
+					supportRequestId:
+						mockResCheckEligibilityClosedTicketLegal.supportRequestId,
+					zendeskTicketId: mockResTicketLegal.ticketId,
+				},
+				shouldRandomize: true,
+				matchType: "msr",
+			};
+
+			expect(fetch).toHaveBeenNthCalledWith(
+				2,
+				`${MATCH_LAMBDA_URL}/handle-match`,
+				{
+					body: JSON.stringify(bodyHandleMatchLegal),
+					method: "POST",
+					headers: {
+						Authorization: undefined,
+					},
+				}
+			);
 		});
 	});
 });

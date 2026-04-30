@@ -3,7 +3,9 @@ import {
 	db,
 	validateAndUpsertZendeskTicket,
 	ZENDESK_DUPLICATED_TICKET_STATUS,
+	getZendeskTicket,
 } from "./";
+import { ZendeskTicket } from "@/types";
 
 export function emailDuplicated(firstName: MSRPiiSec["firstName"]) {
 	return `Olá${", " + firstName}!
@@ -27,7 +29,7 @@ const handleDuplicatedSupportRequest = async (
 	>,
 	msrFirstName: MSRPiiSec["firstName"]
 ) => {
-	const supporRequest = await db.supportRequests.update({
+	const supportRequestUpdated = await db.supportRequests.update({
 		where: {
 			supportRequestId: supportRequest.supportRequestId,
 		},
@@ -46,6 +48,41 @@ const handleDuplicatedSupportRequest = async (
 		},
 	});
 
+	const ticket: ZendeskTicket = await getZendeskTicket(
+		supportRequest.zendeskTicketId
+	);
+
+	//create ticket
+	if (ticket?.status === "closed") {
+		const newTicket = await validateAndUpsertZendeskTicket({
+			ticketId: null,
+			status: "open",
+			statusAcolhimento: ZENDESK_DUPLICATED_TICKET_STATUS,
+			supportType: supportRequest.supportType,
+			msrName: msrFirstName,
+			comment: {
+				html_body: emailDuplicated(msrFirstName),
+				public: true,
+			},
+			subject: ticket.subject,
+			msrZendeskUserId: ticket.requester_id,
+		});
+
+		if (newTicket?.ticketId) {
+			await db.supportRequests.update({
+				where: {
+					supportRequestId: supportRequest.supportRequestId,
+				},
+				data: {
+					zendeskTicketId: newTicket.ticketId,
+				},
+				select: {
+					supportRequestId: true,
+				},
+			});
+		}
+	}
+	//update ticket
 	await validateAndUpsertZendeskTicket({
 		ticketId: supportRequest.zendeskTicketId as never,
 		status: "open",
@@ -57,7 +94,7 @@ const handleDuplicatedSupportRequest = async (
 		},
 	});
 
-	return supporRequest;
+	return supportRequestUpdated;
 };
 
 export default handleDuplicatedSupportRequest;

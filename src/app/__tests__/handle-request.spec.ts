@@ -254,6 +254,12 @@ describe("POST handle-request", () => {
 			mockedDb.supportRequests.update.mockResolvedValueOnce({
 				status: "duplicated",
 			} as SupportRequests);
+
+			// Mockando getTicket
+			vi.mocked(fetch).mockResolvedValue({
+				status: 200,
+				json: async () => ({ ticket: { status: "open" } }),
+			} as Response);
 		});
 
 		afterAll(() => {

@@ -52,8 +52,8 @@ const handleDuplicatedSupportRequest = async (
 		supportRequest.zendeskTicketId
 	);
 
-	//create ticket
 	if (ticket?.status === "closed") {
+		//create ticket
 		const newTicket = await validateAndUpsertZendeskTicket({
 			ticketId: null,
 			status: "open",
@@ -81,18 +81,19 @@ const handleDuplicatedSupportRequest = async (
 				},
 			});
 		}
+	} else {
+		//update ticket
+		await validateAndUpsertZendeskTicket({
+			ticketId: supportRequest.zendeskTicketId as never,
+			status: "open",
+			statusAcolhimento: ZENDESK_DUPLICATED_TICKET_STATUS,
+			supportType: supportRequest.supportType,
+			comment: {
+				html_body: emailDuplicated(msrFirstName),
+				public: true,
+			},
+		});
 	}
-	//update ticket
-	await validateAndUpsertZendeskTicket({
-		ticketId: supportRequest.zendeskTicketId as never,
-		status: "open",
-		statusAcolhimento: ZENDESK_DUPLICATED_TICKET_STATUS,
-		supportType: supportRequest.supportType,
-		comment: {
-			html_body: emailDuplicated(msrFirstName),
-			public: true,
-		},
-	});
 
 	return supportRequestUpdated;
 };

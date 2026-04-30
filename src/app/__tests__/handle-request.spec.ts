@@ -255,10 +255,10 @@ describe("POST handle-request", () => {
 				status: "duplicated",
 			} as SupportRequests);
 
-			// Mockando getTicket
-			vi.mocked(fetch).mockResolvedValue({
+			/// Mockando o fetch para getZendeskTicket
+			fetch.mockResolvedValue({
 				status: 200,
-				json: async () => ({ ticket: { status: "open" } }),
+				json: async () => ({ ticket: { status: "pendent" } }),
 			} as Response);
 		});
 
@@ -651,6 +651,133 @@ describe("POST handle-request", () => {
 					supportRequestId:
 						mockResCheckEligibilityPsychological.supportRequestId,
 					status: "duplicated",
+				},
+			});
+		});
+	});
+
+	describe("New psychological support request with old ongoing psychological support request with closed ticket", () => {
+		beforeAll(async () => {
+			mockUpsertMsrOnDb.mockResolvedValueOnce(mockResMsr);
+
+			mockcheckMatchEligibility.mockResolvedValueOnce(
+				mockResCheckEligibilityPsychological
+			);
+
+			mockValidateAndUpsertZendeskUser.mockResolvedValueOnce(
+				mockResZendeskUser
+			);
+
+			mockValidateAndUpsertZendeskTicket.mockResolvedValueOnce({
+				ticketId: 1011,
+			});
+
+			mockedDb.supportRequests.update.mockResolvedValueOnce({
+				status: "duplicated",
+			} as SupportRequests);
+
+			// Mockando o fetch para getZendeskTicket
+			fetch.mockResolvedValueOnce({
+				status: 200,
+				json: async () => ({
+					ticket: {
+						status: "closed",
+						subject: "[Psicológico] Msr, SÃO PAULO - SP",
+						requester_id: mockResMsr.msrId,
+					},
+				}),
+			} as Response);
+		});
+
+		afterAll(() => {
+			mockReset(mockedDb);
+			vi.resetAllMocks();
+		});
+
+		it("should respond with `{ psychological: {status: 'duplicated'} }`", async () => {
+			const request = new NextRequest(
+				new Request("http://localhost:3000/db/handle-request", {
+					method: "POST",
+					body: JSON.stringify(mockPayloadPsychological),
+				})
+			);
+
+			const response = await POST(request);
+
+			expect(response.status).toEqual(200);
+			expect(await response.json()).toEqual({
+				psychological: { status: "duplicated" },
+			});
+		});
+
+		it("should call checkMatchEligibility with correct params", () => {
+			expect(mockcheckMatchEligibility).toHaveBeenCalledWith(
+				bodyCheckEligibilityPsychological
+			);
+		});
+
+		it("should call validateAndUpsertZendeskUser with correct params", () => {
+			expect(mockValidateAndUpsertZendeskUser).toHaveBeenCalledWith(
+				mockPayloadPsychological
+			);
+		});
+
+		it("should call upsertMsrOnDb with correct params", () => {
+			expect(mockUpsertMsrOnDb).toHaveBeenCalledWith(mockPayloadPsychological);
+		});
+
+		it("should call validateAndUpsertZendeskTicket with correct params", () => {
+			expect(mockValidateAndUpsertZendeskTicket).toHaveBeenCalledWith({
+				ticketId: null,
+				status: "open",
+				statusAcolhimento: "solicitação_repetida",
+				supportType: "psychological",
+				comment: {
+					html_body: emailDuplicated(mockPayloadPsychological.firstName),
+					public: true,
+				},
+				subject: "[Psicológico] Msr, SÃO PAULO - SP",
+				msrName: "Msr",
+				msrZendeskUserId: mockResMsr.msrId,
+			});
+		});
+
+		it("should call to update support request with 'duplicated' status", () => {
+			expect(mockedDb.supportRequests.update).toHaveBeenCalledWith({
+				where: {
+					supportRequestId:
+						mockResCheckEligibilityPsychological.supportRequestId,
+				},
+				data: {
+					status: "duplicated",
+				},
+				select: {
+					supportRequestId: true,
+				},
+			});
+		});
+
+		it("should call to update support request status history with 'duplicated' status", () => {
+			expect(mockedDb.supportRequestStatusHistory.create).toHaveBeenCalledWith({
+				data: {
+					supportRequestId:
+						mockResCheckEligibilityPsychological.supportRequestId,
+					status: "duplicated",
+				},
+			});
+		});
+
+		it("should call to update support request with new ticket id", () => {
+			expect(mockedDb.supportRequests.update).toHaveBeenCalledWith({
+				where: {
+					supportRequestId:
+						mockResCheckEligibilityPsychological.supportRequestId,
+				},
+				data: {
+					zendeskTicketId: 1011,
+				},
+				select: {
+					supportRequestId: true,
 				},
 			});
 		});

@@ -11,3 +11,4 @@ export { default as createMatch } from "./createMatch";
 export { default as logger } from "./logger";
 export * from "./constants";
 export { default as getSupportRequestData } from "./getSupportRequestData";
+export { default as getZendeskTicket } from "./zendesk/getZendeskTicket";

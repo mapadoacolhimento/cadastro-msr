@@ -1,7 +1,8 @@
 "use server";
 
-import { getSupportRequestData } from "@/lib";
+import { getSupportRequestData, logger } from "@/lib";
 import { MatchNotFound, MatchFound } from "@/components/SupportRequestStatus";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 export default async function Page({
 	searchParams,
@@ -15,9 +16,15 @@ export default async function Page({
 		[psychologicalSupportRequestId, legalSupportRequestId].map(
 			async (supportRequestId) => {
 				if (!supportRequestId) return null;
+
+				logger.warn(`[SupportRequestStatusPage] - supportRequestId is missing or undefined`);
+
 				try {
 					return await getSupportRequestData(Number(supportRequestId));
-				} catch {
+				} catch(e) {
+					
+					logger.error(`[SupportRequestStatusPage] - getSupportRequestData failed for supportRequestId '${supportRequestId}': ${getErrorMessage(e)}`);
+
 					return null;
 				}
 			}

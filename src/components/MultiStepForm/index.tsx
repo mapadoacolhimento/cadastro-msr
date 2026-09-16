@@ -3,10 +3,9 @@ import { formatRegisterFormValues } from "@/utils";
 import type { HandleRequestResponse, Values } from "@/types";
 import MultiStepFormWrapper from "./MultiStepFormWrapper";
 import { getFormSteps } from "@/utils/getFormSteps";
-import { useMemo } from "react";
 
 export default function MultiStepForm() {
-	const steps = useMemo(() => getFormSteps(), []);
+	const steps = getFormSteps();
 
 	async function onSubmit(values: Values): Promise<HandleRequestResponse> {
 		const formattedValues = formatRegisterFormValues(values);

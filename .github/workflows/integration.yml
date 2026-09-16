@@ -143,7 +143,7 @@ jobs:
         pnpm-version: [9.x]
         group:
           - name: e2e
-            spec: "cypress/e2e/e2e/**/*.cy.{js,ts}"
+            spec: "cypress/e2e/*.cy.{js,ts}"
       max-parallel: 1
     env:
       DATABASE_URL: postgresql://user:password@localhost:5432/mapa

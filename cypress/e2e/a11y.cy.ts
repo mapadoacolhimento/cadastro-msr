@@ -7,7 +7,7 @@ import {
 	supportTypes,
 	perpetratorGender,
 	livesWithPerpetrator,
-} from "../../fixtures/userData.json";
+} from "../fixtures/userData.json";
 
 function terminalLog(violations) {
 	cy.task(

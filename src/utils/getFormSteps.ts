@@ -35,22 +35,6 @@ export function getFormSteps() {
 		BasicRegisterInformation(),
 		Geolocation(),
 		DiversityInformation(),
-		ConsentConfirmation(),
-	];
-}
-export function getHiddenStepsForm() {
-	return [
-		GenderIdentity(),
-		DateOfBirth(),
-		ViolenceType(),
-		ViolenceOccurredInBrazil(),
-		ExternalSupport(),
-		FinancialBlock(),
-		BeginRegistration(),
-		SupportType(),
-		BasicRegisterInformation(),
-		Geolocation(),
-		DiversityInformation(),
 		ViolenceTime(),
 		PerpetratorGender(),
 		ViolencePerpetrator(),

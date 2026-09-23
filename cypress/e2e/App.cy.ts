@@ -1,15 +1,28 @@
-import userData from "../../fixtures/userData.json";
+import userData from "../fixtures/userData.json";
 
 const {
 	gender,
 	genderViolence,
 	externalSupport,
 	violenceOccurredInBrazil,
+	violenceTime,
 	supportTypes,
 	dateOfBirth,
+	perpetratorGender,
+	livesWithPerpetrator,
 } = userData;
 
 describe("Happy path", () => {
+	beforeEach(() => {
+		cy.intercept("POST", "/handle-request", {
+			statusCode: 200,
+			body: {
+				psychological: { supportRequestId: 1 },
+				legal: { supportRequestId: 2 },
+			},
+		}).as("submitRegistration");
+	});
+
 	describe(
 		"Desktop",
 		{
@@ -40,6 +53,86 @@ describe("Happy path", () => {
 
 				cy.findByRole("heading", { name: "Sobre você" }).should("exist");
 				cy.findByRole("textbox").should("have.value", "18/11/1996");
+			});
+
+			it("should continue to next step if all fields are filled correctly (App2)", () => {
+				cy.visit("/");
+				cy.goThroughHomePage();
+
+				cy.fillAllSteps(supportTypes);
+			});
+
+			it("should go back to the previous step when the back button is clicked (App2)", () => {
+				cy.visit("/cadastro");
+
+				cy.fillGenderIdentityStep(gender);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillDateOfBirthStep(dateOfBirth);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceTypeStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillExternalSupportStep(externalSupport);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillFinancialBlock();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.goThroughBeginRegistrationStep();
+				cy.findByRole("button", { name: "Iniciar cadastro" }).click();
+
+				cy.fillSupportTypeStep(supportTypes);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillBasicRegisterInformationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillGeolocationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillDiversityInformationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceTimeStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillPerpetratorGenderStep(perpetratorGender);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolencePerpetratorStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillLivesWithPerpetratorStep(livesWithPerpetrator);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceLocationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillLegalActionsTakenStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillLegalActionDifficultyStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillProtectiveFactorsStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillRiskFactorsStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillConsentConfirmationStep();
+				cy.findByRole("button", {
+					name: "Voltar para o passo anterior",
+				}).click();
+
+				cy.contains("Selecione as opções que se aplicam ao seu caso").should(
+					"exist"
+				);
 			});
 		}
 	);
@@ -74,6 +167,86 @@ describe("Happy path", () => {
 
 				cy.findByRole("heading", { name: "Sobre você" }).should("exist");
 				cy.findByRole("textbox").should("have.value", "18/11/1996");
+			});
+
+			it("should continue to next step if all fields are filled correctly (App2)", () => {
+				cy.visit("/");
+				cy.goThroughHomePage();
+
+				cy.fillAllSteps(supportTypes);
+			});
+
+			it("should go back to the previous step when the back button is clicked (App2)", () => {
+				cy.visit("/cadastro");
+
+				cy.fillGenderIdentityStep(gender);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillDateOfBirthStep(dateOfBirth);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceTypeStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceOccurredInBrazilStep(violenceOccurredInBrazil);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillExternalSupportStep(externalSupport);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillFinancialBlock();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.goThroughBeginRegistrationStep();
+				cy.findByRole("button", { name: "Iniciar cadastro" }).click();
+
+				cy.fillSupportTypeStep(supportTypes);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillBasicRegisterInformationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillGeolocationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillDiversityInformationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceTimeStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillPerpetratorGenderStep(perpetratorGender);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolencePerpetratorStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillLivesWithPerpetratorStep(livesWithPerpetrator);
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillViolenceLocationStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillLegalActionsTakenStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillLegalActionDifficultyStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillProtectiveFactorsStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillRiskFactorsStep();
+				cy.findByRole("button", { name: "Continuar" }).click();
+
+				cy.fillConsentConfirmationStep();
+				cy.findByRole("button", {
+					name: "Voltar para o passo anterior",
+				}).click();
+
+				cy.contains("Selecione as opções que se aplicam ao seu caso").should(
+					"exist"
+				);
 			});
 		}
 	);
